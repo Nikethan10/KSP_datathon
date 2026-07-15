@@ -1,0 +1,113 @@
+{
+  "n_test": 405476,
+  "pos_rate": 0.0761,
+  "brier_raw": 0.05827,
+  "brier_calibrated": 0.05211,
+  "ece_raw": 0.0678,
+  "ece_calibrated": 0.0028,
+  "reliability_raw": [
+    {
+      "conf": 0.0384,
+      "acc": 0.0125,
+      "frac": 0.1
+    },
+    {
+      "conf": 0.046,
+      "acc": 0.0167,
+      "frac": 0.1
+    },
+    {
+      "conf": 0.0571,
+      "acc": 0.0163,
+      "frac": 0.1
+    },
+    {
+      "conf": 0.0695,
+      "acc": 0.0215,
+      "frac": 0.1
+    },
+    {
+      "conf": 0.0786,
+      "acc": 0.0215,
+      "frac": 0.1
+    },
+    {
+      "conf": 0.0916,
+      "acc": 0.0251,
+      "frac": 0.1
+    },
+    {
+      "conf": 0.1106,
+      "acc": 0.036,
+      "frac": 0.1
+    },
+    {
+      "conf": 0.1473,
+      "acc": 0.058,
+      "frac": 0.1
+    },
+    {
+      "conf": 0.2504,
+      "acc": 0.1282,
+      "frac": 0.1
+    },
+    {
+      "conf": 0.5498,
+      "acc": 0.4252,
+      "frac": 0.1
+    }
+  ],
+  "reliability_calibrated": [
+    {
+      "conf": 0.0101,
+      "acc": 0.0129,
+      "frac": 0.1
+    },
+    {
+      "conf": 0.0137,
+      "acc": 0.0143,
+      "frac": 0.1
+    },
+    {
+      "conf": 0.014,
+      "acc": 0.0182,
+      "frac": 0.1
+    },
+    {
+      "conf": 0.0181,
+      "acc": 0.0227,
+      "frac": 0.1
+    },
+    {
+      "conf": 0.0224,
+      "acc": 0.0206,
+      "frac": 0.1
+    },
+    {
+      "conf": 0.0294,
+      "acc": 0.0248,
+      "frac": 0.1
+    },
+    {
+      "conf": 0.0409,
+      "acc": 0.0355,
+      "frac": 0.1
+    },
+    {
+      "conf": 0.0598,
+      "acc": 0.0585,
+      "frac": 0.1
+    },
+    {
+      "conf": 0.127,
+      "acc": 0.1282,
+      "frac": 0.1
+    },
+    {
+      "conf": 0.424,
+      "acc": 0.4252,
+      "frac": 0.1
+    }
+  ],
+  "method": "Quantile-binned reliability on the held-out test period; isotonic regression fit on validation. Calibration is monotonic, so cell ranking (PAI/AUC) and patrol allocation are unchanged."
+}

@@ -1,0 +1,15 @@
+{
+  "n_patrols": 10,
+  "patrol_radius_km": 2.0,
+  "scope_district": "MYSURU DIST",
+  "baseline_coverage_pct": 6.87,
+  "statusquo_coverage_pct": 16.86,
+  "greedy_coverage_pct": 22.41,
+  "greedy_uplift_pct": 226.3,
+  "greedy_uplift_x": 3.3,
+  "greedy_uplift_vs_statusquo_pct": 32.9,
+  "greedy_uplift_vs_statusquo_x": 1.33,
+  "greedy_cells_covered": 63,
+  "ilp_coverage_pct": 22.41,
+  "ilp_uplift_pct": 226.3
+}

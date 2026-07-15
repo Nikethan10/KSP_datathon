@@ -1,0 +1,79 @@
+[
+  {
+    "patrol_id": 1,
+    "center_lat": 15.274774774800001,
+    "center_lon": 76.3831775701,
+    "risk_covered": 0.7016153708,
+    "cells_covered": 9,
+    "recent_incidents_30d": 30,
+    "top_crime_types": {
+      "Crimes Against Body": 6,
+      "Narcotics & Drugs": 4,
+      "Gambling & Betting": 4,
+      "Cheating & Fraud": 4,
+      "Cyber Crimes": 2
+    },
+    "gravity_breakdown": {
+      "Non-Heinous": 15,
+      "Heinous": 9,
+      "Petty": 6
+    },
+    "description": "Patrol 1: Deploy to (15.2748, 76.3832). Covers 9 cells with 30 recent incidents. Primary concern: Crimes Against Body."
+  },
+  {
+    "patrol_id": 2,
+    "center_lat": 14.7882882883,
+    "center_lon": 75.9906542056,
+    "risk_covered": 0.3890579046,
+    "cells_covered": 6,
+    "recent_incidents_30d": 12,
+    "top_crime_types": {
+      "Motor Vehicle Offences": 5,
+      "Crimes Against Body": 3,
+      "Cheating & Fraud": 2,
+      "Crimes Against Public Tranquility": 1,
+      "Other IPC Offences": 1
+    },
+    "gravity_breakdown": {
+      "Petty": 5,
+      "Non-Heinous": 4,
+      "Heinous": 3
+    },
+    "description": "Patrol 2: Deploy to (14.7883, 75.9907). Covers 6 cells with 12 recent incidents. Primary concern: Motor Vehicle Offences."
+  },
+  {
+    "patrol_id": 3,
+    "center_lat": 14.8333333333,
+    "center_lon": 76.2242990654,
+    "risk_covered": 0.286497116,
+    "cells_covered": 5,
+    "recent_incidents_30d": 5,
+    "top_crime_types": {
+      "Crimes Against Property": 3,
+      "Other IPC Offences": 1,
+      "Forgery & Counterfeiting": 1
+    },
+    "gravity_breakdown": {
+      "Non-Heinous": 5
+    },
+    "description": "Patrol 3: Deploy to (14.8333, 76.2243). Covers 5 cells with 5 recent incidents. Primary concern: Crimes Against Property."
+  },
+  {
+    "patrol_id": 4,
+    "center_lat": 15.3018018018,
+    "center_lon": 76.4485981308,
+    "risk_covered": 0.214863088,
+    "cells_covered": 4,
+    "recent_incidents_30d": 3,
+    "top_crime_types": {
+      "Kidnapping & Abduction": 1,
+      "Motor Vehicle Offences": 1,
+      "Robbery & Dacoity": 1
+    },
+    "gravity_breakdown": {
+      "Heinous": 2,
+      "Petty": 1
+    },
+    "description": "Patrol 4: Deploy to (15.3018, 76.4486). Covers 4 cells with 3 recent incidents. Primary concern: Kidnapping & Abduction."
+  }
+]

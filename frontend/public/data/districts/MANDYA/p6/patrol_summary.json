@@ -1,0 +1,15 @@
+{
+  "n_patrols": 6,
+  "patrol_radius_km": 2.0,
+  "scope_district": "MANDYA",
+  "baseline_coverage_pct": 16.42,
+  "statusquo_coverage_pct": 37.37,
+  "greedy_coverage_pct": 42.91,
+  "greedy_uplift_pct": 161.3,
+  "greedy_uplift_x": 2.6,
+  "greedy_uplift_vs_statusquo_pct": 14.8,
+  "greedy_uplift_vs_statusquo_x": 1.15,
+  "greedy_cells_covered": 35,
+  "ilp_coverage_pct": 45.25,
+  "ilp_uplift_pct": 175.6
+}

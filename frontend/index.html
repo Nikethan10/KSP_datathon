@@ -4,6 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PRAHARI — Crime Intelligence Platform</title>
+    <meta
+      name="description"
+      content="AI-driven crime analytics for Karnataka State Police. Statistical hotspots, next-week risk forecasting, patrol optimisation and a transparent fairness audit over 1,674,732 FIR records."
+    />
+    <link rel="icon" type="image/png" href="/app/brand/favicon.png" />
+    <link rel="apple-touch-icon" href="/app/brand/mark-256.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Noto Sans Kannada is explicit: without it the Kannada UI fell back to
+         whatever the OS happened to ship, so the same build looked different
+         on Windows, macOS and Android. -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- NB: do NOT prefetch brand/loading.mp4 here. Measured: the prefetch
+         was not reused by the <video> element (it downloaded 2.7 MB twice)
+         and competing with the console chunk pushed its load from 6.9s to
+         10.3s. The splash clip is decorative and is fetched at low priority
+         by ConsoleSplash instead. -->
   </head>
   <body>
     <div id="root"></div>

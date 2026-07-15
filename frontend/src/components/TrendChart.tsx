@@ -8,7 +8,29 @@ interface Props {
   label: string
 }
 
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+// "2024-03" -> "Mar '24" so the axis reads naturally
+function fmtPeriod(p: string): string {
+  const [y, m] = String(p).split('-')
+  const mi = Number(m) - 1
+  return mi >= 0 && mi < 12 ? `${MONTHS[mi]} '${y.slice(2)}` : String(p)
+}
+
+// The dataset ends mid-month, so the final month is only partially reported and
+// shows a misleading cliff. Drop any trailing month well below the series median.
+function trimPartialTail(data: TrendPoint[]): TrendPoint[] {
+  if (data.length < 8) return data
+  const counts = data.map((p) => p.count).sort((a, b) => a - b)
+  const median = counts[Math.floor(counts.length / 2)]
+  let end = data.length
+  while (end > 1 && data[end - 1].count < median * 0.5) end--
+  return data.slice(0, end)
+}
+
 export default function TrendChart({ data, label }: Props) {
+  const series = trimPartialTail(data)
+
   return (
     <div>
       <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-1">
@@ -16,41 +38,54 @@ export default function TrendChart({ data, label }: Props) {
       </div>
       <div className="h-36">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 4, right: 4, bottom: 0, left: -18 }}>
+          <AreaChart data={series} margin={{ top: 4, right: 14, bottom: 0, left: 0 }}>
             <defs>
               <linearGradient id="trendFill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#38bdf8" stopOpacity={0.45} />
-                <stop offset="100%" stopColor="#38bdf8" stopOpacity={0.02} />
+                <stop offset="0%" stopColor="#c9a35c" stopOpacity={0.45} />
+                <stop offset="100%" stopColor="#c9a35c" stopOpacity={0.02} />
               </linearGradient>
             </defs>
-            <CartesianGrid stroke="#1e293b" strokeDasharray="3 3" vertical={false} />
+            <CartesianGrid stroke="#272c33" strokeDasharray="3 3" vertical={false} />
             <XAxis
               dataKey="period"
-              tick={{ fill: '#64748b', fontSize: 9 }}
+              tick={{ fill: '#6b7480', fontSize: 9 }}
               tickLine={false}
-              axisLine={{ stroke: '#334155' }}
-              interval={Math.max(0, Math.floor(data.length / 6) - 1)}
+              tickMargin={6}
+              axisLine={{ stroke: '#353b43' }}
+              interval="preserveStartEnd"
+              minTickGap={44}
+              tickFormatter={fmtPeriod}
             />
             <YAxis
-              tick={{ fill: '#64748b', fontSize: 9 }}
+              tick={{ fill: '#6b7480', fontSize: 9 }}
               tickLine={false}
               axisLine={false}
-              tickFormatter={(v: number) => (v >= 1000 ? `${(v / 1000).toFixed(0)}k` : `${v}`)}
+              width={40}
+              allowDecimals={false}
+              tickFormatter={(v: number) => {
+                if (v >= 1000) {
+                  const k = v / 1000
+                  return `${Number.isInteger(k) ? k : k.toFixed(1)}k`
+                }
+                return `${v}`
+              }}
             />
             <Tooltip
               contentStyle={{
-                background: 'rgba(13,17,23,0.95)',
-                border: '1px solid rgba(56,189,248,0.25)',
+                background: 'rgba(29,33,38,0.96)',
+                border: '1px solid rgba(201,163,92,0.28)',
                 borderRadius: 6,
                 fontSize: 11,
               }}
-              labelStyle={{ color: '#94a3b8' }}
-              itemStyle={{ color: '#7dd3fc' }}
+              labelStyle={{ color: '#8a939e' }}
+              itemStyle={{ color: '#c9a35c' }}
+              labelFormatter={(p) => fmtPeriod(String(p))}
+              formatter={(v) => [Number(v).toLocaleString(), 'FIRs']}
             />
             <Area
               type="monotone"
               dataKey="count"
-              stroke="#38bdf8"
+              stroke="#c9a35c"
               strokeWidth={1.6}
               fill="url(#trendFill)"
               name="FIRs"

@@ -211,14 +211,13 @@ def compute_temporal_features(cell_time: pd.DataFrame) -> pd.DataFrame:
     return ct
 
 
-def compute_area_features(
-    cases: pd.DataFrame, cell_time: pd.DataFrame, employees: pd.DataFrame = None
-) -> pd.DataFrame:
-    """Add area-level static features per cell_id."""
-    print("[features] Computing area features ...")
-    ct = cell_time.copy()
+def _compute_cell_stats_for_cutoff(cases: pd.DataFrame, cutoff: pd.Timestamp) -> pd.DataFrame:
+    """Area stats using only cases strictly before the cutoff date."""
+    subset = cases[cases["IncidentFromDate"] < cutoff]
+    if len(subset) == 0:
+        return pd.DataFrame(columns=["cell_id"])
 
-    cell_stats = cases.groupby("cell_id").agg(
+    cell_stats = subset.groupby("cell_id").agg(
         hist_total=("CaseMasterID", "count"),
         hist_heinous_pct=("GravityOffenceID", lambda x: (x == 1).mean()),
         hist_violent_pct=("CrimeMajorHeadID", lambda x: x.isin(CRIME_GROUPS_VIOLENT).mean()),
@@ -226,13 +225,44 @@ def compute_area_features(
         n_crime_types=("CrimeMajorHeadID", "nunique"),
     ).reset_index()
 
-    crime_counts = cases.groupby("cell_id")["CrimeMajorHeadID"].value_counts()
+    crime_counts = subset.groupby("cell_id")["CrimeMajorHeadID"].value_counts()
     crime_probs = crime_counts / crime_counts.groupby(level=0).sum()
     entropy = -(crime_probs * np.log2(crime_probs.clip(lower=1e-10))).groupby(level=0).sum()
     entropy = entropy.reset_index()
     entropy.columns = ["cell_id", "crime_entropy"]
 
     cell_stats = cell_stats.merge(entropy, on="cell_id", how="left")
+    return cell_stats
+
+
+def compute_area_features(
+    cases: pd.DataFrame, cell_time: pd.DataFrame, employees: pd.DataFrame = None
+) -> pd.DataFrame:
+    """Area-level features per cell, temporally safe (no future leakage)."""
+    print("[features] Computing area features (temporally separated) ...")
+    ct = cell_time.copy()
+
+    # Assign split before computing area stats to avoid leakage
+    ct["_split"] = "train"
+    ct.loc[ct["date"] > pd.Timestamp(TRAIN_END), "_split"] = "val"
+    ct.loc[ct["date"] > pd.Timestamp(VAL_END), "_split"] = "test"
+
+    cutoffs = {
+        "train": pd.Timestamp(TRAIN_END),
+        "val":   pd.Timestamp(VAL_END),
+        "test":  pd.Timestamp(VAL_END),  # test sees same history as val
+    }
+
+    parts = []
+    for split_name, cutoff in cutoffs.items():
+        mask = ct["_split"] == split_name
+        chunk = ct[mask].copy()
+        stats = _compute_cell_stats_for_cutoff(cases, cutoff)
+        chunk = chunk.merge(stats, on="cell_id", how="left")
+        parts.append(chunk)
+
+    ct = pd.concat(parts).sort_values(["cell_id", "date", "shift"]).reset_index(drop=True)
+    ct.drop(columns=["_split"], inplace=True)
 
     if employees is not None and "UnitID" in employees.columns:
         station_officers = employees.groupby("UnitID").size().reset_index(name="n_officers")
@@ -241,10 +271,9 @@ def compute_area_features(
             station_officers, left_on="PoliceStationID", right_on="UnitID", how="left"
         )
         cell_officers = station_cell.groupby("cell_id")["n_officers"].sum().reset_index()
-        cell_stats = cell_stats.merge(cell_officers, on="cell_id", how="left")
-        cell_stats["n_officers"] = cell_stats["n_officers"].fillna(0)
+        ct = ct.merge(cell_officers, on="cell_id", how="left")
+        ct["n_officers"] = ct["n_officers"].fillna(0)
 
-    ct = ct.merge(cell_stats, on="cell_id", how="left")
     ct = ct.fillna(0)
 
     return ct

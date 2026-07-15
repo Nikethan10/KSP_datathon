@@ -1,0 +1,15 @@
+{
+  "n_patrols": 8,
+  "patrol_radius_km": 2.0,
+  "scope_district": "KOPPAL",
+  "baseline_coverage_pct": 5.23,
+  "statusquo_coverage_pct": 19.01,
+  "greedy_coverage_pct": 21.23,
+  "greedy_uplift_pct": 306.2,
+  "greedy_uplift_x": 4.1,
+  "greedy_uplift_vs_statusquo_pct": 11.7,
+  "greedy_uplift_vs_statusquo_x": 1.12,
+  "greedy_cells_covered": 57,
+  "ilp_coverage_pct": 21.75,
+  "ilp_uplift_pct": 316.1
+}

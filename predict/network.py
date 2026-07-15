@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 import networkx as nx
 
-from config import TOP_DISRUPTORS, MAX_NETWORK_NODES_EXPORT, OUTPUT_DIR
+from config import TOP_DISRUPTORS, MAX_NETWORK_NODES_EXPORT, OUTPUT_DIR, CRIME_GROUPS_VIOLENT
 
 
 # ---------------------------------------------------------------------------
@@ -170,7 +170,9 @@ def detect_communities(G: nx.Graph) -> dict:
 
 def compute_centrality(G: nx.Graph, community_labels: dict | None = None) -> pd.DataFrame:
     """
-    Compute degree, betweenness (approximate), and eigenvector centrality.
+    Compute degree and key-player score centrality.
+    For small graphs (<=5000 nodes) the key-player score is exact betweenness;
+    for large graphs it falls back to degree centrality.
 
     Returns a DataFrame indexed by offender_id.
     """
@@ -178,7 +180,7 @@ def compute_centrality(G: nx.Graph, community_labels: dict | None = None) -> pd.
     n = G.number_of_nodes()
     if n == 0:
         return pd.DataFrame(
-            columns=["offender_id", "degree", "betweenness",
+            columns=["offender_id", "degree", "key_player_score",
                       "eigenvector", "total_cases", "community_id"]
         )
 
@@ -206,7 +208,7 @@ def compute_centrality(G: nx.Graph, community_labels: dict | None = None) -> pd.
 
     df = pd.DataFrame({"offender_id": list(G.nodes())})
     df["degree"] = df["offender_id"].map(deg).astype("float32")
-    df["betweenness"] = df["offender_id"].map(between).fillna(0.0).astype("float32")
+    df["key_player_score"] = df["offender_id"].map(between).fillna(0.0).astype("float32")
     df["eigenvector"] = df["offender_id"].map(eigen).fillna(0.0).astype("float32")
     df["total_cases"] = df["offender_id"].map(
         {nd: G.nodes[nd].get("total_cases", 0) for nd in G.nodes()}
@@ -333,54 +335,96 @@ def simulate_network_disruption(
     }
 
 
-def simulate_gang_disruption(
+def _minmax(vals: list[float]) -> list[float]:
+    lo, hi = min(vals), max(vals)
+    if hi == lo:
+        return [0.5] * len(vals)
+    return [(v - lo) / (hi - lo) for v in vals]
+
+
+def _gang_crime_profiles(
+    accused: pd.DataFrame, cases: pd.DataFrame, member_to_gang: dict,
+) -> dict:
+    """One-pass crime-severity profile per gang: heinous %, violent %, top crime
+    type, district reach, and total cases. Severity is what makes a gang a
+    *threat* (vs. just large), so it drives the threat tier."""
+    acc = accused.dropna(subset=["OffenderID"]).copy()
+    acc["OffenderID"] = acc["OffenderID"].astype(str)
+    acc["gang"] = acc["OffenderID"].map(member_to_gang)
+    acc = acc.dropna(subset=["gang"])
+
+    sev_cols = ["CaseMasterID", "GravityOffenceID", "CrimeMajorHeadID"]
+    for c in ("crime_type", "DistrictName"):
+        if c in cases.columns:
+            sev_cols.append(c)
+    g = acc[["gang", "CaseMasterID"]].merge(cases[sev_cols], on="CaseMasterID", how="left")
+    g["is_heinous"] = (g["GravityOffenceID"] == 1).astype("int8")
+    g["is_violent"] = g["CrimeMajorHeadID"].isin(CRIME_GROUPS_VIOLENT).astype("int8")
+
+    profiles: dict = {}
+    for gang_id, grp in g.groupby("gang"):
+        top_crime = "—"
+        if "crime_type" in grp.columns and grp["crime_type"].notna().any():
+            top_crime = str(grp["crime_type"].mode().iloc[0])
+        profiles[int(gang_id)] = {
+            "total_cases": int(grp["CaseMasterID"].nunique()),
+            "heinous": float(grp["is_heinous"].mean()),
+            "violent": float(grp["is_violent"].mean()),
+            "n_districts": int(grp["DistrictName"].nunique()) if "DistrictName" in grp else 0,
+            "top_crime": top_crime,
+        }
+    return profiles
+
+
+def analyze_gangs(
     G: nx.Graph,
     communities: dict,
-    top_gangs: int = 20,
+    accused: pd.DataFrame,
+    cases: pd.DataFrame,
+    top_gangs: int = 24,
     min_size: int = 6,
-) -> list[dict]:
+    max_members_viz: int = 22,
+) -> tuple[list[dict], dict]:
     """
-    Gang-level disruption -- the meaningful headline on a large network.
+    Classify the major gangs by THREAT and build a threat-tagged 3D network.
 
-    For each of the largest detected communities (gangs), identify the key
-    members whose removal fragments that gang, and measure the effect. Unlike
-    whole-network removal (negligible on a 400K blob), removing 2-3 members of a
-    tight ~15-person crew genuinely shatters it.
+    Threat combines: crime severity (heinous + violent share — the dominant
+    factor), gang size, internal cohesion, activity, and geographic reach.
+    Gangs are split High / Medium / Low so the map immediately shows which
+    crews are dangerous. Each record also carries the disruption result
+    (fragmentation from arresting the top-3 members) used elsewhere.
 
-    For each gang we report: size, the top key members by within-gang degree,
-    articulation points (members who single-handedly split the gang), and the
-    fragmentation from removing the top-3 members.
+    Returns (gang_records, gang_network) where gang_network = {nodes, edges}
+    with each node tagged {gang, tier, threat} for the frontend.
     """
-    print(f"[network] Simulating gang-level disruption (top {top_gangs} gangs) ...")
+    print(f"[network] Classifying gang threats (top {top_gangs} gangs) ...")
 
     comm_list = communities.get("communities", [])
     if not comm_list:
-        return []
+        return [], {"nodes": [], "edges": []}
 
-    # largest gangs first
-    gangs = sorted((c for c in comm_list if len(c) >= min_size), key=len, reverse=True)
-    gangs = gangs[:top_gangs]
+    gangs = sorted((c for c in comm_list if len(c) >= min_size), key=len, reverse=True)[:top_gangs]
 
-    results: list[dict] = []
+    # offender -> gang_rank (1 = largest); one map drives the crime-profile join
+    member_to_gang = {}
+    for rank, members in enumerate(gangs, start=1):
+        for m in members:
+            member_to_gang[m] = rank
+    profiles = _gang_crime_profiles(accused, cases, member_to_gang)
+
+    # ---- per-gang structural + disruption metrics -----------------------
+    raw = []
     for rank, members in enumerate(gangs, start=1):
         sub = G.subgraph(members).copy()
         size = sub.number_of_nodes()
-        if size < min_size:
-            continue
-
-        # key members by degree within the gang
         deg = dict(sub.degree())
         key_members = sorted(deg, key=deg.get, reverse=True)
-
-        # articulation points: single members whose removal disconnects the gang
         try:
-            artic = list(nx.articulation_points(sub))
+            artic = set(nx.articulation_points(sub))
         except Exception:
-            artic = []
+            artic = set()
 
         largest_before = len(max(nx.connected_components(sub), key=len))
-
-        # remove top-3 key members together, measure fragmentation
         remove_set = key_members[:3]
         H = sub.copy()
         H.remove_nodes_from(remove_set)
@@ -389,44 +433,90 @@ def simulate_gang_disruption(
             comps_after = nx.number_connected_components(H)
         else:
             largest_after, comps_after = 0, 0
+        drop_pct = round((largest_before - largest_after) / largest_before * 100
+                         if largest_before > 0 else 0.0, 1)
 
-        drop_pct = round(
-            (largest_before - largest_after) / largest_before * 100
-            if largest_before > 0 else 0.0, 1
-        )
-
-        key_details = [
-            {
-                "offender_id": m,
-                "name": G.nodes[m].get("name", "Unknown"),
-                "gang_degree": deg[m],
-                "total_cases": G.nodes[m].get("total_cases", 0),
-                "is_articulation": m in artic,
-            }
-            for m in key_members[:5]
-        ]
-
-        results.append({
-            "gang_rank": rank,
-            "gang_size": size,
-            "gang_edges": sub.number_of_edges(),
-            "n_articulation_points": len(artic),
-            "key_members": key_details,
-            "removed_top3": [G.nodes[m].get("name", "Unknown") for m in remove_set],
-            "largest_before": largest_before,
-            "largest_after_top3_removed": largest_after,
-            "components_after_top3_removed": comps_after,
-            "fragmentation_drop_pct": drop_pct,
+        prof = profiles.get(rank, {"total_cases": 0, "heinous": 0.0, "violent": 0.0,
+                                   "n_districts": 0, "top_crime": "—"})
+        raw.append({
+            "rank": rank, "sub": sub, "size": size, "edges": sub.number_of_edges(),
+            "deg": deg, "key_members": key_members, "artic": artic,
+            "remove_set": remove_set, "largest_before": largest_before,
+            "largest_after": largest_after, "comps_after": comps_after,
+            "drop_pct": drop_pct, "cohesion": sub.number_of_edges() / size if size else 0.0,
+            **prof,
         })
 
-    # rank gangs by how disruptable they are (biggest fragmentation first)
-    results.sort(key=lambda r: (r["fragmentation_drop_pct"], r["gang_size"]), reverse=True)
-    if results:
-        best = results[0]
-        print(f"  best gang target: {best['gang_size']}-member gang, "
-              f"removing top 3 fragments it by {best['fragmentation_drop_pct']}% "
-              f"into {best['components_after_top3_removed']} pieces")
-    return results
+    # ---- composite threat score + tiers ---------------------------------
+    severity = [0.6 * r["heinous"] + 0.4 * r["violent"] for r in raw]
+    size_n = _minmax([r["size"] for r in raw])
+    coh_n = _minmax([r["cohesion"] for r in raw])
+    cases_n = _minmax([r["total_cases"] for r in raw])
+    reach_n = _minmax([r["n_districts"] for r in raw])
+    scores = [round(100 * (0.42 * severity[i] + 0.20 * size_n[i] + 0.14 * coh_n[i]
+                           + 0.12 * cases_n[i] + 0.12 * reach_n[i]), 1)
+              for i in range(len(raw))]
+
+    order = sorted(range(len(raw)), key=lambda i: scores[i], reverse=True)
+    n = len(order)
+    tier = {}
+    for pos, i in enumerate(order):
+        frac = pos / max(1, n)
+        tier[i] = "high" if frac < 0.30 else ("medium" if frac < 0.65 else "low")
+
+    # ---- assemble records + threat-tagged network -----------------------
+    records: list[dict] = []
+    viz_nodes, viz_edges = [], []
+    for i, r in enumerate(raw):
+        rank, deg = r["rank"], r["deg"]
+        records.append({
+            "gang_rank": rank,
+            "gang_size": r["size"],
+            "gang_edges": r["edges"],
+            "threat_tier": tier[i],
+            "threat_score": scores[i],
+            "heinous_pct": round(r["heinous"] * 100, 1),
+            "violent_pct": round(r["violent"] * 100, 1),
+            "top_crime": r["top_crime"],
+            "n_districts": r["n_districts"],
+            "total_cases": r["total_cases"],
+            "n_articulation_points": len(r["artic"]),
+            "key_members": [
+                {"offender_id": m, "name": G.nodes[m].get("name", "Unknown"),
+                 "gang_degree": deg[m], "total_cases": G.nodes[m].get("total_cases", 0),
+                 "is_articulation": m in r["artic"]}
+                for m in r["key_members"][:5]
+            ],
+            "removed_top3": [G.nodes[m].get("name", "Unknown") for m in r["remove_set"]],
+            "largest_before": r["largest_before"],
+            "largest_after_top3_removed": r["largest_after"],
+            "components_after_top3_removed": r["comps_after"],
+            "fragmentation_drop_pct": r["drop_pct"],
+        })
+
+        # viz: keep each gang's most-connected core so clusters stay legible
+        chosen = r["key_members"][:max_members_viz]
+        for m in chosen:
+            viz_nodes.append({"data": {
+                "id": str(m), "label": G.nodes[m].get("name", "Unknown"),
+                "size": G.nodes[m].get("total_cases", 1), "gang": rank,
+                "tier": tier[i], "threat": scores[i], "degree": deg[m],
+            }})
+        for u, v, d in r["sub"].subgraph(chosen).edges(data=True):
+            viz_edges.append({"data": {"source": str(u), "target": str(v),
+                                       "weight": int(d.get("weight", 1))}})
+
+    gang_network = {"nodes": viz_nodes, "edges": viz_edges}
+
+    # file/benchmark order: biggest fragmentation target first (headline unchanged)
+    records.sort(key=lambda x: (x["fragmentation_drop_pct"], x["gang_size"]), reverse=True)
+
+    hi = sum(1 for r in records if r["threat_tier"] == "high")
+    print(f"  threat tiers -> high:{hi} "
+          f"med:{sum(1 for r in records if r['threat_tier']=='medium')} "
+          f"low:{sum(1 for r in records if r['threat_tier']=='low')}")
+    print(f"  gang network: {len(viz_nodes)} nodes, {len(viz_edges)} edges")
+    return records, gang_network
 
 
 # ---------------------------------------------------------------------------
@@ -441,13 +531,13 @@ def export_network_for_frontend(
 ) -> dict:
     """
     Export the network in Cytoscape.js JSON format, limited to the
-    top *max_nodes* nodes by betweenness centrality.
+    top *max_nodes* nodes by key-player score.
     """
     print(f"[network] Exporting network for frontend (max {max_nodes} nodes) ...")
 
     community_labels = communities.get("community_labels", {})
     top_ids = set(
-        centrality_df.nlargest(max_nodes, "betweenness")["offender_id"]
+        centrality_df.nlargest(max_nodes, "key_player_score")["offender_id"]
     )
 
     subgraph = G.subgraph(top_ids).copy()
@@ -461,9 +551,9 @@ def export_network_for_frontend(
                 "label": nd.get("name", "Unknown"),
                 "size": nd.get("total_cases", 1),
                 "community": community_labels.get(nid, -1),
-                "betweenness": float(
+                "key_player_score": float(
                     centrality_df.loc[
-                        centrality_df["offender_id"] == nid, "betweenness"
+                        centrality_df["offender_id"] == nid, "key_player_score"
                     ].iloc[0]
                 ) if nid in centrality_df["offender_id"].values else 0.0,
             }
@@ -561,9 +651,9 @@ def run_network_analysis(
     # 3. centrality
     centrality_df = compute_centrality(G, communities["community_labels"])
 
-    # 4. disruption -- whole-network (cumulative) and gang-level
+    # 4. disruption -- whole-network (cumulative) and gang-level threat + disruption
     disruption = simulate_network_disruption(G, centrality_df)
-    gang_disruption = simulate_gang_disruption(G, communities)
+    gang_disruption, gang_network = analyze_gangs(G, communities, accused, cases)
 
     # 5. frontend export
     cytoscape = export_network_for_frontend(G, communities, centrality_df)
@@ -589,15 +679,22 @@ def run_network_analysis(
         json.dump(cytoscape, f, indent=2, default=str)
     print(f"[network] Saved cooffending_network.json")
 
+    with open(out / "gang_network.json", "w", encoding="utf-8") as f:
+        json.dump(gang_network, f, separators=(",", ":"), default=str)
+    print(f"[network] Saved gang_network.json "
+          f"({len(gang_network['nodes'])} nodes, {len(gang_network['edges'])} edges)")
+
     repeat.to_csv(out / "repeat_offenders.csv", index=False)
     print(f"[network] Saved repeat_offenders.csv ({len(repeat)} rows)")
 
     per_node = disruption.get("per_node", [])
+    centrality_method = "betweenness" if G.number_of_nodes() <= 5000 else "degree"
     summary = {
         "graph_nodes": G.number_of_nodes(),
         "graph_edges": G.number_of_edges(),
         "n_communities": communities["n_communities"],
         "modularity": communities["modularity"],
+        "centrality_method": centrality_method,
         "top_disruptor": per_node[0] if per_node else None,
         "cumulative_disruption": disruption.get("headline"),
         "best_gang_target": gang_disruption[0] if gang_disruption else None,

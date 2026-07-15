@@ -99,6 +99,38 @@ volume). Decision: KEEP dataset (concentration is realistic); added a second len
 - Note: 68,241 rows > 16,463 cells because border/registration-scatter cells appear in
   multiple districts' layers — visually harmless (overlapping points).
 
+## Judge-review fix pass — DONE (2026-07-15)
+All review items fixed except Catalyst deploy:
+1. NETWORK mega-case fix: build_cooffending_graph excludes cases >10 accused
+   (MAX_ACCUSED_PER_CASE; 22,659 mass-arrest cases were contributing 77% of edges).
+   New graph: 341,803 nodes / 509,633 edges, 35,333 communities, modularity 0.978.
+   NEW HEADLINE: 953-member gang, 3 arrests -> -77.9% into 11 pieces (stronger AND
+   more defensible than old 1,828/-41%).
+2. FAIRNESS: clearance now chargesheet-based (ChargesheetDetails join, not the
+   single-valued CaseStatusID). 11 districts flagged for reporting bias (was 0).
+   rerun_fairness.py added.
+3. PATROL status-quo baseline: compute_statusquo_coverage (patrols at top
+   historical-volume cells, radius-spaced). Results: optimizer 13.9% vs volume-driven
+   11.4% vs random 3.9% -> +21.9% (1.22x) vs status quo. Honest number matches
+   published predictive-policing field-trial gains — pitch it that way.
+4. SYNTHETIC framing: amber "Benchmark methodology" note on TRUST (planted-pattern
+   recovery; same harness runs on live CCTNS). Judges see it proactively.
+5. GEOJSON minify: 173.8 MB -> 84.3 MB (52%); exporter now compact-separators.
+   minify_geojson.py for existing files.
+6. ANOMALY feed: newest-first sort (spikes first), relabeled.
+7. UX: IntroOverlay onboarding (first visit + "?" in header, localStorage);
+   officer 👍/👎 feedback on patrol briefing cards (localStorage; BRD human-in-the-loop).
+8. GIT: repo initialized at PRAHARI/, initial commit 870366e (201 files), repo-local
+   identity nikethantirumala@gmail.com. .gitignore: node_modules/dist/cache/pycache.
+   NOT pushed anywhere yet — needs user's GitHub.
+Build passes; all tabs re-verified in browser.
+
+## Current headline numbers (post-fix)
+1. PAI 11.2 — 56% of crimes in 5% of area (AUC 0.867, PEI 0.955)
+2. Patrol: +21.9% risk coverage vs volume-driven status quo (1.22x; +259% vs random; ILP-verified)
+3. Gang: 953-member network, 3 targeted arrests fragment it 77.9% into 11 pieces
+   Fairness: Gini 0.239, 11 districts flagged for under-reporting adjustment.
+
 ## NEXT: Catalyst deploy (needs user's Zoho login for CLI auth) -> live URL for submission.
 Then golden-path demo walkthrough, 3-min video, submission template.
 Deferred niceties: cross-tab filter persistence, Ask Prahari, Kannada toggle, network node

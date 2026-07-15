@@ -1,0 +1,15 @@
+{
+  "n_patrols": 4,
+  "patrol_radius_km": 2.0,
+  "scope_district": "DHARWAD",
+  "baseline_coverage_pct": 2.92,
+  "statusquo_coverage_pct": 8.08,
+  "greedy_coverage_pct": 9.73,
+  "greedy_uplift_pct": 233.2,
+  "greedy_uplift_x": 3.3,
+  "greedy_uplift_vs_statusquo_pct": 20.5,
+  "greedy_uplift_vs_statusquo_x": 1.2,
+  "greedy_cells_covered": 26,
+  "ilp_coverage_pct": 9.73,
+  "ilp_uplift_pct": 233.2
+}

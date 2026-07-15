@@ -1,0 +1,15 @@
+{
+  "n_patrols": 6,
+  "patrol_radius_km": 2.0,
+  "scope_district": "BIDAR",
+  "baseline_coverage_pct": 5.07,
+  "statusquo_coverage_pct": 19.31,
+  "greedy_coverage_pct": 21.59,
+  "greedy_uplift_pct": 325.6,
+  "greedy_uplift_x": 4.3,
+  "greedy_uplift_vs_statusquo_pct": 11.8,
+  "greedy_uplift_vs_statusquo_x": 1.12,
+  "greedy_cells_covered": 57,
+  "ilp_coverage_pct": 21.72,
+  "ilp_uplift_pct": 328.2
+}

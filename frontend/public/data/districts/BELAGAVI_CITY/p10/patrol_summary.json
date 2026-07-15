@@ -1,0 +1,15 @@
+{
+  "n_patrols": 10,
+  "patrol_radius_km": 2.0,
+  "scope_district": "BELAGAVI CITY",
+  "baseline_coverage_pct": 23.62,
+  "statusquo_coverage_pct": 49.77,
+  "greedy_coverage_pct": 55.63,
+  "greedy_uplift_pct": 135.5,
+  "greedy_uplift_x": 2.4,
+  "greedy_uplift_vs_statusquo_pct": 11.8,
+  "greedy_uplift_vs_statusquo_x": 1.12,
+  "greedy_cells_covered": 89,
+  "ilp_coverage_pct": 58.01,
+  "ilp_uplift_pct": 145.6
+}

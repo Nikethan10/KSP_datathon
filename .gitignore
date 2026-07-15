@@ -1,15 +1,50 @@
-# python
+# ── python ───────────────────────────────────────────────────────────
 __pycache__/
 *.pyc
 .venv/
+venv/
 
-# heavy regenerable artifacts
+# ── heavy regenerable artifacts ──────────────────────────────────────
+# feature_matrix.parquet alone is 134 MB, over GitHub's 100 MB hard limit
 cache/
 
-# frontend
-frontend/node_modules/
-frontend/dist/
+# pipeline outputs (~134 MB / 690 files). Regenerate with `python main.py`
+# (~22 min). The frontend does NOT read these directly -- copy_data.py
+# copies what the UI needs into frontend/public/data, which IS committed.
+outputs/
 
-# OS
+# build output + the Catalyst deploy staging copy. Both are produced by
+# `npm run build` + the robocopy step in DEPLOY.md; committing them would
+# add ~80 MB of duplicated bundles and cause pointless merge conflicts.
+frontend/dist/
+client/assets/
+client/data/
+client/brand/
+client/index.html
+client/favicon.svg
+client/icons.svg
+# keep client/client-package.json -- Catalyst needs it and it is hand-written
+
+# Stale Vite scaffold from `catalyst init`. NOT the real frontend (that is
+# frontend/). Kept on disk only so the Catalyst CLI stays happy; excluded
+# here so nobody browsing the repo mistakes it for the app.
+react-app/
+
+# ── node ─────────────────────────────────────────────────────────────
+frontend/node_modules/
+node_modules/
+*.log
+
+# ── source media (large originals; processed versions live in
+#    frontend/public/brand and ARE committed) ───────────────────────────
+prahari_loadingscreen.mp4
+prahari_logo.jpg
+
+# ── scratch ──────────────────────────────────────────────────────────
+scratch_preview.png
+*.tmp
+
+# ── OS ───────────────────────────────────────────────────────────────
 Thumbs.db
 .DS_Store
+desktop.ini

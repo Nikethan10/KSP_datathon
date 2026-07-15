@@ -1,0 +1,15 @@
+{
+  "n_patrols": 4,
+  "patrol_radius_km": 2.0,
+  "scope_district": "BENGALURU DIST",
+  "baseline_coverage_pct": 1.63,
+  "statusquo_coverage_pct": 6.2,
+  "greedy_coverage_pct": 7.36,
+  "greedy_uplift_pct": 351.9,
+  "greedy_uplift_x": 4.5,
+  "greedy_uplift_vs_statusquo_pct": 18.8,
+  "greedy_uplift_vs_statusquo_x": 1.19,
+  "greedy_cells_covered": 36,
+  "ilp_coverage_pct": 7.36,
+  "ilp_uplift_pct": 351.9
+}

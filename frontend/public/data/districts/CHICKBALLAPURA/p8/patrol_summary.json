@@ -1,0 +1,15 @@
+{
+  "n_patrols": 8,
+  "patrol_radius_km": 2.0,
+  "scope_district": "CHICKBALLAPURA",
+  "baseline_coverage_pct": 8.35,
+  "statusquo_coverage_pct": 25.32,
+  "greedy_coverage_pct": 29.89,
+  "greedy_uplift_pct": 257.8,
+  "greedy_uplift_x": 3.6,
+  "greedy_uplift_vs_statusquo_pct": 18.0,
+  "greedy_uplift_vs_statusquo_x": 1.18,
+  "greedy_cells_covered": 58,
+  "ilp_coverage_pct": 29.9,
+  "ilp_uplift_pct": 257.9
+}

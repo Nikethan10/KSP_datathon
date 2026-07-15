@@ -1,0 +1,83 @@
+[
+  {
+    "patrol_id": 1,
+    "center_lat": 12.7702702703,
+    "center_lon": 75.1962616822,
+    "risk_covered": 1.2142819315000002,
+    "cells_covered": 9,
+    "recent_incidents_30d": 7,
+    "top_crime_types": {
+      "Robbery & Dacoity": 2,
+      "Crimes Against Women": 1,
+      "Crimes Against Property": 1,
+      "Crimes Against Body": 1,
+      "Narcotics & Drugs": 1
+    },
+    "gravity_breakdown": {
+      "Heinous": 4,
+      "Non-Heinous": 3
+    },
+    "description": "Patrol 1: Deploy to (12.7703, 75.1963). Covers 9 cells with 7 recent incidents. Primary concern: Robbery & Dacoity."
+  },
+  {
+    "patrol_id": 2,
+    "center_lat": 12.8873873874,
+    "center_lon": 75.0280373832,
+    "risk_covered": 0.9754393064,
+    "cells_covered": 8,
+    "recent_incidents_30d": 23,
+    "top_crime_types": {
+      "Cheating & Fraud": 5,
+      "Domestic Violence": 3,
+      "Robbery & Dacoity": 2,
+      "Crimes Against Body": 2,
+      "Other IPC Offences": 2
+    },
+    "gravity_breakdown": {
+      "Non-Heinous": 13,
+      "Heinous": 6,
+      "Petty": 4
+    },
+    "description": "Patrol 2: Deploy to (12.8874, 75.0280). Covers 8 cells with 23 recent incidents. Primary concern: Cheating & Fraud."
+  },
+  {
+    "patrol_id": 3,
+    "center_lat": 12.7432432432,
+    "center_lon": 75.214953271,
+    "risk_covered": 0.7113806381,
+    "cells_covered": 7,
+    "recent_incidents_30d": 6,
+    "top_crime_types": {
+      "Motor Vehicle Offences": 3,
+      "Crimes Against Body": 1,
+      "Domestic Violence": 1,
+      "Kidnapping & Abduction": 1
+    },
+    "gravity_breakdown": {
+      "Petty": 3,
+      "Heinous": 2,
+      "Non-Heinous": 1
+    },
+    "description": "Patrol 3: Deploy to (12.7432, 75.2150). Covers 7 cells with 6 recent incidents. Primary concern: Motor Vehicle Offences."
+  },
+  {
+    "patrol_id": 4,
+    "center_lat": 12.8693693694,
+    "center_lon": 75.046728972,
+    "risk_covered": 0.6100731082000002,
+    "cells_covered": 8,
+    "recent_incidents_30d": 5,
+    "top_crime_types": {
+      "Crimes Against Body": 2,
+      "Motor Vehicle Offences": 1,
+      "Robbery & Dacoity": 1,
+      "Cheating & Fraud": 1
+    },
+    "gravity_breakdown": {
+      "Heinous": 3,
+      "Petty": 1,
+      "Non-Heinous": 1
+    },
+    "description": "Patrol 4: Deploy to (12.8694, 75.0467). Covers 8 cells with 5 recent incidents. Primary concern: Crimes Against Body."
+  }
+]

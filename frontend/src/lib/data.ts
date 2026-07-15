@@ -43,17 +43,34 @@ export interface CrimeTypeBreakdown {
   pct: number
 }
 
+// ── Per-district × per-crime trend analysis ───────────────────────────
+export interface TrendYearPoint { year: number; count: number }
+export interface TrendPlace { place: string; count: number }
+export interface DistrictCrimeTrend {
+  monthly: TrendPoint[]
+  yearly: TrendYearPoint[]
+  top_places: TrendPlace[]
+  total: number
+}
+// districts[district][crimeType | 'ALL'] -> trend
+export interface DistrictTrends {
+  generated: string
+  districts: Record<string, Record<string, DistrictCrimeTrend>>
+}
+
 export interface DistrictCentroid { district: string; lat: number; lon: number }
 
 // significance -> RGBA for deck.gl layers
 export const SIG_COLORS: Record<Significance, [number, number, number, number]> = {
+  // hot spots keep their statistical encoding (red / orange / yellow) untouched
   hot_99: [239, 68, 68, 235],
   hot_95: [249, 115, 22, 210],
   hot_90: [250, 204, 21, 185],
-  not_sig: [148, 163, 184, 40],
-  cold_90: [125, 211, 252, 130],
-  cold_95: [56, 189, 248, 160],
-  cold_99: [2, 132, 199, 200],
+  not_sig: [138, 147, 158, 40],
+  // cold spots: slate-blue, visible on the dark basemap
+  cold_90: [123, 164, 192, 155],
+  cold_95: [91, 132, 160, 185],
+  cold_99: [71, 107, 131, 220],
 }
 
 export const SIG_LABELS: Record<Significance, string> = {
@@ -66,7 +83,7 @@ export const SIG_LABELS: Record<Significance, string> = {
   cold_99: 'Cold spot (99%)',
 }
 
-const BASE = '/data'
+const BASE = `${import.meta.env.BASE_URL}data`
 
 export async function fetchJson<T>(name: string): Promise<T> {
   const res = await fetch(`${BASE}/${name}`)
@@ -76,13 +93,21 @@ export async function fetchJson<T>(name: string): Promise<T> {
 
 export type HotspotScope = 'state' | 'district'
 
+/* NOTE: these are GeoJSON documents but must be served with a `.json`
+   extension. Catalyst's static host does not gzip `.geojson` (measured:
+   identical encoded and decoded size), so the 14 MB district-scope file
+   went over the wire uncompressed. As `.json` it is compressed ~7x.
+   `optimize_geojson.py` performs the rename; re-run it after copy_data.py. */
 export function hotspotFile(crimeType: string | null, scope: HotspotScope = 'state'): string {
   const prefix = scope === 'district' ? 'hotspots_local' : 'hotspots'
-  if (!crimeType) return `${prefix}_overall.geojson`
-  return `${prefix}_${crimeType.replaceAll(' ', '_')}.geojson`
+  if (!crimeType) return `${prefix}_overall.json`
+  return `${prefix}_${crimeType.replaceAll(' ', '_')}.json`
 }
 
 interface GeoJsonFC {
+  /** total cells the Gi* test ran over, including the non-significant ones
+      stripped from `features` by strip_insignificant.py */
+  analysed?: number
   features: {
     geometry: { coordinates: [number, number] }
     properties: {
@@ -95,12 +120,21 @@ interface GeoJsonFC {
   }[]
 }
 
+export interface HotspotSet {
+  points: HotspotPoint[]
+  /** denominator for the "N hot cells / M analysed" readout */
+  analysed: number
+}
+
+/* The files ship significant cells only — the map filters out `not_sig`
+   anyway, and they were ~74% of the payload (13.6 MB -> 3.6 MB on the
+   district-scope file). `analysed` carries the original denominator. */
 export async function loadHotspots(
   crimeType: string | null,
   scope: HotspotScope = 'state',
-): Promise<HotspotPoint[]> {
+): Promise<HotspotSet> {
   const fc = await fetchJson<GeoJsonFC>(hotspotFile(crimeType, scope))
-  return fc.features.map((f) => ({
+  const points = fc.features.map((f) => ({
     position: f.geometry.coordinates,
     cellId: f.properties.cell_id,
     count: f.properties.case_count,
@@ -108,6 +142,7 @@ export async function loadHotspots(
     p: f.properties.gi_pvalue,
     sig: f.properties.significance,
   }))
+  return { points, analysed: fc.analysed ?? points.length }
 }
 
 // -- district name matching: real OSM/census boundary names vs dataset names --
@@ -170,6 +205,17 @@ export interface Anomaly {
   description: string
 }
 
+// Non-territorial units whose anomalies aren't mappable, plus STL artifacts
+// (zero observed / non-positive baseline). Shared by the feed and the tab badge
+// so the alert count always matches what the officer actually sees.
+const NON_GEO_UNITS = new Set(['CID', 'COASTAL SECURITY POLICE', 'KARNATAKA RAILWAYS', 'ISD BENGALURU'])
+
+export function filterAnomalies(anomalies: Anomaly[]): Anomaly[] {
+  return anomalies.filter(
+    (a) => !NON_GEO_UNITS.has(a.district) && a.observed > 0 && a.expected > 0,
+  )
+}
+
 export interface GangKeyMember {
   offender_id: string
   name: string
@@ -177,6 +223,8 @@ export interface GangKeyMember {
   total_cases: number
   is_articulation: boolean
 }
+
+export type ThreatTier = 'high' | 'medium' | 'low'
 
 export interface Gang {
   gang_rank: number
@@ -189,7 +237,28 @@ export interface Gang {
   largest_after_top3_removed: number
   components_after_top3_removed: number
   fragmentation_drop_pct: number
+  // threat classification
+  threat_tier: ThreatTier
+  threat_score: number
+  heinous_pct: number
+  violent_pct: number
+  top_crime: string
+  n_districts: number
+  total_cases: number
 }
+
+export interface GangNode {
+  data: { id: string; label: string; size: number; gang: number; tier: ThreatTier; threat: number; degree: number }
+}
+export interface GangNetwork { nodes: GangNode[]; edges: CytoEdge[] }
+
+// muted threat palette — clear, not neon
+export const THREAT_COLORS: Record<ThreatTier, string> = {
+  high: '#e5484d',
+  medium: '#d99a3c',
+  low: '#5b7a8c',   // muted slate-blue — was a bright blue competing with the accent
+}
+export const THREAT_ORDER: ThreatTier[] = ['high', 'medium', 'low']
 
 export interface NetworkSummary {
   graph_nodes: number
@@ -205,9 +274,54 @@ export interface RiskSummary {
   feature_importance: { feature: string; importance: number }[]
 }
 
-export interface CytoNode { data: { id: string; label: string; size: number; community: number; betweenness: number } }
+export interface CytoNode { data: { id: string; label: string; size: number; community: number; key_player_score: number } }
 export interface CytoEdge { data: { source: string; target: string; weight: number } }
 export interface CytoNetwork { nodes: CytoNode[]; edges: CytoEdge[] }
+
+// ── Offender dossiers (War Room) ──────────────────────────────────────
+export interface OffenderAssociate {
+  offender_id: string
+  name: string
+  shared_cases: number
+}
+export interface OffenderCrimeType { type: string; count: number }
+export interface OffenderDistrict { district: string; count: number }
+
+export interface OffenderDossier {
+  offender_id: string
+  name: string
+  age: number | null
+  total_cases: number
+  arrest_records: number
+  last_arrest: string | null
+  top_crime: string
+  crime_types: OffenderCrimeType[]
+  districts: OffenderDistrict[]
+  n_districts: number
+  heinous_pct: number
+  first_incident: string | null
+  last_incident: string | null
+  career_years: number
+  n_associates: number
+  associates: OffenderAssociate[]
+  gang_rank: number | null
+  threat_tier: ThreatTier | null
+  threat_score: number | null
+  gang_degree: number | null
+  is_articulation: boolean
+  in_graph: boolean
+  wanted_score: number
+  wanted_rank: number
+}
+export interface OffenderIndex {
+  generated: string
+  count: number
+  offenders: OffenderDossier[]
+}
+export interface MostWantedData {
+  generated: string
+  offenders: OffenderDossier[]
+}
 
 // friendly names for model features (mirror of trust/explain.py)
 export const FEATURE_NAMES: Record<string, string> = {
@@ -253,6 +367,13 @@ export interface PatrolSummary {
   greedy_uplift_vs_statusquo_pct?: number
   greedy_uplift_vs_statusquo_x?: number
   ilp_coverage_pct?: number
+}
+
+export interface PatrolDistrict {
+  district: string
+  safe: string
+  n_cells: number
+  coverage_6: number | null
 }
 
 export interface PatrolAllocation {
@@ -311,18 +432,134 @@ export interface FairnessReport {
   methodology: Record<string, string | string[]>
 }
 
+export interface ReliabilityPoint { conf: number; acc: number; frac: number }
+export interface CalibrationData {
+  n_test: number
+  pos_rate: number
+  brier_raw: number
+  brier_calibrated: number
+  ece_raw: number
+  ece_calibrated: number
+  reliability_raw: ReliabilityPoint[]
+  reliability_calibrated: ReliabilityPoint[]
+  method: string
+}
+
 export interface BenchmarkReport {
   headline_numbers: {
     pai_5pct: number
     hit_rate_5pct: number
     coverage_uplift_pct: number
     optimized_coverage_pct: number
+    statusquo_coverage_pct: number
+    greedy_uplift_vs_statusquo_pct: number
+    greedy_uplift_vs_statusquo_x: number
     network_communities: number
     network_modularity: number
     best_gang_size: number
     best_gang_fragmentation_pct: number
     best_gang_pieces: number
   }
+  risk_model?: {
+    test_auc: number
+    pai: Record<string, number>
+    pei: Record<string, number>
+  }
+  patrol_optimizer?: {
+    n_patrols: number
+    patrol_radius_km: number
+    scope_district: string
+    baseline_coverage_pct: number
+    statusquo_coverage_pct: number
+    greedy_coverage_pct: number
+    ilp_coverage_pct?: number
+  }
+  network_analysis?: {
+    graph_nodes: number
+    graph_edges: number
+    n_communities: number
+    modularity: number
+    centrality_method: string
+  }
+}
+
+// ── Novelty analytics types ───────────────────────────────────────────
+
+export type EmergingCategory = 'new' | 'intensifying' | 'persistent' | 'cooling'
+
+export interface EmergingCell {
+  cell_id: number
+  lat: number
+  lon: number
+  district: string | null
+  category: EmergingCategory
+  tau: number
+  p: number
+  recent_monthly: number
+  hist_monthly: number
+  total_cases: number
+}
+
+export interface EmergingData {
+  summary: {
+    window_start: string
+    window_end: string
+    cells_assessed: number
+    counts: Partial<Record<EmergingCategory, number>>
+    method: string
+  }
+  cells: EmergingCell[]
+}
+
+export const EMERGING_COLORS: Record<EmergingCategory, [number, number, number, number]> = {
+  new: [232, 121, 249, 235],          // fuchsia — brand new activity
+  intensifying: [239, 68, 68, 225],   // red — trending up
+  persistent: [249, 115, 22, 190],    // orange — stable hot
+  cooling: [91, 122, 140, 170],       // muted slate-blue — trending down
+}
+
+export interface SpreePoint { lat: number; lon: number; date: string }
+
+export interface Spree {
+  spree_id: number
+  crime_type: string
+  minor_head: number
+  district: string
+  n_cases: number
+  start_date: string
+  end_date: string
+  span_days: number
+  center_lat: number
+  center_lon: number
+  points: SpreePoint[]
+}
+
+export interface SpreeData {
+  summary: { window_days: number; n_sprees: number; method: string }
+  sprees: Spree[]
+}
+
+export interface Corridor {
+  from_district: string
+  to_district: string
+  from_lat: number
+  from_lon: number
+  to_lat: number
+  to_lon: number
+  n_offenders: number
+  n_transitions: number
+}
+
+export interface CorridorData {
+  summary: {
+    total_offenders: number
+    multi_district_offenders: number
+    multi_district_pct: number
+    n_corridors: number
+    method: string
+  }
+  corridors: Corridor[]
+  top_offenders: { offender_id: string; name: string; n_districts: number; n_cases: number }[]
 }
 
 // categorical palette for network communities

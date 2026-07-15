@@ -1,0 +1,224 @@
+[
+  {
+    "district": "BENGALURU CITY",
+    "safe": "BENGALURU_CITY",
+    "n_cells": 425406,
+    "coverage_6": 11.67
+  },
+  {
+    "district": "BENGALURU DIST",
+    "safe": "BENGALURU_DIST",
+    "n_cells": 64004,
+    "coverage_6": 10.46
+  },
+  {
+    "district": "TUMAKURU",
+    "safe": "TUMAKURU",
+    "n_cells": 61553,
+    "coverage_6": 12.4
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "safe": "SHIVAMOGGA",
+    "n_cells": 61338,
+    "coverage_6": 26.22
+  },
+  {
+    "district": "MANDYA",
+    "safe": "MANDYA",
+    "n_cells": 59701,
+    "coverage_6": 42.91
+  },
+  {
+    "district": "BELAGAVI DIST",
+    "safe": "BELAGAVI_DIST",
+    "n_cells": 59569,
+    "coverage_6": 10.36
+  },
+  {
+    "district": "HASSAN",
+    "safe": "HASSAN",
+    "n_cells": 58256,
+    "coverage_6": 20.14
+  },
+  {
+    "district": "MYSURU DIST",
+    "safe": "MYSURU_DIST",
+    "n_cells": 50599,
+    "coverage_6": 15.92
+  },
+  {
+    "district": "CHITRADURGA",
+    "safe": "CHITRADURGA",
+    "n_cells": 47754,
+    "coverage_6": 37.91
+  },
+  {
+    "district": "RAMANAGARA",
+    "safe": "RAMANAGARA",
+    "n_cells": 44232,
+    "coverage_6": 39.15
+  },
+  {
+    "district": "VIJAYAPUR",
+    "safe": "VIJAYAPUR",
+    "n_cells": 39508,
+    "coverage_6": 20.83
+  },
+  {
+    "district": "DAVANAGERE",
+    "safe": "DAVANAGERE",
+    "n_cells": 39041,
+    "coverage_6": 23.68
+  },
+  {
+    "district": "BIDAR",
+    "safe": "BIDAR",
+    "n_cells": 37861,
+    "coverage_6": 21.59
+  },
+  {
+    "district": "CHICKBALLAPURA",
+    "safe": "CHICKBALLAPURA",
+    "n_cells": 36545,
+    "coverage_6": 25.91
+  },
+  {
+    "district": "RAICHUR",
+    "safe": "RAICHUR",
+    "n_cells": 36496,
+    "coverage_6": 28.51
+  },
+  {
+    "district": "CHIKKAMAGALURU",
+    "safe": "CHIKKAMAGALURU",
+    "n_cells": 35485,
+    "coverage_6": 16.96
+  },
+  {
+    "district": "UTTARA KANNADA",
+    "safe": "UTTARA_KANNADA",
+    "n_cells": 32690,
+    "coverage_6": 23.11
+  },
+  {
+    "district": "MANGALURU CITY",
+    "safe": "MANGALURU_CITY",
+    "n_cells": 31544,
+    "coverage_6": 28.75
+  },
+  {
+    "district": "KALABURAGI",
+    "safe": "KALABURAGI",
+    "n_cells": 31351,
+    "coverage_6": 21.69
+  },
+  {
+    "district": "MYSURU CITY",
+    "safe": "MYSURU_CITY",
+    "n_cells": 30510,
+    "coverage_6": 49.79
+  },
+  {
+    "district": "HAVERI",
+    "safe": "HAVERI",
+    "n_cells": 29771,
+    "coverage_6": 22.07
+  },
+  {
+    "district": "UDUPI",
+    "safe": "UDUPI",
+    "n_cells": 28431,
+    "coverage_6": 16.03
+  },
+  {
+    "district": "BALLARI",
+    "safe": "BALLARI",
+    "n_cells": 28426,
+    "coverage_6": 32.6
+  },
+  {
+    "district": "BAGALKOT",
+    "safe": "BAGALKOT",
+    "n_cells": 28123,
+    "coverage_6": 22.89
+  },
+  {
+    "district": "VIJAYANAGARA",
+    "safe": "VIJAYANAGARA",
+    "n_cells": 25815,
+    "coverage_6": 36.89
+  },
+  {
+    "district": "KOPPAL",
+    "safe": "KOPPAL",
+    "n_cells": 24926,
+    "coverage_6": 18.29
+  },
+  {
+    "district": "HUBBALLI DHARWAD CITY",
+    "safe": "HUBBALLI_DHARWAD_CITY",
+    "n_cells": 24087,
+    "coverage_6": 54.03
+  },
+  {
+    "district": "KOLAR",
+    "safe": "KOLAR",
+    "n_cells": 23648,
+    "coverage_6": 44.93
+  },
+  {
+    "district": "CHAMARAJANAGAR",
+    "safe": "CHAMARAJANAGAR",
+    "n_cells": 23043,
+    "coverage_6": 24.73
+  },
+  {
+    "district": "DAKSHINA KANNADA",
+    "safe": "DAKSHINA_KANNADA",
+    "n_cells": 21125,
+    "coverage_6": 20.24
+  },
+  {
+    "district": "BELAGAVI CITY",
+    "safe": "BELAGAVI_CITY",
+    "n_cells": 20877,
+    "coverage_6": 45.31
+  },
+  {
+    "district": "KALABURAGI CITY",
+    "safe": "KALABURAGI_CITY",
+    "n_cells": 20223,
+    "coverage_6": 54.02
+  },
+  {
+    "district": "YADGIR",
+    "safe": "YADGIR",
+    "n_cells": 19511,
+    "coverage_6": 28.38
+  },
+  {
+    "district": "KODAGU",
+    "safe": "KODAGU",
+    "n_cells": 19247,
+    "coverage_6": 23.01
+  },
+  {
+    "district": "GADAG",
+    "safe": "GADAG",
+    "n_cells": 18502,
+    "coverage_6": 24.26
+  },
+  {
+    "district": "DHARWAD",
+    "safe": "DHARWAD",
+    "n_cells": 14866,
+    "coverage_6": 13.7
+  },
+  {
+    "district": "K.G.F",
+    "safe": "KGF",
+    "n_cells": 10256,
+    "coverage_6": 44.59
+  }
+]

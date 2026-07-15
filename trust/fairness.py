@@ -114,10 +114,11 @@ def generate_fairness_statement() -> str:
         "PRAHARI predicts crime risk for geographic areas and time windows, "
         "not for individuals. It uses historical FIR data which reflects "
         "reported crime, not true crime rates. Areas with lower reporting "
-        "or clearance rates may appear safer than they are. We apply a "
-        "reporting-bias adjustment to mitigate this effect. Risk scores "
-        "are explained via SHAP to ensure transparency. No demographic "
-        "attributes (religion, caste) are used as model features."
+        "or clearance rates may appear safer than they are. We compute "
+        "reporting-bias indicators (chargesheet-based clearance rates) and "
+        "flag at-risk districts for analyst review. Risk scores are explained "
+        "via SHAP to ensure transparency. No demographic attributes "
+        "(religion, caste) are used as model features."
     )
 
 

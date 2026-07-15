@@ -1,0 +1,15 @@
+{
+  "n_patrols": 6,
+  "patrol_radius_km": 2.0,
+  "scope_district": "UDUPI",
+  "baseline_coverage_pct": 5.34,
+  "statusquo_coverage_pct": 14.51,
+  "greedy_coverage_pct": 16.03,
+  "greedy_uplift_pct": 200.0,
+  "greedy_uplift_x": 3.0,
+  "greedy_uplift_vs_statusquo_pct": 10.5,
+  "greedy_uplift_vs_statusquo_x": 1.1,
+  "greedy_cells_covered": 52,
+  "ilp_coverage_pct": 16.35,
+  "ilp_uplift_pct": 206.0
+}

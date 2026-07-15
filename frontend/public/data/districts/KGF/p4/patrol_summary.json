@@ -1,0 +1,15 @@
+{
+  "n_patrols": 4,
+  "patrol_radius_km": 2.0,
+  "scope_district": "K.G.F",
+  "baseline_coverage_pct": 11.12,
+  "statusquo_coverage_pct": 34.11,
+  "greedy_coverage_pct": 36.01,
+  "greedy_uplift_pct": 223.9,
+  "greedy_uplift_x": 3.2,
+  "greedy_uplift_vs_statusquo_pct": 5.6,
+  "greedy_uplift_vs_statusquo_x": 1.06,
+  "greedy_cells_covered": 33,
+  "ilp_coverage_pct": 37.05,
+  "ilp_uplift_pct": 233.3
+}

@@ -1,0 +1,15 @@
+{
+  "n_patrols": 6,
+  "patrol_radius_km": 2.0,
+  "scope_district": "TUMAKURU",
+  "baseline_coverage_pct": 2.69,
+  "statusquo_coverage_pct": 11.52,
+  "greedy_coverage_pct": 12.4,
+  "greedy_uplift_pct": 361.2,
+  "greedy_uplift_x": 4.6,
+  "greedy_uplift_vs_statusquo_pct": 7.6,
+  "greedy_uplift_vs_statusquo_x": 1.08,
+  "greedy_cells_covered": 50,
+  "ilp_coverage_pct": 12.98,
+  "ilp_uplift_pct": 382.8
+}

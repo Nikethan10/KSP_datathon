@@ -92,7 +92,7 @@ def optimize_patrol_greedy(
         "allocations": allocations,
         "total_risk_covered": float(total_covered_risk),
         "total_risk": float(total_risk),
-        "coverage_pct": round(100 * total_covered_risk / total_risk, 2) if total_risk > 0 else 0,
+        "coverage_pct": round(100 * float(total_covered_risk) / float(total_risk), 2) if total_risk > 0 else 0,
         "cells_covered": total_cells_covered,
         "total_cells": len(rm),
     }
@@ -304,7 +304,7 @@ def try_ilp_optimizer(
         "allocations": allocations,
         "total_risk_covered": float(total_covered),
         "total_risk": float(total_risk),
-        "coverage_pct": round(100 * total_covered / total_risk, 2) if total_risk > 0 else 0,
+        "coverage_pct": round(100 * float(total_covered) / float(total_risk), 2) if total_risk > 0 else 0,
         "cells_covered": len(covered_set),
         "total_cells": n,
         "method": "ILP",
@@ -316,6 +316,7 @@ def run_patrol_optimizer(
     cases: pd.DataFrame,
     output_dir: Path = None,
     district: str = "BENGALURU CITY",
+    n_patrols: int = None,
 ):
     """
     Full patrol optimization pipeline.
@@ -356,9 +357,12 @@ def run_patrol_optimizer(
             print(f"[patrol] District {district} has too few cells; using statewide map")
             district = None
 
-    greedy_result = optimize_patrol_greedy(risk_map)
-    baseline_pct = compute_baseline_coverage(risk_map)
-    statusquo_pct = compute_statusquo_coverage(risk_map, cases)
+    n_patrols = n_patrols or DEFAULT_NUM_PATROLS
+    greedy_result = optimize_patrol_greedy(risk_map, n_patrols=n_patrols)
+    # float() guards: risk scores arrive as np.float32; json.dump(default=str)
+    # would silently serialize numpy scalars as strings and break the frontend
+    baseline_pct = float(compute_baseline_coverage(risk_map, n_patrols=n_patrols))
+    statusquo_pct = float(compute_statusquo_coverage(risk_map, cases, n_patrols=n_patrols))
     uplift = compute_coverage_uplift(greedy_result["coverage_pct"], baseline_pct)
     uplift_sq = compute_coverage_uplift(greedy_result["coverage_pct"], statusquo_pct)
 
@@ -366,14 +370,14 @@ def run_patrol_optimizer(
 
     ilp_result = None
     try:
-        ilp_result = try_ilp_optimizer(risk_map)
+        ilp_result = try_ilp_optimizer(risk_map, n_patrols=n_patrols)
         ilp_uplift = compute_coverage_uplift(ilp_result["coverage_pct"], baseline_pct)
     except Exception as e:
         print(f"  ILP failed: {e}")
         ilp_uplift = None
 
     summary = {
-        "n_patrols": DEFAULT_NUM_PATROLS,
+        "n_patrols": n_patrols,
         "patrol_radius_km": PATROL_RADIUS_KM,
         "scope_district": district or "STATEWIDE",
         "baseline_coverage_pct": round(baseline_pct, 2),

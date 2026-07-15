@@ -1,0 +1,15 @@
+{
+  "n_patrols": 4,
+  "patrol_radius_km": 2.0,
+  "scope_district": "CHAMARAJANAGAR",
+  "baseline_coverage_pct": 5.31,
+  "statusquo_coverage_pct": 15.0,
+  "greedy_coverage_pct": 19.28,
+  "greedy_uplift_pct": 263.3,
+  "greedy_uplift_x": 3.6,
+  "greedy_uplift_vs_statusquo_pct": 28.5,
+  "greedy_uplift_vs_statusquo_x": 1.29,
+  "greedy_cells_covered": 32,
+  "ilp_coverage_pct": 19.28,
+  "ilp_uplift_pct": 263.3
+}

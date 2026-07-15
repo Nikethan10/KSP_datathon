@@ -1,0 +1,15 @@
+{
+  "n_patrols": 6,
+  "patrol_radius_km": 2.0,
+  "scope_district": "BAGALKOT",
+  "baseline_coverage_pct": 5.17,
+  "statusquo_coverage_pct": 22.89,
+  "greedy_coverage_pct": 22.89,
+  "greedy_uplift_pct": 342.7,
+  "greedy_uplift_x": 4.4,
+  "greedy_uplift_vs_statusquo_pct": -0.0,
+  "greedy_uplift_vs_statusquo_x": 1.0,
+  "greedy_cells_covered": 53,
+  "ilp_coverage_pct": 23.28,
+  "ilp_uplift_pct": 350.2
+}

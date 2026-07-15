@@ -1,0 +1,126 @@
+import { useEffect, useState, useMemo } from 'react'
+import type { Anomaly, DistrictSummary } from '../lib/data'
+
+interface Alert {
+  id: number
+  text: string
+  severity: 'critical' | 'high' | 'medium' | 'low'
+  timestamp: string
+  district: string
+}
+
+function nowTimestamp(): string {
+  const d = new Date()
+  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`
+}
+
+function generateAlerts(anomalies: Anomaly[], districts: DistrictSummary[]): Alert[] {
+  const alerts: Alert[] = []
+  const now = new Date()
+
+  anomalies.forEach((a, i) => {
+    const t = new Date(now.getTime() - i * 47000)
+    const ts = `${String(t.getHours()).padStart(2, '0')}:${String(t.getMinutes()).padStart(2, '0')}:${String(t.getSeconds()).padStart(2, '0')}`
+    alerts.push({
+      id: i,
+      text: `FIR ALERT: ${a.crime_type} — ${a.observed} cases in ${a.district} (expected ${a.expected.toFixed(0)}, z=${a.zscore.toFixed(1)})`,
+      severity: a.severity === 'critical' ? 'critical' : a.zscore > 3 ? 'high' : 'medium',
+      timestamp: ts,
+      district: a.district,
+    })
+  })
+
+  districts
+    .filter((d) => d.yoy_change_pct > 10)
+    .forEach((d, i) => {
+      const t = new Date(now.getTime() - (anomalies.length + i) * 53000)
+      const ts = `${String(t.getHours()).padStart(2, '0')}:${String(t.getMinutes()).padStart(2, '0')}:${String(t.getSeconds()).padStart(2, '0')}`
+      alerts.push({
+        id: 1000 + i,
+        text: `TREND ALERT: ${d.district} crime up ${d.yoy_change_pct.toFixed(1)}% YoY — ${d.latest_year_cases.toLocaleString()} FIRs, led by ${d.top_crime_type}`,
+        severity: d.yoy_change_pct > 15 ? 'high' : 'medium',
+        timestamp: ts,
+        district: d.district,
+      })
+    })
+
+  return alerts
+}
+
+const SEVERITY_COLORS: Record<string, string> = {
+  critical: '#ef4444',
+  high: '#f97316',
+  medium: '#f59e0b',
+  low: '#22c55e',
+}
+
+interface Props {
+  anomalies: Anomaly[]
+  districts: DistrictSummary[]
+}
+
+export default function LiveTicker({ anomalies, districts }: Props) {
+  const alerts = useMemo(() => generateAlerts(anomalies, districts), [anomalies, districts])
+  const [currentIdx, setCurrentIdx] = useState(0)
+  const [clock, setClock] = useState(nowTimestamp)
+  const [sliding, setSliding] = useState(false)
+
+  useEffect(() => {
+    if (alerts.length === 0) return
+    const interval = setInterval(() => {
+      setSliding(true)
+      setTimeout(() => {
+        setCurrentIdx((i) => (i + 1) % alerts.length)
+        setSliding(false)
+      }, 300)
+    }, 4000)
+    return () => clearInterval(interval)
+  }, [alerts.length])
+
+  useEffect(() => {
+    const interval = setInterval(() => setClock(nowTimestamp()), 1000)
+    return () => clearInterval(interval)
+  }, [])
+
+  if (alerts.length === 0) return null
+
+  const current = alerts[currentIdx]
+  const color = SEVERITY_COLORS[current.severity]
+
+  return (
+    <div className="shrink-0 h-7 flex items-center gap-3 px-4 bg-[#111417] border-b border-slate-800/50 overflow-hidden">
+      {/* live indicator */}
+      <div className="flex items-center gap-1.5 shrink-0">
+        <span className="relative flex h-2 w-2">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
+        </span>
+        <span className="text-[9px] font-bold uppercase tracking-widest text-red-400">LIVE</span>
+      </div>
+
+      {/* clock */}
+      <span className="text-[10px] font-mono-data tabular-nums text-slate-500 shrink-0">{clock} IST</span>
+
+      {/* divider */}
+      <span className="w-px h-3.5 bg-slate-700/60 shrink-0" />
+
+      {/* scrolling alert */}
+      <div className="flex-1 overflow-hidden relative min-w-0">
+        <div
+          className={`flex items-center gap-2 transition-all duration-300 ${
+            sliding ? 'translate-y-full opacity-0' : 'translate-y-0 opacity-100'
+          }`}
+        >
+          <span
+            className="shrink-0 w-1.5 h-1.5 rounded-full"
+            style={{ background: color, boxShadow: `0 0 6px ${color}` }}
+          />
+          <span className="text-[10px] text-slate-300 truncate">{current.text}</span>
+        </div>
+      </div>
+
+      {/* alert count */}
+      <span className="text-[9px] tabular-nums text-slate-500 shrink-0">{alerts.length} alerts</span>
+    </div>
+  )
+}

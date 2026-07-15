@@ -1,0 +1,15 @@
+{
+  "n_patrols": 8,
+  "patrol_radius_km": 2.0,
+  "scope_district": "RAICHUR",
+  "baseline_coverage_pct": 10.22,
+  "statusquo_coverage_pct": 30.35,
+  "greedy_coverage_pct": 32.77,
+  "greedy_uplift_pct": 220.5,
+  "greedy_uplift_x": 3.2,
+  "greedy_uplift_vs_statusquo_pct": 8.0,
+  "greedy_uplift_vs_statusquo_x": 1.08,
+  "greedy_cells_covered": 51,
+  "ilp_coverage_pct": 32.77,
+  "ilp_uplift_pct": 220.5
+}

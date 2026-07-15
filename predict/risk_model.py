@@ -3,7 +3,8 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 import lightgbm as lgb
-from sklearn.metrics import roc_auc_score, precision_recall_curve, average_precision_score
+from sklearn.metrics import roc_auc_score, precision_recall_curve, average_precision_score, brier_score_loss
+from sklearn.isotonic import IsotonicRegression
 from config import LGBM_PARAMS, OUTPUT_DIR
 
 EXCLUDE_COLS = [
@@ -167,6 +168,48 @@ def get_feature_importance(model, feat_cols: list, top_n: int = 20) -> list:
     return [{"feature": f, "importance": int(i)} for f, i in pairs[:top_n]]
 
 
+def _reliability(y_true, y_prob, n_bins: int = 10):
+    """Quantile-binned reliability curve + ECE (robust to class imbalance)."""
+    order = np.argsort(y_prob)
+    y_true, y_prob = np.asarray(y_true)[order], np.asarray(y_prob)[order]
+    curve, ece, n = [], 0.0, len(y_prob)
+    for idx in np.array_split(np.arange(n), n_bins):
+        if len(idx) == 0:
+            continue
+        conf, acc = float(y_prob[idx].mean()), float(y_true[idx].mean())
+        ece += (len(idx) / n) * abs(acc - conf)
+        curve.append({"conf": round(conf, 4), "acc": round(acc, 4), "frac": round(len(idx) / n, 3)})
+    return curve, round(ece, 4)
+
+
+def compute_calibration(scored: pd.DataFrame) -> dict:
+    """Reliability, Brier and ECE on the test split, before and after isotonic
+    calibration (fit on validation). Isotonic is monotonic, so rankings —
+    hence PAI/AUC and patrol allocation — are unchanged."""
+    val, test = scored[scored["split"] == "val"], scored[scored["split"] == "test"]
+    yv, pv = val["has_crime"].to_numpy(), val["risk_score"].to_numpy()
+    yt, pt = test["has_crime"].to_numpy(), test["risk_score"].to_numpy()
+
+    curve_raw, ece_raw = _reliability(yt, pt)
+    iso = IsotonicRegression(out_of_bounds="clip").fit(pv, yv)
+    pt_cal = iso.predict(pt)
+    curve_cal, ece_cal = _reliability(yt, pt_cal)
+
+    return {
+        "n_test": int(len(test)),
+        "pos_rate": round(float(yt.mean()), 4),
+        "brier_raw": round(float(brier_score_loss(yt, pt)), 5),
+        "brier_calibrated": round(float(brier_score_loss(yt, pt_cal)), 5),
+        "ece_raw": ece_raw,
+        "ece_calibrated": ece_cal,
+        "reliability_raw": curve_raw,
+        "reliability_calibrated": curve_cal,
+        "method": "Quantile-binned reliability on the held-out test period; isotonic "
+                  "regression fit on validation. Calibration is monotonic, so cell "
+                  "ranking (PAI/AUC) and patrol allocation are unchanged.",
+    }
+
+
 def run_risk_model(feature_matrix: pd.DataFrame, cases: pd.DataFrame, active_grid: pd.DataFrame, output_dir: Path = None):
     """Full risk model pipeline."""
     if output_dir is None:
@@ -201,6 +244,18 @@ def run_risk_model(feature_matrix: pd.DataFrame, cases: pd.DataFrame, active_gri
 
     with open(output_dir / "risk_summary.json", "w") as f:
         json.dump(summary, f, indent=2, default=str)
+
+    # model calibration -> TRUST tab (rank-preserving, doesn't affect PAI/patrol)
+    try:
+        calibration = compute_calibration(scored)
+        calib_dir = OUTPUT_DIR / "trust"
+        calib_dir.mkdir(parents=True, exist_ok=True)
+        with open(calib_dir / "calibration.json", "w") as f:
+            json.dump(calibration, f, indent=2)
+        print(f"  calibration: Brier {calibration['brier_raw']}->{calibration['brier_calibrated']}, "
+              f"ECE {calibration['ece_raw']}->{calibration['ece_calibrated']}")
+    except Exception as e:
+        print(f"  calibration skipped: {e}")
 
     risk_map = scored.groupby("cell_id").agg(
         mean_risk=("risk_score", "mean"),

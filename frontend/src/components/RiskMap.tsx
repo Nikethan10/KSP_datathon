@@ -1,9 +1,11 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import maplibregl from 'maplibre-gl'
 import { MapboxOverlay } from '@deck.gl/mapbox'
 import { HeatmapLayer } from '@deck.gl/aggregation-layers'
 import { ScatterplotLayer } from '@deck.gl/layers'
 import { KARNATAKA_CENTER, KARNATAKA_ZOOM } from '../lib/data'
+import { loadKarnatakaOverlay, karnatakaMaskLayers } from '../lib/basemap'
+import type { KarnatakaOverlay } from '../lib/basemap'
 import type { RiskCell } from '../lib/data'
 
 interface Props {
@@ -40,6 +42,11 @@ export default function RiskMap({ cells, showPriority, flyTarget }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
   const overlayRef = useRef<MapboxOverlay | null>(null)
+  const [overlay, setOverlay] = useState<KarnatakaOverlay | null>(null)
+
+  useEffect(() => {
+    loadKarnatakaOverlay().then(setOverlay).catch(() => {})
+  }, [])
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return
@@ -62,14 +69,15 @@ export default function RiskMap({ cells, showPriority, flyTarget }: Props) {
   }, [])
 
   useEffect(() => {
-    const overlay = overlayRef.current
-    if (!overlay || cells.length === 0) return
+    const deckOverlay = overlayRef.current
+    if (!deckOverlay || cells.length === 0) return
 
     // top 5% cells by predicted risk = "priority cells" (the PAI story)
     const sorted = [...cells].sort((a, b) => b.mean_risk - a.mean_risk)
     const priority = sorted.slice(0, Math.ceil(cells.length * 0.05))
 
     const layers = [
+      ...karnatakaMaskLayers(overlay),
       new HeatmapLayer<RiskCell>({
         id: 'risk-heat',
         data: cells,
@@ -79,9 +87,11 @@ export default function RiskMap({ cells, showPriority, flyTarget }: Props) {
         intensity: 1.15,
         threshold: 0.04,
         colorRange: [
-          [30, 58, 138, 90],
-          [14, 116, 144, 140],
-          [16, 185, 129, 170],
+          // cool end: muted slate-blue -> olive-teal (no navy, no cyan)
+          [59, 80, 92, 90],
+          [91, 122, 140, 140],
+          [92, 138, 110, 170],
+          // hot end unchanged — this encodes real risk magnitude
           [250, 204, 21, 200],
           [249, 115, 22, 225],
           [239, 68, 68, 255],
@@ -106,7 +116,7 @@ export default function RiskMap({ cells, showPriority, flyTarget }: Props) {
         : []),
     ]
 
-    overlay.setProps({
+    deckOverlay.setProps({
       layers,
       getTooltip: ({ object }: { object?: RiskCell }) =>
         object
@@ -116,15 +126,15 @@ export default function RiskMap({ cells, showPriority, flyTarget }: Props) {
                 <div>risk score ${object.mean_risk.toFixed(3)}</div>
               </div>`,
               style: {
-                background: 'rgba(13,17,23,0.92)',
+                background: 'rgba(29,33,38,0.96)',
                 color: '#e6edf3',
                 borderRadius: '6px',
-                border: '1px solid rgba(56,189,248,0.25)',
+                border: '1px solid rgba(201,163,92,0.28)',
               },
             }
           : null,
     })
-  }, [cells, showPriority])
+  }, [cells, showPriority, overlay])
 
   useEffect(() => {
     if (!flyTarget || !mapRef.current) return

@@ -1,0 +1,15 @@
+{
+  "n_patrols": 8,
+  "patrol_radius_km": 2.0,
+  "scope_district": "RAMANAGARA",
+  "baseline_coverage_pct": 16.89,
+  "statusquo_coverage_pct": 40.12,
+  "greedy_coverage_pct": 44.85,
+  "greedy_uplift_pct": 165.5,
+  "greedy_uplift_x": 2.7,
+  "greedy_uplift_vs_statusquo_pct": 11.8,
+  "greedy_uplift_vs_statusquo_x": 1.12,
+  "greedy_cells_covered": 46,
+  "ilp_coverage_pct": 44.85,
+  "ilp_uplift_pct": 165.5
+}

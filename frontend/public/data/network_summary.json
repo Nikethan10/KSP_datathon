@@ -3,6 +3,7 @@
   "graph_edges": 509633,
   "n_communities": 35333,
   "modularity": 0.9783699921756089,
+  "centrality_method": "degree",
   "top_disruptor": {
     "offender_id": "64ef4d97c14a",
     "name": "Yash Buch",
@@ -23,6 +24,13 @@
     "gang_rank": 20,
     "gang_size": 953,
     "gang_edges": 1806,
+    "threat_tier": "medium",
+    "threat_score": 31.0,
+    "heinous_pct": 41.4,
+    "violent_pct": 41.4,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 37,
+    "total_cases": 1344,
     "n_articulation_points": 436,
     "key_members": [
       {
@@ -54,10 +62,10 @@
         "is_articulation": true
       },
       {
-        "offender_id": "88d2b23a5c58",
-        "name": "Elijah Suresh",
+        "offender_id": "c1889f447020",
+        "name": "Ati Chatterjee",
         "gang_degree": 14,
-        "total_cases": 2,
+        "total_cases": 4,
         "is_articulation": true
       }
     ],

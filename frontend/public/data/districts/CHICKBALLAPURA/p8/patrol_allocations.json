@@ -1,0 +1,147 @@
+{
+  "allocations": [
+    {
+      "patrol_id": 1,
+      "seed_cell_id": 103944,
+      "center_lat": 13.3918918919,
+      "center_lon": 77.8691588785,
+      "cells_covered": 7,
+      "risk_covered": 1.4133199454,
+      "cell_ids": [
+        103943,
+        103944,
+        103450,
+        104437,
+        104436,
+        103451,
+        103945
+      ]
+    },
+    {
+      "patrol_id": 2,
+      "seed_cell_id": 115738,
+      "center_lat": 13.6081081081,
+      "center_lon": 77.5140186916,
+      "cells_covered": 8,
+      "risk_covered": 1.1522601843,
+      "cell_ids": [
+        115738,
+        115739,
+        116231,
+        115244,
+        115245,
+        115246,
+        116232,
+        115737
+      ]
+    },
+    {
+      "patrol_id": 3,
+      "seed_cell_id": 106394,
+      "center_lat": 13.4369369369,
+      "center_lon": 77.7289719626,
+      "cells_covered": 9,
+      "risk_covered": 1.1360325254,
+      "cell_ids": [
+        106394,
+        105901,
+        106395,
+        106393,
+        106888,
+        106887,
+        105900,
+        105902,
+        106886
+      ]
+    },
+    {
+      "patrol_id": 4,
+      "seed_cell_id": 125135,
+      "center_lat": 13.7792792793,
+      "center_lon": 77.7943925234,
+      "cells_covered": 7,
+      "risk_covered": 0.8597251511,
+      "cell_ids": [
+        125135,
+        125628,
+        125136,
+        125629,
+        125627,
+        124641,
+        125134
+      ]
+    },
+    {
+      "patrol_id": 5,
+      "seed_cell_id": 104916,
+      "center_lat": 13.4099099099,
+      "center_lon": 77.738317757,
+      "cells_covered": 8,
+      "risk_covered": 0.5705595014000001,
+      "cell_ids": [
+        105408,
+        104915,
+        104422,
+        105410,
+        104917,
+        104916,
+        104423,
+        104424
+      ]
+    },
+    {
+      "patrol_id": 6,
+      "seed_cell_id": 125625,
+      "center_lat": 13.7882882883,
+      "center_lon": 77.7663551402,
+      "cells_covered": 7,
+      "risk_covered": 0.5363423452,
+      "cell_ids": [
+        125133,
+        125626,
+        125625,
+        125132,
+        126117,
+        126118,
+        126119
+      ]
+    },
+    {
+      "patrol_id": 7,
+      "seed_cell_id": 104456,
+      "center_lat": 13.4009009009,
+      "center_lon": 78.046728972,
+      "cells_covered": 7,
+      "risk_covered": 0.46850460390000004,
+      "cell_ids": [
+        104948,
+        104457,
+        103963,
+        104456,
+        103964,
+        104949,
+        104950
+      ]
+    },
+    {
+      "patrol_id": 8,
+      "seed_cell_id": 103436,
+      "center_lat": 13.3828828829,
+      "center_lon": 77.7289719626,
+      "cells_covered": 5,
+      "risk_covered": 0.40238679590000004,
+      "cell_ids": [
+        103436,
+        103929,
+        102943,
+        103930,
+        102942
+      ]
+    }
+  ],
+  "total_risk_covered": 6.5391310526,
+  "total_risk": 21.8757340967,
+  "coverage_pct": 29.89,
+  "cells_covered": 58,
+  "total_cells": 340
+}

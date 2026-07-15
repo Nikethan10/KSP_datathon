@@ -1,0 +1,15 @@
+{
+  "n_patrols": 6,
+  "patrol_radius_km": 2.0,
+  "scope_district": "HASSAN",
+  "baseline_coverage_pct": 5.96,
+  "statusquo_coverage_pct": 17.27,
+  "greedy_coverage_pct": 20.14,
+  "greedy_uplift_pct": 237.8,
+  "greedy_uplift_x": 3.4,
+  "greedy_uplift_vs_statusquo_pct": 16.6,
+  "greedy_uplift_vs_statusquo_x": 1.17,
+  "greedy_cells_covered": 46,
+  "ilp_coverage_pct": 20.86,
+  "ilp_uplift_pct": 249.9
+}
