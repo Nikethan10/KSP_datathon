@@ -1,21 +1,19 @@
-# ── python ───────────────────────────────────────────────────────────
+# ── Python ───────────────────────────────────────────────────────────
 __pycache__/
 *.pyc
 .venv/
 venv/
 
-# ── heavy regenerable artifacts ──────────────────────────────────────
+# ── Heavy regenerable artifacts ───────────────────────────────────────
 # feature_matrix.parquet alone is 134 MB, over GitHub's 100 MB hard limit
 cache/
 
-# pipeline outputs (~134 MB / 690 files). Regenerate with `python main.py`
-# (~22 min). The frontend does NOT read these directly -- copy_data.py
+# Pipeline outputs (~134 MB / 690 files). Regenerate with `python main.py`
+# (~22 min). The frontend does NOT read these directly — copy_data.py
 # copies what the UI needs into frontend/public/data, which IS committed.
 outputs/
 
-# build output + the Catalyst deploy staging copy. Both are produced by
-# `npm run build` + the robocopy step in DEPLOY.md; committing them would
-# add ~80 MB of duplicated bundles and cause pointless merge conflicts.
+# ── Build output + Catalyst staging ──────────────────────────────────
 frontend/dist/
 client/assets/
 client/data/
@@ -23,28 +21,58 @@ client/brand/
 client/index.html
 client/favicon.svg
 client/icons.svg
-# keep client/client-package.json -- Catalyst needs it and it is hand-written
 
-# Stale Vite scaffold from `catalyst init`. NOT the real frontend (that is
-# frontend/). Kept on disk only so the Catalyst CLI stays happy; excluded
-# here so nobody browsing the repo mistakes it for the app.
+# Stale Vite scaffold from `catalyst init` — not the real frontend
 react-app/
 
-# ── node ─────────────────────────────────────────────────────────────
+# ── Node ─────────────────────────────────────────────────────────────
 frontend/node_modules/
 node_modules/
 *.log
 
-# ── source media (large originals; processed versions live in
-#    frontend/public/brand and ARE committed) ───────────────────────────
+# ── IDE / editor config ───────────────────────────────────────────────
+.claude/
+frontend/.claude/
+.vscode/
+.idea/
+
+# ── Submission / presentation docs ───────────────────────────────────
+*.pdf
+*.pptx
+*.docx
+
+# ── One-off utility scripts ───────────────────────────────────────────
+make_ppt.py
+fix_commits.py
+_msg_filter.py
+make_brand_assets.py
+precompute_calibration.py
+precompute_district_trends.py
+precompute_novelty.py
+precompute_offenders.py
+precompute_patrol_all.py
+precompute_patrol_scenarios.py
+precompute_socioeconomic.py
+rebuild_benchmark.py
+rerun_fairness.py
+rerun_local_hotspots.py
+rerun_patrol.py
+
+# ── Test files ────────────────────────────────────────────────────────
+test_skeleton.py
+
+# ── Merged into README ────────────────────────────────────────────────
+STATUS.md
+DEPLOY.md
+CONTRIBUTIONS.md
+
+# ── Source media (large originals; processed versions in frontend/public/brand) ──
 prahari_loadingscreen.mp4
 prahari_logo.jpg
-
-# ── scratch ──────────────────────────────────────────────────────────
 scratch_preview.png
-*.tmp
 
 # ── OS ───────────────────────────────────────────────────────────────
 Thumbs.db
 .DS_Store
 desktop.ini
+*.tmp
