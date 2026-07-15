@@ -1,0 +1,2802 @@
+[
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-05-05 00:00:00",
+    "direction": "decrease",
+    "magnitude": 5.71
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2019-10-27 00:00:00",
+    "direction": "decrease",
+    "magnitude": 4.14
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2021-06-28 00:00:00",
+    "direction": "increase",
+    "magnitude": 5.0
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2022-05-19 00:00:00",
+    "direction": "increase",
+    "magnitude": 7.0
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2023-02-23 00:00:00",
+    "direction": "increase",
+    "magnitude": 5.0
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2016-02-25 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.71
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2017-12-16 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.86
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-03-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 14.43
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-07-23 00:00:00",
+    "direction": "increase",
+    "magnitude": 9.14
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2022-11-15 00:00:00",
+    "direction": "increase",
+    "magnitude": 6.43
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2018-05-05 00:00:00",
+    "direction": "decrease",
+    "magnitude": 6.29
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2019-12-21 00:00:00",
+    "direction": "decrease",
+    "magnitude": 7.86
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2021-11-15 00:00:00",
+    "direction": "increase",
+    "magnitude": 4.86
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2023-05-29 00:00:00",
+    "direction": "increase",
+    "magnitude": 5.57
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2023-10-21 00:00:00",
+    "direction": "decrease",
+    "magnitude": 5.29
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-04-30 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.86
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2019-11-16 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.57
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2022-05-19 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.57
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2023-03-25 00:00:00",
+    "direction": "increase",
+    "magnitude": 10.43
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2023-10-21 00:00:00",
+    "direction": "decrease",
+    "magnitude": 6.71
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Narcotics & Drugs",
+    "changepoint_date": "2016-07-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 4.29
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Narcotics & Drugs",
+    "changepoint_date": "2018-04-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.86
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Narcotics & Drugs",
+    "changepoint_date": "2022-01-19 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.29
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Narcotics & Drugs",
+    "changepoint_date": "2023-02-18 00:00:00",
+    "direction": "increase",
+    "magnitude": 4.57
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Narcotics & Drugs",
+    "changepoint_date": "2023-09-26 00:00:00",
+    "direction": "decrease",
+    "magnitude": 3.0
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Robbery & Dacoity",
+    "changepoint_date": "2016-06-24 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.86
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Robbery & Dacoity",
+    "changepoint_date": "2018-04-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 3.57
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Robbery & Dacoity",
+    "changepoint_date": "2019-11-21 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.86
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Robbery & Dacoity",
+    "changepoint_date": "2021-11-20 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.14
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Robbery & Dacoity",
+    "changepoint_date": "2023-02-18 00:00:00",
+    "direction": "increase",
+    "magnitude": 4.29
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Public Order Violations",
+    "changepoint_date": "2016-03-01 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.14
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Public Order Violations",
+    "changepoint_date": "2018-04-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.14
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Public Order Violations",
+    "changepoint_date": "2019-11-21 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.86
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Public Order Violations",
+    "changepoint_date": "2021-11-15 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.29
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Public Order Violations",
+    "changepoint_date": "2022-12-20 00:00:00",
+    "direction": "increase",
+    "magnitude": 6.57
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Other IPC Offences",
+    "changepoint_date": "2016-07-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.29
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Other IPC Offences",
+    "changepoint_date": "2018-01-05 00:00:00",
+    "direction": "decrease",
+    "magnitude": 3.57
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Other IPC Offences",
+    "changepoint_date": "2019-10-27 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.29
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Other IPC Offences",
+    "changepoint_date": "2022-01-24 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.0
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Other IPC Offences",
+    "changepoint_date": "2022-12-10 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.29
+  },
+  {
+    "district": "BELAGAVI DIST",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-01-26 00:00:00",
+    "direction": "increase",
+    "magnitude": 10.43
+  },
+  {
+    "district": "BELAGAVI DIST",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-02-10 00:00:00",
+    "direction": "decrease",
+    "magnitude": 31.0
+  },
+  {
+    "district": "BELAGAVI DIST",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-01-30 00:00:00",
+    "direction": "increase",
+    "magnitude": 12.57
+  },
+  {
+    "district": "BELAGAVI DIST",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-02-14 00:00:00",
+    "direction": "decrease",
+    "magnitude": 15.14
+  },
+  {
+    "district": "BELAGAVI DIST",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-04-15 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.71
+  },
+  {
+    "district": "BALLARI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-03-26 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.71
+  },
+  {
+    "district": "BALLARI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-02-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 12.71
+  },
+  {
+    "district": "BALLARI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-03-16 00:00:00",
+    "direction": "decrease",
+    "magnitude": 15.57
+  },
+  {
+    "district": "BALLARI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-04-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.29
+  },
+  {
+    "district": "BALLARI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2023-07-28 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.71
+  },
+  {
+    "district": "BAGALKOT",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-01-31 00:00:00",
+    "direction": "increase",
+    "magnitude": 9.71
+  },
+  {
+    "district": "BAGALKOT",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-02-15 00:00:00",
+    "direction": "decrease",
+    "magnitude": 19.0
+  },
+  {
+    "district": "BAGALKOT",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-02-14 00:00:00",
+    "direction": "increase",
+    "magnitude": 22.86
+  },
+  {
+    "district": "BAGALKOT",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-03-01 00:00:00",
+    "direction": "decrease",
+    "magnitude": 5.29
+  },
+  {
+    "district": "BAGALKOT",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-05-15 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.29
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Domestic Violence",
+    "changepoint_date": "2016-06-24 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.0
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Domestic Violence",
+    "changepoint_date": "2018-05-10 00:00:00",
+    "direction": "decrease",
+    "magnitude": 4.43
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Domestic Violence",
+    "changepoint_date": "2022-11-25 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.14
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Domestic Violence",
+    "changepoint_date": "2023-05-29 00:00:00",
+    "direction": "increase",
+    "magnitude": 5.0
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Domestic Violence",
+    "changepoint_date": "2023-08-27 00:00:00",
+    "direction": "decrease",
+    "magnitude": 5.57
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Cyber Crimes",
+    "changepoint_date": "2017-06-19 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.29
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Cyber Crimes",
+    "changepoint_date": "2017-12-16 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.86
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Cyber Crimes",
+    "changepoint_date": "2019-11-16 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.86
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Cyber Crimes",
+    "changepoint_date": "2022-04-19 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.71
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Cyber Crimes",
+    "changepoint_date": "2023-02-08 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.0
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-03-25 00:00:00",
+    "direction": "decrease",
+    "magnitude": 4.29
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-05-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.71
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-04-24 00:00:00",
+    "direction": "decrease",
+    "magnitude": 4.0
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2022-04-24 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.29
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2023-06-03 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.86
+  },
+  {
+    "district": "HASSAN",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-03-16 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.0
+  },
+  {
+    "district": "HASSAN",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-04-05 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.57
+  },
+  {
+    "district": "HASSAN",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-04-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 8.71
+  },
+  {
+    "district": "HASSAN",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-05-15 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.86
+  },
+  {
+    "district": "HASSAN",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2023-07-03 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.71
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-03-15 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.71
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-05-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.43
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-04-14 00:00:00",
+    "direction": "decrease",
+    "magnitude": 5.29
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2022-02-03 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.29
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2023-04-29 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.43
+  },
+  {
+    "district": "BELAGAVI CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-01-26 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.29
+  },
+  {
+    "district": "BELAGAVI CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-02-10 00:00:00",
+    "direction": "decrease",
+    "magnitude": 13.86
+  },
+  {
+    "district": "BELAGAVI CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-01-30 00:00:00",
+    "direction": "increase",
+    "magnitude": 4.71
+  },
+  {
+    "district": "BELAGAVI CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-03-21 00:00:00",
+    "direction": "increase",
+    "magnitude": 6.86
+  },
+  {
+    "district": "BELAGAVI CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-04-15 00:00:00",
+    "direction": "decrease",
+    "magnitude": 8.43
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-03-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 3.43
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-05-29 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.14
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-04-04 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.86
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-06-23 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.86
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-11-15 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.14
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-01-30 00:00:00",
+    "direction": "increase",
+    "magnitude": 23.14
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-02-14 00:00:00",
+    "direction": "decrease",
+    "magnitude": 4.43
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-07-14 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.43
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2019-08-03 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.57
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-09-06 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.0
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-12-31 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.43
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-07-24 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.43
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-02-19 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.86
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-03-26 00:00:00",
+    "direction": "increase",
+    "magnitude": 7.0
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-04-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 9.29
+  },
+  {
+    "district": "HASSAN",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-08-08 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.71
+  },
+  {
+    "district": "HASSAN",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-01-25 00:00:00",
+    "direction": "increase",
+    "magnitude": 7.14
+  },
+  {
+    "district": "HASSAN",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-03-31 00:00:00",
+    "direction": "increase",
+    "magnitude": 10.71
+  },
+  {
+    "district": "HASSAN",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-04-25 00:00:00",
+    "direction": "decrease",
+    "magnitude": 5.43
+  },
+  {
+    "district": "HASSAN",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-06-04 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.86
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-05-10 00:00:00",
+    "direction": "increase",
+    "magnitude": 9.57
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-07-04 00:00:00",
+    "direction": "decrease",
+    "magnitude": 3.29
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-01-30 00:00:00",
+    "direction": "increase",
+    "magnitude": 38.43
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-02-14 00:00:00",
+    "direction": "decrease",
+    "magnitude": 5.29
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-04-10 00:00:00",
+    "direction": "decrease",
+    "magnitude": 4.57
+  },
+  {
+    "district": "CHITRADURGA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2016-05-30 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.43
+  },
+  {
+    "district": "CHITRADURGA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2017-03-21 00:00:00",
+    "direction": "increase",
+    "magnitude": 4.0
+  },
+  {
+    "district": "CHITRADURGA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2017-04-15 00:00:00",
+    "direction": "decrease",
+    "magnitude": 3.71
+  },
+  {
+    "district": "CHITRADURGA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2017-06-24 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.43
+  },
+  {
+    "district": "CHITRADURGA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-10-26 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.29
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-01-30 00:00:00",
+    "direction": "increase",
+    "magnitude": 4.14
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-02-14 00:00:00",
+    "direction": "decrease",
+    "magnitude": 5.71
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-04-10 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.86
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2021-04-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.86
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2023-02-13 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.86
+  },
+  {
+    "district": "MYSURU DIST",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2016-12-31 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.0
+  },
+  {
+    "district": "MYSURU DIST",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-05-05 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.86
+  },
+  {
+    "district": "MYSURU DIST",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-03-25 00:00:00",
+    "direction": "decrease",
+    "magnitude": 4.14
+  },
+  {
+    "district": "MYSURU DIST",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-05-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.0
+  },
+  {
+    "district": "MYSURU DIST",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2022-01-24 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.14
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Kidnapping & Abduction",
+    "changepoint_date": "2016-07-14 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.0
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Kidnapping & Abduction",
+    "changepoint_date": "2018-04-25 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.0
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Kidnapping & Abduction",
+    "changepoint_date": "2019-11-11 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.29
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Kidnapping & Abduction",
+    "changepoint_date": "2021-07-28 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.71
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Kidnapping & Abduction",
+    "changepoint_date": "2022-12-10 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.57
+  },
+  {
+    "district": "MYSURU DIST",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-08-03 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.57
+  },
+  {
+    "district": "MYSURU DIST",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-03-26 00:00:00",
+    "direction": "increase",
+    "magnitude": 14.71
+  },
+  {
+    "district": "MYSURU DIST",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-04-10 00:00:00",
+    "direction": "decrease",
+    "magnitude": 7.43
+  },
+  {
+    "district": "MYSURU DIST",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-05-15 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.71
+  },
+  {
+    "district": "MYSURU DIST",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2021-01-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.57
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-01-26 00:00:00",
+    "direction": "decrease",
+    "magnitude": 8.57
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-01-20 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.14
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-08-23 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.43
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2022-01-19 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.57
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2023-01-14 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.86
+  },
+  {
+    "district": "RAMANAGARA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2017-06-19 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.14
+  },
+  {
+    "district": "RAMANAGARA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2017-07-09 00:00:00",
+    "direction": "decrease",
+    "magnitude": 3.57
+  },
+  {
+    "district": "RAMANAGARA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2019-07-19 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.71
+  },
+  {
+    "district": "RAMANAGARA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-03-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.57
+  },
+  {
+    "district": "RAMANAGARA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2022-04-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.0
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Forgery & Counterfeiting",
+    "changepoint_date": "2016-07-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.14
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Forgery & Counterfeiting",
+    "changepoint_date": "2017-12-06 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.29
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Forgery & Counterfeiting",
+    "changepoint_date": "2021-12-05 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.43
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Forgery & Counterfeiting",
+    "changepoint_date": "2023-02-18 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.57
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Forgery & Counterfeiting",
+    "changepoint_date": "2023-09-16 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.57
+  },
+  {
+    "district": "BELAGAVI DIST",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2016-01-26 00:00:00",
+    "direction": "increase",
+    "magnitude": 4.86
+  },
+  {
+    "district": "BELAGAVI DIST",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2016-02-10 00:00:00",
+    "direction": "decrease",
+    "magnitude": 13.0
+  },
+  {
+    "district": "BELAGAVI DIST",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-02-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 11.14
+  },
+  {
+    "district": "BELAGAVI DIST",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-02-19 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.29
+  },
+  {
+    "district": "BELAGAVI DIST",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-05-15 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.43
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Women",
+    "changepoint_date": "2017-11-26 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.71
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Women",
+    "changepoint_date": "2022-01-24 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.29
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Women",
+    "changepoint_date": "2023-02-28 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.43
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Women",
+    "changepoint_date": "2023-10-11 00:00:00",
+    "direction": "decrease",
+    "magnitude": 3.71
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Women",
+    "changepoint_date": "2023-12-05 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.71
+  },
+  {
+    "district": "CHITRADURGA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-03-21 00:00:00",
+    "direction": "increase",
+    "magnitude": 7.43
+  },
+  {
+    "district": "CHITRADURGA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-06-29 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.43
+  },
+  {
+    "district": "CHITRADURGA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-01-20 00:00:00",
+    "direction": "increase",
+    "magnitude": 7.0
+  },
+  {
+    "district": "CHITRADURGA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-04-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.43
+  },
+  {
+    "district": "CHITRADURGA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2021-03-30 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.43
+  },
+  {
+    "district": "RAMANAGARA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-06-24 00:00:00",
+    "direction": "increase",
+    "magnitude": 6.43
+  },
+  {
+    "district": "RAMANAGARA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-07-09 00:00:00",
+    "direction": "decrease",
+    "magnitude": 7.14
+  },
+  {
+    "district": "RAMANAGARA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2019-11-16 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.29
+  },
+  {
+    "district": "RAMANAGARA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2022-01-09 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.57
+  },
+  {
+    "district": "RAMANAGARA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2022-09-01 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.43
+  },
+  {
+    "district": "UTTARA KANNADA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2016-02-10 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.29
+  },
+  {
+    "district": "UTTARA KANNADA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-01-25 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.14
+  },
+  {
+    "district": "UTTARA KANNADA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-06-29 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.43
+  },
+  {
+    "district": "UTTARA KANNADA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2019-06-24 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.29
+  },
+  {
+    "district": "UTTARA KANNADA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-10-16 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.86
+  },
+  {
+    "district": "BALLARI",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2017-03-26 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.71
+  },
+  {
+    "district": "BALLARI",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-02-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 5.57
+  },
+  {
+    "district": "BALLARI",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-03-16 00:00:00",
+    "direction": "decrease",
+    "magnitude": 3.57
+  },
+  {
+    "district": "BALLARI",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-05-05 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.86
+  },
+  {
+    "district": "BALLARI",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2021-05-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.71
+  },
+  {
+    "district": "BIDAR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-01-31 00:00:00",
+    "direction": "decrease",
+    "magnitude": 5.57
+  },
+  {
+    "district": "BIDAR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-08-08 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.71
+  },
+  {
+    "district": "BIDAR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-03-16 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.0
+  },
+  {
+    "district": "BIDAR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-04-15 00:00:00",
+    "direction": "decrease",
+    "magnitude": 4.14
+  },
+  {
+    "district": "BIDAR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-06-29 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.43
+  },
+  {
+    "district": "BAGALKOT",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-02-14 00:00:00",
+    "direction": "increase",
+    "magnitude": 7.14
+  },
+  {
+    "district": "BAGALKOT",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-03-01 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.0
+  },
+  {
+    "district": "BAGALKOT",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-04-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.29
+  },
+  {
+    "district": "BAGALKOT",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-05-15 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.57
+  },
+  {
+    "district": "BAGALKOT",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2022-12-10 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.57
+  },
+  {
+    "district": "BELAGAVI DIST",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2017-12-26 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.57
+  },
+  {
+    "district": "BELAGAVI DIST",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-04-25 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.86
+  },
+  {
+    "district": "BELAGAVI DIST",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-03-25 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.57
+  },
+  {
+    "district": "BELAGAVI DIST",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-05-14 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.0
+  },
+  {
+    "district": "BELAGAVI DIST",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-10-01 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.57
+  },
+  {
+    "district": "UDUPI",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2016-06-09 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.0
+  },
+  {
+    "district": "UDUPI",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2016-11-01 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.14
+  },
+  {
+    "district": "UDUPI",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-03-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.43
+  },
+  {
+    "district": "UDUPI",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-07-28 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.71
+  },
+  {
+    "district": "UDUPI",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2022-10-31 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.0
+  },
+  {
+    "district": "DAVANAGERE",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-02-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.43
+  },
+  {
+    "district": "DAVANAGERE",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-02-24 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.29
+  },
+  {
+    "district": "DAVANAGERE",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-04-10 00:00:00",
+    "direction": "decrease",
+    "magnitude": 3.0
+  },
+  {
+    "district": "DAVANAGERE",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-04-24 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.43
+  },
+  {
+    "district": "DAVANAGERE",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-09-26 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.71
+  },
+  {
+    "district": "BIDAR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2016-05-30 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.29
+  },
+  {
+    "district": "BIDAR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-04-05 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.43
+  },
+  {
+    "district": "BIDAR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-05-10 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.14
+  },
+  {
+    "district": "BIDAR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-06-24 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.86
+  },
+  {
+    "district": "BIDAR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-02-19 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.14
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Public Tranquility",
+    "changepoint_date": "2019-12-16 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.29
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Public Tranquility",
+    "changepoint_date": "2021-05-24 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.57
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Public Tranquility",
+    "changepoint_date": "2023-02-23 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.57
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Public Tranquility",
+    "changepoint_date": "2023-03-25 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.71
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Crimes Against Public Tranquility",
+    "changepoint_date": "2023-05-14 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.29
+  },
+  {
+    "district": "CHIKKAMAGALURU",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-02-15 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.14
+  },
+  {
+    "district": "CHIKKAMAGALURU",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-06-19 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.43
+  },
+  {
+    "district": "CHIKKAMAGALURU",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-03-26 00:00:00",
+    "direction": "increase",
+    "magnitude": 6.86
+  },
+  {
+    "district": "CHIKKAMAGALURU",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-04-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.86
+  },
+  {
+    "district": "CHIKKAMAGALURU",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2021-09-06 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.43
+  },
+  {
+    "district": "CHICKBALLAPURA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-11-22 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.0
+  },
+  {
+    "district": "CHICKBALLAPURA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-02-25 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.0
+  },
+  {
+    "district": "CHICKBALLAPURA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-06-05 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.43
+  },
+  {
+    "district": "CHICKBALLAPURA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-06-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 4.86
+  },
+  {
+    "district": "CHICKBALLAPURA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-07-05 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.86
+  },
+  {
+    "district": "CHIKKAMAGALURU",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-03-26 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.57
+  },
+  {
+    "district": "CHIKKAMAGALURU",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-04-10 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.14
+  },
+  {
+    "district": "CHIKKAMAGALURU",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-05-05 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.86
+  },
+  {
+    "district": "CHIKKAMAGALURU",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-03-25 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.71
+  },
+  {
+    "district": "CHIKKAMAGALURU",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-11-10 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.29
+  },
+  {
+    "district": "MANGALURU CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2019-04-30 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.57
+  },
+  {
+    "district": "MANGALURU CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-03-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.57
+  },
+  {
+    "district": "MANGALURU CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-07-28 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.71
+  },
+  {
+    "district": "MANGALURU CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-10-26 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.43
+  },
+  {
+    "district": "MANGALURU CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2023-09-26 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.71
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Gambling & Betting",
+    "changepoint_date": "2018-04-15 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.14
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Gambling & Betting",
+    "changepoint_date": "2023-02-23 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.14
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Gambling & Betting",
+    "changepoint_date": "2023-04-14 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.0
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Gambling & Betting",
+    "changepoint_date": "2023-05-19 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.43
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Gambling & Betting",
+    "changepoint_date": "2023-08-27 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.14
+  },
+  {
+    "district": "VIJAYAPUR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-01-22 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.14
+  },
+  {
+    "district": "VIJAYAPUR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-02-21 00:00:00",
+    "direction": "decrease",
+    "magnitude": 3.86
+  },
+  {
+    "district": "VIJAYAPUR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-01-16 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.29
+  },
+  {
+    "district": "VIJAYAPUR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-04-11 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.14
+  },
+  {
+    "district": "VIJAYAPUR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2021-10-02 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.57
+  },
+  {
+    "district": "VIJAYAPUR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-07-09 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.86
+  },
+  {
+    "district": "VIJAYAPUR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2019-11-21 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.57
+  },
+  {
+    "district": "VIJAYAPUR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-03-25 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.86
+  },
+  {
+    "district": "VIJAYAPUR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-04-24 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.86
+  },
+  {
+    "district": "VIJAYAPUR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-10-21 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.29
+  },
+  {
+    "district": "DAVANAGERE",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-03-02 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.71
+  },
+  {
+    "district": "DAVANAGERE",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-01-31 00:00:00",
+    "direction": "increase",
+    "magnitude": 6.0
+  },
+  {
+    "district": "DAVANAGERE",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-02-25 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.14
+  },
+  {
+    "district": "DAVANAGERE",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-04-21 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.0
+  },
+  {
+    "district": "DAVANAGERE",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2021-06-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.57
+  },
+  {
+    "district": "MYSURU CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2016-09-17 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.86
+  },
+  {
+    "district": "MYSURU CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-03-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.29
+  },
+  {
+    "district": "MYSURU CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-06-08 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.29
+  },
+  {
+    "district": "MYSURU CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2022-06-23 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.57
+  },
+  {
+    "district": "MYSURU CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2024-02-18 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.86
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2016-02-03 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.71
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2018-01-18 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.43
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2018-04-28 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.0
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2022-04-07 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.86
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2023-06-01 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.14
+  },
+  {
+    "district": "BELAGAVI CITY",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2016-08-03 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.57
+  },
+  {
+    "district": "BELAGAVI CITY",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2016-08-23 00:00:00",
+    "direction": "decrease",
+    "magnitude": 4.57
+  },
+  {
+    "district": "BELAGAVI CITY",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-02-09 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.43
+  },
+  {
+    "district": "BELAGAVI CITY",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-04-30 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.0
+  },
+  {
+    "district": "BELAGAVI CITY",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2022-01-14 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.43
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Economic Offences",
+    "changepoint_date": "2016-12-16 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.29
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Economic Offences",
+    "changepoint_date": "2018-04-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.14
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Economic Offences",
+    "changepoint_date": "2019-10-27 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.71
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Economic Offences",
+    "changepoint_date": "2022-06-03 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.0
+  },
+  {
+    "district": "BENGALURU CITY",
+    "crime_type": "Economic Offences",
+    "changepoint_date": "2022-11-30 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.71
+  },
+  {
+    "district": "RAICHUR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-03-06 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.29
+  },
+  {
+    "district": "RAICHUR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-07-19 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.14
+  },
+  {
+    "district": "RAICHUR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-03-11 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.43
+  },
+  {
+    "district": "RAICHUR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-04-15 00:00:00",
+    "direction": "decrease",
+    "magnitude": 3.0
+  },
+  {
+    "district": "RAICHUR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-05-05 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.57
+  },
+  {
+    "district": "KALABURAGI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-04-10 00:00:00",
+    "direction": "increase",
+    "magnitude": 6.86
+  },
+  {
+    "district": "KALABURAGI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-04-25 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.71
+  },
+  {
+    "district": "KALABURAGI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-07-04 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.86
+  },
+  {
+    "district": "KALABURAGI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-03-26 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.57
+  },
+  {
+    "district": "KALABURAGI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-04-25 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.86
+  },
+  {
+    "district": "DAKSHINA KANNADA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2019-07-15 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.14
+  },
+  {
+    "district": "DAKSHINA KANNADA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2019-11-12 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.57
+  },
+  {
+    "district": "DAKSHINA KANNADA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-03-21 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.14
+  },
+  {
+    "district": "DAKSHINA KANNADA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-10-17 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.86
+  },
+  {
+    "district": "DAKSHINA KANNADA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-10-27 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.43
+  },
+  {
+    "district": "KALABURAGI",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-03-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.0
+  },
+  {
+    "district": "KALABURAGI",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-05-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.29
+  },
+  {
+    "district": "KALABURAGI",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-10-26 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.0
+  },
+  {
+    "district": "KALABURAGI",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-03-30 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.29
+  },
+  {
+    "district": "KALABURAGI",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2022-12-05 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.57
+  },
+  {
+    "district": "UTTARA KANNADA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-01-16 00:00:00",
+    "direction": "increase",
+    "magnitude": 5.43
+  },
+  {
+    "district": "UTTARA KANNADA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-01-31 00:00:00",
+    "direction": "decrease",
+    "magnitude": 3.14
+  },
+  {
+    "district": "UTTARA KANNADA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-03-01 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.57
+  },
+  {
+    "district": "UTTARA KANNADA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-06-29 00:00:00",
+    "direction": "decrease",
+    "magnitude": 3.0
+  },
+  {
+    "district": "UTTARA KANNADA",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-04-25 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.14
+  },
+  {
+    "district": "MYSURU CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-07-24 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.71
+  },
+  {
+    "district": "MYSURU CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-03-31 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.0
+  },
+  {
+    "district": "MYSURU CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-05-10 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.86
+  },
+  {
+    "district": "MYSURU CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2020-03-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.86
+  },
+  {
+    "district": "MYSURU CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2021-11-15 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.57
+  },
+  {
+    "district": "CHICKBALLAPURA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-09-12 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.0
+  },
+  {
+    "district": "CHICKBALLAPURA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2022-04-09 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.86
+  },
+  {
+    "district": "CHICKBALLAPURA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2022-05-14 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.29
+  },
+  {
+    "district": "CHICKBALLAPURA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2022-06-03 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.29
+  },
+  {
+    "district": "CHICKBALLAPURA",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2023-05-14 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.0
+  },
+  {
+    "district": "HAVERI",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-05-30 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.14
+  },
+  {
+    "district": "HAVERI",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2019-07-09 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.14
+  },
+  {
+    "district": "HAVERI",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-10-21 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.14
+  },
+  {
+    "district": "HAVERI",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-04-19 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.57
+  },
+  {
+    "district": "HAVERI",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-11-25 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.57
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2017-04-16 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.57
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2018-01-31 00:00:00",
+    "direction": "increase",
+    "magnitude": 25.29
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2018-02-15 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.29
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2018-03-27 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.43
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2018-04-16 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.86
+  },
+  {
+    "district": "HAVERI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-01-21 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.71
+  },
+  {
+    "district": "HAVERI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-02-10 00:00:00",
+    "direction": "decrease",
+    "magnitude": 6.43
+  },
+  {
+    "district": "HAVERI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-02-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 5.57
+  },
+  {
+    "district": "HAVERI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-02-19 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.0
+  },
+  {
+    "district": "HAVERI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-04-15 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.14
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-01-21 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.86
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-02-25 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.57
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-04-06 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.43
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2022-03-11 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.71
+  },
+  {
+    "district": "BENGALURU DIST",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2023-05-25 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.0
+  },
+  {
+    "district": "MANGALURU CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-07-14 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.57
+  },
+  {
+    "district": "MANGALURU CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-03-31 00:00:00",
+    "direction": "increase",
+    "magnitude": 8.0
+  },
+  {
+    "district": "MANGALURU CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-04-15 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.29
+  },
+  {
+    "district": "MANGALURU CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2019-07-04 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.86
+  },
+  {
+    "district": "MANGALURU CITY",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2023-02-28 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.71
+  },
+  {
+    "district": "KOLAR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-04-01 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.14
+  },
+  {
+    "district": "KOLAR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-03-21 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.57
+  },
+  {
+    "district": "KOLAR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-05-05 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.14
+  },
+  {
+    "district": "KOLAR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-11-21 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.43
+  },
+  {
+    "district": "KOLAR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2023-08-28 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.86
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2018-01-21 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.29
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2018-02-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.43
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2018-04-11 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.57
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2021-04-10 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.71
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2023-03-11 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.29
+  },
+  {
+    "district": "RAICHUR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2018-05-10 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.43
+  },
+  {
+    "district": "RAICHUR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2019-06-09 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.14
+  },
+  {
+    "district": "RAICHUR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2020-10-26 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.29
+  },
+  {
+    "district": "RAICHUR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-04-29 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.86
+  },
+  {
+    "district": "RAICHUR",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-10-06 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.0
+  },
+  {
+    "district": "HUBBALLI DHARWAD CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2016-07-24 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.14
+  },
+  {
+    "district": "HUBBALLI DHARWAD CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2017-02-09 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.29
+  },
+  {
+    "district": "HUBBALLI DHARWAD CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2017-07-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.29
+  },
+  {
+    "district": "HUBBALLI DHARWAD CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2017-07-19 00:00:00",
+    "direction": "decrease",
+    "magnitude": 4.29
+  },
+  {
+    "district": "HUBBALLI DHARWAD CITY",
+    "crime_type": "Motor Vehicle Offences",
+    "changepoint_date": "2021-09-26 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.43
+  },
+  {
+    "district": "KOLAR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-01-20 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.43
+  },
+  {
+    "district": "KOLAR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-02-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.14
+  },
+  {
+    "district": "KOLAR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-02-19 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.43
+  },
+  {
+    "district": "KOLAR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-04-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.0
+  },
+  {
+    "district": "KOLAR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2022-01-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.71
+  },
+  {
+    "district": "CHAMARAJANAGAR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-03-21 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.43
+  },
+  {
+    "district": "CHAMARAJANAGAR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-06-29 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.43
+  },
+  {
+    "district": "CHAMARAJANAGAR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-07-14 00:00:00",
+    "direction": "decrease",
+    "magnitude": 7.71
+  },
+  {
+    "district": "CHAMARAJANAGAR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-03-16 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.71
+  },
+  {
+    "district": "CHAMARAJANAGAR",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2018-10-07 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.43
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2017-05-10 00:00:00",
+    "direction": "increase",
+    "magnitude": 5.14
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-01-30 00:00:00",
+    "direction": "increase",
+    "magnitude": 25.86
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-02-14 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.14
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-03-31 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.43
+  },
+  {
+    "district": "SHIVAMOGGA",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-04-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.57
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2016-02-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.0
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2018-03-11 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.29
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2018-03-31 00:00:00",
+    "direction": "increase",
+    "magnitude": 5.29
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2018-04-15 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.86
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2018-04-30 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.14
+  },
+  {
+    "district": "UDUPI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2016-02-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.86
+  },
+  {
+    "district": "UDUPI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-03-16 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.14
+  },
+  {
+    "district": "UDUPI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-04-05 00:00:00",
+    "direction": "increase",
+    "magnitude": 7.0
+  },
+  {
+    "district": "UDUPI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-05-20 00:00:00",
+    "direction": "decrease",
+    "magnitude": 3.0
+  },
+  {
+    "district": "UDUPI",
+    "crime_type": "Crimes Against Body",
+    "changepoint_date": "2017-11-06 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.71
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2017-07-29 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.29
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-03-11 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.0
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-03-26 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.86
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-04-10 00:00:00",
+    "direction": "decrease",
+    "magnitude": 4.0
+  },
+  {
+    "district": "MANDYA",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-04-25 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.57
+  },
+  {
+    "district": "VIJAYAPUR",
+    "crime_type": "Gambling & Betting",
+    "changepoint_date": "2019-01-01 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.71
+  },
+  {
+    "district": "VIJAYAPUR",
+    "crime_type": "Gambling & Betting",
+    "changepoint_date": "2019-02-05 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.86
+  },
+  {
+    "district": "VIJAYAPUR",
+    "crime_type": "Gambling & Betting",
+    "changepoint_date": "2020-07-04 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.0
+  },
+  {
+    "district": "VIJAYAPUR",
+    "crime_type": "Gambling & Betting",
+    "changepoint_date": "2022-09-27 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.29
+  },
+  {
+    "district": "VIJAYAPUR",
+    "crime_type": "Gambling & Betting",
+    "changepoint_date": "2023-05-25 00:00:00",
+    "direction": "increase",
+    "magnitude": 2.57
+  },
+  {
+    "district": "HASSAN",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2017-07-11 00:00:00",
+    "direction": "decrease",
+    "magnitude": 1.29
+  },
+  {
+    "district": "HASSAN",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2018-01-27 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.86
+  },
+  {
+    "district": "HASSAN",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2018-03-28 00:00:00",
+    "direction": "increase",
+    "magnitude": 3.57
+  },
+  {
+    "district": "HASSAN",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2018-04-22 00:00:00",
+    "direction": "decrease",
+    "magnitude": 4.29
+  },
+  {
+    "district": "HASSAN",
+    "crime_type": "Cheating & Fraud",
+    "changepoint_date": "2018-05-17 00:00:00",
+    "direction": "decrease",
+    "magnitude": 0.71
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-01-19 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.43
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-02-13 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.71
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2018-04-14 00:00:00",
+    "direction": "decrease",
+    "magnitude": 2.0
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2021-01-28 00:00:00",
+    "direction": "increase",
+    "magnitude": 0.86
+  },
+  {
+    "district": "TUMAKURU",
+    "crime_type": "Crimes Against Property",
+    "changepoint_date": "2023-02-02 00:00:00",
+    "direction": "increase",
+    "magnitude": 1.57
+  }
+]
