@@ -103,3 +103,10 @@ SHAP · OR-Tools · **Zoho Catalyst** (Hosting)
 ## Team
 
 Nikethan · Hari Nair · Katir · Dhikshitha · Nihan
+
+---
+
+## License
+
+© 2026 Nikethan10. All rights reserved. No permission is granted to use, copy, modify, or distribute this code without prior written permission.
+
