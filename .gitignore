@@ -1,0 +1,15 @@
+# python
+__pycache__/
+*.pyc
+.venv/
+
+# heavy regenerable artifacts
+cache/
+
+# frontend
+frontend/node_modules/
+frontend/dist/
+
+# OS
+Thumbs.db
+.DS_Store

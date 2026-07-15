@@ -1,0 +1,65 @@
+@import "tailwindcss";
+@import "maplibre-gl/dist/maplibre-gl.css";
+
+:root {
+  color-scheme: dark;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: #0a0e14;
+  color: #e6edf3;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2d3644; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #3d4654; }
+
+.glass {
+  background: rgba(13, 17, 23, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(56, 189, 248, 0.14);
+}
+
+/* Print: only the patrol briefing sheet, black on white */
+@media print {
+  body {
+    overflow: visible;
+    background: #fff;
+  }
+  body * {
+    visibility: hidden;
+  }
+  .print-briefing,
+  .print-briefing * {
+    visibility: visible;
+  }
+  .print-briefing {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    overflow: visible !important;
+    background: #fff !important;
+    border: none !important;
+    color: #111 !important;
+  }
+  .print-briefing * {
+    background: transparent !important;
+    border-color: #ccc !important;
+    color: #111 !important;
+  }
+  .print-briefing .overflow-y-auto {
+    overflow: visible !important;
+  }
+  .print-briefing button {
+    border: 1px solid #ddd !important;
+  }
+}
