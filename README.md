@@ -121,7 +121,7 @@ frontend/                                React 19 + TypeScript web application
 | Team Member | GitHub Profile | Core Component Ownership |
 |---|---|---|
 | **Nikethan Tirumala** | [@nikethan_10](https://github.com/Nikethan10) | Frontend Architecture, Web Console, MapLibre GL & deck.gl Integration |
-| **Hari Nair** | [@r-harinarayanan](https://github.com/r-harinarayanan) | Analytics Pipeline, LightGBM Risk Model, STL Anomaly Detection |
+| **R Hari Narayanan** | [@r-harinarayanan](https://github.com/r-harinarayanan) | Analytics Pipeline, LightGBM Risk Model, STL Anomaly Detection |
 | **Katir** | [@myselfcarewinter-hue](https://github.com/myselfcarewinter-hue) | System Architecture, ACT Patrol Optimizer, TRUST Layer, Catalyst Deployment |
 | **Dhikshitha** | [@DHIKSHITHA0906](https://github.com/DHIKSHITHA0906) | Co-offending Graph Analytics, Louvain Community Detection, Disruption Modeling |
 | **Nihan** | [@nihan-98716](https://github.com/nihan-98716) | Data Engineering, CCTNS Data Normalization, Gi\* Spatial Analysis Pipeline |
@@ -132,4 +132,4 @@ frontend/                                React 19 + TypeScript web application
 
 ## License
 
-© 2026 Nikethan10. All rights reserved. Proprietary software — no unauthorized copying, modification, or distribution permitted.
+© 2026 Nikethan10,r-harinarayanan. All rights reserved. Proprietary software — no unauthorized copying, modification, or distribution permitted.
