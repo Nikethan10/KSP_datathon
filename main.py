@@ -18,7 +18,27 @@ from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(__file__))
 
-from config import OUTPUT_DIR, CACHE_DIR
+from config import OUTPUT_DIR, CACHE_DIR, DATASET_DIR
+
+
+def require_dataset():
+    """Fail loudly and usefully rather than with a FileNotFoundError six
+    frames deep inside a loader. The dataset ships separately from the repo."""
+    if DATASET_DIR.is_dir() and any(DATASET_DIR.glob("*.csv")):
+        return
+    sys.exit(
+        f"""
+PRAHARI: dataset not found at {DATASET_DIR}
+
+The KSP dataset is distributed separately and is not in this repository.
+Extract `submission_dataset` and point PRAHARI_DATASET_DIR at it:
+
+  PowerShell:  $env:PRAHARI_DATASET_DIR = "D:/path/to/submission_dataset"
+  bash:        export PRAHARI_DATASET_DIR=/path/to/submission_dataset
+
+Or place the folder at <repo>/dataset. See .env.example.
+"""
+    )
 
 
 def main():
@@ -30,6 +50,8 @@ def main():
     parser.add_argument("--anomaly-only", action="store_true")
     parser.add_argument("--district", type=str, default=None, help="Filter to a specific district")
     args = parser.parse_args()
+
+    require_dataset()
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
@@ -118,7 +140,14 @@ def main():
     print("\n--- STEP 7: Patrol optimizer ---")
     from act.patrol_optimizer import run_patrol_optimizer
 
-    risk_map = scored.groupby("cell_id").agg(
+    # Forecast-period rows only. Averaging risk across train+val+test blends
+    # scores the model fitted on into a surface that is supposed to say where
+    # crime is going next, and it measurably degrades the ranking: the
+    # all-splits surface captures 40.8% of test-period crime in its top 5% of
+    # cells, the test-only surface 53.1%. The optimizer inherits whichever it
+    # is given, so this is the ACT layer's input as well as the map's.
+    forecast = scored[scored["split"] == "test"]
+    risk_map = forecast.groupby("cell_id").agg(
         mean_risk=("risk_score", "mean"),
         max_risk=("risk_score", "max"),
     ).reset_index()
@@ -148,7 +177,9 @@ def main():
         with open(net_summary_path) as f:
             network_summary = json.load(f)
 
-    run_full_benchmark(risk_summary, patrol_summary, network_summary, fairness_report)
+    run_full_benchmark(
+        risk_summary, patrol_summary, network_summary, fairness_report, scored_df=scored
+    )
 
     elapsed = time.time() - t0
     print(f"\n{'='*70}")

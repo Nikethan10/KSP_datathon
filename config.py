@@ -4,7 +4,11 @@ from datetime import datetime
 
 # ── Paths ──────────────────────────────────────────────────────────────
 PROJECT_ROOT = Path(__file__).parent
-DATASET_DIR = Path(r"C:\Users\tirum\OneDrive\Desktop\KSP_Final_Dataset\submission_dataset")
+
+# The dataset lives outside the repo (1.67M-row CaseMaster.csv and friends).
+# Point PRAHARI_DATASET_DIR at your extracted `submission_dataset` folder,
+# or drop it at <repo>/dataset. See .env.example and docs/DEPLOY.md.
+DATASET_DIR = Path(os.environ.get("PRAHARI_DATASET_DIR", PROJECT_ROOT / "dataset"))
 OUTPUT_DIR = PROJECT_ROOT / "outputs"
 CACHE_DIR = PROJECT_ROOT / "cache"
 
