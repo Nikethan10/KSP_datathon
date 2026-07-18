@@ -257,7 +257,10 @@ def run_risk_model(feature_matrix: pd.DataFrame, cases: pd.DataFrame, active_gri
     except Exception as e:
         print(f"  calibration skipped: {e}")
 
-    risk_map = scored.groupby("cell_id").agg(
+    # Same correction as main.py: the exported surface is a forecast, so it
+    # must not average in the periods the model was trained on.
+    forecast = scored[scored["split"] == "test"]
+    risk_map = forecast.groupby("cell_id").agg(
         mean_risk=("risk_score", "mean"),
         max_risk=("risk_score", "max"),
     ).reset_index()
