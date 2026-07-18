@@ -1,0 +1,73 @@
+{
+  "captured": "2026-08-21",
+  "commit_context": "before Phase 2 performance work",
+  "bundle": {
+    "assets_total_bytes": 2704914,
+    "assets": {
+      "ConsoleShell-CBjtrETp.js": 2284659,
+      "index-B79GdPag.js": 291232,
+      "index-DWC6z18l.css": 128951,
+      "webgl-device-BoQbN1Q1.js": 72
+    },
+    "note": "ConsoleShell chunk is 2,284,650 B raw / 627,000 B gzip"
+  },
+  "public_data": {
+    "total_bytes": 41668528,
+    "file_count": 536,
+    "largest_10": [
+      {
+        "file": "hotspots_local_overall.json",
+        "bytes": 3737439
+      },
+      {
+        "file": "district_trends.json",
+        "bytes": 2677160
+      },
+      {
+        "file": "risk_map.json",
+        "bytes": 1948997
+      },
+      {
+        "file": "hotspots_local_Crimes_Against_Body.json",
+        "bytes": 1895682
+      },
+      {
+        "file": "hotspots_local_Motor_Vehicle_Offences.json",
+        "bytes": 1822101
+      },
+      {
+        "file": "hotspots_local_Crimes_Against_Property.json",
+        "bytes": 1653293
+      },
+      {
+        "file": "hotspots_local_Cheating_&_Fraud.json",
+        "bytes": 1296453
+      },
+      {
+        "file": "hotspots_overall.json",
+        "bytes": 1119466
+      },
+      {
+        "file": "hotspots_local_Robbery_&_Dacoity.json",
+        "bytes": 1118289
+      },
+      {
+        "file": "hotspots_local_Narcotics_&_Drugs.json",
+        "bytes": 1053761
+      }
+    ]
+  },
+  "deployed_headers": {
+    "content_encoding": "gzip",
+    "cache_control": null,
+    "etag": null,
+    "last_modified": null,
+    "content_security_policy": null,
+    "referrer_policy": null,
+    "permissions_policy": null,
+    "x_frame_options": "DENY",
+    "strict_transport_security": "max-age=64072000; includeSubDomains; preload",
+    "x_content_type_options": "nosniff",
+    "note": "measured against the live Catalyst deployment on 2026-08-21"
+  }
+}

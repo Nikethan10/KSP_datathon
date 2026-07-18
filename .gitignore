@@ -36,35 +36,15 @@ frontend/.claude/
 .vscode/
 .idea/
 
-# ── Submission / presentation docs ───────────────────────────────────
-*.pdf
-*.pptx
-*.docx
-
-# ── One-off utility scripts ───────────────────────────────────────────
-make_ppt.py
+# ── Git history tooling (one-off, not part of the project) ───────────
 fix_commits.py
 _msg_filter.py
-make_brand_assets.py
-precompute_calibration.py
-precompute_district_trends.py
-precompute_novelty.py
-precompute_offenders.py
-precompute_patrol_all.py
-precompute_patrol_scenarios.py
-precompute_socioeconomic.py
-rebuild_benchmark.py
-rerun_fairness.py
-rerun_local_hotspots.py
-rerun_patrol.py
 
-# ── Test files ────────────────────────────────────────────────────────
-test_skeleton.py
-
-# ── Merged into README ────────────────────────────────────────────────
-STATUS.md
-DEPLOY.md
-CONTRIBUTIONS.md
+# NOTE: the precompute_*.py / rerun_*.py scripts are NOT ignored. They
+# produce most of frontend/public/data — offender dossiers, the novelty
+# layer, district trends, patrol scenarios, calibration and the
+# socio-economic panel. main.py's nine stages do not cover them. Ignoring
+# them made the public repo unable to regenerate its own data.
 
 # ── Source media (large originals; processed versions in frontend/public/brand) ──
 prahari_loadingscreen.mp4
@@ -76,3 +56,9 @@ Thumbs.db
 .DS_Store
 desktop.ini
 *.tmp
+
+# ── Catalyst project binding ─────────────────────────────────────────
+# Contains the project id, environment id and dev domain. Not a secret in
+# itself, but it targets our deployment; the values are documented in
+# docs/DEPLOY.md so a fresh clone can re-init its own.
+.catalystrc
