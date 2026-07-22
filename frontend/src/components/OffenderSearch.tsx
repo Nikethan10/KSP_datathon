@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import type { OffenderDossier } from '../lib/data'
 import { THREAT_COLORS } from '../lib/data'
 import { useI18n } from '../lib/i18n'
+import { matchesName } from '../lib/districtSearch'
 
 interface Props {
   offenders: OffenderDossier[]
@@ -27,7 +28,7 @@ export default function OffenderSearch({ offenders, onSelect }: Props) {
     const query = q.trim().toLowerCase()
     if (!query) return []
     return offenders
-      .filter((o) => o.name.toLowerCase().includes(query))
+      .filter((o) => matchesName(o.name, query))
       .sort((a, b) => b.total_cases - a.total_cases)
       .slice(0, 8)
   }, [q, offenders])

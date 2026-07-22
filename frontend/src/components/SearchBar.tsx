@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { fetchJson } from '../lib/data'
 import { useFocus } from '../lib/focus'
-import { useI18n } from '../lib/i18n'
+import { useI18n, districtNameKn } from '../lib/i18n'
+import { searchDistricts } from '../lib/districtSearch'
 import type { DistrictCentroid } from '../lib/data'
 
 export default function SearchBar({ className = '' }: { className?: string }) {
@@ -25,17 +26,23 @@ export default function SearchBar({ className = '' }: { className?: string }) {
     return () => document.removeEventListener('mousedown', onDown)
   }, [])
 
-  const matches = useMemo(() => {
-    const query = q.trim().toLowerCase()
-    if (!query) return []
-    return districts
-      .filter(
-        (d) =>
-          d.district.toLowerCase().includes(query) ||
-          td(d.district).toLowerCase().includes(query),
-      )
-      .slice(0, 8)
-  }, [q, districts, td])
+  /* Ranked search over the dataset name, the Kannada name and an alias table
+     that covers colloquial and pre-2014 spellings. Plain substring matching
+     could not find "K.G.F" from "kgf" (the dots), nor "Bengaluru City" from
+     "bangalore" or "banglore". See lib/districtSearch.ts. */
+  const matches = useMemo(
+    () =>
+      searchDistricts(
+        districts,
+        q,
+        (d) => d.district,
+        (d) => {
+          const kn = districtNameKn(d.district)
+          return kn ? [kn] : []
+        },
+      ),
+    [q, districts],
+  )
 
   useEffect(() => setHi(0), [q])
 

@@ -637,6 +637,13 @@ const districtNames: Record<string, string> = {
   'YADGIR': 'ಯಾದಗಿರಿ',
 }
 
+/* Exported so search can match Kannada names regardless of the active
+   language: td() deliberately returns English when lang is 'en', but a
+   Kannada speaker should still be able to type ಬೆಂಗಳೂರು into the English UI. */
+export function districtNameKn(district: string): string | undefined {
+  return districtNames[district]
+}
+
 // ── Crime type translations ──────────────────────────────────────────
 const crimeTypes: Record<string, string> = {
   'Arms Act Violations': 'ಶಸ್ತ್ರಾಸ್ತ್ರ ಕಾಯ್ದೆ ಉಲ್ಲಂಘನೆ',
