@@ -11,7 +11,8 @@ const translations: Record<string, Record<Lang, string>> = {
 
   // ── Header / Footer ───────────────────────────────────────────────
   'header.subtitle': { en: 'Crime Intelligence · Karnataka State Police', kn: 'ಅಪರಾಧ ಗುಪ್ತಚರ · ಕರ್ನಾಟಕ ರಾಜ್ಯ ಪೊಲೀಸ್' },
-  'footer.stats': { en: '1,674,732 FIRs · 2016–2024 · 41 districts · 1,074 stations', kn: '1,674,732 ಎಫ್‌ಐಆರ್ · 2016–2024 · 41 ಜಿಲ್ಲೆಗಳು · 1,074 ಠಾಣೆಗಳು' },
+  'footer.districts': { en: 'districts', kn: 'ಜಿಲ್ಲೆಗಳು' },
+  'footer.stations': { en: 'stations', kn: 'ಠಾಣೆಗಳು' },
   'footer.hotspots': { en: 'Hotspots: Getis-Ord Gi* (p < 0.05) · Basemap © OpenStreetMap', kn: 'ಹಾಟ್‌ಸ್ಪಾಟ್: Getis-Ord Gi* (p < 0.05) · ನಕ್ಷೆ © OpenStreetMap' },
 
   // ── SENSE view ─────────────────────────────────────────────────────
@@ -77,7 +78,7 @@ const translations: Record<string, Record<Lang, string>> = {
   'predict.modelStats': { en: 'Model performance', kn: 'ಮಾದರಿ ಕಾರ್ಯಕ್ಷಮತೆ' },
   'predict.crimesIn5': { en: 'crimes in 5% area', kn: '5% ಪ್ರದೇಶದಲ್ಲಿ ಅಪರಾಧಗಳು' },
   'predict.predictionAccuracy': { en: 'prediction accuracy', kn: 'ಮುನ್ಸೂಚನೆ ನಿಖರತೆ' },
-  'predict.testAUC': { en: 'test AUC', kn: 'ಪರೀಕ್ಷಾ AUC' },
+  'predict.pei': { en: 'efficiency index', kn: 'ದಕ್ಷತೆ ಸೂಚ್ಯಂಕ' },
   'predict.paiCurve': { en: 'Crime captured vs area patrolled', kn: 'ಗಸ್ತು ಪ್ರದೇಶಕ್ಕೆ ಎದುರಾಗಿ ಸೆರೆಹಿಡಿದ ಅಪರಾಧ' },
   'predict.modelLine': { en: 'PRAHARI', kn: 'ಪ್ರಹರಿ' },
   'predict.randomPatrol': { en: 'random patrol', kn: 'ಯಾದೃಚ್ಛಿಕ ಗಸ್ತು' },
@@ -224,8 +225,11 @@ const translations: Record<string, Record<Lang, string>> = {
   'trust.hideExamples': { en: 'Hide examples', kn: 'ಉದಾಹರಣೆಗಳನ್ನು ಮರೆಮಾಡಿ' },
   'trust.limitCorpus': { en: 'Scores are benchmarked on a synthetic FIR corpus with planted patterns (a ground-truth test that the pipeline recovers known structure). The same harness runs unchanged on live CCTNS data — real-world scores will differ.', kn: 'ಅಂಕಗಳನ್ನು ಕೃತಕ FIR ದತ್ತಸಂಚಯದ ಮೇಲೆ ಮಾನದಂಡ ಮಾಡಲಾಗಿದೆ; ನೈಜ ದತ್ತಾಂಶದಲ್ಲಿ ಅಂಕಗಳು ಭಿನ್ನವಾಗಿರುತ್ತವೆ.' },
   'trust.reliabilitySub': { en: 'every number below is measured on held-out data the model never saw — nothing is estimated', kn: 'ಕೆಳಗಿನ ಪ್ರತಿ ಸಂಖ್ಯೆಯೂ ಮಾದರಿ ನೋಡದ ದತ್ತಾಂಶದ ಮೇಲೆ ಅಳೆಯಲಾಗಿದೆ — ಯಾವುದೂ ಅಂದಾಜಲ್ಲ' },
-  'trust.aucTile': { en: 'ranking quality (AUC)', kn: 'ಶ್ರೇಣಿ ಗುಣಮಟ್ಟ (AUC)' },
-  'trust.aucSub': { en: 'risky cell ranked above safe one', kn: 'ಸುರಕ್ಷಿತಕ್ಕಿಂತ ಅಪಾಯದ ಕೋಶ ಮೇಲೆ' },
+  'forecast.title': { en: 'Departure from baseline', kn: 'ಬೇಸ್‌ಲೈನ್‌ನಿಂದ ವಿಚಲನ' },
+  'forecast.note': { en: 'Observed minus STL-expected counts, summed over active anomalies. Bar length is relative to the largest departure shown; arrow direction is set only when the 80% interval excludes zero.', kn: 'ಗಮನಿಸಿದ ಸಂಖ್ಯೆಗಳು ಮತ್ತು STL ನಿರೀಕ್ಷಿತ ಸಂಖ್ಯೆಗಳ ನಡುವಿನ ವ್ಯತ್ಯಾಸ. 80% ಅಂತರವು ಸುನ್ನಯನ್ನು ಹೊರತುಪಡಿಸಿದಾಗ ಮಾತ್ರ ದಿಕ್ಕು ತೋರಿಸಲಾಗುತ್ತದೆ.' },
+  'trust.modelSummary': { en: 'Model summary', kn: 'ಮಾದರಿ ಸಾರಾಶ' },
+  'trust.hitRateTile': { en: 'crime captured in 5% of area', kn: '5% ಪ್ರದೇಶದಲ್ಲಿ ಸೆರೆಹಿಡಿದ ಅಪರಾಧ' },
+  'trust.hitRateSub': { en: 'measured on the held-out test period', kn: 'ಪರೀಕ್ಷಾ ಅವಧಿಯಲ್ಲಿ ಅಳೆಯಲಾಗಿದೆ' },
   'trust.calibTile': { en: 'calibration error', kn: 'ಕ್ಯಾಲಿಬ್ರೇಶನ್ ದೋಷ' },
   'trust.calibTileSub': { en: 'predicted risk vs what happened', kn: 'ಊಹಿಸಿದ ಅಪಾಯ vs ನಡೆದದ್ದು' },
   'trust.peiTile': { en: 'of theoretical best', kn: 'ಸೈದ್ಧಾಂತಿಕ ಗರಿಷ್ಠದ' },
@@ -250,7 +254,7 @@ const translations: Record<string, Record<Lang, string>> = {
   // ── Intro overlay ──────────────────────────────────────────────────
   'intro.title': { en: 'Welcome to PRAHARI', kn: 'ಪ್ರಹರಿಗೆ ಸ್ವಾಗತ' },
   'intro.subtitle': { en: 'AI-driven crime intelligence for Karnataka State Police', kn: 'ಕರ್ನಾಟಕ ರಾಜ್ಯ ಪೊಲೀಸರಿಗಾಗಿ AI-ಚಾಲಿತ ಅಪರಾಧ ಗುಪ್ತಚರ' },
-  'intro.senseDesc': { en: 'Statistical hotspot detection with Gi* spatial analysis across all 41 districts', kn: 'ಎಲ್ಲಾ 41 ಜಿಲ್ಲೆಗಳಲ್ಲಿ Gi* ಸ್ಥಳೀಯ ವಿಶ್ಲೇಷಣೆಯೊಂದಿಗೆ ಸಂಖ್ಯಾಶಾಸ್ತ್ರೀಯ ಹಾಟ್‌ಸ್ಪಾಟ್ ಪತ್ತೆ' },
+  'intro.senseDesc': { en: 'Statistical hotspot detection with Gi* spatial analysis across all 37 police districts', kn: 'ಎಲ್ಲಾ 37 ಪೊಲೀಸ್ ಜಿಲ್ಲೆಗಳಲ್ಲಿ Gi* ಸ್ಥಳೀಯ ವಿಶ್ಲೇಷಣೆಯೊಂದಿಗೆ ಸಂಖ್ಯಾಶಾಸ್ತ್ರೀಯ ಹಾಟ್‌ಸ್ಪಾಟ್ ಪತ್ತೆ' },
   'intro.predictDesc': { en: 'Risk forecasting, anomaly alerts, and co-offending network analysis', kn: 'ಅಪಾಯ ಮುನ್ಸೂಚನೆ, ಅಸಹಜತೆ ಎಚ್ಚರಿಕೆಗಳು, ಮತ್ತು ಸಹ-ಅಪರಾಧ ಜಾಲ ವಿಶ್ಲೇಷಣೆ' },
   'intro.actDesc': { en: 'Optimized patrol deployment with coverage analysis and briefing sheets', kn: 'ವ್ಯಾಪ್ತಿ ವಿಶ್ಲೇಷಣೆ ಮತ್ತು ಮಾಹಿತಿ ಹಾಳೆಗಳೊಂದಿಗೆ ಅತ್ಯುತ್ತಮ ಗಸ್ತು ನಿಯೋಜನೆ' },
   'intro.trustDesc': { en: 'SHAP explanations, fairness audit, and transparent benchmarks', kn: 'SHAP ವಿವರಣೆಗಳು, ನ್ಯಾಯೋಚಿತ ಲೆಕ್ಕಪರಿಶೋಧನೆ, ಮತ್ತು ಪಾರದರ್ಶಕ ಮಾನದಂಡಗಳು' },
@@ -269,8 +273,8 @@ const translations: Record<string, Record<Lang, string>> = {
   'intel.recommendation': { en: 'Recommended Action', kn: 'ಶಿಫಾರಸು ಕ್ರಮ' },
   'intel.deployment': { en: 'Recommended Deployment', kn: 'ಶಿಫಾರಸು ನಿಯೋಜನೆ' },
   'intel.forecast': { en: '7-Day Crime Forecast', kn: '7-ದಿನ ಅಪರಾಧ ಮುನ್ಸೂಚನೆ' },
-  'intel.aiInsight': { en: 'AI Prediction Insight', kn: 'AI ಮುನ್ಸೂಚನೆ ಒಳನೋಟ' },
-  'intel.aiSummary': { en: 'AI Intelligence Summary', kn: 'AI ಗುಪ್ತಚರ ಸಾರಾಂಶ' },
+  'intel.aiInsight': { en: 'Model insight', kn: 'ಮಾದರಿ ಒಳನೋಡ' },
+  'intel.aiSummary': { en: 'Model summary', kn: 'ಮಾದರಿ ಸಾರಾಶ' },
   'intel.trend': { en: 'Trend', kn: 'ಪ್ರವೃತ್ತಿ' },
   'intel.heinous': { en: 'Heinous', kn: 'ಗಂಭೀರ' },
   'intel.clearance': { en: 'Clearance', kn: 'ತೀರ್ಮಾನ' },
@@ -305,15 +309,15 @@ const translations: Record<string, Record<Lang, string>> = {
     // "16.7 ಲಕ್ಷ" are the same quantity (1 lakh = 100,000), but showing two
     // different-looking figures across a language toggle invites a judge to
     // wonder which is wrong. The precise number is unambiguous in both.
-    en: 'PRAHARI turns 1,674,732 Karnataka FIR records into decisions a station house officer can act on tonight — where crime is statistically clustering, what is likely next week, and exactly where to send the patrol.',
-    kn: 'ಪ್ರಹರಿ 1,674,732 ಕರ್ನಾಟಕ ಎಫ್‌ಐಆರ್ ದಾಖಲೆಗಳನ್ನು ಇಂದೇ ಕ್ರಮ ಕೈಗೊಳ್ಳಬಹುದಾದ ನಿರ್ಧಾರಗಳಾಗಿ ಪರಿವರ್ತಿಸುತ್ತದೆ.',
+    en: 'PRAHARI turns {firs} Karnataka FIR records into decisions a station house officer can act on tonight — where crime is statistically clustering, what is likely next week, and exactly where to send the patrol.',
+    kn: 'ಪ್ರಹರಿ {firs} ಕರ್ನಾಟಕ ಎಫ್‌ಐಆರ್ ದಾಖಲೆಗಳನ್ನು ಇಂದೇ ಕ್ರಮ ಕೈಗೊಳ್ಳಬಹುದಾದ ನಿರ್ಧಾರಗಳಾಗಿ ಪರಿವರ್ತಿಸುತ್ತದೆ.',
   },
   'site.hero.cta': { en: 'Enter the console', kn: 'ಕನ್ಸೋಲ್ ಪ್ರವೇಶಿಸಿ' },
   'site.hero.cta2': { en: 'How it works', kn: 'ಹೇಗೆ ಕೆಲಸ ಮಾಡುತ್ತದೆ' },
   'site.hero.statFirs': { en: 'FIR records', kn: 'ಎಫ್‌ಐಆರ್ ದಾಖಲೆ' },
   'site.hero.statDistricts': { en: 'Districts', kn: 'ಜಿಲ್ಲೆಗಳು' },
   'site.hero.statStations': { en: 'Stations', kn: 'ಠಾಣೆಗಳು' },
-  'site.hero.statAuc': { en: 'Model AUC', kn: 'ಮಾದರಿ AUC' },
+  'site.hero.statPai': { en: 'Better than random', kn: 'ಯಾದೃಚ್ಛಿಕಕ್ಕಿಂತ ಉತ್ತಮ' },
 
   // ── Problem ────────────────────────────────────────────────────────
   'site.problem.stamp': { en: '01 / The gap', kn: '01 / ಅಂತರ' },
@@ -379,7 +383,7 @@ const translations: Record<string, Record<Lang, string>> = {
   // 16,650 is the cell count the shipped hotspot data actually carries and
   // what the SENSE readout shows ("722 hot cells / 16,650 analysed").
   // The old 16,463 matched neither and would not survive a judge checking.
-  'site.caps.ingest.body': { en: 'Eight fragmented CCTNS tables normalised into one analysis-ready model — 1,674,732 cases across 16,650 analysed grid cells.', kn: '' },
+  'site.caps.ingest.body': { en: 'Eight fragmented CCTNS tables normalised into one analysis-ready model — {firs} cases across 16,650 analysed grid cells.', kn: '' },
   'site.caps.geo.title': { en: 'Geospatial drill-down', kn: 'ಭೌಗೋಳಿಕ ವಿಶ್ಲೇಷಣೆ' },
   'site.caps.geo.body': { en: 'State-to-district-to-station navigation on a live map, with filters by crime type, gravity and time.', kn: '' },
   'site.caps.hotspot.title': { en: 'Statistical hotspot detection', kn: 'ಅಂಕಿಅಂಶ ಹಾಟ್‌ಸ್ಪಾಟ್ ಪತ್ತೆ' },
@@ -389,7 +393,7 @@ const translations: Record<string, Record<Lang, string>> = {
   'site.caps.anomaly.title': { en: 'Emerging-pattern alerts', kn: 'ಹೊಸ ಮಾದರಿ ಎಚ್ಚರಿಕೆಗಳು' },
   'site.caps.anomaly.body': { en: 'STL residual analysis surfaces spikes as they emerge, ranked by z-score and routed to the intelligence feed.', kn: '' },
   'site.caps.network.title': { en: 'Co-offending network', kn: 'ಸಹ-ಅಪರಾಧಿ ಜಾಲ' },
-  'site.caps.network.body': { en: 'A 341,803-node offender graph with Louvain communities and a disruption simulator that ranks who to remove first.', kn: '' },
+  'site.caps.network.body': { en: 'A co-offending graph over every accused on record, with Louvain communities and a disruption simulator that ranks who to remove first.', kn: '' },
   'site.caps.socio.title': { en: 'Socio-economic overlay', kn: 'ಸಾಮಾಜಿಕ-ಆರ್ಥಿಕ ಪದರ' },
   'site.caps.socio.body': { en: 'Demographic and occupational correlations for accused and victims, read alongside the spatial picture.', kn: '' },
   'site.caps.patrol.title': { en: 'Patrol optimizer', kn: 'ಗಸ್ತು ಆಪ್ಟಿಮೈಜರ್' },
@@ -408,10 +412,12 @@ const translations: Record<string, Record<Lang, string>> = {
     en: 'Every figure below is read live from the benchmark report the pipeline produces, so this page cannot drift from what the model actually did.',
     kn: 'ಕೆಳಗಿನ ಪ್ರತಿ ಅಂಕಿಯೂ ಪೈಪ್‌ಲೈನ್ ಉತ್ಪಾದಿಸಿದ ವರದಿಯಿಂದ ನೇರವಾಗಿ ಬರುತ್ತದೆ.',
   },
-  'site.metrics.pai': { en: 'PAI @ top 5% area', kn: 'PAI @ ಮೇಲಿನ 5%' },
+  'site.metrics.pai': { en: 'Predictive accuracy index', kn: 'ಭವಿಷ್ಯ ನಿಖರತೆ ಸೂಚ್ಯಂಕ' },
   'site.metrics.paiNote': { en: '{n}% of crime falls inside the 5% of area the model flags.', kn: '' },
-  'site.metrics.auc': { en: 'Test AUC', kn: 'ಪರೀಕ್ಷಾ AUC' },
-  'site.metrics.aucNote': { en: 'Held-out temporal split — trained on earlier years, tested on later ones.', kn: '' },
+  'site.metrics.rri': { en: 'Better than current practice', kn: 'ಪ್ರಸ್ತುತ ವಿಧಾನಕ್ಕಿಂತ ಸುಧಾರಿತ' },
+  'site.metrics.rriNote': { en: 'Recapture Rate Index. Patrolling where crime has historically been captures {n}% in the same 5% of area; PRAHARI captures more.', kn: 'ರಿಕಾಪ್ಚರ್ ದರ ಸೂಚ್ಯಂಕ. ಐತಿಹಾಸಿಕ ಅಪರಾಧ ಸ್ಥಳಗಳಲ್ಲಿ ಗಸ್ತು ಮಾಡಿದರೆ ಅದೇ 5% ಪ್ರದೇಶದಲ್ಲಿ {n}% ಸಿಗುತ್ತದೆ.' },
+  'site.metrics.hitRate': { en: 'Hit rate @ 5% area', kn: 'ಹಿಟ್ ದರ @ 5% ಪ್ರದೇಶ' },
+  'site.metrics.hitRateNote': { en: 'Share of next period’s crime captured inside the flagged 5%. Held-out temporal split — trained on earlier years, tested on later ones.', kn: 'ಫ್ಲಾಗ್ ಮಾಡಿದ 5% ಪ್ರದೇಶದಲ್ಲಿ ಸೆರೆಹಿಡಿದ ಮುಂದಿನ ಅವಧಿಯ ಅಪರಾಧಗಳ ಪ್ರಮಾಣ.' },
   'site.metrics.coverage': { en: 'Patrol coverage uplift', kn: 'ಗಸ್ತು ವ್ಯಾಪ್ತಿ ಏರಿಕೆ' },
   'site.metrics.coverageNote': { en: '{a}% optimized vs {b}% status quo, same number of units.', kn: '' },
   'site.metrics.gini': { en: 'Allocation Gini', kn: 'ಹಂಚಿಕೆ ಜಿನಿ' },
@@ -486,7 +492,7 @@ const translations: Record<string, Record<Lang, string>> = {
 
   // ── How it works page ──────────────────────────────────────────────
   'site.how.stamp': { en: 'Method', kn: 'ವಿಧಾನ' },
-  'site.how.title': { en: 'From 1,674,732 records to tonight’s patrol route', kn: '1,674,732 ದಾಖಲೆಗಳಿಂದ ಇಂದಿನ ಗಸ್ತು ಮಾರ್ಗಕ್ಕೆ' },
+  'site.how.title': { en: 'From {firs} records to tonight’s patrol route', kn: '{firs} ದಾಖಲೆಗಳಿಂದ ಇಂದಿನ ಗಸ್ತು ಮಾರ್ಗಕ್ಕೆ' },
   'site.how.lede': {
     en: 'The pipeline runs end to end in about twenty minutes and produces every artefact the console reads. Nothing on screen is computed live in the browser.',
     kn: 'ಪೈಪ್‌ಲೈನ್ ಸುಮಾರು ಇಪ್ಪತ್ತು ನಿಮಿಷಗಳಲ್ಲಿ ಪೂರ್ಣಗೊಳ್ಳುತ್ತದೆ.',

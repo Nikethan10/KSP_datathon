@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { fetchJson, featureName } from '../lib/data'
-import { generateAISummary } from '../lib/insights'
+import { composeModelSummary } from '../lib/insights'
 import { useI18n } from '../lib/i18n'
 import type {
   ShapData, FairnessReport, BenchmarkReport, CalibrationData, ReliabilityPoint,
@@ -98,7 +98,7 @@ export default function TrustView() {
 
   const aiSummary = useMemo(() => {
     if (!rm) return null
-    return generateAISummary(rm)
+    return composeModelSummary(rm)
   }, [rm])
 
   if (!benchmark && !shap && !fairness) {
@@ -123,7 +123,7 @@ export default function TrustView() {
                 <path d="M12 2a7 7 0 0 1 7 7c0 2.4-1.2 4.5-3 5.7V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.3A7 7 0 0 1 12 2Z" stroke="#c9a35c" strokeWidth="1.5" />
                 <path d="M9 21h6" stroke="#c9a35c" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
-              <span className="text-[10px] uppercase tracking-widest text-sky-400 font-semibold">AI Intelligence Summary</span>
+              <span className="text-[10px] uppercase tracking-widest text-sky-400 font-semibold">{t('trust.modelSummary')}</span>
             </div>
             <div className="text-[11px] text-slate-300 leading-relaxed">{aiSummary}</div>
           </div>
@@ -136,11 +136,11 @@ export default function TrustView() {
           </div>
           <div className="text-[10px] text-slate-500 mb-2">{t('trust.reliabilitySub')}</div>
           <div className="flex gap-2.5">
-            {rm && (
+            {rm?.pai && (
               <Tile
-                value={rm.test_auc.toFixed(2)}
-                label={t('trust.aucTile')}
-                sub={`${(rm.test_auc * 100).toFixed(0)}% ${t('trust.aucSub')}`}
+                value={`${rm.pai.hit_rate_5pct.toFixed(1)}%`}
+                label={t('trust.hitRateTile')}
+                sub={t('trust.hitRateSub')}
               />
             )}
             {calib && (

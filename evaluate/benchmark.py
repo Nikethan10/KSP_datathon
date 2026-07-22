@@ -5,12 +5,49 @@ from pathlib import Path
 from config import OUTPUT_DIR
 
 
+def compute_rri(scored_df, hit_rates: dict, area_pcts=None) -> dict:
+    """Recapture Rate Index: our hit rate divided by the hit rate of the
+    baseline stations already run -- "patrol where crime has been happening".
+
+    The baseline is ranked using ONLY pre-test rows, which is exactly the
+    information a station has on the first morning of the forecast window.
+    Ranking it on test-period data would leak the answer and understate us.
+
+    RRI > 1 means we beat current practice. An SP can take "27% better than
+    what you do today" to a budget meeting; AUC does not survive that room.
+    """
+    if area_pcts is None:
+        area_pcts = [1, 2, 5, 10, 20]
+
+    test = scored_df[scored_df["split"] == "test"]
+    prior = scored_df[scored_df["split"] != "test"]
+
+    actual = test.groupby("cell_id")["n_crimes"].sum()
+    total = actual.sum()
+    n_cells = actual.size
+    if total == 0 or n_cells == 0:
+        return {}
+
+    prior_vol = prior.groupby("cell_id")["n_crimes"].sum().reindex(actual.index).fillna(0)
+
+    results = {}
+    for pct in area_pcts:
+        n_top = max(1, int(n_cells * pct / 100))
+        top = prior_vol.sort_values(ascending=False).head(n_top).index
+        base = actual.reindex(top).fillna(0).sum() / total * 100
+        ours = hit_rates.get(f"hit_rate_{pct}pct", 0)
+        results[f"baseline_hit_rate_{pct}pct"] = round(base, 2)
+        results[f"rri_{pct}pct"] = round(ours / base, 2) if base else None
+    return results
+
+
 def run_full_benchmark(
     risk_summary: dict,
     patrol_summary: dict,
     network_summary: dict,
     fairness_report: dict,
     output_dir: Path = None,
+    scored_df=None,
 ) -> dict:
     """Consolidate all metrics into a single benchmark report."""
     if output_dir is None:
@@ -23,20 +60,31 @@ def run_full_benchmark(
         "patrol_optimizer": {},
         "network_analysis": {},
         "fairness": {},
+        # Kept for the methodology appendix and never rendered in the UI. AUC
+        # is computed over all cell-shift pairs, including the vast mass of
+        # quiet rural cells at 3am nobody was ever going to patrol, so it
+        # flatters the model and says nothing about the decision an SP makes.
+        "diagnostics": {},
     }
 
     # Risk model metrics
     if risk_summary:
         report["risk_model"] = {
-            "test_auc": risk_summary.get("test_auc"),
             "pai": risk_summary.get("pai", {}),
             "pei": risk_summary.get("pei", {}),
             "top_features": risk_summary.get("feature_importance", [])[:5],
         }
-        pai_5 = risk_summary.get("pai", {}).get("pai_5pct", 0)
-        hit_5 = risk_summary.get("pai", {}).get("hit_rate_5pct", 0)
-        report["headline_numbers"]["pai_5pct"] = pai_5
-        report["headline_numbers"]["hit_rate_5pct"] = hit_5
+        report["diagnostics"]["test_auc"] = risk_summary.get("test_auc")
+        pai = risk_summary.get("pai", {})
+        report["headline_numbers"]["pai_5pct"] = pai.get("pai_5pct", 0)
+        report["headline_numbers"]["hit_rate_5pct"] = pai.get("hit_rate_5pct", 0)
+
+        if scored_df is not None:
+            rri = compute_rri(scored_df, pai)
+            report["risk_model"]["rri"] = rri
+            if rri.get("rri_5pct") is not None:
+                report["headline_numbers"]["rri_5pct"] = rri["rri_5pct"]
+                report["headline_numbers"]["baseline_hit_rate_5pct"] = rri["baseline_hit_rate_5pct"]
 
     # Patrol optimizer
     if patrol_summary:
@@ -82,6 +130,10 @@ def run_full_benchmark(
     print("=" * 70)
     print(f"\n  1. PAI at 5% area: {hn.get('pai_5pct', 'N/A')}")
     print(f"     ({hn.get('hit_rate_5pct', 'N/A')}% of crimes found in 5% of area)")
+    if hn.get("rri_5pct") is not None:
+        print(f"  1b. Recapture Rate Index: {hn['rri_5pct']}x current practice")
+        print(f"      (baseline 'patrol where crime has been' captures "
+              f"{hn.get('baseline_hit_rate_5pct')}% in the same 5%)")
     print(f"\n  2. Coverage uplift: +{hn.get('coverage_uplift_pct', 'N/A')}%")
     print(f"     ({hn.get('optimized_coverage_pct', 'N/A')}% optimized vs baseline)")
     print(f"\n  3. Network: {hn.get('network_communities', 'N/A')} co-offending groups "

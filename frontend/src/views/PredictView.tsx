@@ -282,7 +282,7 @@ export default function PredictView() {
                 <svg viewBox="0 0 24 24" width="10" height="10" fill="none" aria-hidden>
                   <path d="M12 2a7 7 0 0 0-7 7c0 3 2 5.5 5.5 8.5L12 19l1.5-1.5C17 14.5 19 12 19 9a7 7 0 0 0-7-7Z" stroke="currentColor" strokeWidth="1.5" />
                 </svg>
-                AI Prediction Insight
+                {t('intel.aiInsight')}
               </div>
               <div className="text-[10px] text-slate-400 leading-snug">{predictionNarrative}</div>
             </div>

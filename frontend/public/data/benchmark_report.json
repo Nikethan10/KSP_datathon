@@ -2,6 +2,8 @@
   "headline_numbers": {
     "pai_5pct": 10.63,
     "hit_rate_5pct": 53.13,
+    "rri_5pct": 1.27,
+    "baseline_hit_rate_5pct": 41.94,
     "coverage_uplift_pct": 215.6,
     "optimized_coverage_pct": 11.67,
     "statusquo_coverage_pct": 9.87,
@@ -17,7 +19,6 @@
     "best_gang_pieces": 11
   },
   "risk_model": {
-    "test_auc": 0.8471,
     "pai": {
       "pai_1pct": 25.9,
       "hit_rate_1pct": 25.9,
@@ -58,7 +59,19 @@
         "feature": "is_morning_shift",
         "importance": 87
       }
-    ]
+    ],
+    "rri": {
+      "baseline_hit_rate_1pct": 15.61,
+      "rri_1pct": 1.66,
+      "baseline_hit_rate_2pct": 25.74,
+      "rri_2pct": 1.42,
+      "baseline_hit_rate_5pct": 41.94,
+      "rri_5pct": 1.27,
+      "baseline_hit_rate_10pct": 57.05,
+      "rri_10pct": 1.17,
+      "baseline_hit_rate_20pct": 70.19,
+      "rri_20pct": 1.12
+    }
   },
   "patrol_optimizer": {
     "n_patrols": 6,
@@ -101,6 +114,13 @@
       "gang_rank": 20,
       "gang_size": 953,
       "gang_edges": 1806,
+      "threat_tier": "medium",
+      "threat_score": 31.0,
+      "heinous_pct": 41.4,
+      "violent_pct": 41.4,
+      "top_crime": "Crimes Against Body",
+      "n_districts": 37,
+      "total_cases": 1344,
       "n_articulation_points": 436,
       "key_members": [
         {
@@ -132,10 +152,10 @@
           "is_articulation": true
         },
         {
-          "offender_id": "88d2b23a5c58",
-          "name": "Elijah Suresh",
+          "offender_id": "c1889f447020",
+          "name": "Ati Chatterjee",
           "gang_degree": 14,
-          "total_cases": 2,
+          "total_cases": 4,
           "is_articulation": true
         }
       ],
@@ -156,5 +176,8 @@
     "gini": 0.1833,
     "max_min_ratio": 3.51,
     "bias_districts_flagged": 11
+  },
+  "diagnostics": {
+    "test_auc": 0.8471
   }
 }

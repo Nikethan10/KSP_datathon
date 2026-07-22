@@ -5,7 +5,7 @@ KSP Datathon 2026 — Challenge 02.
 
 **Live Application:** https://prahari-60076064719.development.catalystserverless.in/app/index.html
 
-PRAHARI processes 1,674,732 FIR records (2016–2024, across all 41 districts and 1,074 police stations) into actionable operational decision intelligence: identifying statistical crime clusters, predicting week-ahead spatial risk, and optimizing shift patrol deployments.
+PRAHARI processes 1,674,732 FIR records (2016–2024, across all 37 Karnataka police districts, 4 non-territorial units and 1,074 police stations) into actionable operational decision intelligence: identifying statistical crime clusters, predicting week-ahead spatial risk, and optimizing shift patrol deployments.
 
 ---
 
@@ -22,11 +22,11 @@ PRAHARI processes 1,674,732 FIR records (2016–2024, across all 41 districts an
 
 ## Empirical Benchmark Performance
 
-All metrics are programmatically exported by `outputs/evaluate/benchmark_report.json` and consumed directly by the interface to maintain fidelity with pipeline outputs.
+All metrics are exported to `outputs/evaluate/benchmark_report.json` by the pipeline and published to [`frontend/public/data/benchmark_report.json`](frontend/public/data/benchmark_report.json), which **is committed** — `outputs/` is gitignored, so that published copy is the one to read. The interface reads it at runtime and renders an em-dash for any figure it cannot load, so nothing on screen is ever a hardcoded literal.
 
 | Evaluation Metric | Value | Technical Context |
 |---|---|---|
-| Risk Model AUC | **0.847** | Evaluated on out-of-time test split |
+| Recapture Rate Index (RRI @ 5%) | **1.27×** | Versus the status-quo tactic of patrolling where crime has historically occurred, which captures 41.9% in the same area budget. Baseline ranked on pre-2024 data only, so no test-period information leaks into it. |
 | Predictive Accuracy Index (PAI @ 5%) | **10.63** | Captures 53.1% of crimes within top 5% priority spatial area |
 | Patrol Coverage | **11.67%** | Optimized ILP coverage vs **9.87%** volume-based baseline (+18.2% relative uplift) |
 | Optimization Gap | **11.72% vs 11.67%** | Greedy heuristic within 0.05 percentage points of global ILP optimum |
@@ -37,7 +37,9 @@ All metrics are programmatically exported by `outputs/evaluate/benchmark_report.
 
 ## Responsible AI & Ethical Design
 
-PRAHARI predicts spatial-temporal crime risk for **geographic grid cells and time windows**, and analyzes structural relationships among individuals **already on official record**. The system explicitly does **not** generate individual-level pre-crime scores. Personal identifiers are anonymized at data ingestion, and no sensitive case-level metadata is exposed on public endpoints.
+PRAHARI predicts spatial-temporal crime risk for **geographic grid cells and time windows**, and analyzes structural relationships among individuals **already on official record**. The system explicitly does **not** generate individual-level pre-crime scores.
+
+**Current access model — stated plainly.** This prototype is a static site with no authentication: every precomputed artifact under `/app/data/` is readable by anyone with the URL, including the offender dossier index. The personal names in the supplied dataset are synthetic, so no real individual is identifiable, but the *architecture* has no access control and we are not going to imply otherwise. Role-based access (SCRB analyst / District SP / Station House Officer), an access audit log requiring a written justification before any dossier is opened, and a move of offender lookup behind an authenticated Catalyst Function are in progress; this section will be updated when they land. On real CCTNS data, none of the dossier surfaces should be deployed without them.
 
 ---
 
@@ -55,8 +57,14 @@ The web console initializes locally at `http://localhost:5173/app/`. Precomputed
 
 ### 2. Analytics Pipeline Execution
 
+The dataset is distributed separately and is not in this repository. Point
+`PRAHARI_DATASET_DIR` at your extracted `submission_dataset` folder (or place it
+at `<repo>/dataset`); see [`.env.example`](.env.example). `main.py` fails with an
+explanatory message if it cannot find it.
+
 ```bash
 pip install -r requirements.txt
+export PRAHARI_DATASET_DIR=/path/to/submission_dataset   # PowerShell: $env:PRAHARI_DATASET_DIR = "..."
 python main.py            # Executes full 9-stage analytics pipeline (~22 min)
 python copy_data.py       # Exports analytics outputs to frontend assets
 python optimize_geojson.py      # Optimizes GeoJSON structures for compressed delivery
@@ -72,7 +80,8 @@ python bundle_patrol.py         # Aggregates district patrol plans into bundled 
 
 ### Deployment Workflow
 
-Run from the root directory:
+Full instructions, platform gotchas and the Catalyst project binding are in
+[`docs/DEPLOY.md`](docs/DEPLOY.md). Short version, from the root directory:
 
 ```powershell
 cd frontend; npm run build; cd ..
@@ -120,9 +129,9 @@ frontend/                                React 19 + TypeScript web application
 
 | Team Member | GitHub Profile | Core Component Ownership |
 |---|---|---|
-| **Nikethan Tirumala** | [@nikethan_10](https://github.com/Nikethan10) | Frontend Architecture, Web Console, MapLibre GL & deck.gl Integration |
+| **Nikethan Tirumala** | [@Nikethan10](https://github.com/Nikethan10) | Frontend Architecture, Web Console, MapLibre GL & deck.gl Integration |
 | **Hari Nair** | [@r-harinarayanan](https://github.com/r-harinarayanan) | Analytics Pipeline, LightGBM Risk Model, STL Anomaly Detection |
-| **Katir** | [@myselfcarewinter-hue](https://github.com/myselfcarewinter-hue) | System Architecture, ACT Patrol Optimizer, TRUST Layer, Catalyst Deployment |
+| **Katir Velavan** (team lead) | [@myselfcarewinter-hue](https://github.com/myselfcarewinter-hue) | System Architecture, ACT Patrol Optimizer, TRUST Layer, Catalyst Deployment |
 | **Dhikshitha** | [@DHIKSHITHA0906](https://github.com/DHIKSHITHA0906) | Co-offending Graph Analytics, Louvain Community Detection, Disruption Modeling |
 | **Nihan** | [@nihan-98716](https://github.com/nihan-98716) | Data Engineering, CCTNS Data Normalization, Gi\* Spatial Analysis Pipeline |
 
@@ -132,4 +141,6 @@ frontend/                                React 19 + TypeScript web application
 
 ## License
 
-© 2026 Nikethan10. All rights reserved. Proprietary software — no unauthorized copying, modification, or distribution permitted.
+See [LICENSE](LICENSE).
+
+Submitted to KSP Datathon 2026 under Hack2skill's terms, which require a public repository. Verify the licence choice against those terms before the finale.
