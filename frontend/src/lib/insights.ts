@@ -151,9 +151,9 @@ export function generatePredictionNarrative(
   const top3 = shapFeatures.slice(0, 3)
   const drivers = top3.map((f) => f.description || f.feature).join(', ')
   const hitRate = riskSummary.pai?.hit_rate_5pct ?? 0
-  const auc = riskSummary.test_auc
+  const pai = riskSummary.pai?.pai_5pct ?? 0
 
-  return `PRAHARI identifies ${hitRate.toFixed(1)}% of future crime in just 5% of the area (AUC ${auc.toFixed(2)}). Top prediction drivers: ${drivers}. The model has learned spatio-temporal crime clustering patterns — areas with recent nearby incidents face significantly elevated risk.`
+  return `PRAHARI identifies ${hitRate.toFixed(1)}% of future crime in just 5% of the area — ${pai.toFixed(1)}× what picking that area at random would return. Top prediction drivers: ${drivers}. The model has learned spatio-temporal crime clustering patterns — areas with recent nearby incidents face significantly elevated risk.`
 }
 
 export function generatePatrolRecommendation(
@@ -180,45 +180,100 @@ export function generatePatrolRecommendation(
 export interface ForecastItem {
   crimeType: string
   direction: 'up' | 'down' | 'stable'
-  confidence: number
+  /** observed minus STL-expected, summed over this crime type's anomalies */
+  excess: number
+  /** 80% interval on `excess`, from the pooled STL residual dispersion */
+  lo: number
+  hi: number
+  nSpikes: number
+  nDrops: number
+  nDistricts: number
   detail: string
 }
+
+/* z = (observed - expected) / sigma, so the STL residual standard deviation
+   behind each anomaly is recoverable as (observed - expected) / z. Summing
+   independent residuals gives sigma_total = sqrt(sum of sigma_i^2), which is
+   what the interval below is built from.
+
+   This replaces a "confidence" field that was literally
+   `Math.min(95, 50 + total * 8)` -- a percentage that rose with how many
+   anomalies happened to be in the feed and carried no statistical meaning at
+   all. In a policing context that is not a rough heuristic, it is a made-up
+   statistic attached to a crime forecast. */
+const Z80 = 1.2816 // two-sided 80% normal quantile
 
 export function generateForecast(
   anomalies: Anomaly[],
   _districts: DistrictSummary[],
 ): ForecastItem[] {
-  const crimeMap = new Map<string, { spikes: number; drops: number; total: number }>()
+  interface Acc {
+    spikes: number
+    drops: number
+    excess: number
+    variance: number
+    districts: Set<string>
+  }
+  const byCrime = new Map<string, Acc>()
 
   for (const a of anomalies) {
-    const entry = crimeMap.get(a.crime_type) ?? { spikes: 0, drops: 0, total: 0 }
-    if (a.zscore > 0) entry.spikes++
-    else entry.drops++
-    entry.total++
-    crimeMap.set(a.crime_type, entry)
+    const acc =
+      byCrime.get(a.crime_type) ??
+      { spikes: 0, drops: 0, excess: 0, variance: 0, districts: new Set<string>() }
+
+    const delta = a.observed - a.expected
+    if (a.zscore > 0) acc.spikes++
+    else acc.drops++
+    acc.excess += delta
+
+    // Guard against a zero z-score, which would divide to Infinity.
+    if (a.zscore !== 0) {
+      const sigma = Math.abs(delta / a.zscore)
+      acc.variance += sigma * sigma
+    }
+    acc.districts.add(a.district)
+    byCrime.set(a.crime_type, acc)
   }
 
   const items: ForecastItem[] = []
-  for (const [crime, stats] of crimeMap.entries()) {
-    const direction = stats.spikes > stats.drops ? 'up' : stats.drops > stats.spikes ? 'down' : 'stable'
-    const confidence = Math.min(95, 50 + stats.total * 8)
-    const affectedDistricts = new Set(anomalies.filter((a) => a.crime_type === crime).map((a) => a.district))
+  for (const [crime, acc] of byCrime.entries()) {
+    const margin = Z80 * Math.sqrt(acc.variance)
+    const lo = acc.excess - margin
+    const hi = acc.excess + margin
 
+    // "Stable" is not a tie in spike/drop counts -- it is an interval that
+    // straddles zero, i.e. we cannot tell the direction apart from noise.
+    const direction: ForecastItem['direction'] =
+      lo > 0 ? 'up' : hi < 0 ? 'down' : 'stable'
+
+    const nDistricts = acc.districts.size
     items.push({
       crimeType: crime,
       direction,
-      confidence,
-      detail: `${stats.spikes} spike${stats.spikes !== 1 ? 's' : ''} across ${affectedDistricts.size} district${affectedDistricts.size !== 1 ? 's' : ''}`,
+      excess: acc.excess,
+      lo,
+      hi,
+      nSpikes: acc.spikes,
+      nDrops: acc.drops,
+      nDistricts,
+      detail:
+        `${acc.spikes} spike${acc.spikes !== 1 ? 's' : ''}, ` +
+        `${acc.drops} drop${acc.drops !== 1 ? 's' : ''} across ` +
+        `${nDistricts} district${nDistricts !== 1 ? 's' : ''}. ` +
+        `Net ${acc.excess >= 0 ? '+' : ''}${Math.round(acc.excess)} vs STL baseline ` +
+        `(80% interval ${Math.round(lo)} to ${Math.round(hi)}).`,
     })
   }
 
-  return items.sort((a, b) => b.confidence - a.confidence).slice(0, 6)
+  // Rank by the size of the departure from baseline, not by a made-up score.
+  return items.sort((a, b) => Math.abs(b.excess) - Math.abs(a.excess)).slice(0, 6)
 }
 
-export function generateAISummary(riskSummary: Pick<RiskSummary, 'test_auc' | 'pai'>): string {
-  const auc = riskSummary.test_auc
+/* Deterministic template, not a language model. It was called
+   generateAISummary, which implied an LLM had written it. */
+export function composeModelSummary(riskSummary: Pick<RiskSummary, 'pai'>): string {
   const hitRate = riskSummary.pai?.hit_rate_5pct ?? 0
   const pai = riskSummary.pai?.pai_5pct ?? 0
 
-  return `PRAHARI's predictive engine achieves ${(auc * 100).toFixed(0)}% ranking accuracy (AUC ${auc.toFixed(2)}) on held-out test data. By patrolling just 5% of the area, ${hitRate.toFixed(1)}% of future crime is covered — a ${pai.toFixed(1)}× improvement over random deployment. Every prediction is explainable: SHAP values show which factors drove each risk score, and isotonic calibration ensures scores read as true probabilities.`
+  return `On a held-out temporal split, patrolling the 5% of Karnataka that PRAHARI flags captures ${hitRate.toFixed(1)}% of the crime that follows — ${pai.toFixed(1)}× what the same area picked at random would return. Every prediction is explainable: SHAP values show which factors drove each risk score, and isotonic calibration ensures scores read as true probabilities.`
 }
