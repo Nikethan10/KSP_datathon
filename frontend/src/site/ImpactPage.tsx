@@ -89,10 +89,10 @@ export default function ImpactPage() {
       <Section stamp={t('site.impact.netStamp')} title={t('site.impact.netTitle')} lede={t('site.impact.netLede')}>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { v: b ? b.network_analysis.graph_nodes.toLocaleString('en-US') : '341,803', l: t('site.impact.nodes') },
-            { v: b ? b.network_analysis.graph_edges.toLocaleString('en-US') : '509,633', l: t('site.impact.edges') },
-            { v: b ? b.headline_numbers.network_communities.toLocaleString('en-US') : '35,333', l: t('site.impact.communities') },
-            { v: b ? b.headline_numbers.network_modularity.toFixed(3) : '0.978', l: t('site.impact.modularity') },
+            { v: b ? b.network_analysis.graph_nodes.toLocaleString('en-IN') : '—', l: t('site.impact.nodes') },
+            { v: b ? b.network_analysis.graph_edges.toLocaleString('en-IN') : '—', l: t('site.impact.edges') },
+            { v: b ? b.headline_numbers.network_communities.toLocaleString('en-IN') : '—', l: t('site.impact.communities') },
+            { v: b ? b.headline_numbers.network_modularity.toFixed(3) : '—', l: t('site.impact.modularity') },
           ].map((s, i) => (
             <Reveal key={s.l} delay={i * 70}>
               <div className="site-card p-6">

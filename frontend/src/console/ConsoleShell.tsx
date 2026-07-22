@@ -12,6 +12,7 @@ import { getThreatLevel } from '../lib/insights'
 import ThreatIndicator from '../components/ThreatIndicator'
 import LiveTicker from '../components/LiveTicker'
 import { useI18n } from '../lib/i18n'
+import { useStats, stat } from '../lib/useStats'
 import { useFocus } from '../lib/focus'
 import { useNav } from '../lib/nav'
 import { useRoute, SLUG_BY_TAB } from '../lib/route'
@@ -32,13 +33,11 @@ const THREAT_HEX: Record<ThreatLevel, string> = {
 export default function ConsoleShell() {
   const { activeTab: tab, setActiveTab: setTab } = useNav()
   const { tab: routeTab, navigate } = useRoute()
-  const [computedAt, setComputedAt] = useState<string | null>(null)
   const [anomalies, setAnomalies] = useState<Anomaly[]>([])
   const [districtSummaries, setDistrictSummaries] = useState<DistrictSummary[]>([])
   const [threatLevel, setThreatLevel] = useState<ThreatLevel>('LOW')
-  const [districtCount, setDistrictCount] = useState(0)
-  const [stationCount, setStationCount] = useState(0)
   const [showHelp, setShowHelp] = useState(false)
+  const stats = useStats()
   const { lang, setLang, t } = useI18n()
   const { focus } = useFocus()
 
@@ -55,9 +54,6 @@ export default function ConsoleShell() {
   }
 
   useEffect(() => {
-    fetchJson<{ computed_at: string }>('meta.json')
-      .then((m) => setComputedAt(m.computed_at.slice(0, 10)))
-      .catch(() => {})
     Promise.all([
       fetchJson<Anomaly[]>('anomaly_feed.json'),
       fetchJson<DistrictSummary[]>('district_summary.json'),
@@ -65,8 +61,6 @@ export default function ConsoleShell() {
       const filtered = filterAnomalies(a)
       setAnomalies(filtered)
       setDistrictSummaries(ds)
-      setDistrictCount(ds.length)
-      setStationCount(1074)
       const avgYoY = ds.reduce((s, d) => s + d.yoy_change_pct, 0) / (ds.length || 1)
       setThreatLevel(getThreatLevel(filtered.length, avgYoY))
     }).catch(() => {})
@@ -106,7 +100,8 @@ export default function ConsoleShell() {
               PRAHARI <span className="brand-accent font-semibold">ಪ್ರಹರಿ</span>
             </span>
             <span className="hidden md:inline mt-1 text-[9px] font-mono-data uppercase tracking-[0.22em] text-slate-500">
-              {districtCount} Districts · {stationCount.toLocaleString()} Stations{computedAt ? ` · Updated ${computedAt}` : ''}
+              {stat(stats.districts)} Districts · {stats.specialUnits ? `${stats.specialUnits} Special Units · ` : ''}
+              {stat(stats.stations)} Stations{stats.computedAt ? ` · Computed ${stats.computedAt}` : ''}
             </span>
           </div>
         </a>
@@ -184,12 +179,15 @@ export default function ConsoleShell() {
       </main>
 
       <footer className="shrink-0 z-20 flex items-center justify-between px-4 h-7 text-[10px] font-mono-data text-slate-500 border-t border-slate-800/70 bg-[#15181c]">
-        <span className="tracking-tight">{t('footer.stats')}</span>
+        <span className="tracking-tight">
+          {stat(stats.firs)} FIRs · 2016–2024 · {stat(stats.districts)} {t('footer.districts')} ·{' '}
+          {stat(stats.stations)} {t('footer.stations')}
+        </span>
         <span className="flex items-center gap-3">
-          {computedAt && (
+          {stats.computedAt && (
             <span className="flex items-center gap-1.5 text-slate-400">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.7)]" />
-              {t('common.analyticsComputed')} {computedAt} · {t('common.nightlyRecompute')}
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              {t('common.analyticsComputed')} {stats.computedAt}
             </span>
           )}
           <span className="hidden lg:inline tracking-tight">{t('footer.hotspots')}</span>

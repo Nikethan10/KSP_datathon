@@ -3,6 +3,7 @@ import PageHeader from './PageHeader'
 import { Section, Reveal } from './primitives'
 import CTA from './sections/CTA'
 import { useI18n } from '../lib/i18n'
+import { useStats, stat, fillStats } from '../lib/useStats'
 
 const STAGES = [
   { key: 'sense', tab: 'sense', methods: ['Getis-Ord Gi* (p < 0.05)', 'LISA local clusters', 'State + district-normalised lenses', 'Emerging-hotspot classification'] },
@@ -13,21 +14,22 @@ const STAGES = [
 
 export default function HowItWorksPage() {
   const { t } = useI18n()
+  const stats = useStats()
   return (
     <SiteShell>
       <PageHeader
         stamp={t('site.how.stamp')}
-        title={t('site.how.title')}
+        title={fillStats(t('site.how.title'), stats)}
         lede={t('site.how.lede')}
       />
 
       <Section stamp={t('site.how.dataStamp')} title={t('site.how.dataTitle')} lede={t('site.how.dataLede')}>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { v: '1,674,732', l: t('site.how.dFirs') },
+            { v: stat(stats.firs), l: t('site.how.dFirs') },
             { v: '2016–2024', l: t('site.how.dYears') },
-            { v: '41', l: t('site.how.dDistricts') },
-            { v: '1,074', l: t('site.how.dStations') },
+            { v: stat(stats.districts), l: t('site.how.dDistricts') },
+            { v: stat(stats.stations), l: t('site.how.dStations') },
           ].map((s, i) => (
             <Reveal key={s.l} delay={i * 70}>
               <div className="site-card p-6">

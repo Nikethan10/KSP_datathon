@@ -1,5 +1,6 @@
 import { Section, DossierCard } from '../primitives'
 import { useI18n } from '../../lib/i18n'
+import { useStats, fillStats } from '../../lib/useStats'
 
 /* One card per functional requirement in the BRD. Keeping the FR numbers
    visible turns this section into capability-coverage evidence, not just
@@ -20,6 +21,7 @@ const CAPS: { fr: string; key: string; shipped: boolean }[] = [
 
 export default function Capabilities() {
   const { t } = useI18n()
+  const stats = useStats()
   return (
     <Section
       id="capabilities"
@@ -34,7 +36,7 @@ export default function Capabilities() {
             index={c.fr}
             meta={c.shipped ? t('site.caps.live') : t('site.caps.roadmap')}
             title={t(`site.caps.${c.key}.title`)}
-            body={t(`site.caps.${c.key}.body`)}
+            body={fillStats(t(`site.caps.${c.key}.body`), stats)}
             delay={(i % 3) * 70}
             muted={!c.shipped}
           />

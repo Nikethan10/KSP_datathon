@@ -4,9 +4,10 @@ import { Section, Reveal } from './primitives'
 import Stack, { CatalystTable } from './sections/Stack'
 import CTA from './sections/CTA'
 import { useI18n } from '../lib/i18n'
+import { useStats, fillStats } from '../lib/useStats'
 
 const PIPELINE_STEPS = [
-  'Load & normalise 1,674,732 FIR records',
+  'Load & normalise {firs} FIR records',
   'SENSE layer — Gi* / LISA hotspot surfaces',
   'Feature engineering — near-repeat, temporal, spatial lags',
   'Risk model — LightGBM, calibrated',
@@ -19,6 +20,7 @@ const PIPELINE_STEPS = [
 
 export default function StackPage() {
   const { t } = useI18n()
+  const stats = useStats()
   return (
     <SiteShell>
       <PageHeader
@@ -52,7 +54,7 @@ export default function StackPage() {
             {PIPELINE_STEPS.map((s, i) => (
               <li key={s} className="flex items-baseline gap-5 px-6 py-4">
                 <span className="stamp shrink-0 w-8">{String(i + 1).padStart(2, '0')}</span>
-                <span className="text-[13.5px] text-slate-300 leading-snug">{s}</span>
+                <span className="text-[13.5px] text-slate-300 leading-snug">{fillStats(s, stats)}</span>
               </li>
             ))}
           </ol>

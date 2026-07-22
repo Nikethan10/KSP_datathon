@@ -4,14 +4,27 @@ import { useCountUp } from '../../lib/useCountUp'
 import { useReveal } from '../../lib/useReveal'
 import { useI18n } from '../../lib/i18n'
 import { fetchJson } from '../../lib/data'
-import type { DistrictSummary } from '../../lib/data'
+import { useStats, fillStats } from '../../lib/useStats'
 
-function Stat({ value, label, decimals = 0 }: { value: number; label: string; decimals?: number }) {
-  const n = useCountUp(value, 1400)
+function Stat({
+  value,
+  label,
+  decimals = 0,
+  suffix = '',
+}: {
+  value: number | null
+  label: string
+  decimals?: number
+  suffix?: string
+}) {
+  // Count up to 0 while the value is unknown; the dash is rendered instead.
+  const n = useCountUp(value ?? 0, 1400)
   return (
     <div>
       <div className="text-[clamp(20px,2.6vw,28px)] font-semibold tabular-nums text-slate-50 leading-none">
-        {decimals ? n.toFixed(decimals) : Math.round(n).toLocaleString('en-US')}
+        {value === null
+          ? '—'
+          : `${decimals ? n.toFixed(decimals) : Math.round(n).toLocaleString('en-IN')}${suffix}`}
       </div>
       <div className="mt-2 text-[10px] font-mono-data uppercase tracking-[0.2em] text-slate-500">
         {label}
@@ -23,23 +36,13 @@ function Stat({ value, label, decimals = 0 }: { value: number; label: string; de
 export default function Hero() {
   const { t } = useI18n()
   const ref = useReveal<HTMLElement>()
-  const [firs, setFirs] = useState(0)
-  const [districts, setDistricts] = useState(0)
-  const [auc, setAuc] = useState(0)
+  const stats = useStats()
+  const [pai, setPai] = useState<number | null>(null)
 
   useEffect(() => {
-    fetchJson<DistrictSummary[]>('district_summary.json')
-      .then((ds) => {
-        setDistricts(ds.length)
-        setFirs(ds.reduce((s, d) => s + (d.total_cases || 0), 0))
-      })
-      .catch(() => {
-        setDistricts(41)
-        setFirs(1674732)
-      })
-    fetchJson<{ test_auc: number }>('risk_summary.json')
-      .then((r) => setAuc(r.test_auc))
-      .catch(() => setAuc(0.847))
+    fetchJson<{ headline_numbers: { pai_5pct: number } }>('benchmark_report.json')
+      .then((r) => setPai(r.headline_numbers.pai_5pct))
+      .catch(() => setPai(null))
   }, [])
 
   return (
@@ -70,7 +73,7 @@ export default function Hero() {
           </h1>
 
           <p className="mt-6 text-[16px] md:text-[17px] leading-relaxed text-slate-400 max-w-xl">
-            {t('site.hero.lede')}
+            {fillStats(t('site.hero.lede'), stats)}
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-3">
@@ -83,10 +86,10 @@ export default function Hero() {
           </div>
 
           <div className="mt-14 pt-8 border-t border-slate-800/70 grid grid-cols-2 sm:grid-cols-4 gap-7">
-            <Stat value={firs} label={t('site.hero.statFirs')} />
-            <Stat value={districts} label={t('site.hero.statDistricts')} />
-            <Stat value={1074} label={t('site.hero.statStations')} />
-            <Stat value={auc} decimals={3} label={t('site.hero.statAuc')} />
+            <Stat value={stats.firs} label={t('site.hero.statFirs')} />
+            <Stat value={stats.districts} label={t('site.hero.statDistricts')} />
+            <Stat value={stats.stations} label={t('site.hero.statStations')} />
+            <Stat value={pai} decimals={1} suffix="×" label={t('site.hero.statPai')} />
           </div>
         </div>
       </div>
