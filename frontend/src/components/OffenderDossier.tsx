@@ -87,7 +87,7 @@ export default function OffenderDossier({ dossier: d, onBack, onSelectAssociate,
           <div className="mt-0.5 flex items-center gap-2 text-[10px] text-slate-500 font-mono-data">
             <span>#{d.offender_id.slice(0, 8).toUpperCase()}</span>
             {d.age != null && <span>· {t('war.age')} {d.age}</span>}
-            <span className="text-amber-300/80">· {t('war.rank')} #{d.wanted_rank}</span>
+
           </div>
         </div>
       </div>

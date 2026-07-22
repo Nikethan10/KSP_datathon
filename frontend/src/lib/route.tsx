@@ -19,16 +19,25 @@ export type Screen = 'landing' | 'how-it-works' | 'impact' | 'stack' | 'console'
 const SITE_SCREENS: Screen[] = ['landing', 'how-it-works', 'impact', 'stack']
 
 const TAB_BY_SLUG: Record<string, Tab> = {
-  sense: 'SENSE',
-  predict: 'PREDICT',
+  command: 'COMMAND',
+  investigate: 'INVESTIGATE',
+  connect: 'CONNECT',
+  forecast: 'FORECAST',
   act: 'ACT',
+  replay: 'REPLAY',
   trust: 'TRUST',
+  // Pre-rename slugs, kept so existing links and the deck's QR codes resolve.
+  sense: 'FORECAST',
+  predict: 'CONNECT',
 }
 
 export const SLUG_BY_TAB: Record<Tab, string> = {
-  SENSE: 'sense',
-  PREDICT: 'predict',
+  COMMAND: 'command',
+  INVESTIGATE: 'investigate',
+  CONNECT: 'connect',
+  FORECAST: 'forecast',
   ACT: 'act',
+  REPLAY: 'replay',
   TRUST: 'trust',
 }
 

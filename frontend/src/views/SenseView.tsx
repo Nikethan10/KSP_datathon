@@ -10,7 +10,7 @@ import DossierOverlay from '../components/DossierOverlay'
 import IntelFeed from '../components/IntelFeed'
 import ThreatIndicator from '../components/ThreatIndicator'
 import {
-  fetchJson, loadHotspots, matchBoundaryToDataset, THREAT_COLORS, filterAnomalies,
+  fetchJson, loadHotspots, matchBoundaryToDataset, filterAnomalies,
   KARNATAKA_CENTER, KARNATAKA_ZOOM,
 } from '../lib/data'
 import {
@@ -157,7 +157,7 @@ export default function SenseView() {
         here: o.districts.find((d) => d.district === selectedDistrict)?.count ?? 0,
       }))
       .filter((x) => x.here > 0)
-      .sort((a, b) => b.here - a.here || b.offender.wanted_score - a.offender.wanted_score)
+      .sort((a, b) => b.here - a.here || b.offender.total_cases - a.offender.total_cases)
       .slice(0, 5)
   }, [selectedDistrict, offenders])
 
@@ -396,7 +396,7 @@ export default function SenseView() {
                     >
                       <span className="flex items-center gap-1.5 min-w-0">
                         <span className="w-1.5 h-1.5 rounded-full shrink-0"
-                          style={{ background: o.threat_tier ? THREAT_COLORS[o.threat_tier] : '#8aa0b8' }} />
+                          style={{ background: '#8aa0b8' }} />
                         <span className="text-[10px] text-slate-300 truncate">{o.name}</span>
                         {o.heinous_pct >= 50 && (
                           <span className="text-[8px] text-red-400/90 shrink-0">{o.heinous_pct.toFixed(0)}%H</span>

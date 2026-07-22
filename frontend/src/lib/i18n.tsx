@@ -4,10 +4,101 @@ export type Lang = 'en' | 'kn'
 
 const translations: Record<string, Record<Lang, string>> = {
   // ── Tab names ──────────────────────────────────────────────────────
-  'tab.sense': { en: 'SENSE', kn: 'ಗ್ರಹಿಕೆ' },
-  'tab.predict': { en: 'PREDICT', kn: 'ಮುನ್ಸೂಚನೆ' },
+  'tab.command': { en: 'COMMAND', kn: 'ನಿಯಂತ್ರಣ' },
+  'tab.investigate': { en: 'INVESTIGATE', kn: 'ತನಿಖೆ' },
+  'tab.connect': { en: 'CONNECT', kn: 'ಸಂಪರ್ಕ' },
+  'tab.forecast': { en: 'FORECAST', kn: 'ಮುನ್ಸೂಚನೆ' },
   'tab.act': { en: 'ACT', kn: 'ಕ್ರಮ' },
+  'tab.replay': { en: 'REPLAY', kn: 'ಮರುಪ್ರದರ್ಶನ' },
   'tab.trust': { en: 'TRUST', kn: 'ನಂಬಿಕೆ' },
+
+  // ── Product positioning ────────────────────────────────────────────
+  'product.tagline': {
+    en: 'Crime Intelligence & Decision Support Platform',
+    kn: 'ಅಪರಾಧ ಗುಪ್ತಚರ ಮತ್ತು ನಿರ್ಧಾರ ಬೆಂಬಲ ವೇದಿಕೆ',
+  },
+
+  // ── COMMAND ────────────────────────────────────────────────────────
+  'command.intelligence': { en: 'Intelligence', kn: 'ಗುಪ್ತಚರ' },
+  'command.alerts': { en: 'Active alerts', kn: 'ಸಕ್ರಿಯ ಎಚ್ಚರಿಕೆಗಳು' },
+  'command.headline': {
+    en: '{crime} is running {excess} cases above its STL baseline across {n} district(s), most sharply in {district}. The 80% interval on that departure is {lo} to {hi}.',
+    kn: '',
+  },
+  'command.openForecast': { en: 'Open in forecast', kn: 'ಮುನ್ಸೂಚನೆಯಲ್ಲಿ ತೆರೆಯಿರಿ' },
+  'command.noSignal': { en: 'No departures from baseline in the current window.', kn: '' },
+  'command.noAlerts': { en: 'No active alerts.', kn: 'ಸಕ್ರಿಯ ಎಚ್ಚರಿಕೆಗಳಿಲ್ಲ.' },
+  'command.loadFailed': { en: 'Operational picture unavailable', kn: 'ಕಾರ್ಯಾಚರಣೆ ಚಿತ್ರಣ ಲಭ್ಯವಿಲ್ಲ' },
+  'command.loadFailedHint': {
+    en: 'The analytics artifacts could not be loaded. No figures are shown rather than estimated ones.',
+    kn: '',
+  },
+  'command.mFirs': { en: 'FIRs analysed', kn: 'ವಿಶ್ಲೇಷಿಸಿದ ಎಫ್‌ಐಆರ್' },
+  'command.mDistricts': { en: 'Police districts', kn: 'ಪೊಲೀಸ್ ಜಿಲ್ಲೆಗಳು' },
+  'command.mHotCells': { en: 'Hot cells', kn: 'ಹಾಟ್ ಸೆಲ್‌ಗಳು' },
+  'command.mNetworks': { en: 'Co-offending groups', kn: 'ಸಹ-ಅಪರಾಧ ಗುಂಪುಗಳು' },
+  'command.topDistricts': { en: 'By volume', kn: 'ಪ್ರಮಾಣದ ಪ್ರಕಾರ' },
+
+  // ── INVESTIGATE ────────────────────────────────────────────────────
+  'investigate.searchLabel': { en: 'Search records', kn: 'ದಾಖಲೆಗಳನ್ನು ಹುಡುಕಿ' },
+  'investigate.searchPlaceholder': { en: 'Name…', kn: 'ಹೆಸರು…' },
+  'investigate.searchHint': {
+    en: 'Person names on record. Typos and word order are tolerated.',
+    kn: '',
+  },
+  'investigate.empty': {
+    en: 'Search for a person on record to open their investigation workspace.',
+    kn: '',
+  },
+  'investigate.noResults': { en: 'No matching records.', kn: 'ಹೊಂದಾಣಿಕೆಯ ದಾಖಲೆಗಳಿಲ್ಲ.' },
+  'investigate.loadFailed': { en: 'Record index unavailable.', kn: '' },
+  'investigate.rowMeta': { en: '{cases} FIRs · {districts} districts', kn: '' },
+  'investigate.placeholder': {
+    en: 'Select a record to see their timeline, co-accused, districts and offence pattern — assembled from what is already on file.',
+    kn: '',
+  },
+
+  // ── Investigation workspace ────────────────────────────────────────
+  'workspace.idLine': { en: 'Record {id} · age {age}', kn: '' },
+  'workspace.fLinkedFirs': { en: 'Linked FIRs', kn: 'ಸಂಬಂಧಿತ ಎಫ್‌ಐಆರ್' },
+  'workspace.fCoAccused': { en: 'Co-accused', kn: 'ಸಹ-ಆರೋಪಿ' },
+  'workspace.fDistricts': { en: 'Districts', kn: 'ಜಿಲ್ಲೆಗಳು' },
+  'workspace.fArrests': { en: 'Arrest records', kn: 'ಬಂಧನ ದಾಖಲೆಗಳು' },
+  'workspace.fLastArrest': { en: 'Last arrest', kn: 'ಕೊನೆಯ ಬಂಧನ' },
+  'workspace.fSpan': { en: 'Record span', kn: 'ದಾಖಲೆ ಅವಧಿ' },
+  'workspace.noScoreNote': {
+    en: 'Every figure above is a fact already on record. PRAHARI does not score individuals — it forecasts risk for places and time windows only. See TRUST for what the system must not be used for.',
+    kn: '',
+  },
+  'workspace.timeline': { en: 'Record timeline', kn: 'ದಾಖಲೆ ಕಾಲಗಣನೆ' },
+  'workspace.timelineNote': { en: 'first incident to last, with last arrest marked', kn: '' },
+  'workspace.tFirst': { en: 'First incident', kn: 'ಮೊದಲ ಘಟನೆ' },
+  'workspace.tLast': { en: 'Last incident', kn: 'ಕೊನೆಯ ಘಟನೆ' },
+  'workspace.tArrest': { en: 'Last arrest', kn: 'ಕೊನೆಯ ಬಂಧನ' },
+  'workspace.noTimeline': { en: 'No dated incidents on record.', kn: '' },
+  'workspace.associations': { en: 'Co-accused', kn: 'ಸಹ-ಆರೋಪಿಗಳು' },
+  'workspace.associationsNote': { en: 'people named alongside this record in the same FIRs', kn: '' },
+  'workspace.noAssociates': { en: 'No co-accused on record.', kn: '' },
+  'workspace.aShared': { en: '{n} shared', kn: '{n} ಹಂಚಿಕೆ' },
+  'workspace.aTotalCases': { en: '{n} FIRs total', kn: '' },
+  'workspace.pattern': { en: 'Offence pattern', kn: 'ಅಪರಾಧ ಮಾದರಿ' },
+  'workspace.patternNote': { en: 'distribution across the record, not a prediction', kn: '' },
+  'workspace.byOffence': { en: 'By offence', kn: 'ಅಪರಾಧದ ಪ್ರಕಾರ' },
+  'workspace.byDistrict': { en: 'By district', kn: 'ಜಿಲ್ಲೆಯ ಪ್ರಕಾರ' },
+  'workspace.heinous': { en: '{n}% of linked FIRs are classified heinous.', kn: '' },
+
+  // ── FORECAST lenses ────────────────────────────────────────────────
+  'forecast.lensPatterns': { en: 'Patterns', kn: 'ಮಾದರಿಗಳು' },
+  'forecast.lensRisk': { en: 'Week-ahead risk', kn: 'ಮುಂದಿನ ವಾರದ ಅಪಾಯ' },
+
+  // ── REPLAY ─────────────────────────────────────────────────────────
+  'replay.stamp': { en: 'Section 06', kn: 'ವಿಭಾಗ 06' },
+  'replay.title': { en: 'Prediction against reality', kn: 'ವಾಸ್ತವದ ವಿರುದ್ಧ ಮುನ್ಸೂಚನೆ' },
+  'replay.lede': {
+    en: 'Step through the held-out test period week by week. PRAHARI’s forecast is drawn first, then the FIRs that actually followed drop onto the map, and the hit rate accumulates as you watch.',
+    kn: '',
+  },
+  'replay.pending': { en: 'Backtest data is being generated.', kn: '' },
 
   // ── Header / Footer ───────────────────────────────────────────────
   'header.subtitle': { en: 'Crime Intelligence · Karnataka State Police', kn: 'ಅಪರಾಧ ಗುಪ್ತಚರ · ಕರ್ನಾಟಕ ರಾಜ್ಯ ಪೊಲೀಸ್' },
@@ -114,7 +205,7 @@ const translations: Record<string, Record<Lang, string>> = {
   'predict.keyMembers': { en: 'Key members', kn: 'ಪ್ರಮುಖ ಸದಸ್ಯರು' },
 
   // ── War Room (offender dossiers) ───────────────────────────────────
-  'war.mostWanted': { en: 'Most Wanted', kn: 'ಅತಿ ಬೇಕಾದವರು' },
+  'war.mostWanted': { en: 'Most-recorded individuals', kn: 'ಅತಿ ಹೆಚ್ಚು ದಾಖಲಾದ ವ್ಯಕ್ತಿಗಳು' },
   'war.gangs': { en: 'Gangs', kn: 'ಗ್ಯಾಂಗ್‌ಗಳು' },
   'war.roster': { en: 'Roster', kn: 'ತಂಡ ಪಟ್ಟಿ' },
   'war.gangConnections': { en: 'Gang Networks', kn: 'ಗ್ಯಾಂಗ್ ಜಾಲಗಳು' },
@@ -143,7 +234,7 @@ const translations: Record<string, Record<Lang, string>> = {
   'war.solo': { en: 'No gang — operates solo', kn: 'ಗ್ಯಾಂಗ್ ಇಲ್ಲ — ಏಕಾಂಗಿ' },
   'war.notInGraph': { en: 'not in the visualized network', kn: 'ದೃಶ್ಯ ಜಾಲದಲ್ಲಿ ಇಲ್ಲ' },
   'war.heinousShare': { en: 'heinous', kn: 'ಗಂಭೀರ' },
-  'war.wantedNote': { en: 'ranked by caseload, severity, reach & threat', kn: 'ಪ್ರಕರಣ ಹೊರೆ, ತೀವ್ರತೆ, ವ್ಯಾಪ್ತಿ ಮತ್ತು ಬೆದರಿಕೆ ಪ್ರಕಾರ' },
+  'war.wantedNote': { en: 'ordered by FIRs on record, then districts appeared in', kn: 'ದಾಖಲಾದ ಎಫ್‌ಐಆರ್, ನಂತರ ಜಿಲ್ಲೆಗಳ ಪ್ರಕಾರ' },
   'board.pick': { en: 'Select a gang to view its connections', kn: 'ಸಂಪರ್ಕಗಳನ್ನು ನೋಡಲು ಒಂದು ಗ್ಯಾಂಗ್ ಆಯ್ಕೆಮಾಡಿ' },
   'board.members': { en: 'members', kn: 'ಸದಸ್ಯರು' },
   'board.hint': { en: 'click a member to open their dossier · hover to trace links', kn: 'ಕಡತ ತೆರೆಯಲು ಸದಸ್ಯರನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ · ಸಂಪರ್ಕ ಪತ್ತೆಗೆ ಹೋವರ್' },
@@ -253,7 +344,12 @@ const translations: Record<string, Record<Lang, string>> = {
 
   // ── Intro overlay ──────────────────────────────────────────────────
   'intro.title': { en: 'Welcome to PRAHARI', kn: 'ಪ್ರಹರಿಗೆ ಸ್ವಾಗತ' },
-  'intro.subtitle': { en: 'AI-driven crime intelligence for Karnataka State Police', kn: 'ಕರ್ನಾಟಕ ರಾಜ್ಯ ಪೊಲೀಸರಿಗಾಗಿ AI-ಚಾಲಿತ ಅಪರಾಧ ಗುಪ್ತಚರ' },
+  'intro.subtitle': { en: 'Crime intelligence and decision support for Karnataka State Police', kn: 'ಕರ್ನಾಟಕ ರಾಜ್ಯ ಪೊಲೀಸರಿಗಾಗಿ ಅಪರಾಧ ಗುಪ್ತಚರ ಮತ್ತು ನಿರ್ಧಾರ ಬೆಂಬಲ' },
+  'intro.commandDesc': { en: 'The state-wide operational picture: where crime is clustering right now, what departed from baseline, and which districts carry the volume', kn: '' },
+  'intro.investigateDesc': { en: 'Search a person on record and open their timeline, co-accused, districts and offence pattern on one surface', kn: '' },
+  'intro.connectDesc': { en: 'Co-offending networks, community structure, and which removals actually fragment a group', kn: '' },
+  'intro.forecastDesc': { en: 'Gi* hotspots and trends, plus the week-ahead risk surface and anomaly alerts', kn: '' },
+  'intro.replayDesc': { en: 'Step through the held-out test period and watch the forecast play out against the FIRs that actually followed', kn: '' },
   'intro.senseDesc': { en: 'Statistical hotspot detection with Gi* spatial analysis across all 37 police districts', kn: 'ಎಲ್ಲಾ 37 ಪೊಲೀಸ್ ಜಿಲ್ಲೆಗಳಲ್ಲಿ Gi* ಸ್ಥಳೀಯ ವಿಶ್ಲೇಷಣೆಯೊಂದಿಗೆ ಸಂಖ್ಯಾಶಾಸ್ತ್ರೀಯ ಹಾಟ್‌ಸ್ಪಾಟ್ ಪತ್ತೆ' },
   'intro.predictDesc': { en: 'Risk forecasting, anomaly alerts, and co-offending network analysis', kn: 'ಅಪಾಯ ಮುನ್ಸೂಚನೆ, ಅಸಹಜತೆ ಎಚ್ಚರಿಕೆಗಳು, ಮತ್ತು ಸಹ-ಅಪರಾಧ ಜಾಲ ವಿಶ್ಲೇಷಣೆ' },
   'intro.actDesc': { en: 'Optimized patrol deployment with coverage analysis and briefing sheets', kn: 'ವ್ಯಾಪ್ತಿ ವಿಶ್ಲೇಷಣೆ ಮತ್ತು ಮಾಹಿತಿ ಹಾಳೆಗಳೊಂದಿಗೆ ಅತ್ಯುತ್ತಮ ಗಸ್ತು ನಿಯೋಜನೆ' },

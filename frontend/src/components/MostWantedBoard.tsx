@@ -31,7 +31,7 @@ function tilt(id: string): number {
   return ((h % 9) - 4) * 0.8
 }
 
-// threat pyramid rows, apex first (most dangerous on top)
+// rows, apex first (highest caseload on top)
 const ROWS = [2, 4, 6, 8, 10, 10]
 const ROW_Y = [12, 27, 43, 59, 74, 89]
 const ROW_CARD = [86, 76, 66, 60, 58, 58]
@@ -45,7 +45,9 @@ export default function MostWantedBoard({ offenders, onSelect }: Props) {
   const drag = useRef<{ x: number; y: number; tx: number; ty: number; moved: boolean } | null>(null)
 
   const { nodes, edges, adj, cardOf } = useMemo(() => {
-    const list = [...offenders].sort((a, b) => a.wanted_rank - b.wanted_rank).slice(0, 40)
+    const list = [...offenders]
+      .sort((a, b) => b.total_cases - a.total_cases || b.n_districts - a.n_districts)
+      .slice(0, 40)
     const n = list.length
     const t1 = Math.ceil(n / 3)
     const t2 = Math.ceil((2 * n) / 3)
@@ -62,7 +64,7 @@ export default function MostWantedBoard({ offenders, onSelect }: Props) {
       const x = count === 1 ? 50 : 50 - span / 2 + (span * inRow) / (count - 1)
       cardMap.set(o.offender_id, ROW_CARD[row])
       return {
-        id: o.offender_id, name: o.name, rank: o.wanted_rank, score: o.wanted_score,
+        id: o.offender_id, name: o.name, rank: i + 1, score: o.total_cases,
         tier: tierOf(i), x, y: ROW_Y[row], rot: tilt(o.offender_id),
       }
     })
@@ -159,7 +161,7 @@ export default function MostWantedBoard({ offenders, onSelect }: Props) {
       {/* MOST WANTED header stencil */}
       <div className="absolute top-3 left-1/2 -translate-x-1/2 z-10 text-center pointer-events-none">
         <div className="text-[11px] font-bold tracking-[0.35em] text-slate-300">{t('war.mostWanted').toUpperCase()}</div>
-        <div className="text-[9px] text-slate-500">{t('board.threatPyramid')}</div>
+        <div className="text-[9px] text-slate-500">{t('war.wantedNote')}</div>
       </div>
 
       {/* pan + zoom camera */}
@@ -225,7 +227,7 @@ export default function MostWantedBoard({ offenders, onSelect }: Props) {
                     </div>
                     <div className="px-1 py-[3px] text-center">
                       <div className="text-[8px] font-semibold leading-tight text-[#2a2620] truncate">{n.name}</div>
-                      <div className="text-[6.5px] leading-tight" style={{ color }}>{t('war.threat')} {n.score.toFixed(0)}</div>
+                      <div className="text-[6.5px] leading-tight" style={{ color }}>{n.score.toFixed(0)} {t('war.cases')}</div>
                     </div>
                   </div>
                 </button>

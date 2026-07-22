@@ -50,17 +50,6 @@ export default function DossierOverlay({ dossier, onClose, onSelectAssociate }: 
             </button>
           </div>
           {/* threat score bar */}
-          {dossier.threat_score != null && (
-            <div className="flex items-center gap-2 mt-2">
-              <span className="text-[8px] uppercase tracking-wider text-slate-500">Threat</span>
-              <div className="flex-1 h-1.5 rounded bg-slate-700/50 overflow-hidden">
-                <div className="h-full rounded" style={{ width: `${Math.min(100, dossier.threat_score * 10)}%`, background: tierColor }} />
-              </div>
-              <span className="text-[10px] font-bold tabular-nums" style={{ color: tierColor }}>
-                {dossier.threat_score.toFixed(1)}
-              </span>
-            </div>
-          )}
         </div>
         <div className="flex-1 min-h-0 overflow-y-auto p-3.5 pt-2">
           <OffenderDossier dossier={dossier} onBack={onClose} onSelectAssociate={onSelectAssociate} hideBack />

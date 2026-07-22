@@ -30,8 +30,15 @@ function NetStat({ value, label }: { value: string; label: string }) {
   )
 }
 
-export default function PredictView() {
-  const [mode, setMode] = useState<Mode>('risk')
+interface PredictViewProps {
+  /** Which lens to open on. CONNECT mounts 'network', FORECAST mounts 'risk'. */
+  initialMode?: Mode
+  /** Hide the internal mode switch when the section already implies the lens. */
+  lockMode?: boolean
+}
+
+export default function PredictView({ initialMode = 'risk', lockMode = false }: PredictViewProps) {
+  const [mode, setMode] = useState<Mode>(initialMode)
   const [netSub, setNetSub] = useState<NetSub>('gangs')
 
   const [cells, setCells] = useState<RiskCell[]>([])
@@ -96,7 +103,10 @@ export default function PredictView() {
 
   const board40 = useMemo(() => {
     if (mostWanted.length) return mostWanted
-    return [...offenderIndex].sort((a, b) => a.wanted_rank - b.wanted_rank).slice(0, 40)
+    // by record volume, not by a predicted score on the person
+    return [...offenderIndex]
+      .sort((a, b) => b.total_cases - a.total_cases || b.n_districts - a.n_districts)
+      .slice(0, 40)
   }, [mostWanted, offenderIndex])
 
   // most-dangerous gang first — drives the default gang board
@@ -194,19 +204,21 @@ export default function PredictView() {
 
       {/* top-left: mode switch + sub-tabs + controls */}
       <div className="absolute top-3 left-3 z-30 flex items-center gap-2">
-        <div className="glass rounded-md flex overflow-hidden">
-          {modes.map((m) => (
-            <button
-              key={m}
-              onClick={() => setMode(m)}
-              className={`px-3.5 py-1.5 text-xs font-semibold tracking-wider transition-colors ${
-                mode === m ? 'bg-sky-500/25 text-sky-300' : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              {MODE_LABELS[m]}
-            </button>
-          ))}
-        </div>
+        {!lockMode && (
+          <div className="glass rounded-md flex overflow-hidden">
+            {modes.map((m) => (
+              <button
+                key={m}
+                onClick={() => setMode(m)}
+                className={`px-3.5 py-1.5 text-xs font-semibold tracking-wider transition-colors ${
+                  mode === m ? 'bg-sky-500/25 text-sky-300' : 'text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                {MODE_LABELS[m]}
+              </button>
+            ))}
+          </div>
+        )}
 
         {mode === 'network' && (
           <div className="glass rounded-md flex overflow-hidden">

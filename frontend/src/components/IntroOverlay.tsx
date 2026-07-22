@@ -8,10 +8,14 @@ interface Props {
 export default function IntroOverlay({ onClose }: Props) {
   const { t } = useI18n()
 
+  // Mirrors the seven-section navigation, in workflow order.
   const rows = [
-    { tab: t('tab.sense'), desc: t('intro.senseDesc') },
-    { tab: t('tab.predict'), desc: t('intro.predictDesc') },
+    { tab: t('tab.command'), desc: t('intro.commandDesc') },
+    { tab: t('tab.investigate'), desc: t('intro.investigateDesc') },
+    { tab: t('tab.connect'), desc: t('intro.connectDesc') },
+    { tab: t('tab.forecast'), desc: t('intro.forecastDesc') },
     { tab: t('tab.act'), desc: t('intro.actDesc') },
+    { tab: t('tab.replay'), desc: t('intro.replayDesc') },
     { tab: t('tab.trust'), desc: t('intro.trustDesc') },
   ]
 

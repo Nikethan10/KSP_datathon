@@ -69,5 +69,21 @@
     "strict_transport_security": "max-age=64072000; includeSubDomains; preload",
     "x_content_type_options": "nosniff",
     "note": "measured against the live Catalyst deployment on 2026-08-21"
+  },
+  "after_ia_split": {
+    "captured": "2026-08-23",
+    "change": "seven lazy-loaded sections replacing four eagerly-imported views",
+    "before": {
+      "console_chunk_bytes": 2284650,
+      "console_chunk_gzip_bytes": 627000,
+      "note": "single ConsoleShell chunk, downloaded whatever tab you opened"
+    },
+    "after": {
+      "chunk_count": 16,
+      "console_shell_bytes": 16056,
+      "command_view_bytes": 5865,
+      "predict_view_bytes": 406680,
+      "note": "PredictView carries 3d-force-graph + three and now loads only when CONNECT is opened"
+    }
   }
 }

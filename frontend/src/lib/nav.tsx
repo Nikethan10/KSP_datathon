@@ -1,6 +1,25 @@
 import { createContext, useContext, useCallback, useState, type ReactNode } from 'react'
 
-export type Tab = 'SENSE' | 'PREDICT' | 'ACT' | 'TRUST'
+/* The console's seven sections. These are product areas, not pipeline
+   layers — the engine still runs SENSE -> PREDICT -> ACT -> TRUST internally,
+   but an officer navigates by what they are trying to do, not by which
+   analytical stage produced the number.
+
+     COMMAND      what is happening across the state right now
+     INVESTIGATE  who and what is linked to this person, FIR or place
+     CONNECT      criminal networks and how they fragment
+     FORECAST     hotspots, trends, anomalies, week-ahead risk
+     ACT          where to put the units, and what the next one buys
+     REPLAY       what we predicted, against what actually happened
+     TRUST        how well it works, where it fails, what it must not do */
+export type Tab =
+  | 'COMMAND'
+  | 'INVESTIGATE'
+  | 'CONNECT'
+  | 'FORECAST'
+  | 'ACT'
+  | 'REPLAY'
+  | 'TRUST'
 
 interface NavPayload {
   tab: Tab
@@ -16,7 +35,7 @@ interface NavCtx {
 }
 
 const Ctx = createContext<NavCtx>({
-  activeTab: 'SENSE',
+  activeTab: 'COMMAND',
   setActiveTab: () => {},
   pending: null,
   navigateTo: () => {},
@@ -24,7 +43,7 @@ const Ctx = createContext<NavCtx>({
 })
 
 export function NavProvider({ children }: { children: ReactNode }) {
-  const [activeTab, setActiveTab] = useState<Tab>('SENSE')
+  const [activeTab, setActiveTab] = useState<Tab>('COMMAND')
   const [pending, setPending] = useState<NavPayload | null>(null)
 
   const navigateTo = useCallback((p: NavPayload) => {

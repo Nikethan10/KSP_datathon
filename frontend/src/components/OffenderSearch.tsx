@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { OffenderDossier } from '../lib/data'
-import { THREAT_COLORS } from '../lib/data'
 import { useI18n } from '../lib/i18n'
 import { matchesName } from '../lib/districtSearch'
 
@@ -72,7 +71,6 @@ export default function OffenderSearch({ offenders, onSelect }: Props) {
             <div className="px-3 py-1.5 text-[11px] text-slate-500">{t('war.noSuspect')}</div>
           ) : (
             matches.map((d, i) => {
-              const color = d.threat_tier ? THREAT_COLORS[d.threat_tier] : '#8aa0b8'
               return (
                 <button
                   key={d.offender_id}
@@ -83,8 +81,7 @@ export default function OffenderSearch({ offenders, onSelect }: Props) {
                     i === hi ? 'bg-slate-700/50' : ''
                   }`}
                 >
-                  <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: color }} />
-                  <span className="text-[11.5px] text-slate-200 truncate flex-1">{d.name}</span>
+                                    <span className="text-[11.5px] text-slate-200 truncate flex-1">{d.name}</span>
                   <span className="text-[9.5px] text-slate-500 tabular-nums shrink-0">
                     {d.total_cases} {t('war.cases')}
                   </span>

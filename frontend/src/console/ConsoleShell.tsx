@@ -1,8 +1,15 @@
-import { useEffect, useState } from 'react'
-import SenseView from '../views/SenseView'
-import PredictView from '../views/PredictView'
-import ActView from '../views/ActView'
-import TrustView from '../views/TrustView'
+import { useEffect, useState, lazy, Suspense } from 'react'
+
+/* Each section is split out. Loading COMMAND used to pull in 3d-force-graph
+   and three (~700 KB) because every view was imported eagerly, for a graph
+   most sessions never open. */
+const CommandView = lazy(() => import('../views/CommandView'))
+const InvestigateView = lazy(() => import('../views/InvestigateView'))
+const ConnectView = lazy(() => import('../views/PredictView'))
+const ForecastView = lazy(() => import('../views/ForecastView'))
+const ActView = lazy(() => import('../views/ActView'))
+const ReplayView = lazy(() => import('../views/ReplayView'))
+const TrustView = lazy(() => import('../views/TrustView'))
 import IntroOverlay from '../components/IntroOverlay'
 import ErrorBoundary from '../components/ErrorBoundary'
 import SentinelMark from '../components/SentinelMark'
@@ -20,14 +27,45 @@ import type { Tab } from '../lib/nav'
 import type { Anomaly, DistrictSummary } from '../lib/data'
 import type { ThreatLevel } from '../lib/insights'
 
-const TABS: Tab[] = ['SENSE', 'PREDICT', 'ACT', 'TRUST']
-const TAB_KEYS: Record<Tab, string> = { SENSE: 'tab.sense', PREDICT: 'tab.predict', ACT: 'tab.act', TRUST: 'tab.trust' }
+const TABS: Tab[] = [
+  'COMMAND', 'INVESTIGATE', 'CONNECT', 'FORECAST', 'ACT', 'REPLAY', 'TRUST',
+]
+const TAB_KEYS: Record<Tab, string> = {
+  COMMAND: 'tab.command',
+  INVESTIGATE: 'tab.investigate',
+  CONNECT: 'tab.connect',
+  FORECAST: 'tab.forecast',
+  ACT: 'tab.act',
+  REPLAY: 'tab.replay',
+  TRUST: 'tab.trust',
+}
+/* Numbered so the navigation reads as a workflow rather than a set of
+   interchangeable dashboards. */
+const TAB_NO: Record<Tab, string> = {
+  COMMAND: '01', INVESTIGATE: '02', CONNECT: '03',
+  FORECAST: '04', ACT: '05', REPLAY: '06', TRUST: '07',
+}
 
 const THREAT_HEX: Record<ThreatLevel, string> = {
   CRITICAL: '#ef4444',
   HIGH: '#f97316',
   MEDIUM: '#f59e0b',
   LOW: '#22c55e',
+}
+
+/* Matches the console's shape so a section switch does not collapse the
+   layout and reflow everything behind it. */
+function SectionSkeleton() {
+  return (
+    <div className="h-full grid grid-rows-[minmax(0,1.55fr)_minmax(0,1fr)] animate-pulse">
+      <div className="border-b border-slate-800/70 bg-slate-900/20" />
+      <div className="grid grid-cols-1 lg:grid-cols-3 divide-x divide-slate-800/70">
+        <div className="bg-slate-900/10" />
+        <div className="bg-slate-900/10" />
+        <div className="bg-slate-900/10" />
+      </div>
+    </div>
+  )
 }
 
 export default function ConsoleShell() {
@@ -68,7 +106,7 @@ export default function ConsoleShell() {
 
   // a search from the map-less TRUST tab jumps to SENSE and flies there
   useEffect(() => {
-    if (focus && tab === 'TRUST') goTab('SENSE')
+    if (focus && tab === 'TRUST') goTab('FORECAST')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focus])
 
@@ -99,9 +137,8 @@ export default function ConsoleShell() {
             <span className="text-[17px] font-bold tracking-[0.14em] text-slate-100 group-hover:text-white transition-colors">
               PRAHARI <span className="brand-accent font-semibold">ಪ್ರಹರಿ</span>
             </span>
-            <span className="hidden md:inline mt-1 text-[9px] font-mono-data uppercase tracking-[0.22em] text-slate-500">
-              {stat(stats.districts)} Districts · {stats.specialUnits ? `${stats.specialUnits} Special Units · ` : ''}
-              {stat(stats.stations)} Stations{stats.computedAt ? ` · Computed ${stats.computedAt}` : ''}
+            <span className="hidden lg:inline mt-1 text-[9px] font-mono-data uppercase tracking-[0.18em] text-slate-500">
+              {t('product.tagline')}
             </span>
           </div>
         </a>
@@ -127,12 +164,13 @@ export default function ConsoleShell() {
               <button
                 key={tb}
                 onClick={() => goTab(tb)}
-                className={`relative px-4 h-full flex items-center text-[11px] font-semibold uppercase tracking-[0.16em] transition-colors ${
+                className={`relative px-2.5 xl:px-3 h-full flex items-center text-[10.5px] font-semibold uppercase tracking-[0.12em] whitespace-nowrap transition-colors ${
                   active ? 'text-slate-50' : 'text-slate-500 hover:text-slate-300'
                 }`}
               >
+                <span className="text-[8px] tabular-nums text-slate-600 mr-1.5">{TAB_NO[tb]}</span>
                 {t(TAB_KEYS[tb])}
-                {tb === 'PREDICT' && anomalies.length > 0 && (
+                {tb === 'COMMAND' && anomalies.length > 0 && (
                   <span className="ml-1.5 min-w-[15px] h-[15px] rounded-[3px] bg-red-500/90 text-[9px] text-white font-bold flex items-center justify-center px-1 tabular-nums">
                     {anomalies.length}
                   </span>
@@ -140,7 +178,7 @@ export default function ConsoleShell() {
                 {active && (
                   <span
                     className="absolute left-2.5 right-2.5 bottom-0 h-[2px] rounded-full"
-                    style={{ background: 'var(--brand)', boxShadow: '0 0 10px rgba(201,163,92,0.55)' }}
+                    style={{ background: 'var(--brand)' }}
                   />
                 )}
               </button>
@@ -171,10 +209,15 @@ export default function ConsoleShell() {
 
       <main className="flex-1 flex flex-col min-h-0 relative">
         <ErrorBoundary>
-          {tab === 'SENSE' ? <SenseView />
-            : tab === 'PREDICT' ? <PredictView />
-            : tab === 'ACT' ? <ActView />
-            : <TrustView />}
+          <Suspense fallback={<SectionSkeleton />}>
+            {tab === 'COMMAND' ? <CommandView />
+              : tab === 'INVESTIGATE' ? <InvestigateView />
+              : tab === 'CONNECT' ? <ConnectView initialMode="network" lockMode />
+              : tab === 'FORECAST' ? <ForecastView />
+              : tab === 'ACT' ? <ActView />
+              : tab === 'REPLAY' ? <ReplayView />
+              : <TrustView />}
+          </Suspense>
         </ErrorBoundary>
       </main>
 
