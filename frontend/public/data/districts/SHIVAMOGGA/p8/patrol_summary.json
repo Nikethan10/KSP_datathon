@@ -1,0 +1,15 @@
+{
+  "n_patrols": 8,
+  "patrol_radius_km": 2.0,
+  "scope_district": "SHIVAMOGGA",
+  "baseline_coverage_pct": 10.53,
+  "statusquo_coverage_pct": 26.11,
+  "greedy_coverage_pct": 31.5,
+  "greedy_uplift_pct": 199.0,
+  "greedy_uplift_x": 3.0,
+  "greedy_uplift_vs_statusquo_pct": 20.6,
+  "greedy_uplift_vs_statusquo_x": 1.21,
+  "greedy_cells_covered": 62,
+  "ilp_coverage_pct": 33.8,
+  "ilp_uplift_pct": 220.9
+}

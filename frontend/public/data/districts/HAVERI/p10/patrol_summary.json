@@ -1,0 +1,15 @@
+{
+  "n_patrols": 10,
+  "patrol_radius_km": 2.0,
+  "scope_district": "HAVERI",
+  "baseline_coverage_pct": 8.1,
+  "statusquo_coverage_pct": 25.65,
+  "greedy_coverage_pct": 28.6,
+  "greedy_uplift_pct": 253.0,
+  "greedy_uplift_x": 3.5,
+  "greedy_uplift_vs_statusquo_pct": 11.5,
+  "greedy_uplift_vs_statusquo_x": 1.12,
+  "greedy_cells_covered": 64,
+  "ilp_coverage_pct": 28.99,
+  "ilp_uplift_pct": 257.8
+}

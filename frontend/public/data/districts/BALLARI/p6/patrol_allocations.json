@@ -1,0 +1,108 @@
+{
+  "allocations": [
+    {
+      "patrol_id": 1,
+      "seed_cell_id": 199978,
+      "center_lat": 15.1486486486,
+      "center_lon": 76.9252336449,
+      "cells_covered": 9,
+      "risk_covered": 0.7525372133000001,
+      "cell_ids": [
+        199978,
+        199485,
+        200470,
+        199484,
+        199486,
+        199979,
+        200471,
+        199977,
+        200472
+      ]
+    },
+    {
+      "patrol_id": 2,
+      "seed_cell_id": 199975,
+      "center_lat": 15.1486486486,
+      "center_lon": 76.8971962617,
+      "cells_covered": 8,
+      "risk_covered": 0.40774423620000005,
+      "cell_ids": [
+        199483,
+        199481,
+        199976,
+        200468,
+        199975,
+        199482,
+        200469,
+        199974
+      ]
+    },
+    {
+      "patrol_id": 3,
+      "seed_cell_id": 198992,
+      "center_lat": 15.1306306306,
+      "center_lon": 76.9252336449,
+      "cells_covered": 6,
+      "risk_covered": 0.3304876908,
+      "cell_ids": [
+        198992,
+        198991,
+        198993,
+        198498,
+        198499,
+        198500
+      ]
+    },
+    {
+      "patrol_id": 4,
+      "seed_cell_id": 226597,
+      "center_lat": 15.6351351351,
+      "center_lon": 76.8971962617,
+      "cells_covered": 6,
+      "risk_covered": 0.3169377371,
+      "cell_ids": [
+        226597,
+        226596,
+        226104,
+        227090,
+        226103,
+        226598
+      ]
+    },
+    {
+      "patrol_id": 5,
+      "seed_cell_id": 213748,
+      "center_lat": 15.4009009009,
+      "center_lon": 76.6074766355,
+      "cells_covered": 5,
+      "risk_covered": 0.2750009299,
+      "cell_ids": [
+        213748,
+        213747,
+        214240,
+        213255,
+        214241
+      ]
+    },
+    {
+      "patrol_id": 6,
+      "seed_cell_id": 199980,
+      "center_lat": 15.1486486486,
+      "center_lon": 76.9439252336,
+      "cells_covered": 5,
+      "risk_covered": 0.21515664450000002,
+      "cell_ids": [
+        200473,
+        199980,
+        199487,
+        199981,
+        199488
+      ]
+    }
+  ],
+  "total_risk_covered": 2.2978644518,
+  "total_risk": 7.0494972799,
+  "coverage_pct": 32.6,
+  "cells_covered": 39,
+  "total_cells": 146
+}

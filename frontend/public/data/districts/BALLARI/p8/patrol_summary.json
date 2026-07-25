@@ -1,0 +1,15 @@
+{
+  "n_patrols": 8,
+  "patrol_radius_km": 2.0,
+  "scope_district": "BALLARI",
+  "baseline_coverage_pct": 20.08,
+  "statusquo_coverage_pct": 32.05,
+  "greedy_coverage_pct": 37.86,
+  "greedy_uplift_pct": 88.6,
+  "greedy_uplift_x": 1.9,
+  "greedy_uplift_vs_statusquo_pct": 18.1,
+  "greedy_uplift_vs_statusquo_x": 1.18,
+  "greedy_cells_covered": 45,
+  "ilp_coverage_pct": 38.51,
+  "ilp_uplift_pct": 91.8
+}

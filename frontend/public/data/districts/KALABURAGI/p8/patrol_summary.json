@@ -1,0 +1,15 @@
+{
+  "n_patrols": 8,
+  "patrol_radius_km": 2.0,
+  "scope_district": "KALABURAGI",
+  "baseline_coverage_pct": 12.85,
+  "statusquo_coverage_pct": 22.54,
+  "greedy_coverage_pct": 26.3,
+  "greedy_uplift_pct": 104.7,
+  "greedy_uplift_x": 2.0,
+  "greedy_uplift_vs_statusquo_pct": 16.7,
+  "greedy_uplift_vs_statusquo_x": 1.17,
+  "greedy_cells_covered": 27,
+  "ilp_coverage_pct": 26.3,
+  "ilp_uplift_pct": 104.7
+}

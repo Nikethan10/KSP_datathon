@@ -1,0 +1,15 @@
+{
+  "n_patrols": 6,
+  "patrol_radius_km": 2.0,
+  "scope_district": "VIJAYAPUR",
+  "baseline_coverage_pct": 3.62,
+  "statusquo_coverage_pct": 19.67,
+  "greedy_coverage_pct": 20.83,
+  "greedy_uplift_pct": 475.3,
+  "greedy_uplift_x": 5.8,
+  "greedy_uplift_vs_statusquo_pct": 5.9,
+  "greedy_uplift_vs_statusquo_x": 1.06,
+  "greedy_cells_covered": 59,
+  "ilp_coverage_pct": 21.87,
+  "ilp_uplift_pct": 504.0
+}

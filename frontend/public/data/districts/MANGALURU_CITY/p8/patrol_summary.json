@@ -1,0 +1,15 @@
+{
+  "n_patrols": 8,
+  "patrol_radius_km": 2.0,
+  "scope_district": "MANGALURU CITY",
+  "baseline_coverage_pct": 15.03,
+  "statusquo_coverage_pct": 30.89,
+  "greedy_coverage_pct": 35.49,
+  "greedy_uplift_pct": 136.2,
+  "greedy_uplift_x": 2.4,
+  "greedy_uplift_vs_statusquo_pct": 14.9,
+  "greedy_uplift_vs_statusquo_x": 1.15,
+  "greedy_cells_covered": 69,
+  "ilp_coverage_pct": 37.73,
+  "ilp_uplift_pct": 151.1
+}

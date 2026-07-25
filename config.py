@@ -15,7 +15,7 @@ KARNATAKA_BBOX = {
 }
 GRID_RESOLUTION_KM = 1.0
 DEG_PER_KM_LAT = 1 / 111.0
-DEG_PER_KM_LON = 1 / 85.0  # ~at 15°N latitude
+DEG_PER_KM_LON = 1 / 107.0  # cos(15°) × 111 ≈ 107 km/deg at Karnataka's mid-latitude
 MIN_CASES_PER_CELL = 5
 
 # ── Temporal ───────────────────────────────────────────────────────────

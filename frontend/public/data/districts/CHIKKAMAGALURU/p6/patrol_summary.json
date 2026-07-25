@@ -1,0 +1,15 @@
+{
+  "n_patrols": 6,
+  "patrol_radius_km": 2.0,
+  "scope_district": "CHIKKAMAGALURU",
+  "baseline_coverage_pct": 3.66,
+  "statusquo_coverage_pct": 16.32,
+  "greedy_coverage_pct": 16.96,
+  "greedy_uplift_pct": 363.1,
+  "greedy_uplift_x": 4.6,
+  "greedy_uplift_vs_statusquo_pct": 3.9,
+  "greedy_uplift_vs_statusquo_x": 1.04,
+  "greedy_cells_covered": 48,
+  "ilp_coverage_pct": 17.14,
+  "ilp_uplift_pct": 368.0
+}

@@ -1,9 +1,12 @@
 {
   "headline_numbers": {
-    "pai_5pct": 11.21,
-    "hit_rate_5pct": 56.06,
-    "coverage_uplift_pct": 258.7,
-    "optimized_coverage_pct": 13.91,
+    "pai_5pct": 10.63,
+    "hit_rate_5pct": 53.13,
+    "coverage_uplift_pct": 215.6,
+    "optimized_coverage_pct": 11.67,
+    "statusquo_coverage_pct": 9.87,
+    "greedy_uplift_vs_statusquo_pct": 18.2,
+    "greedy_uplift_vs_statusquo_x": 1.18,
     "top_disruptor_drop_pct": 0.01,
     "cumulative_disruption_removed": 50,
     "cumulative_disruption_drop_pct": 0.1,
@@ -14,46 +17,46 @@
     "best_gang_pieces": 11
   },
   "risk_model": {
-    "test_auc": 0.8666,
+    "test_auc": 0.8471,
     "pai": {
-      "pai_1pct": 26.71,
-      "hit_rate_1pct": 26.71,
-      "pai_2pct": 19.01,
-      "hit_rate_2pct": 38.03,
-      "pai_5pct": 11.21,
-      "hit_rate_5pct": 56.06,
-      "pai_10pct": 6.96,
-      "hit_rate_10pct": 69.56,
-      "pai_20pct": 4.04,
-      "hit_rate_20pct": 80.86
+      "pai_1pct": 25.9,
+      "hit_rate_1pct": 25.9,
+      "pai_2pct": 18.25,
+      "hit_rate_2pct": 36.5,
+      "pai_5pct": 10.63,
+      "hit_rate_5pct": 53.13,
+      "pai_10pct": 6.7,
+      "hit_rate_10pct": 66.98,
+      "pai_20pct": 3.93,
+      "hit_rate_20pct": 78.61
     },
     "pei": {
-      "pei_1pct": 0.9739,
-      "pei_2pct": 0.964,
-      "pei_5pct": 0.9555,
-      "pei_10pct": 0.945,
-      "pei_20pct": 0.929
+      "pei_1pct": 0.9688,
+      "pei_2pct": 0.9562,
+      "pei_5pct": 0.9292,
+      "pei_10pct": 0.9234,
+      "pei_20pct": 0.9085
     },
     "top_features": [
       {
         "feature": "hist_total",
-        "importance": 593
-      },
-      {
-        "feature": "day_of_year",
-        "importance": 318
+        "importance": 455
       },
       {
         "feature": "is_night_shift",
-        "importance": 288
+        "importance": 216
       },
       {
         "feature": "nr_0.5km_30d",
-        "importance": 233
+        "importance": 154
+      },
+      {
+        "feature": "day_of_year",
+        "importance": 148
       },
       {
         "feature": "is_morning_shift",
-        "importance": 151
+        "importance": 87
       }
     ]
   },
@@ -61,22 +64,23 @@
     "n_patrols": 6,
     "patrol_radius_km": 2.0,
     "scope_district": "BENGALURU CITY",
-    "baseline_coverage_pct": 3.88,
-    "statusquo_coverage_pct": 11.41,
-    "greedy_coverage_pct": 13.91,
-    "greedy_uplift_pct": 258.7,
-    "greedy_uplift_x": 3.6,
-    "greedy_uplift_vs_statusquo_pct": 21.9,
-    "greedy_uplift_vs_statusquo_x": 1.22,
+    "baseline_coverage_pct": 3.7,
+    "statusquo_coverage_pct": 9.87,
+    "greedy_coverage_pct": 11.67,
+    "greedy_uplift_pct": 215.6,
+    "greedy_uplift_x": 3.2,
+    "greedy_uplift_vs_statusquo_pct": 18.2,
+    "greedy_uplift_vs_statusquo_x": 1.18,
     "greedy_cells_covered": 54,
-    "ilp_coverage_pct": 14.07,
-    "ilp_uplift_pct": 262.8
+    "ilp_coverage_pct": 11.72,
+    "ilp_uplift_pct": 216.9
   },
   "network_analysis": {
     "graph_nodes": 341803,
     "graph_edges": 509633,
     "n_communities": 35333,
     "modularity": 0.9783699921756089,
+    "centrality_method": "degree",
     "top_disruptor": {
       "offender_id": "64ef4d97c14a",
       "name": "Yash Buch",
@@ -149,8 +153,8 @@
     "cytoscape_edges": 223
   },
   "fairness": {
-    "gini": 0.239,
-    "max_min_ratio": 4.62,
+    "gini": 0.1833,
+    "max_min_ratio": 3.51,
     "bias_districts_flagged": 11
   }
 }

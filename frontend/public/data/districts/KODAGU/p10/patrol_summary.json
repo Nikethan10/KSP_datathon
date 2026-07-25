@@ -1,0 +1,15 @@
+{
+  "n_patrols": 10,
+  "patrol_radius_km": 2.0,
+  "scope_district": "KODAGU",
+  "baseline_coverage_pct": 10.31,
+  "statusquo_coverage_pct": 29.57,
+  "greedy_coverage_pct": 32.01,
+  "greedy_uplift_pct": 210.3,
+  "greedy_uplift_x": 3.1,
+  "greedy_uplift_vs_statusquo_pct": 8.3,
+  "greedy_uplift_vs_statusquo_x": 1.08,
+  "greedy_cells_covered": 76,
+  "ilp_coverage_pct": 32.35,
+  "ilp_uplift_pct": 213.6
+}

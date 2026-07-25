@@ -3,6 +3,13 @@
     "gang_rank": 20,
     "gang_size": 953,
     "gang_edges": 1806,
+    "threat_tier": "medium",
+    "threat_score": 31.0,
+    "heinous_pct": 41.4,
+    "violent_pct": 41.4,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 37,
+    "total_cases": 1344,
     "n_articulation_points": 436,
     "key_members": [
       {
@@ -34,10 +41,10 @@
         "is_articulation": true
       },
       {
-        "offender_id": "88d2b23a5c58",
-        "name": "Elijah Suresh",
+        "offender_id": "c1889f447020",
+        "name": "Ati Chatterjee",
         "gang_degree": 14,
-        "total_cases": 2,
+        "total_cases": 4,
         "is_articulation": true
       }
     ],
@@ -55,6 +62,13 @@
     "gang_rank": 13,
     "gang_size": 975,
     "gang_edges": 1731,
+    "threat_tier": "medium",
+    "threat_score": 37.6,
+    "heinous_pct": 40.8,
+    "violent_pct": 40.8,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 39,
+    "total_cases": 1426,
     "n_articulation_points": 452,
     "key_members": [
       {
@@ -107,6 +121,13 @@
     "gang_rank": 7,
     "gang_size": 1071,
     "gang_edges": 1902,
+    "threat_tier": "medium",
+    "threat_score": 36.7,
+    "heinous_pct": 37.3,
+    "violent_pct": 37.3,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 38,
+    "total_cases": 1482,
     "n_articulation_points": 499,
     "key_members": [
       {
@@ -124,17 +145,17 @@
         "is_articulation": true
       },
       {
-        "offender_id": "c04f14887c44",
-        "name": "Oeshi Sabharwal",
-        "gang_degree": 13,
-        "total_cases": 3,
-        "is_articulation": true
-      },
-      {
         "offender_id": "f9dfd1c07c1c",
         "name": "Jalsa Gaba",
         "gang_degree": 13,
         "total_cases": 4,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "c04f14887c44",
+        "name": "Oeshi Sabharwal",
+        "gang_degree": 13,
+        "total_cases": 3,
         "is_articulation": true
       },
       {
@@ -148,17 +169,83 @@
     "removed_top3": [
       "Vedant Jayaraman",
       "Jack Sastry",
-      "Oeshi Sabharwal"
+      "Jalsa Gaba"
     ],
     "largest_before": 1071,
-    "largest_after_top3_removed": 471,
-    "components_after_top3_removed": 9,
-    "fragmentation_drop_pct": 56.0
+    "largest_after_top3_removed": 451,
+    "components_after_top3_removed": 8,
+    "fragmentation_drop_pct": 57.9
+  },
+  {
+    "gang_rank": 23,
+    "gang_size": 947,
+    "gang_edges": 1681,
+    "threat_tier": "medium",
+    "threat_score": 34.6,
+    "heinous_pct": 42.0,
+    "violent_pct": 42.0,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 39,
+    "total_cases": 1334,
+    "n_articulation_points": 444,
+    "key_members": [
+      {
+        "offender_id": "5a87b84c5b48",
+        "name": "Ranbir Thakur",
+        "gang_degree": 16,
+        "total_cases": 5,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "9c8d00813ca6",
+        "name": "Baghyawati Parmar",
+        "gang_degree": 15,
+        "total_cases": 6,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "ba3f45408830",
+        "name": "Aashi Hayer",
+        "gang_degree": 15,
+        "total_cases": 4,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "0c727ff2a194",
+        "name": "Sudiksha Prabhu",
+        "gang_degree": 11,
+        "total_cases": 4,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "8bbcbedd3d37",
+        "name": "Qadim Keer",
+        "gang_degree": 10,
+        "total_cases": 4,
+        "is_articulation": true
+      }
+    ],
+    "removed_top3": [
+      "Ranbir Thakur",
+      "Baghyawati Parmar",
+      "Aashi Hayer"
+    ],
+    "largest_before": 947,
+    "largest_after_top3_removed": 411,
+    "components_after_top3_removed": 10,
+    "fragmentation_drop_pct": 56.6
   },
   {
     "gang_rank": 19,
     "gang_size": 956,
     "gang_edges": 1670,
+    "threat_tier": "low",
+    "threat_score": 27.2,
+    "heinous_pct": 39.5,
+    "violent_pct": 39.5,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 38,
+    "total_cases": 1384,
     "n_articulation_points": 420,
     "key_members": [
       {
@@ -166,6 +253,13 @@
         "name": "Maya D\u2019Alia",
         "gang_degree": 19,
         "total_cases": 4,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "070ddd58e8de",
+        "name": "Bimala Sachar",
+        "gang_degree": 14,
+        "total_cases": 3,
         "is_articulation": true
       },
       {
@@ -183,13 +277,6 @@
         "is_articulation": true
       },
       {
-        "offender_id": "070ddd58e8de",
-        "name": "Bimala Sachar",
-        "gang_degree": 14,
-        "total_cases": 3,
-        "is_articulation": true
-      },
-      {
         "offender_id": "a1ff36f3161a",
         "name": "Janani Nagy",
         "gang_degree": 13,
@@ -199,70 +286,25 @@
     ],
     "removed_top3": [
       "Maya D\u2019Alia",
-      "Chasmum Chakraborty",
-      "Wyatt Hayer"
+      "Bimala Sachar",
+      "Chasmum Chakraborty"
     ],
     "largest_before": 956,
-    "largest_after_top3_removed": 458,
+    "largest_after_top3_removed": 473,
     "components_after_top3_removed": 6,
-    "fragmentation_drop_pct": 52.1
-  },
-  {
-    "gang_rank": 17,
-    "gang_size": 961,
-    "gang_edges": 1692,
-    "n_articulation_points": 459,
-    "key_members": [
-      {
-        "offender_id": "61ca6fa69cc6",
-        "name": "Xavier Nanda",
-        "gang_degree": 13,
-        "total_cases": 5,
-        "is_articulation": true
-      },
-      {
-        "offender_id": "3e448ed680a1",
-        "name": "Devansh Issac",
-        "gang_degree": 12,
-        "total_cases": 4,
-        "is_articulation": true
-      },
-      {
-        "offender_id": "145ed87f30c9",
-        "name": "Nitesh Dara",
-        "gang_degree": 11,
-        "total_cases": 3,
-        "is_articulation": true
-      },
-      {
-        "offender_id": "608f72d4151b",
-        "name": "Bhavini Sankaran",
-        "gang_degree": 11,
-        "total_cases": 4,
-        "is_articulation": true
-      },
-      {
-        "offender_id": "80d0c77e332f",
-        "name": "Janya Kapur",
-        "gang_degree": 11,
-        "total_cases": 4,
-        "is_articulation": true
-      }
-    ],
-    "removed_top3": [
-      "Xavier Nanda",
-      "Devansh Issac",
-      "Nitesh Dara"
-    ],
-    "largest_before": 961,
-    "largest_after_top3_removed": 479,
-    "components_after_top3_removed": 8,
-    "fragmentation_drop_pct": 50.2
+    "fragmentation_drop_pct": 50.5
   },
   {
     "gang_rank": 18,
     "gang_size": 958,
     "gang_edges": 1714,
+    "threat_tier": "medium",
+    "threat_score": 29.9,
+    "heinous_pct": 39.4,
+    "violent_pct": 39.4,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 38,
+    "total_cases": 1375,
     "n_articulation_points": 436,
     "key_members": [
       {
@@ -315,6 +357,13 @@
     "gang_rank": 10,
     "gang_size": 1015,
     "gang_edges": 1761,
+    "threat_tier": "low",
+    "threat_score": 24.7,
+    "heinous_pct": 40.2,
+    "violent_pct": 40.2,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 37,
+    "total_cases": 1422,
     "n_articulation_points": 491,
     "key_members": [
       {
@@ -346,10 +395,10 @@
         "is_articulation": true
       },
       {
-        "offender_id": "a4949c90b0b9",
-        "name": "Siya Gill",
+        "offender_id": "a2fdab6ba143",
+        "name": "Jeremiah Soni",
         "gang_degree": 11,
-        "total_cases": 5,
+        "total_cases": 2,
         "is_articulation": true
       }
     ],
@@ -367,6 +416,13 @@
     "gang_rank": 5,
     "gang_size": 1123,
     "gang_edges": 2001,
+    "threat_tier": "high",
+    "threat_score": 45.5,
+    "heinous_pct": 41.9,
+    "violent_pct": 41.9,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 38,
+    "total_cases": 1645,
     "n_articulation_points": 527,
     "key_members": [
       {
@@ -391,17 +447,17 @@
         "is_articulation": true
       },
       {
-        "offender_id": "c2c581b9743c",
-        "name": "Gayathri Sood",
+        "offender_id": "11215e299873",
+        "name": "Udant Tailor",
         "gang_degree": 12,
         "total_cases": 3,
         "is_articulation": true
       },
       {
-        "offender_id": "57eea18f0aae",
-        "name": "Januja Dube",
+        "offender_id": "02bd7931648e",
+        "name": "Ishaan Naidu",
         "gang_degree": 12,
-        "total_cases": 3,
+        "total_cases": 2,
         "is_articulation": true
       }
     ],
@@ -419,6 +475,13 @@
     "gang_rank": 1,
     "gang_size": 1305,
     "gang_edges": 2309,
+    "threat_tier": "high",
+    "threat_score": 59.2,
+    "heinous_pct": 40.9,
+    "violent_pct": 40.9,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 38,
+    "total_cases": 1878,
     "n_articulation_points": 605,
     "key_members": [
       {
@@ -450,10 +513,10 @@
         "is_articulation": true
       },
       {
-        "offender_id": "6745f6ac8cfd",
-        "name": "Falguni Chada",
+        "offender_id": "1b4fe10562a9",
+        "name": "Chameli Natt",
         "gang_degree": 13,
-        "total_cases": 3,
+        "total_cases": 5,
         "is_articulation": true
       }
     ],
@@ -471,6 +534,13 @@
     "gang_rank": 15,
     "gang_size": 962,
     "gang_edges": 1659,
+    "threat_tier": "low",
+    "threat_score": 27.4,
+    "heinous_pct": 41.7,
+    "violent_pct": 41.7,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 38,
+    "total_cases": 1405,
     "n_articulation_points": 441,
     "key_members": [
       {
@@ -481,18 +551,18 @@
         "is_articulation": true
       },
       {
-        "offender_id": "de6ef5757590",
-        "name": "Mugdha Sangha",
-        "gang_degree": 15,
-        "total_cases": 4,
-        "is_articulation": true
-      },
-      {
         "offender_id": "2a559e65f3f7",
         "name": "Siddharth Subramanian",
         "gang_degree": 15,
         "total_cases": 2,
         "is_articulation": false
+      },
+      {
+        "offender_id": "de6ef5757590",
+        "name": "Mugdha Sangha",
+        "gang_degree": 15,
+        "total_cases": 4,
+        "is_articulation": true
       },
       {
         "offender_id": "1440d93271d6",
@@ -502,17 +572,17 @@
         "is_articulation": false
       },
       {
-        "offender_id": "f7bb0077e601",
-        "name": "Jeremiah Dutt",
+        "offender_id": "4922d34cc627",
+        "name": "Neel Sanghvi",
         "gang_degree": 12,
-        "total_cases": 5,
+        "total_cases": 2,
         "is_articulation": true
       }
     ],
     "removed_top3": [
       "Krishna Sani",
-      "Mugdha Sangha",
-      "Siddharth Subramanian"
+      "Siddharth Subramanian",
+      "Mugdha Sangha"
     ],
     "largest_before": 962,
     "largest_after_top3_removed": 531,
@@ -523,6 +593,13 @@
     "gang_rank": 16,
     "gang_size": 962,
     "gang_edges": 1693,
+    "threat_tier": "low",
+    "threat_score": 28.8,
+    "heinous_pct": 40.5,
+    "violent_pct": 40.5,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 38,
+    "total_cases": 1383,
     "n_articulation_points": 467,
     "key_members": [
       {
@@ -533,17 +610,17 @@
         "is_articulation": true
       },
       {
-        "offender_id": "c3d76b404411",
-        "name": "Sanya Johal",
-        "gang_degree": 13,
-        "total_cases": 5,
-        "is_articulation": true
-      },
-      {
         "offender_id": "2cf65f7fcf93",
         "name": "Chandresh Saraf",
         "gang_degree": 13,
         "total_cases": 2,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "c3d76b404411",
+        "name": "Sanya Johal",
+        "gang_degree": 13,
+        "total_cases": 5,
         "is_articulation": true
       },
       {
@@ -554,17 +631,17 @@
         "is_articulation": true
       },
       {
-        "offender_id": "1dd0e0d946a8",
-        "name": "Aadhya Bhakta",
+        "offender_id": "fb72afe93773",
+        "name": "Saksham Malhotra",
         "gang_degree": 12,
-        "total_cases": 3,
+        "total_cases": 4,
         "is_articulation": true
       }
     ],
     "removed_top3": [
       "Ayush Mukherjee",
-      "Sanya Johal",
-      "Chandresh Saraf"
+      "Chandresh Saraf",
+      "Sanya Johal"
     ],
     "largest_before": 962,
     "largest_after_top3_removed": 565,
@@ -575,6 +652,13 @@
     "gang_rank": 3,
     "gang_size": 1225,
     "gang_edges": 2222,
+    "threat_tier": "high",
+    "threat_score": 61.5,
+    "heinous_pct": 40.6,
+    "violent_pct": 40.6,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 39,
+    "total_cases": 1776,
     "n_articulation_points": 560,
     "key_members": [
       {
@@ -627,6 +711,13 @@
     "gang_rank": 9,
     "gang_size": 1024,
     "gang_edges": 1823,
+    "threat_tier": "medium",
+    "threat_score": 36.4,
+    "heinous_pct": 41.8,
+    "violent_pct": 41.8,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 38,
+    "total_cases": 1484,
     "n_articulation_points": 476,
     "key_members": [
       {
@@ -658,8 +749,8 @@
         "is_articulation": true
       },
       {
-        "offender_id": "322fdc8dad89",
-        "name": "Advik Choudhry",
+        "offender_id": "79ce3b15677c",
+        "name": "Wyatt Parikh",
         "gang_degree": 11,
         "total_cases": 2,
         "is_articulation": true
@@ -679,6 +770,13 @@
     "gang_rank": 14,
     "gang_size": 964,
     "gang_edges": 1661,
+    "threat_tier": "low",
+    "threat_score": 25.3,
+    "heinous_pct": 37.2,
+    "violent_pct": 37.2,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 38,
+    "total_cases": 1394,
     "n_articulation_points": 463,
     "key_members": [
       {
@@ -703,17 +801,17 @@
         "is_articulation": true
       },
       {
-        "offender_id": "8cf439743c80",
-        "name": "Yutika Sem",
-        "gang_degree": 10,
-        "total_cases": 3,
-        "is_articulation": true
-      },
-      {
         "offender_id": "3a79f1cae9df",
         "name": "Bhavna Kamdar",
         "gang_degree": 10,
         "total_cases": 5,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "a995b170d43c",
+        "name": "Harini Chadha",
+        "gang_degree": 10,
+        "total_cases": 2,
         "is_articulation": true
       }
     ],
@@ -731,6 +829,13 @@
     "gang_rank": 2,
     "gang_size": 1234,
     "gang_edges": 2209,
+    "threat_tier": "high",
+    "threat_score": 61.2,
+    "heinous_pct": 42.1,
+    "violent_pct": 42.1,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 39,
+    "total_cases": 1783,
     "n_articulation_points": 524,
     "key_members": [
       {
@@ -783,6 +888,13 @@
     "gang_rank": 12,
     "gang_size": 997,
     "gang_edges": 1774,
+    "threat_tier": "medium",
+    "threat_score": 32.7,
+    "heinous_pct": 38.4,
+    "violent_pct": 38.4,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 38,
+    "total_cases": 1453,
     "n_articulation_points": 444,
     "key_members": [
       {
@@ -807,17 +919,17 @@
         "is_articulation": true
       },
       {
-        "offender_id": "bc9cdbe74c54",
-        "name": "Chasmum Sant",
-        "gang_degree": 12,
-        "total_cases": 3,
-        "is_articulation": true
-      },
-      {
         "offender_id": "9945d5f051a1",
         "name": "Om Nath",
         "gang_degree": 12,
         "total_cases": 2,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "bc9cdbe74c54",
+        "name": "Chasmum Sant",
+        "gang_degree": 12,
+        "total_cases": 3,
         "is_articulation": true
       }
     ],
@@ -832,23 +944,89 @@
     "fragmentation_drop_pct": 26.6
   },
   {
+    "gang_rank": 22,
+    "gang_size": 949,
+    "gang_edges": 1727,
+    "threat_tier": "low",
+    "threat_score": 24.8,
+    "heinous_pct": 38.5,
+    "violent_pct": 38.5,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 37,
+    "total_cases": 1358,
+    "n_articulation_points": 423,
+    "key_members": [
+      {
+        "offender_id": "c19faa8f38a9",
+        "name": "Yutika Khosla",
+        "gang_degree": 17,
+        "total_cases": 4,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "7ca8d2246aec",
+        "name": "Champak Chacko",
+        "gang_degree": 14,
+        "total_cases": 4,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "653d819a0d51",
+        "name": "Zinal Batra",
+        "gang_degree": 14,
+        "total_cases": 4,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "58b1db769413",
+        "name": "Bhavani Savant",
+        "gang_degree": 14,
+        "total_cases": 4,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "8301be136314",
+        "name": "Yahvi Sachar",
+        "gang_degree": 13,
+        "total_cases": 3,
+        "is_articulation": true
+      }
+    ],
+    "removed_top3": [
+      "Yutika Khosla",
+      "Champak Chacko",
+      "Zinal Batra"
+    ],
+    "largest_before": 949,
+    "largest_after_top3_removed": 734,
+    "components_after_top3_removed": 9,
+    "fragmentation_drop_pct": 22.7
+  },
+  {
     "gang_rank": 8,
     "gang_size": 1051,
     "gang_edges": 1899,
+    "threat_tier": "high",
+    "threat_score": 38.1,
+    "heinous_pct": 38.4,
+    "violent_pct": 38.4,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 38,
+    "total_cases": 1477,
     "n_articulation_points": 463,
     "key_members": [
-      {
-        "offender_id": "ff0d0789e6af",
-        "name": "Ekaraj Chauhan",
-        "gang_degree": 14,
-        "total_cases": 5,
-        "is_articulation": true
-      },
       {
         "offender_id": "a369ad1d40a8",
         "name": "Nathaniel Pathak",
         "gang_degree": 14,
         "total_cases": 3,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "ff0d0789e6af",
+        "name": "Ekaraj Chauhan",
+        "gang_degree": 14,
+        "total_cases": 5,
         "is_articulation": true
       },
       {
@@ -874,8 +1052,8 @@
       }
     ],
     "removed_top3": [
-      "Ekaraj Chauhan",
       "Nathaniel Pathak",
+      "Ekaraj Chauhan",
       "Mugdha Dhar"
     ],
     "largest_before": 1051,
@@ -887,6 +1065,13 @@
     "gang_rank": 11,
     "gang_size": 1000,
     "gang_edges": 1916,
+    "threat_tier": "high",
+    "threat_score": 43.4,
+    "heinous_pct": 40.9,
+    "violent_pct": 40.9,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 38,
+    "total_cases": 1465,
     "n_articulation_points": 446,
     "key_members": [
       {
@@ -904,41 +1089,225 @@
         "is_articulation": true
       },
       {
+        "offender_id": "870db374f5ad",
+        "name": "Neha Bala",
+        "gang_degree": 13,
+        "total_cases": 3,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "e235902e8d55",
+        "name": "Andrew Hayer",
+        "gang_degree": 13,
+        "total_cases": 3,
+        "is_articulation": true
+      },
+      {
         "offender_id": "9d010a6e09a8",
         "name": "Chanchal Khalsa",
         "gang_degree": 13,
         "total_cases": 5,
-        "is_articulation": true
-      },
-      {
-        "offender_id": "5ff672014205",
-        "name": "Pranav Bose",
-        "gang_degree": 13,
-        "total_cases": 3,
-        "is_articulation": true
-      },
-      {
-        "offender_id": "5df72d75bcd7",
-        "name": "Ekiya Vala",
-        "gang_degree": 13,
-        "total_cases": 3,
         "is_articulation": true
       }
     ],
     "removed_top3": [
       "Gayathri Ganesan",
       "Upkaar Sehgal",
-      "Chanchal Khalsa"
+      "Neha Bala"
     ],
     "largest_before": 1000,
-    "largest_after_top3_removed": 807,
+    "largest_after_top3_removed": 785,
     "components_after_top3_removed": 8,
-    "fragmentation_drop_pct": 19.3
+    "fragmentation_drop_pct": 21.5
+  },
+  {
+    "gang_rank": 17,
+    "gang_size": 961,
+    "gang_edges": 1692,
+    "threat_tier": "low",
+    "threat_score": 28.5,
+    "heinous_pct": 41.8,
+    "violent_pct": 41.8,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 38,
+    "total_cases": 1345,
+    "n_articulation_points": 459,
+    "key_members": [
+      {
+        "offender_id": "61ca6fa69cc6",
+        "name": "Xavier Nanda",
+        "gang_degree": 13,
+        "total_cases": 5,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "3e448ed680a1",
+        "name": "Devansh Issac",
+        "gang_degree": 12,
+        "total_cases": 4,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "80d0c77e332f",
+        "name": "Janya Kapur",
+        "gang_degree": 11,
+        "total_cases": 4,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "145ed87f30c9",
+        "name": "Nitesh Dara",
+        "gang_degree": 11,
+        "total_cases": 3,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "b69606280372",
+        "name": "Ishwar Varty",
+        "gang_degree": 11,
+        "total_cases": 2,
+        "is_articulation": true
+      }
+    ],
+    "removed_top3": [
+      "Xavier Nanda",
+      "Devansh Issac",
+      "Janya Kapur"
+    ],
+    "largest_before": 961,
+    "largest_after_top3_removed": 804,
+    "components_after_top3_removed": 9,
+    "fragmentation_drop_pct": 16.3
+  },
+  {
+    "gang_rank": 24,
+    "gang_size": 938,
+    "gang_edges": 1728,
+    "threat_tier": "low",
+    "threat_score": 26.6,
+    "heinous_pct": 40.1,
+    "violent_pct": 40.1,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 37,
+    "total_cases": 1367,
+    "n_articulation_points": 429,
+    "key_members": [
+      {
+        "offender_id": "8fd0433033b3",
+        "name": "Ishaan Bhatti",
+        "gang_degree": 15,
+        "total_cases": 3,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "590fdaece233",
+        "name": "Harrison Bath",
+        "gang_degree": 15,
+        "total_cases": 6,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "24dbb48826a0",
+        "name": "Atharv Toor",
+        "gang_degree": 14,
+        "total_cases": 3,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "4fadf4b0a431",
+        "name": "Inaya De",
+        "gang_degree": 14,
+        "total_cases": 2,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "639e7c4f663b",
+        "name": "Meghana Viswanathan",
+        "gang_degree": 13,
+        "total_cases": 2,
+        "is_articulation": true
+      }
+    ],
+    "removed_top3": [
+      "Ishaan Bhatti",
+      "Harrison Bath",
+      "Atharv Toor"
+    ],
+    "largest_before": 938,
+    "largest_after_top3_removed": 793,
+    "components_after_top3_removed": 6,
+    "fragmentation_drop_pct": 15.5
+  },
+  {
+    "gang_rank": 21,
+    "gang_size": 952,
+    "gang_edges": 1799,
+    "threat_tier": "high",
+    "threat_score": 38.9,
+    "heinous_pct": 44.2,
+    "violent_pct": 44.2,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 38,
+    "total_cases": 1395,
+    "n_articulation_points": 412,
+    "key_members": [
+      {
+        "offender_id": "64ef4d97c14a",
+        "name": "Yash Buch",
+        "gang_degree": 22,
+        "total_cases": 6,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "da9b8fc10212",
+        "name": "Onveer Natarajan",
+        "gang_degree": 15,
+        "total_cases": 4,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "ce0187d06cdc",
+        "name": "Jackson Panchal",
+        "gang_degree": 14,
+        "total_cases": 4,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "564459097a23",
+        "name": "Praneel D\u2019Alia",
+        "gang_degree": 14,
+        "total_cases": 7,
+        "is_articulation": true
+      },
+      {
+        "offender_id": "f86d4bea128a",
+        "name": "Wahab Hans",
+        "gang_degree": 14,
+        "total_cases": 3,
+        "is_articulation": true
+      }
+    ],
+    "removed_top3": [
+      "Yash Buch",
+      "Onveer Natarajan",
+      "Jackson Panchal"
+    ],
+    "largest_before": 952,
+    "largest_after_top3_removed": 820,
+    "components_after_top3_removed": 9,
+    "fragmentation_drop_pct": 13.9
   },
   {
     "gang_rank": 6,
     "gang_size": 1071,
     "gang_edges": 1831,
+    "threat_tier": "medium",
+    "threat_score": 29.0,
+    "heinous_pct": 40.8,
+    "violent_pct": 40.8,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 37,
+    "total_cases": 1544,
     "n_articulation_points": 484,
     "key_members": [
       {
@@ -956,6 +1325,13 @@
         "is_articulation": true
       },
       {
+        "offender_id": "7664f11b358d",
+        "name": "Irya Purohit",
+        "gang_degree": 11,
+        "total_cases": 2,
+        "is_articulation": true
+      },
+      {
         "offender_id": "0981af72467f",
         "name": "Damini Swamy",
         "gang_degree": 11,
@@ -968,29 +1344,29 @@
         "gang_degree": 11,
         "total_cases": 4,
         "is_articulation": true
-      },
-      {
-        "offender_id": "7664f11b358d",
-        "name": "Irya Purohit",
-        "gang_degree": 11,
-        "total_cases": 2,
-        "is_articulation": true
       }
     ],
     "removed_top3": [
       "Watika Soni",
       "Rayaan Bora",
-      "Damini Swamy"
+      "Irya Purohit"
     ],
     "largest_before": 1071,
     "largest_after_top3_removed": 1022,
-    "components_after_top3_removed": 7,
+    "components_after_top3_removed": 6,
     "fragmentation_drop_pct": 4.6
   },
   {
     "gang_rank": 4,
     "gang_size": 1205,
     "gang_edges": 2060,
+    "threat_tier": "high",
+    "threat_score": 46.2,
+    "heinous_pct": 39.1,
+    "violent_pct": 39.1,
+    "top_crime": "Crimes Against Body",
+    "n_districts": 38,
+    "total_cases": 1753,
     "n_articulation_points": 547,
     "key_members": [
       {
@@ -1022,10 +1398,10 @@
         "is_articulation": true
       },
       {
-        "offender_id": "2c7db582d8ed",
-        "name": "Eesha Garg",
+        "offender_id": "3c908b6b7808",
+        "name": "Kabir Dutta",
         "gang_degree": 10,
-        "total_cases": 3,
+        "total_cases": 5,
         "is_articulation": true
       }
     ],

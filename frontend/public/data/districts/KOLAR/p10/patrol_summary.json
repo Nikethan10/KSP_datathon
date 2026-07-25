@@ -1,0 +1,15 @@
+{
+  "n_patrols": 10,
+  "patrol_radius_km": 2.0,
+  "scope_district": "KOLAR",
+  "baseline_coverage_pct": 31.24,
+  "statusquo_coverage_pct": 48.56,
+  "greedy_coverage_pct": 56.69,
+  "greedy_uplift_pct": 81.5,
+  "greedy_uplift_x": 1.8,
+  "greedy_uplift_vs_statusquo_pct": 16.7,
+  "greedy_uplift_vs_statusquo_x": 1.17,
+  "greedy_cells_covered": 46,
+  "ilp_coverage_pct": 58.82,
+  "ilp_uplift_pct": 88.3
+}

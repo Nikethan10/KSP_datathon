@@ -1,0 +1,15 @@
+{
+  "n_patrols": 8,
+  "patrol_radius_km": 2.0,
+  "scope_district": "DAVANAGERE",
+  "baseline_coverage_pct": 5.31,
+  "statusquo_coverage_pct": 24.23,
+  "greedy_coverage_pct": 27.49,
+  "greedy_uplift_pct": 417.5,
+  "greedy_uplift_x": 5.2,
+  "greedy_uplift_vs_statusquo_pct": 13.5,
+  "greedy_uplift_vs_statusquo_x": 1.13,
+  "greedy_cells_covered": 62,
+  "ilp_coverage_pct": 29.31,
+  "ilp_uplift_pct": 451.7
+}

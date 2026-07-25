@@ -1,414 +1,414 @@
 {
   "disparity_metrics": {
-    "gini_coefficient": 0.239,
-    "max_min_ratio": 4.62,
-    "coefficient_of_variation": 0.4809,
+    "gini_coefficient": 0.1833,
+    "max_min_ratio": 3.51,
+    "coefficient_of_variation": 0.3613,
     "n_districts": 39,
     "highest_risk_districts": [
       {
-        "DistrictName": "HUBBALLI DHARWAD CITY",
-        "mean_risk": 0.16492104150784315,
-        "n_cases": 24087
-      },
-      {
         "DistrictName": "BAGALKOT",
-        "mean_risk": 0.16124634963065215,
+        "mean_risk": 0.16416238248348236,
         "n_cases": 28123
       },
       {
+        "DistrictName": "HUBBALLI DHARWAD CITY",
+        "mean_risk": 0.15506868064403534,
+        "n_cases": 24087
+      },
+      {
         "DistrictName": "BALLARI",
-        "mean_risk": 0.1304518636949102,
+        "mean_risk": 0.12798911333084106,
         "n_cases": 28426
       },
       {
         "DistrictName": "BENGALURU CITY",
-        "mean_risk": 0.1273337303478975,
+        "mean_risk": 0.12569642066955566,
         "n_cases": 425406
       },
       {
         "DistrictName": "MYSURU CITY",
-        "mean_risk": 0.11906905119268292,
+        "mean_risk": 0.12478891760110855,
         "n_cases": 30510
       }
     ],
     "lowest_risk_districts": [
       {
         "DistrictName": "VIJAYANAGARA",
-        "mean_risk": 0.035681066847252745,
+        "mean_risk": 0.04681515693664551,
         "n_cases": 25815
       },
       {
-        "DistrictName": "YADGIR",
-        "mean_risk": 0.03891041358119658,
-        "n_cases": 19511
-      },
-      {
-        "DistrictName": "MYSURU DIST",
-        "mean_risk": 0.04076929740389972,
-        "n_cases": 50599
+        "DistrictName": "KOLAR",
+        "mean_risk": 0.05227430909872055,
+        "n_cases": 23648
       },
       {
         "DistrictName": "KALABURAGI",
-        "mean_risk": 0.04101705313776224,
+        "mean_risk": 0.05259332433342934,
         "n_cases": 31351
       },
       {
-        "DistrictName": "KOLAR",
-        "mean_risk": 0.04288312547294118,
-        "n_cases": 23648
+        "DistrictName": "MYSURU DIST",
+        "mean_risk": 0.05404744669795036,
+        "n_cases": 50599
+      },
+      {
+        "DistrictName": "RAMANAGARA",
+        "mean_risk": 0.055013444274663925,
+        "n_cases": 44232
       }
     ],
     "district_details": [
       {
         "DistrictName": "BAGALKOT",
-        "mean_risk": 0.16124634963065215,
-        "max_risk": 0.9255234003,
-        "total_risk": 148.3466416602,
-        "n_cells": 920,
+        "mean_risk": 0.16416238248348236,
+        "max_risk": 0.8219499588012695,
+        "total_risk": 152.50685119628906,
+        "n_cells": 929,
         "n_cases": 28123,
-        "cases_per_cell": 30.568478260869565
+        "cases_per_cell": 30.27233584499462
       },
       {
         "DistrictName": "BALLARI",
-        "mean_risk": 0.1304518636949102,
-        "max_risk": 0.8651436567,
-        "total_risk": 43.5709224741,
+        "mean_risk": 0.12798911333084106,
+        "max_risk": 0.7598479986190796,
+        "total_risk": 42.74836349487305,
         "n_cells": 334,
         "n_cases": 28426,
         "cases_per_cell": 85.10778443113773
       },
       {
         "DistrictName": "BELAGAVI CITY",
-        "mean_risk": 0.10244638746184212,
-        "max_risk": 0.8398642540000001,
-        "total_risk": 23.357776341300003,
-        "n_cells": 228,
+        "mean_risk": 0.11102794110774994,
+        "max_risk": 0.579284131526947,
+        "total_risk": 28.867263793945312,
+        "n_cells": 260,
         "n_cases": 20877,
-        "cases_per_cell": 91.5657894736842
+        "cases_per_cell": 80.29615384615384
       },
       {
         "DistrictName": "BELAGAVI DIST",
-        "mean_risk": 0.0569557402722353,
-        "max_risk": 0.7445665598,
-        "total_risk": 72.61856884710001,
-        "n_cells": 1275,
+        "mean_risk": 0.07419261336326599,
+        "max_risk": 0.7638200521469116,
+        "total_risk": 95.33750915527344,
+        "n_cells": 1285,
         "n_cases": 59569,
-        "cases_per_cell": 46.72078431372549
+        "cases_per_cell": 46.35719844357977
       },
       {
         "DistrictName": "BENGALURU CITY",
-        "mean_risk": 0.1273337303478975,
-        "max_risk": 0.7563986778,
-        "total_risk": 193.8019375895,
-        "n_cells": 1522,
+        "mean_risk": 0.12569642066955566,
+        "max_risk": 0.6294474601745605,
+        "total_risk": 204.50808715820312,
+        "n_cells": 1627,
         "n_cases": 425406,
-        "cases_per_cell": 279.50459921156374
+        "cases_per_cell": 261.46650276582665
       },
       {
         "DistrictName": "BENGALURU DIST",
-        "mean_risk": 0.0809638891406015,
-        "max_risk": 0.4519353211,
-        "total_risk": 75.3773807899,
-        "n_cells": 931,
+        "mean_risk": 0.08945666253566742,
+        "max_risk": 0.3903607726097107,
+        "total_risk": 89.0093765258789,
+        "n_cells": 995,
         "n_cases": 64004,
-        "cases_per_cell": 68.74758324382384
+        "cases_per_cell": 64.32562814070351
       },
       {
         "DistrictName": "BIDAR",
-        "mean_risk": 0.05168810137901702,
-        "max_risk": 0.3480541408,
-        "total_risk": 27.343005629500002,
-        "n_cells": 529,
+        "mean_risk": 0.06551393866539001,
+        "max_risk": 0.2838502526283264,
+        "total_risk": 35.31201171875,
+        "n_cells": 539,
         "n_cases": 37861,
-        "cases_per_cell": 71.57088846880907
+        "cases_per_cell": 70.2430426716141
       },
       {
         "DistrictName": "CHAMARAJANAGAR",
-        "mean_risk": 0.046193562185080646,
-        "max_risk": 0.2265204042,
-        "total_risk": 11.4560034219,
-        "n_cells": 248,
+        "mean_risk": 0.05994165316224098,
+        "max_risk": 0.20713022351264954,
+        "total_risk": 14.925471305847168,
+        "n_cells": 249,
         "n_cases": 23043,
-        "cases_per_cell": 92.91532258064517
+        "cases_per_cell": 92.5421686746988
       },
       {
         "DistrictName": "CHICKBALLAPURA",
-        "mean_risk": 0.05162287870031348,
-        "max_risk": 0.3137879968,
-        "total_risk": 16.4676983054,
-        "n_cells": 319,
+        "mean_risk": 0.06341478228569031,
+        "max_risk": 0.3015590012073517,
+        "total_risk": 20.482975006103516,
+        "n_cells": 323,
         "n_cases": 36545,
-        "cases_per_cell": 114.56112852664577
+        "cases_per_cell": 113.14241486068111
       },
       {
         "DistrictName": "CHIKKAMAGALURU",
-        "mean_risk": 0.05332576826682465,
-        "max_risk": 0.5025342703,
-        "total_risk": 33.7552113129,
-        "n_cells": 633,
+        "mean_risk": 0.06519342213869095,
+        "max_risk": 0.4337095022201538,
+        "total_risk": 41.59340286254883,
+        "n_cells": 638,
         "n_cases": 35485,
-        "cases_per_cell": 56.05845181674565
+        "cases_per_cell": 55.61912225705329
       },
       {
         "DistrictName": "CHITRADURGA",
-        "mean_risk": 0.04950261574109589,
-        "max_risk": 0.3523993194,
-        "total_risk": 7.2273818982,
-        "n_cells": 146,
+        "mean_risk": 0.05745232477784157,
+        "max_risk": 0.27888166904449463,
+        "total_risk": 8.905110359191895,
+        "n_cells": 155,
         "n_cases": 47754,
-        "cases_per_cell": 327.0821917808219
+        "cases_per_cell": 308.09032258064514
       },
       {
         "DistrictName": "COASTAL SECURITY POLICE",
-        "mean_risk": 0.09510223202500001,
-        "max_risk": 0.2849743664,
-        "total_risk": 2.2824535686000003,
-        "n_cells": 24,
+        "mean_risk": 0.0974714457988739,
+        "max_risk": 0.19603008031845093,
+        "total_risk": 2.144371747970581,
+        "n_cells": 22,
         "n_cases": 213,
-        "cases_per_cell": 8.875
+        "cases_per_cell": 9.681818181818182
       },
       {
         "DistrictName": "DAKSHINA KANNADA",
-        "mean_risk": 0.05279580460026882,
-        "max_risk": 0.48963716630000004,
-        "total_risk": 19.6400393113,
-        "n_cells": 372,
+        "mean_risk": 0.06568834185600281,
+        "max_risk": 0.4355332851409912,
+        "total_risk": 24.501752853393555,
+        "n_cells": 373,
         "n_cases": 21125,
-        "cases_per_cell": 56.78763440860215
+        "cases_per_cell": 56.63538873994638
       },
       {
         "DistrictName": "DAVANAGERE",
-        "mean_risk": 0.060908066540154446,
-        "max_risk": 0.4700390399,
-        "total_risk": 31.5503784678,
-        "n_cells": 518,
+        "mean_risk": 0.0727350041270256,
+        "max_risk": 0.3797045052051544,
+        "total_risk": 38.0404052734375,
+        "n_cells": 523,
         "n_cases": 39041,
-        "cases_per_cell": 75.36872586872587
+        "cases_per_cell": 74.64818355640536
       },
       {
         "DistrictName": "DHARWAD",
-        "mean_risk": 0.05643707286030151,
-        "max_risk": 0.6048123837,
-        "total_risk": 22.4619549984,
-        "n_cells": 398,
+        "mean_risk": 0.06757096201181412,
+        "max_risk": 0.49748265743255615,
+        "total_risk": 27.16352653503418,
+        "n_cells": 402,
         "n_cases": 14866,
-        "cases_per_cell": 37.35175879396985
+        "cases_per_cell": 36.98009950248756
       },
       {
         "DistrictName": "GADAG",
-        "mean_risk": 0.06080247202587601,
-        "max_risk": 0.37399458890000004,
-        "total_risk": 22.5577171216,
-        "n_cells": 371,
+        "mean_risk": 0.07397912442684174,
+        "max_risk": 0.344673216342926,
+        "total_risk": 28.11206817626953,
+        "n_cells": 380,
         "n_cases": 18502,
-        "cases_per_cell": 49.870619946091644
+        "cases_per_cell": 48.689473684210526
       },
       {
         "DistrictName": "HASSAN",
-        "mean_risk": 0.045945821133122365,
-        "max_risk": 0.24605660140000002,
-        "total_risk": 21.7783192171,
-        "n_cells": 474,
+        "mean_risk": 0.057691123336553574,
+        "max_risk": 0.19166885316371918,
+        "total_risk": 25.557167053222656,
+        "n_cells": 443,
         "n_cases": 58256,
-        "cases_per_cell": 122.90295358649789
+        "cases_per_cell": 131.50338600451468
       },
       {
         "DistrictName": "HAVERI",
-        "mean_risk": 0.04725680650877193,
-        "max_risk": 0.3611418307,
-        "total_risk": 18.855465797,
-        "n_cells": 399,
+        "mean_risk": 0.06186625733971596,
+        "max_risk": 0.2974083125591278,
+        "total_risk": 24.313438415527344,
+        "n_cells": 393,
         "n_cases": 29771,
-        "cases_per_cell": 74.6140350877193
+        "cases_per_cell": 75.7531806615776
       },
       {
         "DistrictName": "HUBBALLI DHARWAD CITY",
-        "mean_risk": 0.16492104150784315,
-        "max_risk": 0.46673256160000004,
-        "total_risk": 16.821946233800002,
-        "n_cells": 102,
+        "mean_risk": 0.15506868064403534,
+        "max_risk": 0.40415894985198975,
+        "total_risk": 18.918378829956055,
+        "n_cells": 122,
         "n_cases": 24087,
-        "cases_per_cell": 236.14705882352942
+        "cases_per_cell": 197.4344262295082
       },
       {
         "DistrictName": "K.G.F",
-        "mean_risk": 0.06075864243636364,
-        "max_risk": 0.3334224522,
-        "total_risk": 10.025176002,
+        "mean_risk": 0.07426933944225311,
+        "max_risk": 0.30044808983802795,
+        "total_risk": 12.254441261291504,
         "n_cells": 165,
         "n_cases": 10256,
         "cases_per_cell": 62.157575757575756
       },
       {
         "DistrictName": "KALABURAGI",
-        "mean_risk": 0.04101705313776224,
-        "max_risk": 0.2783246636,
-        "total_risk": 5.8654385987,
-        "n_cells": 143,
+        "mean_risk": 0.05259332433342934,
+        "max_risk": 0.3282862901687622,
+        "total_risk": 7.363065242767334,
+        "n_cells": 140,
         "n_cases": 31351,
-        "cases_per_cell": 219.23776223776224
+        "cases_per_cell": 223.93571428571428
       },
       {
         "DistrictName": "KALABURAGI CITY",
-        "mean_risk": 0.10944734908832489,
-        "max_risk": 0.495016396,
-        "total_risk": 21.561127770400002,
-        "n_cells": 197,
+        "mean_risk": 0.11759449541568756,
+        "max_risk": 0.429433673620224,
+        "total_risk": 25.40041160583496,
+        "n_cells": 216,
         "n_cases": 20223,
-        "cases_per_cell": 102.65482233502539
+        "cases_per_cell": 93.625
       },
       {
         "DistrictName": "KARNATAKA RAILWAYS",
-        "mean_risk": 0.11091822462827587,
-        "max_risk": 0.4190522432,
-        "total_risk": 16.0831425711,
-        "n_cells": 145,
+        "mean_risk": 0.11212505400180817,
+        "max_risk": 0.3760263919830322,
+        "total_risk": 15.809632301330566,
+        "n_cells": 141,
         "n_cases": 9888,
-        "cases_per_cell": 68.19310344827586
+        "cases_per_cell": 70.12765957446808
       },
       {
         "DistrictName": "KODAGU",
-        "mean_risk": 0.05378102367318436,
-        "max_risk": 0.3197931945,
-        "total_risk": 19.253606475,
-        "n_cells": 358,
+        "mean_risk": 0.067437544465065,
+        "max_risk": 0.31999102234840393,
+        "total_risk": 24.277515411376953,
+        "n_cells": 360,
         "n_cases": 19247,
-        "cases_per_cell": 53.762569832402235
+        "cases_per_cell": 53.46388888888889
       },
       {
         "DistrictName": "KOLAR",
-        "mean_risk": 0.04288312547294118,
-        "max_risk": 0.18427085880000002,
-        "total_risk": 3.6450656652,
-        "n_cells": 85,
+        "mean_risk": 0.05227430909872055,
+        "max_risk": 0.16983942687511444,
+        "total_risk": 4.3387675285339355,
+        "n_cells": 83,
         "n_cases": 23648,
-        "cases_per_cell": 278.21176470588233
+        "cases_per_cell": 284.9156626506024
       },
       {
         "DistrictName": "KOPPAL",
-        "mean_risk": 0.05230841823580786,
-        "max_risk": 0.3372904658,
-        "total_risk": 23.957255552,
-        "n_cells": 458,
+        "mean_risk": 0.0663101002573967,
+        "max_risk": 0.3204942047595978,
+        "total_risk": 31.298368453979492,
+        "n_cells": 472,
         "n_cases": 24926,
-        "cases_per_cell": 54.4235807860262
+        "cases_per_cell": 52.809322033898304
       },
       {
         "DistrictName": "MANDYA",
-        "mean_risk": 0.05879644954017094,
-        "max_risk": 0.3616871834,
-        "total_risk": 6.8791845962,
-        "n_cells": 117,
+        "mean_risk": 0.06673350930213928,
+        "max_risk": 0.31870022416114807,
+        "total_risk": 8.008021354675293,
+        "n_cells": 120,
         "n_cases": 59701,
-        "cases_per_cell": 510.2649572649573
+        "cases_per_cell": 497.5083333333333
       },
       {
         "DistrictName": "MANGALURU CITY",
-        "mean_risk": 0.0900844473965625,
-        "max_risk": 0.4015377462,
-        "total_risk": 28.827023166900002,
-        "n_cells": 320,
+        "mean_risk": 0.09860873967409134,
+        "max_risk": 0.34387096762657166,
+        "total_risk": 33.72418975830078,
+        "n_cells": 342,
         "n_cases": 31544,
-        "cases_per_cell": 98.575
+        "cases_per_cell": 92.23391812865498
       },
       {
         "DistrictName": "MYSURU CITY",
-        "mean_risk": 0.11906905119268292,
-        "max_risk": 0.4071855545,
-        "total_risk": 14.6454932967,
-        "n_cells": 123,
+        "mean_risk": 0.12478891760110855,
+        "max_risk": 0.31921228766441345,
+        "total_risk": 17.595237731933594,
+        "n_cells": 141,
         "n_cases": 30510,
-        "cases_per_cell": 248.0487804878049
+        "cases_per_cell": 216.38297872340425
       },
       {
         "DistrictName": "MYSURU DIST",
-        "mean_risk": 0.04076929740389972,
-        "max_risk": 0.2239960879,
-        "total_risk": 14.636177768000001,
-        "n_cells": 359,
+        "mean_risk": 0.05404744669795036,
+        "max_risk": 0.24136315286159515,
+        "total_risk": 18.80851173400879,
+        "n_cells": 348,
         "n_cases": 50599,
-        "cases_per_cell": 140.9442896935933
+        "cases_per_cell": 145.3994252873563
       },
       {
         "DistrictName": "RAICHUR",
-        "mean_risk": 0.04663029470563003,
-        "max_risk": 0.32456085090000003,
-        "total_risk": 17.3930999252,
-        "n_cells": 373,
+        "mean_risk": 0.06306901574134827,
+        "max_risk": 0.2981664538383484,
+        "total_risk": 23.398605346679688,
+        "n_cells": 371,
         "n_cases": 36496,
-        "cases_per_cell": 97.84450402144772
+        "cases_per_cell": 98.37196765498652
       },
       {
         "DistrictName": "RAMANAGARA",
-        "mean_risk": 0.04544474729134616,
-        "max_risk": 0.1724111885,
-        "total_risk": 4.726253718300001,
-        "n_cells": 104,
+        "mean_risk": 0.055013444274663925,
+        "max_risk": 0.16064655780792236,
+        "total_risk": 5.171263694763184,
+        "n_cells": 94,
         "n_cases": 44232,
-        "cases_per_cell": 425.3076923076923
+        "cases_per_cell": 470.5531914893617
       },
       {
         "DistrictName": "SHIVAMOGGA",
-        "mean_risk": 0.05086967432442748,
-        "max_risk": 0.349265635,
-        "total_risk": 19.9917820095,
-        "n_cells": 393,
+        "mean_risk": 0.0626436173915863,
+        "max_risk": 0.3095032870769501,
+        "total_risk": 24.994802474975586,
+        "n_cells": 399,
         "n_cases": 61338,
-        "cases_per_cell": 156.0763358778626
+        "cases_per_cell": 153.72932330827066
       },
       {
         "DistrictName": "TUMAKURU",
-        "mean_risk": 0.05319808807785179,
-        "max_risk": 0.4522540867,
-        "total_risk": 63.8909037815,
-        "n_cells": 1201,
+        "mean_risk": 0.06726735830307007,
+        "max_risk": 0.40054193139076233,
+        "total_risk": 81.46076965332031,
+        "n_cells": 1211,
         "n_cases": 61553,
-        "cases_per_cell": 51.251457119067446
+        "cases_per_cell": 50.82824112303881
       },
       {
         "DistrictName": "UDUPI",
-        "mean_risk": 0.06119475415479205,
-        "max_risk": 0.25096145270000003,
-        "total_risk": 33.840699047600005,
-        "n_cells": 553,
+        "mean_risk": 0.07341112941503525,
+        "max_risk": 0.25924456119537354,
+        "total_risk": 40.52294158935547,
+        "n_cells": 552,
         "n_cases": 28431,
-        "cases_per_cell": 51.4122965641953
+        "cases_per_cell": 51.505434782608695
       },
       {
         "DistrictName": "UTTARA KANNADA",
-        "mean_risk": 0.05449515447854671,
-        "max_risk": 0.4172154367,
-        "total_risk": 31.498199288600002,
-        "n_cells": 578,
+        "mean_risk": 0.06876391917467117,
+        "max_risk": 0.3657313585281372,
+        "total_risk": 37.95768356323242,
+        "n_cells": 552,
         "n_cases": 32690,
-        "cases_per_cell": 56.55709342560554
+        "cases_per_cell": 59.221014492753625
       },
       {
         "DistrictName": "VIJAYANAGARA",
-        "mean_risk": 0.035681066847252745,
-        "max_risk": 0.12290660290000001,
-        "total_risk": 3.2469770831,
-        "n_cells": 91,
+        "mean_risk": 0.04681515693664551,
+        "max_risk": 0.11645541340112686,
+        "total_risk": 4.494255065917969,
+        "n_cells": 96,
         "n_cases": 25815,
-        "cases_per_cell": 283.68131868131866
+        "cases_per_cell": 268.90625
       },
       {
         "DistrictName": "VIJAYAPUR",
-        "mean_risk": 0.05320387383526971,
-        "max_risk": 0.49695351720000003,
-        "total_risk": 38.4664007829,
-        "n_cells": 723,
+        "mean_risk": 0.06982933729887009,
+        "max_risk": 0.41150355339050293,
+        "total_risk": 50.97541809082031,
+        "n_cells": 730,
         "n_cases": 39508,
-        "cases_per_cell": 54.644536652835406
+        "cases_per_cell": 54.12054794520548
       },
       {
         "DistrictName": "YADGIR",
-        "mean_risk": 0.03891041358119658,
-        "max_risk": 0.20976454020000002,
-        "total_risk": 9.105036778,
-        "n_cells": 234,
+        "mean_risk": 0.05554730072617531,
+        "max_risk": 0.22802360355854034,
+        "total_risk": 11.942669868469238,
+        "n_cells": 215,
         "n_cases": 19511,
-        "cases_per_cell": 83.38034188034187
+        "cases_per_cell": 90.74883720930232
       }
     ]
   },
@@ -625,7 +625,7 @@
     ],
     "flag": "Areas with low clearance rates may have under-reporting, inflating apparent safety. Predictions are area-level, not individual-level."
   },
-  "fairness_statement": "PRAHARI predicts crime risk for geographic areas and time windows, not for individuals. It uses historical FIR data which reflects reported crime, not true crime rates. Areas with lower reporting or clearance rates may appear safer than they are. We apply a reporting-bias adjustment to mitigate this effect. Risk scores are explained via SHAP to ensure transparency. No demographic attributes (religion, caste) are used as model features.",
+  "fairness_statement": "PRAHARI predicts crime risk for geographic areas and time windows, not for individuals. It uses historical FIR data which reflects reported crime, not true crime rates. Areas with lower reporting or clearance rates may appear safer than they are. We compute reporting-bias indicators (chargesheet-based clearance rates) and flag at-risk districts for analyst review. Risk scores are explained via SHAP to ensure transparency. No demographic attributes (religion, caste) are used as model features.",
   "methodology": {
     "risk_target": "area-level, not individual",
     "features_excluded": [

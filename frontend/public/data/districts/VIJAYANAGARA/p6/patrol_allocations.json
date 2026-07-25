@@ -1,0 +1,102 @@
+{
+  "allocations": [
+    {
+      "patrol_id": 1,
+      "seed_cell_id": 206822,
+      "center_lat": 15.274774774800001,
+      "center_lon": 76.3831775701,
+      "cells_covered": 9,
+      "risk_covered": 0.7016153708,
+      "cell_ids": [
+        206822,
+        206823,
+        206329,
+        206821,
+        207314,
+        207315,
+        206328,
+        207316,
+        206330
+      ]
+    },
+    {
+      "patrol_id": 2,
+      "seed_cell_id": 180158,
+      "center_lat": 14.7882882883,
+      "center_lon": 75.9906542056,
+      "cells_covered": 6,
+      "risk_covered": 0.3890579046,
+      "cell_ids": [
+        180158,
+        180651,
+        180157,
+        179665,
+        179666,
+        180650
+      ]
+    },
+    {
+      "patrol_id": 3,
+      "seed_cell_id": 182648,
+      "center_lat": 14.8333333333,
+      "center_lon": 76.2242990654,
+      "cells_covered": 5,
+      "risk_covered": 0.286497116,
+      "cell_ids": [
+        182155,
+        182648,
+        182649,
+        183142,
+        182154
+      ]
+    },
+    {
+      "patrol_id": 4,
+      "seed_cell_id": 208308,
+      "center_lat": 15.3018018018,
+      "center_lon": 76.4485981308,
+      "cells_covered": 4,
+      "risk_covered": 0.214863088,
+      "cell_ids": [
+        208801,
+        207814,
+        207815,
+        208308
+      ]
+    },
+    {
+      "patrol_id": 5,
+      "seed_cell_id": 206326,
+      "center_lat": 15.2657657658,
+      "center_lon": 76.3551401869,
+      "cells_covered": 4,
+      "risk_covered": 0.21136936160000003,
+      "cell_ids": [
+        206326,
+        206327,
+        206325,
+        205833
+      ]
+    },
+    {
+      "patrol_id": 6,
+      "seed_cell_id": 192970,
+      "center_lat": 15.0225225225,
+      "center_lon": 75.9345794393,
+      "cells_covered": 5,
+      "risk_covered": 0.21112762019999998,
+      "cell_ids": [
+        192970,
+        192477,
+        192476,
+        192971,
+        192969
+      ]
+    }
+  ],
+  "total_risk_covered": 2.0145304612,
+  "total_risk": 5.460228614,
+  "coverage_pct": 36.89,
+  "cells_covered": 33,
+  "total_cells": 112
+}

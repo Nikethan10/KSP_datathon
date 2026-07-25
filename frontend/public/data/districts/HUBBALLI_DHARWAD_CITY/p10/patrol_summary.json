@@ -1,0 +1,15 @@
+{
+  "n_patrols": 10,
+  "patrol_radius_km": 2.0,
+  "scope_district": "HUBBALLI DHARWAD CITY",
+  "baseline_coverage_pct": 42.04,
+  "statusquo_coverage_pct": 67.91,
+  "greedy_coverage_pct": 72.12,
+  "greedy_uplift_pct": 71.6,
+  "greedy_uplift_x": 1.7,
+  "greedy_uplift_vs_statusquo_pct": 6.2,
+  "greedy_uplift_vs_statusquo_x": 1.06,
+  "greedy_cells_covered": 82,
+  "ilp_coverage_pct": 76.41,
+  "ilp_uplift_pct": 81.8
+}

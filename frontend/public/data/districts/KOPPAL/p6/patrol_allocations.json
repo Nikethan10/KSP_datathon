@@ -1,0 +1,113 @@
+{
+  "allocations": [
+    {
+      "patrol_id": 1,
+      "seed_cell_id": 215219,
+      "center_lat": 15.4279279279,
+      "center_lon": 76.5327102804,
+      "cells_covered": 8,
+      "risk_covered": 1.5982142240000001,
+      "cell_ids": [
+        215219,
+        215711,
+        215712,
+        214726,
+        215218,
+        215713,
+        214727,
+        215220
+      ]
+    },
+    {
+      "patrol_id": 2,
+      "seed_cell_id": 211234,
+      "center_lat": 15.3558558559,
+      "center_lon": 76.1495327103,
+      "cells_covered": 9,
+      "risk_covered": 1.3888483195999999,
+      "cell_ids": [
+        210742,
+        211234,
+        210741,
+        211233,
+        211235,
+        211727,
+        211726,
+        211728,
+        210740
+      ]
+    },
+    {
+      "patrol_id": 3,
+      "seed_cell_id": 232931,
+      "center_lat": 15.7522522523,
+      "center_lon": 76.1962616822,
+      "cells_covered": 7,
+      "risk_covered": 0.9472964257,
+      "cell_ids": [
+        232931,
+        232930,
+        233423,
+        233424,
+        232438,
+        232437,
+        232932
+      ]
+    },
+    {
+      "patrol_id": 4,
+      "seed_cell_id": 225092,
+      "center_lat": 15.6081081081,
+      "center_lon": 76.6542056075,
+      "cells_covered": 7,
+      "risk_covered": 0.8756453843,
+      "cell_ids": [
+        225092,
+        225093,
+        225586,
+        224599,
+        224600,
+        225584,
+        225585
+      ]
+    },
+    {
+      "patrol_id": 5,
+      "seed_cell_id": 208295,
+      "center_lat": 15.3018018018,
+      "center_lon": 76.3271028037,
+      "cells_covered": 7,
+      "risk_covered": 0.6539697237000001,
+      "cell_ids": [
+        208789,
+        207801,
+        208787,
+        208294,
+        208296,
+        208295,
+        207803
+      ]
+    },
+    {
+      "patrol_id": 6,
+      "seed_cell_id": 210249,
+      "center_lat": 15.3378378378,
+      "center_lon": 76.1588785047,
+      "cells_covered": 6,
+      "risk_covered": 0.6142281591,
+      "cell_ids": [
+        210743,
+        210248,
+        210249,
+        209756,
+        209757,
+        209755
+      ]
+    }
+  ],
+  "total_risk_covered": 6.0782022364,
+  "total_risk": 33.228430698699995,
+  "coverage_pct": 18.29,
+  "cells_covered": 44,
+  "total_cells": 490
+}

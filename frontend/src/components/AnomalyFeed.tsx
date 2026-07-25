@@ -1,4 +1,5 @@
 import type { Anomaly } from '../lib/data'
+import { useI18n } from '../lib/i18n'
 
 interface Props {
   anomalies: Anomaly[]
@@ -6,7 +7,8 @@ interface Props {
 }
 
 export default function AnomalyFeed({ anomalies, onSelect }: Props) {
-  // an alert feed reads newest-first; spikes before drops, severity breaks ties
+  const { t, td, tc } = useI18n()
+
   const sorted = [...anomalies].sort((a, b) => {
     const spikeA = a.observed > a.expected ? 1 : 0
     const spikeB = b.observed > b.expected ? 1 : 0
@@ -19,7 +21,7 @@ export default function AnomalyFeed({ anomalies, onSelect }: Props) {
   return (
     <div className="flex flex-col min-h-0">
       <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-1.5">
-        Anomaly alerts — newest first · STL residual z-score
+        {t('predict.anomalies')}
       </div>
       <div className="overflow-y-auto min-h-0 flex flex-col gap-1 pr-1">
         {sorted.map((a, i) => {
@@ -39,21 +41,28 @@ export default function AnomalyFeed({ anomalies, onSelect }: Props) {
                       : 'bg-sky-500/15 text-sky-300'
                   }`}
                 >
-                  {isSpike ? 'spike' : 'drop'}
+                  {isSpike ? t('predict.spike') : t('predict.drop')}
                 </span>
                 <span className="text-xs font-semibold text-slate-200 truncate">
-                  {a.crime_type}
+                  {tc(a.crime_type)}
                 </span>
                 <span className="ml-auto shrink-0 text-[10px] text-slate-500 tabular-nums">
                   {date}
                 </span>
               </div>
               <div className="mt-1 flex items-center justify-between text-[10.5px] text-slate-400">
-                <span className="truncate">{a.district}</span>
+                <span className="truncate">{td(a.district)}</span>
                 <span className="shrink-0 ml-2 tabular-nums">
-                  {a.observed} vs {a.expected.toFixed(1)} exp · z {a.zscore.toFixed(1)}
+                  {a.observed} vs {a.expected.toFixed(1)} · z {a.zscore.toFixed(1)}
                 </span>
               </div>
+              {a.observed > 0 && a.expected > 0 && (
+                <div className="mt-1 text-[9.5px] text-slate-500 leading-snug">
+                  {isSpike
+                    ? `${(a.observed / a.expected).toFixed(1)}× above the ${td(a.district)} baseline for ${tc(a.crime_type)}`
+                    : `${(a.expected / Math.max(a.observed, 0.1)).toFixed(1)}× below expected in ${td(a.district)}`}
+                </div>
+              )}
             </button>
           )
         })}

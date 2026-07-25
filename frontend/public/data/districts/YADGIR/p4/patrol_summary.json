@@ -1,0 +1,15 @@
+{
+  "n_patrols": 4,
+  "patrol_radius_km": 2.0,
+  "scope_district": "YADGIR",
+  "baseline_coverage_pct": 6.56,
+  "statusquo_coverage_pct": 18.09,
+  "greedy_coverage_pct": 23.39,
+  "greedy_uplift_pct": 256.4,
+  "greedy_uplift_x": 3.6,
+  "greedy_uplift_vs_statusquo_pct": 29.3,
+  "greedy_uplift_vs_statusquo_x": 1.29,
+  "greedy_cells_covered": 30,
+  "ilp_coverage_pct": 23.69,
+  "ilp_uplift_pct": 261.0
+}

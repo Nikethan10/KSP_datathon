@@ -1,0 +1,79 @@
+[
+  {
+    "patrol_id": 1,
+    "center_lat": 15.4279279279,
+    "center_lon": 75.6355140187,
+    "risk_covered": 2.0201506316,
+    "cells_covered": 9,
+    "recent_incidents_30d": 49,
+    "top_crime_types": {
+      "Motor Vehicle Offences": 9,
+      "Crimes Against Body": 8,
+      "Cheating & Fraud": 5,
+      "Narcotics & Drugs": 4,
+      "Gambling & Betting": 4
+    },
+    "gravity_breakdown": {
+      "Non-Heinous": 19,
+      "Petty": 15,
+      "Heinous": 15
+    },
+    "description": "Patrol 1: Deploy to (15.4279, 75.6355). Covers 9 cells with 49 recent incidents. Primary concern: Motor Vehicle Offences."
+  },
+  {
+    "patrol_id": 2,
+    "center_lat": 15.4459459459,
+    "center_lon": 75.6542056075,
+    "risk_covered": 1.0975777731000003,
+    "cells_covered": 8,
+    "recent_incidents_30d": 8,
+    "top_crime_types": {
+      "Motor Vehicle Offences": 2,
+      "Crimes Against Body": 2,
+      "Public Order Violations": 1,
+      "Gambling & Betting": 1,
+      "Narcotics & Drugs": 1
+    },
+    "gravity_breakdown": {
+      "Petty": 4,
+      "Heinous": 2,
+      "Non-Heinous": 2
+    },
+    "description": "Patrol 2: Deploy to (15.4459, 75.6542). Covers 8 cells with 8 recent incidents. Primary concern: Motor Vehicle Offences."
+  },
+  {
+    "patrol_id": 3,
+    "center_lat": 15.725225225199999,
+    "center_lon": 75.3831775701,
+    "risk_covered": 1.0204533973999999,
+    "cells_covered": 8,
+    "recent_incidents_30d": 4,
+    "top_crime_types": {
+      "Motor Vehicle Offences": 2,
+      "Crimes Against Body": 1,
+      "Robbery & Dacoity": 1
+    },
+    "gravity_breakdown": {
+      "Heinous": 2,
+      "Petty": 2
+    },
+    "description": "Patrol 3: Deploy to (15.7252, 75.3832). Covers 8 cells with 4 recent incidents. Primary concern: Motor Vehicle Offences."
+  },
+  {
+    "patrol_id": 4,
+    "center_lat": 15.7342342342,
+    "center_lon": 75.9626168224,
+    "risk_covered": 0.8426691368,
+    "cells_covered": 6,
+    "recent_incidents_30d": 2,
+    "top_crime_types": {
+      "Robbery & Dacoity": 1,
+      "Gambling & Betting": 1
+    },
+    "gravity_breakdown": {
+      "Heinous": 1,
+      "Petty": 1
+    },
+    "description": "Patrol 4: Deploy to (15.7342, 75.9626). Covers 6 cells with 2 recent incidents. Primary concern: Robbery & Dacoity."
+  }
+]

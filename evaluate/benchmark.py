@@ -43,6 +43,9 @@ def run_full_benchmark(
         report["patrol_optimizer"] = patrol_summary
         report["headline_numbers"]["coverage_uplift_pct"] = patrol_summary.get("greedy_uplift_pct", 0)
         report["headline_numbers"]["optimized_coverage_pct"] = patrol_summary.get("greedy_coverage_pct", 0)
+        report["headline_numbers"]["statusquo_coverage_pct"] = patrol_summary.get("statusquo_coverage_pct", 0)
+        report["headline_numbers"]["greedy_uplift_vs_statusquo_pct"] = patrol_summary.get("greedy_uplift_vs_statusquo_pct", 0)
+        report["headline_numbers"]["greedy_uplift_vs_statusquo_x"] = patrol_summary.get("greedy_uplift_vs_statusquo_x", 0)
 
     # Network
     if network_summary:

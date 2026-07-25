@@ -1,0 +1,15 @@
+{
+  "n_patrols": 10,
+  "patrol_radius_km": 2.0,
+  "scope_district": "CHITRADURGA",
+  "baseline_coverage_pct": 24.87,
+  "statusquo_coverage_pct": 35.61,
+  "greedy_coverage_pct": 49.68,
+  "greedy_uplift_pct": 99.8,
+  "greedy_uplift_x": 2.0,
+  "greedy_uplift_vs_statusquo_pct": 39.5,
+  "greedy_uplift_vs_statusquo_x": 1.4,
+  "greedy_cells_covered": 46,
+  "ilp_coverage_pct": 50.92,
+  "ilp_uplift_pct": 104.8
+}

@@ -1,0 +1,15 @@
+{
+  "n_patrols": 8,
+  "patrol_radius_km": 2.0,
+  "scope_district": "DAKSHINA KANNADA",
+  "baseline_coverage_pct": 8.38,
+  "statusquo_coverage_pct": 20.18,
+  "greedy_coverage_pct": 24.34,
+  "greedy_uplift_pct": 190.5,
+  "greedy_uplift_x": 2.9,
+  "greedy_uplift_vs_statusquo_pct": 20.6,
+  "greedy_uplift_vs_statusquo_x": 1.21,
+  "greedy_cells_covered": 58,
+  "ilp_coverage_pct": 24.72,
+  "ilp_uplift_pct": 195.1
+}

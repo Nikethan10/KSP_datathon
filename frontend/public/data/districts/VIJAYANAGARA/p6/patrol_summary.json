@@ -1,0 +1,15 @@
+{
+  "n_patrols": 6,
+  "patrol_radius_km": 2.0,
+  "scope_district": "VIJAYANAGARA",
+  "baseline_coverage_pct": 13.83,
+  "statusquo_coverage_pct": 28.3,
+  "greedy_coverage_pct": 36.89,
+  "greedy_uplift_pct": 166.7,
+  "greedy_uplift_x": 2.7,
+  "greedy_uplift_vs_statusquo_pct": 30.3,
+  "greedy_uplift_vs_statusquo_x": 1.3,
+  "greedy_cells_covered": 33,
+  "ilp_coverage_pct": 36.92,
+  "ilp_uplift_pct": 167.0
+}

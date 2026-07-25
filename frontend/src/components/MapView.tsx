@@ -1,19 +1,29 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import maplibregl from 'maplibre-gl'
 import { MapboxOverlay } from '@deck.gl/mapbox'
 import { ColumnLayer, ScatterplotLayer, GeoJsonLayer } from '@deck.gl/layers'
 import {
-  SIG_COLORS, SIG_LABELS, KARNATAKA_CENTER, KARNATAKA_ZOOM,
+  SIG_COLORS, SIG_LABELS, EMERGING_COLORS, KARNATAKA_CENTER, KARNATAKA_ZOOM,
 } from '../lib/data'
-import type { HotspotPoint, Significance } from '../lib/data'
+import { loadKarnatakaOverlay, karnatakaMaskLayers } from '../lib/basemap'
+import type { KarnatakaOverlay } from '../lib/basemap'
+import type { HotspotPoint, Significance, EmergingCell } from '../lib/data'
 
 interface Props {
   hotspots: HotspotPoint[]
   boundaries: GeoJSON.FeatureCollection | null
   view3D: boolean
   sigOnly: boolean
-  flyTarget: { lat: number; lon: number; zoom?: number } | null
+  emerging: EmergingCell[] | null
+  flyTarget: { lat: number; lon: number; zoom?: number; pitch?: number } | null
   onDistrictClick: (boundaryName: string) => void
+}
+
+const EMERGING_LABELS: Record<EmergingCell['category'], string> = {
+  new: 'NEW hotspot',
+  intensifying: 'Intensifying',
+  persistent: 'Persistent',
+  cooling: 'Cooling',
 }
 
 // real OSM raster tiles, darkened for the command-center theme
@@ -33,28 +43,33 @@ const OSM_STYLE: maplibregl.StyleSpecification = {
       type: 'raster',
       source: 'osm',
       paint: {
-        'raster-saturation': -0.85,
-        'raster-brightness-max': 0.55,
-        'raster-contrast': 0.15,
+        'raster-saturation': -0.92,
+        'raster-brightness-max': 0.38,
+        'raster-contrast': 0.12,
       },
     },
   ],
 }
 
 function elevation(count: number): number {
-  return Math.log2(1 + count) * 260
+  return Math.log2(1 + count) * 340
 }
 
 function radiusFlat(count: number): number {
-  return 120 + Math.log2(1 + count) * 160
+  return 160 + Math.log2(1 + count) * 200
 }
 
 export default function MapView({
-  hotspots, boundaries, view3D, sigOnly, flyTarget, onDistrictClick,
+  hotspots, boundaries, view3D, sigOnly, emerging, flyTarget, onDistrictClick,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
   const overlayRef = useRef<MapboxOverlay | null>(null)
+  const [overlay, setOverlay] = useState<KarnatakaOverlay | null>(null)
+
+  useEffect(() => {
+    loadKarnatakaOverlay().then(setOverlay).catch(() => {})
+  }, [])
 
   // init map once
   useEffect(() => {
@@ -64,8 +79,8 @@ export default function MapView({
       style: OSM_STYLE,
       center: KARNATAKA_CENTER,
       zoom: KARNATAKA_ZOOM,
-      pitch: 45,
-      bearing: -10,
+      pitch: 40,
+      bearing: 0,
     })
     map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'bottom-right')
     const overlay = new MapboxOverlay({ layers: [] })
@@ -81,8 +96,8 @@ export default function MapView({
 
   // update deck layers when data/toggles change
   useEffect(() => {
-    const overlay = overlayRef.current
-    if (!overlay) return
+    const deckOverlay = overlayRef.current
+    if (!deckOverlay) return
 
     const data = sigOnly ? hotspots.filter((h) => h.sig !== 'not_sig') : hotspots
 
@@ -91,18 +106,32 @@ export default function MapView({
       getFillColor: (d: HotspotPoint) => SIG_COLORS[d.sig as Significance],
     }
 
-    const hotspotLayer = view3D
+    const hotspotLayer = emerging
+      ? new ScatterplotLayer<EmergingCell>({
+          id: 'emerging-cells',
+          data: emerging,
+          getPosition: (d) => [d.lon, d.lat],
+          getRadius: (d) => 250 + Math.log2(1 + d.total_cases) * 140,
+          getFillColor: (d) => EMERGING_COLORS[d.category],
+          radiusUnits: 'meters',
+          pickable: true,
+          stroked: true,
+          getLineColor: (d) => (d.category === 'new' ? [255, 255, 255, 220] : [0, 0, 0, 0]),
+          getLineWidth: (d) => (d.category === 'new' ? 1.5 : 0),
+          lineWidthUnits: 'pixels',
+        })
+      : view3D
       ? new ColumnLayer<HotspotPoint>({
           id: 'hotspots-3d',
           data,
           diskResolution: 6,
-          radius: 480,
+          radius: 620,
           extruded: true,
           getPosition: (d) => d.position,
           getElevation: (d) => elevation(d.count),
           getFillColor: common.getFillColor,
           pickable: true,
-          material: { ambient: 0.55, diffuse: 0.6, shininess: 30 },
+          material: { ambient: 0.64, diffuse: 0.65, shininess: 25 },
         })
       : new ScatterplotLayer<HotspotPoint>({
           id: 'hotspots-flat',
@@ -115,7 +144,7 @@ export default function MapView({
           stroked: false,
         })
 
-    const layers: (ColumnLayer<HotspotPoint> | ScatterplotLayer<HotspotPoint> | GeoJsonLayer)[] = [hotspotLayer]
+    const layers: (ColumnLayer<HotspotPoint> | ScatterplotLayer<HotspotPoint> | ScatterplotLayer<EmergingCell> | GeoJsonLayer)[] = [hotspotLayer]
 
     if (boundaries) {
       layers.unshift(
@@ -124,13 +153,13 @@ export default function MapView({
           data: boundaries,
           stroked: true,
           filled: true,
-          getFillColor: [56, 189, 248, 4],
-          getLineColor: [56, 189, 248, 110],
-          getLineWidth: 1.2,
+          getFillColor: [62, 92, 74, 10],
+          getLineColor: [120, 155, 135, 120],
+          getLineWidth: 1.4,
           lineWidthUnits: 'pixels',
           pickable: true,
           autoHighlight: true,
-          highlightColor: [56, 189, 248, 35],
+          highlightColor: [201, 163, 92, 32],
           onClick: (info) => {
             const name = info.object?.properties?.district
             if (name) onDistrictClick(name)
@@ -139,10 +168,30 @@ export default function MapView({
       )
     }
 
-    overlay.setProps({
+    // spotlight mask at the very bottom so it dims the basemap outside Karnataka
+    layers.unshift(...karnatakaMaskLayers(overlay))
+
+    deckOverlay.setProps({
       layers,
-      getTooltip: ({ object }: { object?: HotspotPoint | { properties?: { district?: string } } }) => {
+      getTooltip: ({ object }: { object?: HotspotPoint | EmergingCell | { properties?: { district?: string } } }) => {
         if (!object) return null
+        if ('category' in object) {
+          const e = object as EmergingCell
+          return {
+            html: `<div style="font-family:ui-sans-serif,system-ui;font-size:12px">
+              <div style="font-weight:600;margin-bottom:2px">${EMERGING_LABELS[e.category]}</div>
+              <div>${e.recent_monthly}/mo now vs ${e.hist_monthly}/mo before</div>
+              <div>trend τ = ${e.tau.toFixed(2)}, p = ${e.p.toFixed(3)}</div>
+              ${e.district ? `<div style="color:#8a939e">${e.district}</div>` : ''}
+            </div>`,
+            style: {
+              background: 'rgba(29,33,38,0.96)',
+              color: '#e6edf3',
+              borderRadius: '6px',
+              border: '1px solid rgba(232,121,249,0.35)',
+            },
+          }
+        }
         if ('sig' in object) {
           const h = object as HotspotPoint
           return {
@@ -152,10 +201,10 @@ export default function MapView({
               <div>Gi* z = ${h.z.toFixed(2)}, p = ${h.p.toFixed(3)}</div>
             </div>`,
             style: {
-              background: 'rgba(13,17,23,0.92)',
+              background: 'rgba(29,33,38,0.96)',
               color: '#e6edf3',
               borderRadius: '6px',
-              border: '1px solid rgba(56,189,248,0.25)',
+              border: '1px solid rgba(201,163,92,0.28)',
             },
           }
         }
@@ -164,24 +213,30 @@ export default function MapView({
           ? {
               html: `<div style="font-family:ui-sans-serif,system-ui;font-size:12px;font-weight:600">${d}</div>`,
               style: {
-                background: 'rgba(13,17,23,0.92)',
-                color: '#7dd3fc',
+                background: 'rgba(29,33,38,0.96)',
+                color: '#c9a35c',
                 borderRadius: '6px',
-                border: '1px solid rgba(56,189,248,0.25)',
+                border: '1px solid rgba(201,163,92,0.28)',
               },
             }
           : null
       },
     })
-  }, [hotspots, boundaries, view3D, sigOnly, onDistrictClick])
+  }, [hotspots, boundaries, view3D, sigOnly, emerging, overlay, onDistrictClick])
 
-  // fly on request
+  // fly on request — a descending approach rather than a flat pan, so
+  // selecting a district reads as "zooming into" it
   useEffect(() => {
     if (!flyTarget || !mapRef.current) return
     mapRef.current.flyTo({
       center: [flyTarget.lon, flyTarget.lat],
-      zoom: flyTarget.zoom ?? 9.5,
-      duration: 1600,
+      zoom: flyTarget.zoom ?? 10.2,
+      pitch: flyTarget.pitch ?? 50,
+      bearing: 0,
+      // >1 arcs out before descending; the pause at altitude is what makes
+      // the movement legible instead of a jump cut
+      curve: 1.5,
+      speed: 0.8,
       essential: true,
     })
   }, [flyTarget])

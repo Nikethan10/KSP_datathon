@@ -1,0 +1,15 @@
+{
+  "n_patrols": 4,
+  "patrol_radius_km": 2.0,
+  "scope_district": "UTTARA KANNADA",
+  "baseline_coverage_pct": 3.95,
+  "statusquo_coverage_pct": 16.2,
+  "greedy_coverage_pct": 18.02,
+  "greedy_uplift_pct": 355.7,
+  "greedy_uplift_x": 4.6,
+  "greedy_uplift_vs_statusquo_pct": 11.2,
+  "greedy_uplift_vs_statusquo_x": 1.11,
+  "greedy_cells_covered": 34,
+  "ilp_coverage_pct": 18.02,
+  "ilp_uplift_pct": 355.7
+}

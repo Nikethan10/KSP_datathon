@@ -1,0 +1,194 @@
+[
+  {
+    "patrol_id": 1,
+    "center_lat": 17.3378378378,
+    "center_lon": 76.8317757009,
+    "risk_covered": 3.9550509751999994,
+    "cells_covered": 11,
+    "recent_incidents_30d": 27,
+    "top_crime_types": {
+      "Crimes Against Body": 8,
+      "Gambling & Betting": 4,
+      "Narcotics & Drugs": 3,
+      "Robbery & Dacoity": 3,
+      "Cheating & Fraud": 2
+    },
+    "gravity_breakdown": {
+      "Heinous": 12,
+      "Non-Heinous": 9,
+      "Petty": 6
+    },
+    "description": "Patrol 1: Deploy to (17.3378, 76.8318). Covers 11 cells with 27 recent incidents. Primary concern: Crimes Against Body."
+  },
+  {
+    "patrol_id": 2,
+    "center_lat": 17.3108108108,
+    "center_lon": 76.8224299065,
+    "risk_covered": 2.5930212400999997,
+    "cells_covered": 11,
+    "recent_incidents_30d": 28,
+    "top_crime_types": {
+      "Motor Vehicle Offences": 4,
+      "Cheating & Fraud": 3,
+      "Gambling & Betting": 3,
+      "Crimes Against Property": 3,
+      "Other IPC Offences": 2
+    },
+    "gravity_breakdown": {
+      "Non-Heinous": 14,
+      "Petty": 9,
+      "Heinous": 5
+    },
+    "description": "Patrol 2: Deploy to (17.3108, 76.8224). Covers 11 cells with 28 recent incidents. Primary concern: Motor Vehicle Offences."
+  },
+  {
+    "patrol_id": 3,
+    "center_lat": 17.3558558559,
+    "center_lon": 76.8504672897,
+    "risk_covered": 2.3411389291,
+    "cells_covered": 10,
+    "recent_incidents_30d": 22,
+    "top_crime_types": {
+      "Motor Vehicle Offences": 5,
+      "Crimes Against Body": 3,
+      "Arms Act Violations": 2,
+      "Robbery & Dacoity": 2,
+      "Cheating & Fraud": 2
+    },
+    "gravity_breakdown": {
+      "Non-Heinous": 8,
+      "Petty": 8,
+      "Heinous": 6
+    },
+    "description": "Patrol 3: Deploy to (17.3559, 76.8505). Covers 10 cells with 22 recent incidents. Primary concern: Motor Vehicle Offences."
+  },
+  {
+    "patrol_id": 4,
+    "center_lat": 17.3198198198,
+    "center_lon": 76.8598130841,
+    "risk_covered": 2.1650248617,
+    "cells_covered": 11,
+    "recent_incidents_30d": 18,
+    "top_crime_types": {
+      "Cheating & Fraud": 4,
+      "Crimes Against Body": 3,
+      "Motor Vehicle Offences": 3,
+      "Narcotics & Drugs": 2,
+      "Other IPC Offences": 2
+    },
+    "gravity_breakdown": {
+      "Non-Heinous": 11,
+      "Petty": 4,
+      "Heinous": 3
+    },
+    "description": "Patrol 4: Deploy to (17.3198, 76.8598). Covers 11 cells with 18 recent incidents. Primary concern: Cheating & Fraud."
+  },
+  {
+    "patrol_id": 5,
+    "center_lat": 17.3558558559,
+    "center_lon": 76.8130841122,
+    "risk_covered": 1.7290469185000001,
+    "cells_covered": 9,
+    "recent_incidents_30d": 12,
+    "top_crime_types": {
+      "Crimes Against Property": 2,
+      "Motor Vehicle Offences": 2,
+      "Narcotics & Drugs": 2,
+      "Cheating & Fraud": 2,
+      "Domestic Violence": 1
+    },
+    "gravity_breakdown": {
+      "Non-Heinous": 8,
+      "Petty": 3,
+      "Heinous": 1
+    },
+    "description": "Patrol 5: Deploy to (17.3559, 76.8131). Covers 9 cells with 12 recent incidents. Primary concern: Crimes Against Property."
+  },
+  {
+    "patrol_id": 6,
+    "center_lat": 17.3288288288,
+    "center_lon": 76.8037383178,
+    "risk_covered": 1.1446619778000002,
+    "cells_covered": 6,
+    "recent_incidents_30d": 0,
+    "top_crime_types": {},
+    "gravity_breakdown": {},
+    "description": "Patrol 6: Deploy to (17.3288, 76.8037). Covers 6 cells with 0 recent incidents. Primary concern: General."
+  },
+  {
+    "patrol_id": 7,
+    "center_lat": 17.3378378378,
+    "center_lon": 76.8691588785,
+    "risk_covered": 0.7314390577000001,
+    "cells_covered": 5,
+    "recent_incidents_30d": 6,
+    "top_crime_types": {
+      "Other IPC Offences": 2,
+      "Cheating & Fraud": 1,
+      "Narcotics & Drugs": 1,
+      "Public Order Violations": 1,
+      "Gambling & Betting": 1
+    },
+    "gravity_breakdown": {
+      "Non-Heinous": 4,
+      "Petty": 2
+    },
+    "description": "Patrol 7: Deploy to (17.3378, 76.8692). Covers 5 cells with 6 recent incidents. Primary concern: Other IPC Offences."
+  },
+  {
+    "patrol_id": 8,
+    "center_lat": 17.2927927928,
+    "center_lon": 76.8130841122,
+    "risk_covered": 0.7238740586000001,
+    "cells_covered": 7,
+    "recent_incidents_30d": 5,
+    "top_crime_types": {
+      "Crimes Against Body": 2,
+      "Crimes Against Property": 1,
+      "Public Order Violations": 1,
+      "Other IPC Offences": 1
+    },
+    "gravity_breakdown": {
+      "Non-Heinous": 2,
+      "Heinous": 2,
+      "Petty": 1
+    },
+    "description": "Patrol 8: Deploy to (17.2928, 76.8131). Covers 7 cells with 5 recent incidents. Primary concern: Crimes Against Body."
+  },
+  {
+    "patrol_id": 9,
+    "center_lat": 17.3738738739,
+    "center_lon": 76.8317757009,
+    "risk_covered": 0.7190955057,
+    "cells_covered": 6,
+    "recent_incidents_30d": 4,
+    "top_crime_types": {
+      "Motor Vehicle Offences": 2,
+      "Cheating & Fraud": 1,
+      "Crimes Against Body": 1
+    },
+    "gravity_breakdown": {
+      "Petty": 2,
+      "Non-Heinous": 1,
+      "Heinous": 1
+    },
+    "description": "Patrol 9: Deploy to (17.3739, 76.8318). Covers 6 cells with 4 recent incidents. Primary concern: Motor Vehicle Offences."
+  },
+  {
+    "patrol_id": 10,
+    "center_lat": 17.3918918919,
+    "center_lon": 76.8598130841,
+    "risk_covered": 0.5936887748,
+    "cells_covered": 6,
+    "recent_incidents_30d": 2,
+    "top_crime_types": {
+      "Crimes Against Public Tranquility": 1,
+      "Public Order Violations": 1
+    },
+    "gravity_breakdown": {
+      "Non-Heinous": 1,
+      "Petty": 1
+    },
+    "description": "Patrol 10: Deploy to (17.3919, 76.8598). Covers 6 cells with 2 recent incidents. Primary concern: Crimes Against Public Tranquility."
+  }
+]

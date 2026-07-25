@@ -1,0 +1,134 @@
+[
+  {
+    "patrol_id": 1,
+    "center_lat": 16.1666666667,
+    "center_lon": 75.6635514019,
+    "risk_covered": 1.7934976890999998,
+    "cells_covered": 10,
+    "recent_incidents_30d": 11,
+    "top_crime_types": {
+      "Crimes Against Property": 6,
+      "Crimes Against Body": 5
+    },
+    "gravity_breakdown": {
+      "Non-Heinous": 6,
+      "Heinous": 5
+    },
+    "description": "Patrol 1: Deploy to (16.1667, 75.6636). Covers 10 cells with 11 recent incidents. Primary concern: Crimes Against Property."
+  },
+  {
+    "patrol_id": 2,
+    "center_lat": 16.3378378378,
+    "center_lon": 75.2897196262,
+    "risk_covered": 1.1123636812000002,
+    "cells_covered": 8,
+    "recent_incidents_30d": 3,
+    "top_crime_types": {
+      "Crimes Against Body": 3
+    },
+    "gravity_breakdown": {
+      "Heinous": 3
+    },
+    "description": "Patrol 2: Deploy to (16.3378, 75.2897). Covers 8 cells with 3 recent incidents. Primary concern: Crimes Against Body."
+  },
+  {
+    "patrol_id": 3,
+    "center_lat": 16.509009009,
+    "center_lon": 75.2897196262,
+    "risk_covered": 1.0485665462,
+    "cells_covered": 10,
+    "recent_incidents_30d": 6,
+    "top_crime_types": {
+      "Crimes Against Body": 5,
+      "Crimes Against Property": 1
+    },
+    "gravity_breakdown": {
+      "Heinous": 5,
+      "Non-Heinous": 1
+    },
+    "description": "Patrol 3: Deploy to (16.5090, 75.2897). Covers 10 cells with 6 recent incidents. Primary concern: Crimes Against Body."
+  },
+  {
+    "patrol_id": 4,
+    "center_lat": 16.1846846847,
+    "center_lon": 75.691588785,
+    "risk_covered": 1.0088194685,
+    "cells_covered": 9,
+    "recent_incidents_30d": 6,
+    "top_crime_types": {
+      "Crimes Against Body": 5,
+      "Crimes Against Property": 1
+    },
+    "gravity_breakdown": {
+      "Heinous": 5,
+      "Non-Heinous": 1
+    },
+    "description": "Patrol 4: Deploy to (16.1847, 75.6916). Covers 9 cells with 6 recent incidents. Primary concern: Crimes Against Body."
+  },
+  {
+    "patrol_id": 5,
+    "center_lat": 16.1486486486,
+    "center_lon": 75.6728971963,
+    "risk_covered": 0.7005909942000002,
+    "cells_covered": 7,
+    "recent_incidents_30d": 3,
+    "top_crime_types": {
+      "Crimes Against Body": 2,
+      "Crimes Against Property": 1
+    },
+    "gravity_breakdown": {
+      "Heinous": 2,
+      "Non-Heinous": 1
+    },
+    "description": "Patrol 5: Deploy to (16.1486, 75.6729). Covers 7 cells with 3 recent incidents. Primary concern: Crimes Against Body."
+  },
+  {
+    "patrol_id": 6,
+    "center_lat": 16.481981982,
+    "center_lon": 75.1214953271,
+    "risk_covered": 0.6586421205999999,
+    "cells_covered": 9,
+    "recent_incidents_30d": 8,
+    "top_crime_types": {
+      "Crimes Against Property": 4,
+      "Crimes Against Body": 4
+    },
+    "gravity_breakdown": {
+      "Non-Heinous": 4,
+      "Heinous": 4
+    },
+    "description": "Patrol 6: Deploy to (16.4820, 75.1215). Covers 9 cells with 8 recent incidents. Primary concern: Crimes Against Property."
+  },
+  {
+    "patrol_id": 7,
+    "center_lat": 16.1846846847,
+    "center_lon": 75.6168224299,
+    "risk_covered": 0.6060324312,
+    "cells_covered": 7,
+    "recent_incidents_30d": 1,
+    "top_crime_types": {
+      "Crimes Against Property": 1
+    },
+    "gravity_breakdown": {
+      "Non-Heinous": 1
+    },
+    "description": "Patrol 7: Deploy to (16.1847, 75.6168). Covers 7 cells with 1 recent incidents. Primary concern: Crimes Against Property."
+  },
+  {
+    "patrol_id": 8,
+    "center_lat": 16.3918918919,
+    "center_lon": 75.1121495327,
+    "risk_covered": 0.5697315485000001,
+    "cells_covered": 6,
+    "recent_incidents_30d": 5,
+    "top_crime_types": {
+      "Crimes Against Body": 4,
+      "Crimes Against Property": 1
+    },
+    "gravity_breakdown": {
+      "Heinous": 4,
+      "Non-Heinous": 1
+    },
+    "description": "Patrol 8: Deploy to (16.3919, 75.1121). Covers 6 cells with 5 recent incidents. Primary concern: Crimes Against Body."
+  }
+]

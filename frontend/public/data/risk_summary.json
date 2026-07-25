@@ -1,104 +1,104 @@
 {
-  "test_auc": 0.8666,
+  "test_auc": 0.8471,
   "pai": {
-    "pai_1pct": 26.71,
-    "hit_rate_1pct": 26.71,
-    "pai_2pct": 19.01,
-    "hit_rate_2pct": 38.03,
-    "pai_5pct": 11.21,
-    "hit_rate_5pct": 56.06,
-    "pai_10pct": 6.96,
-    "hit_rate_10pct": 69.56,
-    "pai_20pct": 4.04,
-    "hit_rate_20pct": 80.86
+    "pai_1pct": 25.9,
+    "hit_rate_1pct": 25.9,
+    "pai_2pct": 18.25,
+    "hit_rate_2pct": 36.5,
+    "pai_5pct": 10.63,
+    "hit_rate_5pct": 53.13,
+    "pai_10pct": 6.7,
+    "hit_rate_10pct": 66.98,
+    "pai_20pct": 3.93,
+    "hit_rate_20pct": 78.61
   },
   "pei": {
-    "pei_1pct": 0.9739,
-    "pei_2pct": 0.964,
-    "pei_5pct": 0.9555,
-    "pei_10pct": 0.945,
-    "pei_20pct": 0.929
+    "pei_1pct": 0.9688,
+    "pei_2pct": 0.9562,
+    "pei_5pct": 0.9292,
+    "pei_10pct": 0.9234,
+    "pei_20pct": 0.9085
   },
   "feature_importance": [
     {
       "feature": "hist_total",
-      "importance": 593
-    },
-    {
-      "feature": "day_of_year",
-      "importance": 318
+      "importance": 455
     },
     {
       "feature": "is_night_shift",
-      "importance": 288
+      "importance": 216
     },
     {
       "feature": "nr_0.5km_30d",
-      "importance": 233
+      "importance": 154
+    },
+    {
+      "feature": "day_of_year",
+      "importance": 148
     },
     {
       "feature": "is_morning_shift",
-      "importance": 151
+      "importance": 87
     },
     {
       "feature": "nr_5.0km_30d",
-      "importance": 143
-    },
-    {
-      "feature": "hour_cos",
-      "importance": 103
-    },
-    {
-      "feature": "dow",
-      "importance": 100
-    },
-    {
-      "feature": "hour_proxy",
-      "importance": 96
-    },
-    {
-      "feature": "nr_2.0km_30d",
-      "importance": 83
-    },
-    {
-      "feature": "hist_property_pct",
-      "importance": 69
-    },
-    {
-      "feature": "nr_2.0km_7d",
-      "importance": 64
-    },
-    {
-      "feature": "nr_0.5km_3d",
-      "importance": 63
-    },
-    {
-      "feature": "nr_0.5km_14d",
-      "importance": 62
-    },
-    {
-      "feature": "nr_0.5km_7d",
-      "importance": 60
-    },
-    {
-      "feature": "nr_2.0km_14d",
-      "importance": 60
-    },
-    {
-      "feature": "crime_entropy",
-      "importance": 54
+      "importance": 82
     },
     {
       "feature": "nr_1.0km_30d",
-      "importance": 50
+      "importance": 74
     },
     {
-      "feature": "nr_0.5km_1d",
-      "importance": 48
+      "feature": "hour_proxy",
+      "importance": 73
     },
     {
-      "feature": "hist_heinous_pct",
-      "importance": 46
+      "feature": "hour_cos",
+      "importance": 58
+    },
+    {
+      "feature": "nr_2.0km_30d",
+      "importance": 57
+    },
+    {
+      "feature": "nr_2.0km_7d",
+      "importance": 49
+    },
+    {
+      "feature": "dow",
+      "importance": 45
+    },
+    {
+      "feature": "nr_2.0km_14d",
+      "importance": 42
+    },
+    {
+      "feature": "nr_0.5km_3d",
+      "importance": 32
+    },
+    {
+      "feature": "nr_0.5km_14d",
+      "importance": 32
+    },
+    {
+      "feature": "n_crime_types",
+      "importance": 27
+    },
+    {
+      "feature": "nr_0.5km_7d",
+      "importance": 27
+    },
+    {
+      "feature": "nr_1.0km_1d",
+      "importance": 27
+    },
+    {
+      "feature": "nr_1.0km_3d",
+      "importance": 26
+    },
+    {
+      "feature": "hist_property_pct",
+      "importance": 25
     }
   ]
 }

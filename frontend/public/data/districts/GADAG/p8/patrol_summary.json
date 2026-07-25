@@ -1,0 +1,15 @@
+{
+  "n_patrols": 8,
+  "patrol_radius_km": 2.0,
+  "scope_district": "GADAG",
+  "baseline_coverage_pct": 7.28,
+  "statusquo_coverage_pct": 26.39,
+  "greedy_coverage_pct": 28.63,
+  "greedy_uplift_pct": 293.4,
+  "greedy_uplift_x": 3.9,
+  "greedy_uplift_vs_statusquo_pct": 8.5,
+  "greedy_uplift_vs_statusquo_x": 1.09,
+  "greedy_cells_covered": 55,
+  "ilp_coverage_pct": 29.11,
+  "ilp_uplift_pct": 300.0
+}

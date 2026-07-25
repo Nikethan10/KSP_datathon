@@ -1,0 +1,30 @@
+{
+  "defaults": {
+    "project": 1,
+    "env": 1
+  },
+  "actives": {
+    "project": 1,
+    "env": 1
+  },
+  "projects": [
+    {
+      "idx": 1,
+      "id": "48284000000023001",
+      "name": "PRAHARI",
+      "domain": {
+        "id": "50044294375",
+        "name": "prahari-60076064719.development"
+      },
+      "timezone": "Asia/Kolkata",
+      "env": [
+        {
+          "idx": 1,
+          "id": "60076064719",
+          "name": "Development",
+          "type": 3
+        }
+      ]
+    }
+  ]
+}
