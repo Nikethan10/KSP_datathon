@@ -1,57 +1,49 @@
 # PRAHARI · ಪ್ರಹರಿ
 
-**AI-driven crime analytics and visualisation for Karnataka State Police.**  
+**AI-driven crime analytics and visualization platform for Karnataka State Police.**  
 KSP Datathon 2026 — Challenge 02.
 
-**Live:** https://prahari-60076064719.development.catalystserverless.in/app/index.html
+**Live Application:** https://prahari-60076064719.development.catalystserverless.in/app/index.html
 
-PRAHARI turns 1,674,732 FIR records (2016–2024, all 41 districts, 1,074
-stations) into decisions a station house officer can act on tonight: where
-crime is statistically clustering, what is likely next week, and exactly
-where to send the patrol.
+PRAHARI processes 1,674,732 FIR records (2016–2024, across all 41 districts and 1,074 police stations) into actionable operational decision intelligence: identifying statistical crime clusters, predicting week-ahead spatial risk, and optimizing shift patrol deployments.
 
 ---
 
-## The Four Layers
+## Architecture & System Layers
 
-| Layer | Question it answers | Method |
+| Layer | Functional Objective | Technical Methodology |
 |---|---|---|
-| **SENSE** | Where is crime actually clustering? | Getis-Ord Gi\* / LISA at p < 0.05 — significance, not a blurred heatmap |
-| **PREDICT** | What is likely next, and who is behind it? | LightGBM with near-repeat features · STL anomaly detection · Louvain co-offending communities |
-| **ACT** | Where do I send the units I have? | Maximal-coverage integer program (OR-Tools) with a greedy fallback |
-| **TRUST** | Why should I believe it? | SHAP attributions · calibration curve · reporting-bias-adjusted fairness audit |
+| **SENSE** | Statistical Hotspot Identification | Getis-Ord Gi\* / LISA local statistics at $p < 0.05$ threshold |
+| **PREDICT** | Spatio-Temporal Risk & Offender Forecasting | LightGBM with near-repeat spatial features, STL anomaly detection, & Louvain co-offending graph analytics |
+| **ACT** | Patrol Resource Optimization | Maximal-coverage Integer Linear Program (OR-Tools) with greedy fallbacks |
+| **TRUST** | Explainability & Algorithmic Auditability | Per-prediction SHAP attributions, empirical calibration curves, & reporting-bias adjusted fairness audits |
 
 ---
 
-## Measured Results
+## Empirical Benchmark Performance
 
-Every figure is produced by `outputs/evaluate/benchmark_report.json` and read
-live by the UI, so the site cannot drift from what the pipeline actually did.
+All metrics are programmatically exported by `outputs/evaluate/benchmark_report.json` and consumed directly by the interface to maintain fidelity with pipeline outputs.
 
-| Metric | Value |
-|---|---|
-| Risk model — test AUC | **0.847** (held-out temporal split) |
-| PAI @ top 5% of area | **10.63** — 53.1% of crime inside 5% of the map |
-| Patrol coverage | **11.67%** optimised vs **9.87%** status quo → **+18.2%** |
-| ILP vs greedy | 11.72% vs 11.67% — the fast heuristic leaves almost nothing on the table |
-| Co-offending graph | 341,803 offenders · 509,633 links · modularity 0.978 |
-| Allocation fairness (Gini) | **0.183**, 11 districts flagged for review |
-
----
-
-## Ethical Boundary
-
-PRAHARI predicts risk for **areas and time windows**, and analyses networks of
-people **already on record**. It does not predict crime for named individuals.
-There is no pre-crime score for a person anywhere in this system. Personal
-identifiers are hashed at ingest and no case-level or offender-level data
-appears on the public marketing pages.
+| Evaluation Metric | Value | Technical Context |
+|---|---|---|
+| Risk Model AUC | **0.847** | Evaluated on out-of-time test split |
+| Predictive Accuracy Index (PAI @ 5%) | **10.63** | Captures 53.1% of crimes within top 5% priority spatial area |
+| Patrol Coverage | **11.67%** | Optimized ILP coverage vs **9.87%** volume-based baseline (+18.2% relative uplift) |
+| Optimization Gap | **11.72% vs 11.67%** | Greedy heuristic within 0.05 percentage points of global ILP optimum |
+| Co-offending Network Scale | **341,803 nodes** | 509,633 co-offender linkages across 35,333 graph communities (modularity 0.978) |
+| Allocation Disparity (Gini) | **0.183** | Low allocation disparity across jurisdictions; 11 districts flagged for reporting audit |
 
 ---
 
-## Running It
+## Responsible AI & Ethical Design
 
-### Frontend (what the judges see)
+PRAHARI predicts spatial-temporal crime risk for **geographic grid cells and time windows**, and analyzes structural relationships among individuals **already on official record**. The system explicitly does **not** generate individual-level pre-crime scores. Personal identifiers are anonymized at data ingestion, and no sensitive case-level metadata is exposed on public endpoints.
+
+---
+
+## Project Setup & Execution
+
+### 1. Web Console & User Interface
 
 ```bash
 cd frontend
@@ -59,96 +51,85 @@ npm install
 npm run dev
 ```
 
-Opens on `http://localhost:5173/app/`. All analytics are precomputed — the
-committed `frontend/public/data/` is everything the UI needs, so this works
-without running the Python pipeline.
+The web console initializes locally at `http://localhost:5173/app/`. Precomputed analytics artifacts reside in `frontend/public/data/` for standalone execution.
 
-### Analytics Pipeline (optional — regenerates the data)
+### 2. Analytics Pipeline Execution
 
 ```bash
 pip install -r requirements.txt
-python main.py            # ~22 min, 9 steps
-python copy_data.py       # publish outputs -> frontend/public/data
-python optimize_geojson.py      # .geojson -> .json (Catalyst gzips .json only)
-python strip_insignificant.py   # drop not_sig cells (~74% of the payload)
-python bundle_patrol.py         # 444 patrol files -> 1 bundle
+python main.py            # Executes full 9-stage analytics pipeline (~22 min)
+python copy_data.py       # Exports analytics outputs to frontend assets
+python optimize_geojson.py      # Optimizes GeoJSON structures for compressed delivery
+python strip_insignificant.py   # Filters non-significant spatial units
+python bundle_patrol.py         # Aggregates district patrol plans into bundled structures
 ```
-
-> The three post-processing scripts are **not optional** if you re-run
-> `copy_data.py`. Without them the app requests `.geojson` files that no
-> longer exist in the code paths, ships 3× the bytes, and the ACT tab loses
-> its patrol data.
 
 ---
 
-## Deploying to Zoho Catalyst
+## Deployment Configuration (Zoho Catalyst)
 
-**Live URL:** https://prahari-60076064719.development.catalystserverless.in/app/index.html
+**Deployment URL:** https://prahari-60076064719.development.catalystserverless.in/app/index.html
 
-Run from the repo root in PowerShell:
+### Deployment Workflow
+
+Run from the root directory:
 
 ```powershell
 cd frontend; npm run build; cd ..
 robocopy frontend\dist client /E /XD districts scenarios
 
-# Prune stale bundles from client/assets
+# Prune outdated asset bundles
 $keep = Get-ChildItem frontend\dist\assets -File | Select-Object -ExpandProperty Name
 Get-ChildItem client\assets -File | Where-Object { $keep -notcontains $_.Name } | Remove-Item -Force
 
 npx zcatalyst-cli deploy --only client
 ```
 
-Then verify with a cache-buster (Catalyst caches `index.html`):
-```
-https://prahari-60076064719.development.catalystserverless.in/app/index.html?v=2
-```
+### Deployment & Infrastructure Guidelines
 
-### Key Gotchas
-
-- **`robocopy` exit codes 0–7 mean success.** Anything ≥ 8 is a real failure.
-- **`catalyst.json` must stay a plain client**, not the React plugin.
-- **`vite.config.ts` needs `base: '/app/'`** — Catalyst serves the client under `/app/`.
-- **Catalyst rejects a client ZIP over ~500 files** — this is why `robocopy` excludes `districts` and `scenarios` (pre-merged into `patrol_bundle.json`).
-- **Catalyst does not gzip `.geojson`** — every map file must be served as `.json` (`optimize_geojson.py` handles this).
+- **File Count Thresholds:** Serverless client distribution bundles exclude raw unbundled scenario directories to satisfy platform file limit constraints (`patrol_bundle.json` satisfies spatial query requirements).
+- **Data Compression:** Map layers are optimized and served with standard `.json` encoding to leverage edge-compression filters.
+- **Routing Configuration:** Base paths are scoped to `/app/` within `vite.config.ts` for reverse-proxy routing compatibility.
 
 ---
 
-## Repository Layout
+## Directory Structure
 
 ```
-sense/ predict/ act/ trust/ evaluate/   analytics pipeline (Python)
-main.py                                  runs all 9 pipeline steps
-copy_data.py                             publishes outputs -> frontend
-frontend/                                React + TypeScript console + site
-  src/site/                              public landing site
-  src/console/  src/views/               the 4-tab operational console
-  public/data/                           precomputed analytics (committed)
+sense/ predict/ act/ trust/ evaluate/   Python analytics pipeline modules
+main.py                                  Main pipeline orchestrator (9 stages)
+copy_data.py                             Data publishing & asset synchronization
+frontend/                                React 19 + TypeScript web application
+  src/site/                              Marketing & overview web interfaces
+  src/console/  src/views/               4-tab operational analytics dashboard
+  public/data/                           Precomputed spatial & model artifacts
 ```
 
 ---
 
-## Stack
+## Technology Stack
 
-React 19 · TypeScript · MapLibre GL · deck.gl · Recharts · Tailwind v4 ·
-pandas · scikit-learn · LightGBM · libpysal/esda · networkx · statsmodels ·
-SHAP · OR-Tools · **Zoho Catalyst** (Hosting)
+- **Frontend & Visualization:** React 19, TypeScript, Vite 8, MapLibre GL, deck.gl, Recharts, Tailwind v4
+- **Data Science & ML Pipeline:** pandas, scikit-learn, LightGBM, libpysal, esda, networkx, statsmodels, SHAP
+- **Optimization:** Google OR-Tools (Integer Linear Programming)
+- **Cloud Infrastructure:** Zoho Catalyst (Hosting & Serverless Distribution)
 
 ---
 
-## Team
+## Team & Contribution Ownership
 
-| Member | GitHub | Role |
+| Team Member | GitHub Profile | Core Component Ownership |
 |---|---|---|
-| **Nikethan Tirumala** | [@nikethan_10](https://github.com/Nikethan10) | Frontend architecture · React console · MapLibre GL · deck.gl |
-| **Hari Nair** | [@r-harinarayanan](https://github.com/r-harinarayanan) | Analytics pipeline · LightGBM risk model · STL anomaly detection |
-| **Katir** | [@myselfcarewinter-hue](https://github.com/myselfcarewinter-hue) | System design · ACT patrol optimizer · TRUST layer · Catalyst deploy |
-| **Dhikshitha** | [@DHIKSHITHA0906](https://github.com/DHIKSHITHA0906) | Co-offending network · Louvain communities · gang disruption |
-| **Nihan** | [@nihan-98716](https://github.com/nihan-98716) | Data engineering · Gi\* spatial analysis · GeoJSON pipeline |
+| **Nikethan Tirumala** | [@nikethan_10](https://github.com/Nikethan10) | Frontend Architecture, Web Console, MapLibre GL & deck.gl Integration |
+| **Hari Nair** | [@r-harinarayanan](https://github.com/r-harinarayanan) | Analytics Pipeline, LightGBM Risk Model, STL Anomaly Detection |
+| **Katir** | [@myselfcarewinter-hue](https://github.com/myselfcarewinter-hue) | System Architecture, ACT Patrol Optimizer, TRUST Layer, Catalyst Deployment |
+| **Dhikshitha** | [@DHIKSHITHA0906](https://github.com/DHIKSHITHA0906) | Co-offending Graph Analytics, Louvain Community Detection, Disruption Modeling |
+| **Nihan** | [@nihan-98716](https://github.com/nihan-98716) | Data Engineering, CCTNS Data Normalization, Gi\* Spatial Analysis Pipeline |
 
-> Development was carried out on a shared workstation. Git history reflects a single committer; the breakdown above reflects actual module ownership.
+> *Note: Development was conducted using a shared core development environment. Module ownership is delineated above.*
 
 ---
 
 ## License
 
-© 2026 Nikethan10. All rights reserved. No permission is granted to use, copy, modify, or distribute this code without prior written permission.
+© 2026 Nikethan10. All rights reserved. Proprietary software — no unauthorized copying, modification, or distribution permitted.
