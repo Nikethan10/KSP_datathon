@@ -132,4 +132,4 @@ frontend/                                React 19 + TypeScript web application
 
 ## License
 
-© 2026 Nikethan10,r-harinarayanan,myselfcarewinter-hue,DHIKSHITHA0906,nihan-98716. All rights reserved. Proprietary software — no unauthorized copying, modification, or distribution permitted.
+© 2026 Nikethan10,r-harinarayanan,nihan-98716. All rights reserved. Proprietary software — no unauthorized copying, modification, or distribution permitted.
