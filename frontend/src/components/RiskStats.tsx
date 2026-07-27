@@ -49,7 +49,7 @@ export default function RiskStats({ summary }: { summary: RiskSummary }) {
         </div>
         <div className="flex gap-2">
           <Stat value={`${summary.pai.hit_rate_5pct.toFixed(0)}%`} label={t('predict.crimesIn5')} animate={summary.pai.hit_rate_5pct} />
-          <Stat value={summary.pai.pai_5pct.toFixed(1)} label={t('predict.predictionAccuracy')} animate={summary.pai.pai_5pct} />
+          <Stat value={`${summary.pai.pai_5pct.toFixed(1)}×`} label={t('predict.predictionAccuracy')} animate={summary.pai.pai_5pct} />
           {summary.pei?.pei_5pct !== undefined && (
             <Stat
               value={`${(summary.pei.pei_5pct * 100).toFixed(0)}%`}

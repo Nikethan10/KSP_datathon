@@ -1,12 +1,11 @@
 import { useEffect, useState, useMemo } from 'react'
+import { useI18n } from '../lib/i18n'
 import type { Anomaly, DistrictSummary } from '../lib/data'
 
 interface Alert {
   id: number
   text: string
   severity: 'critical' | 'high' | 'medium' | 'low'
-  timestamp: string
-  district: string
 }
 
 function nowTimestamp(): string {
@@ -16,31 +15,22 @@ function nowTimestamp(): string {
 
 function generateAlerts(anomalies: Anomaly[], districts: DistrictSummary[]): Alert[] {
   const alerts: Alert[] = []
-  const now = new Date()
 
   anomalies.forEach((a, i) => {
-    const t = new Date(now.getTime() - i * 47000)
-    const ts = `${String(t.getHours()).padStart(2, '0')}:${String(t.getMinutes()).padStart(2, '0')}:${String(t.getSeconds()).padStart(2, '0')}`
     alerts.push({
       id: i,
-      text: `FIR ALERT: ${a.crime_type} — ${a.observed} cases in ${a.district} (expected ${a.expected.toFixed(0)}, z=${a.zscore.toFixed(1)})`,
+      text: `ANOMALY: ${a.crime_type} — ${a.observed} cases in ${a.district} (expected ${a.expected.toFixed(0)}, z=${a.zscore.toFixed(1)})`,
       severity: a.severity === 'critical' ? 'critical' : a.zscore > 3 ? 'high' : 'medium',
-      timestamp: ts,
-      district: a.district,
     })
   })
 
   districts
     .filter((d) => d.yoy_change_pct > 10)
     .forEach((d, i) => {
-      const t = new Date(now.getTime() - (anomalies.length + i) * 53000)
-      const ts = `${String(t.getHours()).padStart(2, '0')}:${String(t.getMinutes()).padStart(2, '0')}:${String(t.getSeconds()).padStart(2, '0')}`
       alerts.push({
         id: 1000 + i,
-        text: `TREND ALERT: ${d.district} crime up ${d.yoy_change_pct.toFixed(1)}% YoY — ${d.latest_year_cases.toLocaleString()} FIRs, led by ${d.top_crime_type}`,
+        text: `TREND: ${d.district} crime up ${d.yoy_change_pct.toFixed(1)}% YoY — ${d.latest_year_cases.toLocaleString()} FIRs, led by ${d.top_crime_type}`,
         severity: d.yoy_change_pct > 15 ? 'high' : 'medium',
-        timestamp: ts,
-        district: d.district,
       })
     })
 
@@ -60,6 +50,7 @@ interface Props {
 }
 
 export default function LiveTicker({ anomalies, districts }: Props) {
+  const { t } = useI18n()
   const alerts = useMemo(() => generateAlerts(anomalies, districts), [anomalies, districts])
   const [currentIdx, setCurrentIdx] = useState(0)
   const [clock, setClock] = useState(nowTimestamp)
@@ -89,13 +80,11 @@ export default function LiveTicker({ anomalies, districts }: Props) {
 
   return (
     <div className="shrink-0 h-7 flex items-center gap-3 px-4 bg-[#111417] border-b border-slate-800/50 overflow-hidden">
-      {/* live indicator */}
-      <div className="flex items-center gap-1.5 shrink-0">
-        <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
-        </span>
-        <span className="text-[9px] font-bold uppercase tracking-widest text-red-400">LIVE</span>
+      {/* Labelled as a demo feed on purpose: it replays batch-analysed
+          anomalies and must never read as a live CCTNS link. */}
+      <div className="flex items-center gap-1.5 shrink-0" title={t('ticker.note')}>
+        <span className="inline-flex rounded-full h-2 w-2 bg-amber-400/90" />
+        <span className="text-[9px] font-bold uppercase tracking-widest text-amber-400/90">{t('ticker.demo')}</span>
       </div>
 
       {/* clock */}
@@ -120,7 +109,7 @@ export default function LiveTicker({ anomalies, districts }: Props) {
       </div>
 
       {/* alert count */}
-      <span className="text-[9px] tabular-nums text-slate-500 shrink-0">{alerts.length} alerts</span>
+      <span className="text-[9px] tabular-nums text-slate-500 shrink-0">{alerts.length} {t('ticker.alerts')}</span>
     </div>
   )
 }

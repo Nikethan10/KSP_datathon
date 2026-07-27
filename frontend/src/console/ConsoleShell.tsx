@@ -15,8 +15,6 @@ import ErrorBoundary from '../components/ErrorBoundary'
 import SentinelMark from '../components/SentinelMark'
 import SearchBar from '../components/SearchBar'
 import { fetchJson, filterAnomalies } from '../lib/data'
-import { getThreatLevel } from '../lib/insights'
-import ThreatIndicator from '../components/ThreatIndicator'
 import LiveTicker from '../components/LiveTicker'
 import { useI18n } from '../lib/i18n'
 import { useStats, stat } from '../lib/useStats'
@@ -25,7 +23,6 @@ import { useNav } from '../lib/nav'
 import { useRoute, SLUG_BY_TAB } from '../lib/route'
 import type { Tab } from '../lib/nav'
 import type { Anomaly, DistrictSummary } from '../lib/data'
-import type { ThreatLevel } from '../lib/insights'
 
 const TABS: Tab[] = [
   'COMMAND', 'INVESTIGATE', 'CONNECT', 'FORECAST', 'ACT', 'REPLAY', 'TRUST',
@@ -44,13 +41,6 @@ const TAB_KEYS: Record<Tab, string> = {
 const TAB_NO: Record<Tab, string> = {
   COMMAND: '01', INVESTIGATE: '02', CONNECT: '03',
   FORECAST: '04', ACT: '05', REPLAY: '06', TRUST: '07',
-}
-
-const THREAT_HEX: Record<ThreatLevel, string> = {
-  CRITICAL: '#ef4444',
-  HIGH: '#f97316',
-  MEDIUM: '#f59e0b',
-  LOW: '#22c55e',
 }
 
 /* Matches the console's shape so a section switch does not collapse the
@@ -73,7 +63,6 @@ export default function ConsoleShell() {
   const { tab: routeTab, navigate } = useRoute()
   const [anomalies, setAnomalies] = useState<Anomaly[]>([])
   const [districtSummaries, setDistrictSummaries] = useState<DistrictSummary[]>([])
-  const [threatLevel, setThreatLevel] = useState<ThreatLevel>('LOW')
   const [showHelp, setShowHelp] = useState(false)
   const stats = useStats()
   const { lang, setLang, t } = useI18n()
@@ -96,11 +85,8 @@ export default function ConsoleShell() {
       fetchJson<Anomaly[]>('anomaly_feed.json'),
       fetchJson<DistrictSummary[]>('district_summary.json'),
     ]).then(([a, ds]) => {
-      const filtered = filterAnomalies(a)
-      setAnomalies(filtered)
+      setAnomalies(filterAnomalies(a))
       setDistrictSummaries(ds)
-      const avgYoY = ds.reduce((s, d) => s + d.yoy_change_pct, 0) / (ds.length || 1)
-      setThreatLevel(getThreatLevel(filtered.length, avgYoY))
     }).catch(() => {})
   }, [])
 
@@ -122,7 +108,7 @@ export default function ConsoleShell() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const threatHex = THREAT_HEX[threatLevel]
+  const districtsRising = districtSummaries.filter((d) => d.yoy_change_pct > 10).length
 
   return (
     <div className="h-full flex flex-col">
@@ -143,17 +129,22 @@ export default function ConsoleShell() {
           </div>
         </a>
 
-        <div
-          className="hidden md:flex ml-4 px-3 py-1 rounded-md border"
-          style={{ borderColor: `${threatHex}30`, background: `${threatHex}08` }}
+        {/* What "critical" never said: the actual counts, and a way in. */}
+        <button
+          onClick={() => goTab('COMMAND')}
+          className="hidden md:flex flex-col items-start ml-4 px-3 py-1 rounded-md border border-slate-700/70 hover:border-slate-500 transition-colors text-left"
         >
-          <ThreatIndicator level={threatLevel} />
-        </div>
-
-        <div className="hidden lg:flex items-center gap-1.5 ml-3">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.7)]" />
-          <span className="text-[9px] uppercase tracking-widest text-emerald-400/80 font-semibold">ONLINE</span>
-        </div>
+          <span className="text-[8px] uppercase tracking-[0.16em] text-slate-500">{t('shell.situation')}</span>
+          <span className="text-[10px] font-semibold text-slate-200 tabular-nums leading-tight">
+            {districtSummaries.length === 0
+              ? '—'
+              : anomalies.length === 0 && districtsRising === 0
+                ? t('shell.situationQuiet')
+                : t('shell.situationLine')
+                    .replace('{a}', String(anomalies.length))
+                    .replace('{d}', String(districtsRising))}
+          </span>
+        </button>
 
         <SearchBar className="hidden sm:block ml-5" />
 
