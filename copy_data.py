@@ -16,6 +16,7 @@ DEST = ROOT / "frontend" / "public" / "data"
 COPY = [
     ("sense", "*.geojson"),
     ("sense", "district_summary.json"),
+    ("sense", "station_summary.json"),
     ("sense", "trend_monthly.json"),
     ("sense", "trend_weekly.json"),
     ("sense", "crime_type_breakdown.json"),
