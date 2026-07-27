@@ -1,0 +1,134 @@
+{
+  "area_pct": 5.0,
+  "n_cells": 16740,
+  "n_flagged": 837,
+  "weeks": [
+    {
+      "week": "2024-W01",
+      "start": "2024-01-01",
+      "end": "2024-01-07",
+      "partial": false,
+      "hit_rate": 40.88,
+      "cell_hit_rate": 52.11,
+      "pai": 8.18,
+      "total_incidents": 3955,
+      "captured_incidents": 1617
+    },
+    {
+      "week": "2024-W02",
+      "start": "2024-01-08",
+      "end": "2024-01-14",
+      "partial": false,
+      "hit_rate": 42.62,
+      "cell_hit_rate": 53.34,
+      "pai": 8.52,
+      "total_incidents": 4120,
+      "captured_incidents": 1756
+    },
+    {
+      "week": "2024-W03",
+      "start": "2024-01-15",
+      "end": "2024-01-21",
+      "partial": false,
+      "hit_rate": 40.29,
+      "cell_hit_rate": 51.29,
+      "pai": 8.06,
+      "total_incidents": 4100,
+      "captured_incidents": 1652
+    },
+    {
+      "week": "2024-W04",
+      "start": "2024-01-22",
+      "end": "2024-01-28",
+      "partial": false,
+      "hit_rate": 40.62,
+      "cell_hit_rate": 51.87,
+      "pai": 8.12,
+      "total_incidents": 3781,
+      "captured_incidents": 1536
+    },
+    {
+      "week": "2024-W05",
+      "start": "2024-01-29",
+      "end": "2024-02-04",
+      "partial": false,
+      "hit_rate": 42.81,
+      "cell_hit_rate": 53.92,
+      "pai": 8.56,
+      "total_incidents": 4319,
+      "captured_incidents": 1849
+    },
+    {
+      "week": "2024-W06",
+      "start": "2024-02-05",
+      "end": "2024-02-11",
+      "partial": false,
+      "hit_rate": 42.96,
+      "cell_hit_rate": 54.64,
+      "pai": 8.59,
+      "total_incidents": 4588,
+      "captured_incidents": 1971
+    },
+    {
+      "week": "2024-W07",
+      "start": "2024-02-12",
+      "end": "2024-02-18",
+      "partial": false,
+      "hit_rate": 41.09,
+      "cell_hit_rate": 52.45,
+      "pai": 8.22,
+      "total_incidents": 4451,
+      "captured_incidents": 1829
+    },
+    {
+      "week": "2024-W08",
+      "start": "2024-02-19",
+      "end": "2024-02-25",
+      "partial": false,
+      "hit_rate": 45.14,
+      "cell_hit_rate": 56.01,
+      "pai": 9.03,
+      "total_incidents": 4333,
+      "captured_incidents": 1956
+    },
+    {
+      "week": "2024-W09",
+      "start": "2024-02-26",
+      "end": "2024-03-03",
+      "partial": false,
+      "hit_rate": 45.23,
+      "cell_hit_rate": 55.41,
+      "pai": 9.05,
+      "total_incidents": 4550,
+      "captured_incidents": 2058
+    },
+    {
+      "week": "2024-W10",
+      "start": "2024-03-04",
+      "end": "2024-03-10",
+      "partial": false,
+      "hit_rate": 45.95,
+      "cell_hit_rate": 57.05,
+      "pai": 9.19,
+      "total_incidents": 4085,
+      "captured_incidents": 1877
+    },
+    {
+      "week": "2024-W11",
+      "start": "2024-03-11",
+      "end": "2024-03-15",
+      "partial": true,
+      "hit_rate": 33.33,
+      "cell_hit_rate": 62.5,
+      "pai": 6.67,
+      "total_incidents": 15,
+      "captured_incidents": 5
+    }
+  ],
+  "best_week": "2024-W10",
+  "worst_week": "2024-W03",
+  "mean_hit_rate": 42.76,
+  "mean_cell_hit_rate": 53.81,
+  "method": "LightGBM trained on train+val only; test rows scored and aggregated to cell level per ISO week. Flagged cells are the top 5.0% by mean predicted risk that week. Actual incidents are real FIR coordinates from CaseMaster.",
+  "denominator_note": "hit_rate counts every FIR statewide; cell_hit_rate counts only crime inside the modelled grid, which is the basis of the headline PAI and hit-rate figures reported elsewhere."
+}

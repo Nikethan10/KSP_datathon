@@ -92,13 +92,35 @@ const translations: Record<string, Record<Lang, string>> = {
   'forecast.lensRisk': { en: 'Week-ahead risk', kn: 'ಮುಂದಿನ ವಾರದ ಅಪಾಯ' },
 
   // ── REPLAY ─────────────────────────────────────────────────────────
-  'replay.stamp': { en: 'Section 06', kn: 'ವಿಭಾಗ 06' },
-  'replay.title': { en: 'Prediction against reality', kn: 'ವಾಸ್ತವದ ವಿರುದ್ಧ ಮುನ್ಸೂಚನೆ' },
-  'replay.lede': {
-    en: 'Step through the held-out test period week by week. PRAHARI’s forecast is drawn first, then the FIRs that actually followed drop onto the map, and the hit rate accumulates as you watch.',
+  'replay.legendTitle': { en: 'Reading the map', kn: 'ನಕ್ಷೆ ಓದುವುದು' },
+  'replay.legendForecast': { en: 'Forecast — top {n}% of cells', kn: 'ಮುನ್ಸೂಚನೆ — ಮೇಲಿನ {n}% ಸೆಲ್‌ಗಳು' },
+  'replay.legendHit': { en: 'FIR inside the forecast', kn: 'ಮುನ್ಸೂಚನೆಯೊಳಗಿನ ಎಫ್‌ಐಆರ್' },
+  'replay.legendMiss': { en: 'FIR outside it', kn: 'ಅದರ ಹೊರಗಿನ ಎಫ್‌ಐಆರ್' },
+  'replay.sHitRate': { en: 'Hit rate', kn: 'ಹಿಟ್ ದರ' },
+  'replay.sCaptured': { en: 'Captured', kn: 'ಸೆರೆಹಿಡಿದದ್ದು' },
+  'replay.sPai': { en: 'vs random', kn: 'ಯಾದೃಚ್ಛಿಕದ ವಿರುದ್ಧ' },
+  'replay.play': { en: 'Play week', kn: 'ವಾರ ಪ್ಲೇ ಮಾಡಿ' },
+  'replay.pause': { en: 'Pause', kn: 'ವಿರಾಮ' },
+  'replay.jumpBest': { en: 'Best week', kn: 'ಅತ್ಯುತ್ತಮ ವಾರ' },
+  'replay.jumpWorst': { en: 'Worst week', kn: 'ಕೆಟ್ಟ ವಾರ' },
+  'replay.bestWeek': { en: 'Best week in the test period', kn: '' },
+  'replay.worstWeek': { en: 'Worst week in the test period', kn: '' },
+  'replay.partial': { en: 'partial week', kn: 'ಭಾಗಶಃ ವಾರ' },
+  'replay.meanHit': { en: 'mean {n}% across full weeks', kn: '' },
+  'replay.method': {
+    en: 'The model saw nothing after 2023-12-31. Forecast cells are its top-ranked 5% for that week; the dots are real FIR coordinates from the week that followed. The hit rate counts one against the other as the week plays.',
     kn: '',
   },
-  'replay.pending': { en: 'Backtest data is being generated.', kn: '' },
+  'replay.sInGrid': { en: 'In modelled grid', kn: 'ಮಾದರಿ ಗ್ರಿಡ್‌ನಲ್ಲಿ' },
+  'replay.denominators': {
+    en: 'Two denominators, both shown. {all}% counts every FIR in Karnataka that week, including cells too sparse to model. {grid}% counts only crime inside the modelled grid — that is the basis of the 53.1% hit rate quoted elsewhere on this platform, and the higher of the two.',
+    kn: '',
+  },
+  'replay.unavailable': { en: 'Backtest data unavailable', kn: 'ಬ್ಯಾಕ್‌ಟೆಸ್ಟ್ ದತ್ತಾಂಶ ಲಭ್ಯವಿಲ್ಲ' },
+  'replay.unavailableHint': {
+    en: 'Run `python -m evaluate.backtest` to generate it. No figures are shown rather than estimated ones.',
+    kn: '',
+  },
 
   // ── Header / Footer ───────────────────────────────────────────────
   'header.subtitle': { en: 'Crime Intelligence · Karnataka State Police', kn: 'ಅಪರಾಧ ಗುಪ್ತಚರ · ಕರ್ನಾಟಕ ರಾಜ್ಯ ಪೊಲೀಸ್' },

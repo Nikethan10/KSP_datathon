@@ -7,6 +7,8 @@ venv/
 # ── Heavy regenerable artifacts ───────────────────────────────────────
 # feature_matrix.parquet alone is 134 MB, over GitHub's 100 MB hard limit
 cache/
+# (backtest_scored_test.parquet lives here too — regenerate with
+#  `python -m evaluate.backtest`)
 
 # Pipeline outputs (~134 MB / 690 files). Regenerate with `python main.py`
 # (~22 min). The frontend does NOT read these directly — copy_data.py

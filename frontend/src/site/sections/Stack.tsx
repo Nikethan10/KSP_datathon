@@ -4,7 +4,7 @@ import { useI18n } from '../../lib/i18n'
 const COLUMNS = [
   {
     key: 'frontend',
-    items: ['React 19 · TypeScript', 'MapLibre GL · deck.gl', 'Recharts · 3d-force-graph', 'Tailwind CSS v4'],
+    items: ['React 19 · TypeScript', 'MapLibre GL · deck.gl', 'Recharts', 'Tailwind CSS v4'],
   },
   {
     key: 'ml',
