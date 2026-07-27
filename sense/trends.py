@@ -25,7 +25,7 @@ def compute_district_summary(cases):
     """
     results = []
 
-    # Determine latest full year and prior year
+    # Determine latest year and prior year
     years = cases["year"].dropna().unique()
     years = sorted([int(y) for y in years])
     if len(years) < 2:
@@ -35,16 +35,30 @@ def compute_district_summary(cases):
         latest_year = years[-1]
         prior_year = years[-2]
 
+    # The corpus ends mid-year (2024-03-15), so the latest year is partial.
+    # Comparing it against the FULL prior year fabricates an ~-80% "drop" in
+    # every district. Compare like with like instead: latest year to date vs
+    # the same window of the prior year.
+    cutoff = cases["IncidentFromDate"].max()
+    prior_cutoff = None
+    if prior_year is not None and pd.notna(cutoff):
+        try:
+            prior_cutoff = cutoff.replace(year=prior_year)
+        except ValueError:  # Feb 29 in a non-leap prior year
+            prior_cutoff = cutoff.replace(year=prior_year, day=28)
+
     for district, grp in cases.groupby("DistrictName"):
         if pd.isna(district):
             continue
 
         total = len(grp)
 
-        # YoY change
-        if latest_year is not None and prior_year is not None:
+        # YoY change, latest-YTD vs prior-year same window
+        if latest_year is not None and prior_year is not None and prior_cutoff is not None:
             latest_count = len(grp[grp["year"] == latest_year])
-            prior_count = len(grp[grp["year"] == prior_year])
+            prior_count = len(grp[
+                (grp["year"] == prior_year) & (grp["IncidentFromDate"] <= prior_cutoff)
+            ])
             if prior_count > 0:
                 yoy_change = round((latest_count - prior_count) / prior_count * 100, 1)
             else:
