@@ -85,10 +85,37 @@ export const SIG_LABELS: Record<Significance, string> = {
 
 const BASE = `${import.meta.env.BASE_URL}data`
 
-export async function fetchJson<T>(name: string): Promise<T> {
-  const res = await fetch(`${BASE}/${name}`)
-  if (!res.ok) throw new Error(`fetch ${name}: ${res.status}`)
-  return res.json()
+/* Every fetch goes through one cache, for two reasons.
+
+   Deduplication: ConsoleShell and several views ask for district_summary.json
+   and anomaly_feed.json independently, so a cold console used to make the same
+   request two or three times over.
+
+   Persistence: only one section mounts at a time, so moving between sections
+   unmounts a view and remounts it later. Without a cache that re-downloads
+   megabytes on every navigation — the single biggest cause of the console
+   feeling slow after the first load.
+
+   Failures are evicted so a later mount can retry rather than inheriting a
+   rejected promise forever. */
+const cache = new Map<string, Promise<unknown>>()
+
+export function fetchJson<T>(name: string): Promise<T> {
+  const hit = cache.get(name)
+  if (hit) return hit as Promise<T>
+
+  const p = fetch(`${BASE}/${name}`).then((res) => {
+    if (!res.ok) throw new Error(`fetch ${name}: ${res.status}`)
+    return res.json()
+  })
+  cache.set(name, p)
+  p.catch(() => cache.delete(name))
+  return p as Promise<T>
+}
+
+/** Drop cached payloads — used when the data manifest changes. */
+export function clearDataCache(): void {
+  cache.clear()
 }
 
 export type HotspotScope = 'state' | 'district'
@@ -129,11 +156,25 @@ export interface HotspotSet {
 /* The files ship significant cells only — the map filters out `not_sig`
    anyway, and they were ~74% of the payload (13.6 MB -> 3.6 MB on the
    district-scope file). `analysed` carries the original denominator. */
-export async function loadHotspots(
+const hotspotCache = new Map<string, Promise<HotspotSet>>()
+
+export function loadHotspots(
   crimeType: string | null,
   scope: HotspotScope = 'state',
 ): Promise<HotspotSet> {
-  const fc = await fetchJson<GeoJsonFC>(hotspotFile(crimeType, scope))
+  const key = hotspotFile(crimeType, scope)
+  const hit = hotspotCache.get(key)
+  if (hit) return hit
+  const p = parseHotspots(key)
+  hotspotCache.set(key, p)
+  p.catch(() => hotspotCache.delete(key))
+  return p
+}
+
+/* Kept separate so the cache above stores the mapped points, not just the
+   raw document: re-mapping 20k features per filter change was the jank. */
+async function parseHotspots(file: string): Promise<HotspotSet> {
+  const fc = await fetchJson<GeoJsonFC>(file)
   const points = fc.features.map((f) => ({
     position: f.geometry.coordinates,
     cellId: f.properties.cell_id,

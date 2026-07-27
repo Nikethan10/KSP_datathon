@@ -42,25 +42,15 @@ export default function ForecastView() {
         ))}
       </div>
 
-      {/* Both stay mounted: switching lens should not refetch a megabyte of
-          hotspot data or tear down a WebGL context.
-
-          Stacked and toggled with visibility rather than `display: none`,
-          because a display-none subtree measures 0x0 and Recharts warns on
-          every render that its container has no size. */}
-      {(['patterns', 'risk'] as Lens[]).map((id) => (
-        <div
-          key={id}
-          className="absolute inset-0"
-          style={{
-            visibility: lens === id ? 'visible' : 'hidden',
-            pointerEvents: lens === id ? 'auto' : 'none',
-          }}
-          aria-hidden={lens !== id}
-        >
-          {id === 'patterns' ? <SenseView /> : <PredictView initialMode="risk" lockMode />}
-        </div>
-      ))}
+      {/* One lens mounted at a time. Keeping both alive held two MapLibre
+          contexts plus two deck.gl contexts on a single section, and the
+          browser caps WebGL contexts at around sixteen — enough to white-screen
+          a map partway through a demo. Remounting is cheap now that data.ts
+          caches parsed payloads, so a lens switch re-renders without
+          re-downloading or re-parsing anything. */}
+      <div className="absolute inset-0 flex flex-col">
+        {lens === 'patterns' ? <SenseView /> : <PredictView initialMode="risk" lockMode />}
+      </div>
     </div>
   )
 }
