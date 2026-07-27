@@ -23,8 +23,10 @@ import numpy as np
 import pandas as pd
 
 from scipy.spatial import cKDTree
+from shapely.geometry import Point
 
 from config import CACHE_DIR, DATASET_DIR, OUTPUT_DIR
+from clip_to_state import load_state
 from data.grid import build_grid
 from predict.risk_model import train_risk_model, predict_risk
 
@@ -98,6 +100,30 @@ def build(out_dir: Path | None = None) -> dict:
 
     incidents = load_incident_points()
 
+    # The analysis grid is a rectangle over Karnataka's bounding box, so it
+    # covers the Arabian Sea and slivers of neighbouring states, and CaseMaster
+    # carries some FIRs geocoded to those areas. Every other display layer is
+    # already clipped to the state polygon by clip_to_state.py; the replay
+    # layers have to be too, or stray dots appear offshore.
+    #
+    # This is a geographic validity rule applied to all points regardless of
+    # whether they were hits or misses, not a filter chosen for its effect on
+    # the number: it moves the mean hit rate by about half a percentage point
+    # (42.8% -> 43.3%) while removing 1,165 of 42,297 incidents.
+    state = load_state(Path(__file__).resolve().parent.parent / "frontend" / "public" / "data")
+    if state is None:
+        print("[backtest] WARNING: state outline missing, skipping clip")
+        n_clipped = 0
+    else:
+        before = len(incidents)
+        incidents = incidents[[
+            state.contains(Point(lon, lat))
+            for lon, lat in zip(incidents["longitude"], incidents["latitude"])
+        ]]
+        n_clipped = before - len(incidents)
+        print(f"[backtest] clipped {n_clipped:,} out-of-state FIRs "
+              f"({n_clipped / before * 100:.2f}%)")
+
     # Whether an FIR landed inside a flagged cell has to be decided here, with
     # the same nearest-cell rule the pipeline uses (cKDTree over grid
     # centroids). Approximating it in the browser by rounding coordinates into
@@ -155,6 +181,11 @@ def build(out_dir: Path | None = None) -> dict:
         flagged_xy = flagged.merge(coords, on="cell_id", how="left").dropna(
             subset=["cell_lat", "cell_lon"]
         )
+        if state is not None:
+            flagged_xy = flagged_xy[[
+                state.contains(Point(lon, lat))
+                for lon, lat in zip(flagged_xy["cell_lon"], flagged_xy["cell_lat"])
+            ]]
 
         shard = {
             "week": wk,
@@ -211,6 +242,8 @@ def build(out_dir: Path | None = None) -> dict:
         "worst_week": ranked[0]["week"] if ranked else None,
         "mean_hit_rate": round(float(np.mean([w["hit_rate"] for w in full])), 2) if full else None,
         "mean_cell_hit_rate": round(float(np.mean([w["cell_hit_rate"] for w in full])), 2) if full else None,
+        "clipped_out_of_state_firs_all_years": int(n_clipped),
+        "incidents_shown": int(sum(w["total_incidents"] for w in weeks)),
         "method": (
             "LightGBM trained on train+val only; test rows scored and aggregated "
             "to cell level per ISO week. Flagged cells are the top "

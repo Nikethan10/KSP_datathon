@@ -18,12 +18,23 @@ from shapely.prepared import prep
 BUFFER_DEG = 0.01
 
 
-def _load_state(dest: Path):
-    outline = dest / "karnataka_outline.geojson"
-    if not outline.exists():
-        return None
-    geom = shape(json.load(open(outline, encoding="utf-8"))["features"][0]["geometry"])
-    return prep(geom.buffer(BUFFER_DEG))
+def load_state(dest: Path):
+    """Prepared Karnataka polygon, buffered outward ~1 km.
+
+    Accepts either extension: copy_data.py writes `.geojson` and clips before
+    optimize_geojson.py renames everything to `.json`, so a standalone run
+    after that rename used to find nothing and skip silently.
+    """
+    for name in ("karnataka_outline.geojson", "karnataka_outline.json"):
+        outline = dest / name
+        if outline.exists():
+            geom = shape(json.load(open(outline, encoding="utf-8"))["features"][0]["geometry"])
+            return prep(geom.buffer(BUFFER_DEG))
+    return None
+
+
+# backwards-compatible alias
+_load_state = load_state
 
 
 def _clip_geojson(path: Path, inside) -> tuple[int, int]:
@@ -50,7 +61,7 @@ def _clip_json_points(path: Path, inside, lon_key, lat_key, container=None) -> t
 
 
 def clip_public_data(dest: Path) -> None:
-    inside = _load_state(dest)
+    inside = load_state(dest)
     if inside is None:
         print("[clip] karnataka_outline.geojson missing — skipping clip")
         return
@@ -78,6 +89,21 @@ def clip_public_data(dest: Path) -> None:
         if before != after:
             total_removed += before - after
             print(f"[clip] emerging_hotspots.json: {before} -> {after} ({before - after} removed)")
+
+    # replay shards: forecast cells and the FIRs drawn against them
+    replay = dest / "replay"
+    if replay.is_dir():
+        for path in sorted(replay.glob("2024-W*.json")):
+            data = json.load(open(path, encoding="utf-8"))
+            before = len(data.get("cells", [])) + len(data.get("incidents", []))
+            data["cells"] = [c for c in data.get("cells", []) if inside.contains(Point(c[0], c[1]))]
+            data["incidents"] = [i for i in data.get("incidents", []) if inside.contains(Point(i[0], i[1]))]
+            after = len(data["cells"]) + len(data["incidents"])
+            if before != after:
+                total_removed += before - after
+                with open(path, "w", encoding="utf-8") as f:
+                    json.dump(data, f, separators=(",", ":"))
+                print(f"[clip] {path.name}: {before} -> {after} ({before - after} removed)")
 
     print(f"[clip] done — {total_removed} out-of-state points removed")
 
