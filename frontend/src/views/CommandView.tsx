@@ -7,10 +7,12 @@ import {
   fetchJson,
   filterAnomalies,
   loadHotspots,
+  matchBoundaryToDataset,
   type Anomaly,
   type DistrictSummary,
   type HotspotPoint,
   type NetworkSummary,
+  type StationSummaryFile,
 } from '../lib/data'
 import { generateForecast, type ForecastItem } from '../lib/insights'
 
@@ -73,6 +75,8 @@ export default function CommandView() {
   const [districts, setDistricts] = useState<DistrictSummary[]>([])
   const [network, setNetwork] = useState<NetworkSummary | null>(null)
   const [boundaries, setBoundaries] = useState<GeoJSON.FeatureCollection | null>(null)
+  const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null)
+  const [stations, setStations] = useState<StationSummaryFile | null>(null)
   const [loading, setLoading] = useState(true)
   const [failed, setFailed] = useState(false)
 
@@ -102,6 +106,9 @@ export default function CommandView() {
       .catch(() => {})
     fetchJson<GeoJSON.FeatureCollection>('karnataka_districts.json')
       .then((b) => alive && setBoundaries(b))
+      .catch(() => {})
+    fetchJson<StationSummaryFile>('station_summary.json')
+      .then((st) => alive && setStations(st))
       .catch(() => {})
 
     return () => {
@@ -138,6 +145,22 @@ export default function CommandView() {
     [districts],
   )
 
+  /* The card a click on the map opens: what is happening in that district,
+     and the two things an officer can do about it from here. */
+  const districtCard = useMemo(() => {
+    if (!selectedDistrict) return null
+    const d = districts.find((x) => x.district === selectedDistrict)
+    if (!d) return null
+    const anoms = anomalies.filter((a) => a.district === selectedDistrict)
+    const topStations = stations?.districts[selectedDistrict]?.slice(0, 3) ?? []
+    return { d, anoms, topStations }
+  }, [selectedDistrict, districts, anomalies, stations])
+
+  const handleDistrictClick = (boundaryName: string) => {
+    const match = matchBoundaryToDataset(boundaryName, districts.map((x) => x.district))
+    if (match) setSelectedDistrict(match)
+  }
+
   if (failed) {
     return (
       <div className="h-full flex items-center justify-center px-6">
@@ -160,8 +183,110 @@ export default function CommandView() {
           sigOnly
           emerging={null}
           flyTarget={null}
-          onDistrictClick={() => navigateTo({ tab: 'FORECAST' })}
+          onDistrictClick={handleDistrictClick}
         />
+
+        {districtCard && (
+          <div className="absolute top-3 right-3 z-20 w-[290px] rounded-md border border-slate-700/70 bg-[#15181c]/95 overflow-hidden">
+            <div className="flex items-start justify-between gap-2 px-3.5 pt-3 pb-2">
+              <div>
+                <div className="text-[13px] font-semibold text-slate-50 leading-tight">
+                  {td(districtCard.d.district)}
+                </div>
+                <div className="mt-0.5 text-[9px] uppercase tracking-[0.14em] text-slate-500">
+                  {t('command.cardKicker')}
+                </div>
+              </div>
+              <button
+                onClick={() => setSelectedDistrict(null)}
+                aria-label={t('common.close')}
+                className="text-slate-500 hover:text-slate-200 text-[13px] leading-none px-1 transition-colors"
+              >
+                &#x2715;
+              </button>
+            </div>
+            <div className="grid grid-cols-2 gap-x-3 gap-y-2 px-3.5 pb-2.5">
+              <div>
+                <div className="text-[15px] font-semibold tabular-nums text-slate-50 leading-none">
+                  {districtCard.d.latest_year_cases.toLocaleString('en-IN')}
+                </div>
+                <div className="mt-1 text-[8px] font-mono-data uppercase tracking-[0.14em] text-slate-500">
+                  {t('command.cardFirs')}
+                </div>
+              </div>
+              <div>
+                <div
+                  className="text-[15px] font-semibold tabular-nums leading-none"
+                  style={{ color: districtCard.d.yoy_change_pct > 0 ? '#e5484d' : '#5ec98a' }}
+                >
+                  {districtCard.d.yoy_change_pct > 0 ? '+' : ''}
+                  {districtCard.d.yoy_change_pct.toFixed(1)}%
+                </div>
+                <div className="mt-1 text-[8px] font-mono-data uppercase tracking-[0.14em] text-slate-500">
+                  {t('command.cardYoY')}
+                </div>
+              </div>
+              <div className="col-span-2 text-[10.5px] text-slate-300">
+                <span className="text-slate-500">{t('command.cardTopCrime')}: </span>
+                {tc(districtCard.d.top_crime_type)}
+              </div>
+              {districtCard.anoms.length > 0 && (
+                <div className="col-span-2 text-[10.5px] text-slate-300">
+                  <span className="text-slate-500">{t('command.cardAnoms')}: </span>
+                  <span className="tabular-nums">{districtCard.anoms.length}</span>
+                  {' · '}
+                  {tc(districtCard.anoms[0].crime_type)}
+                </div>
+              )}
+              {districtCard.topStations.length > 0 && (
+                <div className="col-span-2">
+                  <div className="text-[8px] font-mono-data uppercase tracking-[0.14em] text-slate-500 mb-1">
+                    {t('command.cardStations')}
+                  </div>
+                  <ul className="space-y-0.5">
+                    {districtCard.topStations.map((st) => (
+                      <li key={st.station} className="flex items-baseline gap-2 text-[10px]">
+                        <span className="flex-1 truncate text-slate-300">{st.station}</span>
+                        <span className="tabular-nums text-slate-400">
+                          {st.latest.toLocaleString('en-IN')}
+                        </span>
+                        <span
+                          className="w-12 text-right tabular-nums"
+                          style={{
+                            color:
+                              st.yoy_pct === null
+                                ? '#6b7480'
+                                : st.yoy_pct > 0
+                                  ? '#e5484d'
+                                  : '#5ec98a',
+                          }}
+                        >
+                          {st.yoy_pct === null
+                            ? '—'
+                            : `${st.yoy_pct > 0 ? '+' : ''}${st.yoy_pct.toFixed(0)}%`}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+            <div className="flex divide-x divide-slate-800/70 border-t border-slate-800/70">
+              <button
+                onClick={() => navigateTo({ tab: 'FORECAST', district: districtCard.d.district })}
+                className="flex-1 px-3 py-2 text-[9.5px] font-semibold uppercase tracking-[0.12em] text-slate-300 hover:text-slate-50 hover:bg-slate-800/40 transition-colors text-left"
+              >
+                {t('command.cardForecast')} →
+              </button>
+              <button
+                onClick={() => navigateTo({ tab: 'ACT', district: districtCard.d.district })}
+                className="flex-1 px-3 py-2 text-[9.5px] font-semibold uppercase tracking-[0.12em] text-slate-300 hover:text-slate-50 hover:bg-slate-800/40 transition-colors text-left"
+              >
+                {t('command.cardDeploy')} →
+              </button>
+            </div>
+          </div>
+        )}
         {loading && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <span className="text-[10px] font-mono-data uppercase tracking-[0.2em] text-slate-500">

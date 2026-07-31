@@ -52,7 +52,7 @@ export default function SenseView() {
   const [loading, setLoading] = useState(true)
   const { focus } = useFocus()
   const { t, tc, td } = useI18n()
-  const { navigateTo } = useNav()
+  const { navigateTo, pending, consumePending } = useNav()
 
   // header search -> fly the map + highlight the district
   useEffect(() => {
@@ -208,6 +208,14 @@ export default function SenseView() {
     })
   }, [])
 
+  // a district handed over from COMMAND's card opens focused here
+  useEffect(() => {
+    if (!pending || pending.tab !== 'FORECAST' || !pending.district || districts.length === 0) return
+    const d = districts.find((x) => x.district === pending.district)
+    if (d) handleDistrictSelect(d)
+    consumePending()
+  }, [pending, districts, handleDistrictSelect, consumePending])
+
   const handleEmergingSelect = useCallback((c: EmergingCell) => {
     setFlyTarget({ lat: c.lat, lon: c.lon, zoom: 11.5 })
   }, [])
@@ -284,7 +292,7 @@ export default function SenseView() {
 
         {/* quick stats bar */}
         <div className="flex gap-1.5 shrink-0">
-          <QuickStat label="FIRs" value={totalFIRs} />
+          <QuickStat label={t('sense.firsLatest')} value={totalFIRs} />
           <QuickStat label="Hotspots" value={activeHotspots} />
           <QuickStat label="Anomalies" value={anomalies.length} accent={anomalies.length > 0} />
           <QuickStat label="At Risk" value={districtsAtRisk} accent={districtsAtRisk > 3} />

@@ -200,6 +200,21 @@ const BOUNDARY_TO_DATASET: Record<string, string[]> = {
   'DAKSHINA KANNADA': ['DAKSHINA KANNADA', 'MANGALURU CITY'],
 }
 
+export interface StationRow {
+  station: string
+  total: number
+  latest: number
+  yoy_pct: number | null
+  top_crime: string | null
+}
+
+export interface StationSummaryFile {
+  generated: string
+  latest_year: number
+  prior_year: number | null
+  districts: Record<string, StationRow[]>
+}
+
 export function matchBoundaryToDataset(
   boundaryName: string,
   datasetDistricts: string[],
