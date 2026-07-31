@@ -38,6 +38,10 @@ interface ReplayIndex {
   method: string
 }
 
+interface BenchmarkHeadline {
+  headline_numbers?: { hit_rate_5pct?: number }
+}
+
 interface WeekShard {
   week: string
   start: string
@@ -74,6 +78,7 @@ export default function ReplayView() {
   const { t } = useI18n()
 
   const [index, setIndex] = useState<ReplayIndex | null>(null)
+  const [trustHitRate, setTrustHitRate] = useState<number | null>(null)
   const [shard, setShard] = useState<WeekShard | null>(null)
   const [weekIdx, setWeekIdx] = useState(0)
   const [revealDay, setRevealDay] = useState(6)
@@ -92,6 +97,14 @@ export default function ReplayView() {
         setWeekIdx(first >= 0 ? first : 0)
       })
       .catch(() => alive && setFailed(true))
+    // The whole-test-period figure TRUST reports, so the weekly counter can
+    // say how it relates instead of appearing to contradict it.
+    fetchJson<BenchmarkHeadline>('benchmark_report.json')
+      .then((b) => {
+        const n = b.headline_numbers?.hit_rate_5pct
+        if (alive && typeof n === 'number') setTrustHitRate(n)
+      })
+      .catch(() => {})
     return () => {
       alive = false
     }
@@ -195,6 +208,9 @@ export default function ReplayView() {
   const isBest = week?.week === index.best_week
   const isWorst = week?.week === index.worst_week
 
+  /* Which stage of the experiment the screen is showing right now. */
+  const stage: 1 | 2 | 3 = revealDay < 0 ? 1 : revealDay < 6 ? 2 : 3
+
   return (
     <div className="h-full flex flex-col">
       <div className="relative flex-1 min-h-0">
@@ -249,6 +265,36 @@ export default function ReplayView() {
             />
           </div>
         )}
+
+        {/* The experiment in three steps, so nobody has to find it in the
+            method paragraph: forecast first, reality second, score third. */}
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-stretch rounded-md border border-slate-700/70 bg-[#15181c]/95 divide-x divide-slate-800/70">
+          {[
+            { n: 1, key: 'replay.step1' },
+            { n: 2, key: 'replay.step2' },
+            { n: 3, key: 'replay.step3' },
+          ].map((st) => (
+            <div
+              key={st.n}
+              className={`px-3 py-1.5 flex items-center gap-2 transition-opacity ${
+                stage === st.n ? 'opacity-100' : 'opacity-40'
+              }`}
+            >
+              <span
+                className="w-4 h-4 rounded-full text-[9px] font-bold flex items-center justify-center shrink-0"
+                style={{
+                  background: stage === st.n ? '#c9a35c' : '#3f4753',
+                  color: stage === st.n ? '#15181c' : '#9aa3ad',
+                }}
+              >
+                {st.n}
+              </span>
+              <span className="text-[9.5px] uppercase tracking-[0.12em] text-slate-300 whitespace-nowrap">
+                {t(st.key)}
+              </span>
+            </div>
+          ))}
+        </div>
 
         {(isBest || isWorst) && (
           <div
@@ -353,6 +399,9 @@ export default function ReplayView() {
             {t('replay.denominators')
               .replace('{all}', String(index.mean_hit_rate ?? '—'))
               .replace('{grid}', String(index.mean_cell_hit_rate))}
+            {trustHitRate !== null && (
+              <> {t('replay.vsTrust').replace('{n}', trustHitRate.toFixed(1))}</>
+            )}
           </p>
         )}
       </div>
