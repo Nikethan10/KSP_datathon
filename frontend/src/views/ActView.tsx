@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import PatrolMap from '../components/PatrolMap'
 import BriefingPanel from '../components/BriefingPanel'
 import { fetchJson } from '../lib/data'
@@ -121,6 +121,18 @@ export default function ActView() {
     }
   }, [numPatrols, districtSafe, bundle])
 
+  /* Coverage at every available unit count for the current district, straight
+     from the optimizer's own runs — the marginal-return question ("what does
+     the next pair of units buy?") answered with measured numbers. */
+  const coverageCurve = useMemo(() => {
+    if (!bundle) return []
+    const key = districtSafe && districtSafe in bundle ? districtSafe : FALLBACK_KEY
+    return PATROL_OPTIONS.map((n) => ({
+      n,
+      coverage: bundle[key]?.[`p${n}`]?.patrol_summary.greedy_coverage_pct ?? null,
+    }))
+  }, [bundle, districtSafe])
+
   const handleSelect = (b: PatrolBriefing) => {
     setSelected(b.patrol_id)
     setFlyTarget({ lat: b.center_lat, lon: b.center_lon, zoom: 12.8 })
@@ -175,6 +187,43 @@ export default function ActView() {
                 </button>
               ))}
             </div>
+          </div>
+        )}
+        {coverageCurve.some((c) => c.coverage !== null) && (
+          <div className="glass rounded-md px-3 py-2 w-[248px]">
+            <div className="text-[9px] uppercase tracking-wider text-slate-400 mb-1.5">
+              {t('act.marginalTitle')}
+            </div>
+            {coverageCurve.map((c, i) => {
+              const prev = i > 0 ? coverageCurve[i - 1].coverage : null
+              const delta = c.coverage !== null && prev !== null ? c.coverage - prev : null
+              const peak = Math.max(...coverageCurve.map((x) => x.coverage ?? 0), 1)
+              const active = numPatrols === c.n
+              return (
+                <button
+                  key={c.n}
+                  onClick={() => setNumPatrols(c.n)}
+                  className="w-full flex items-center gap-2 py-[3px] group"
+                >
+                  <span className={`w-4 text-left text-[10px] tabular-nums ${active ? 'text-sky-300 font-bold' : 'text-slate-500'}`}>
+                    {c.n}
+                  </span>
+                  <div className="flex-1 h-1.5 rounded bg-slate-800/70 overflow-hidden">
+                    <div
+                      className={`h-full rounded ${active ? 'bg-sky-400' : 'bg-slate-600 group-hover:bg-slate-500'}`}
+                      style={{ width: `${((c.coverage ?? 0) / peak) * 100}%` }}
+                    />
+                  </div>
+                  <span className={`w-11 text-right text-[10px] tabular-nums ${active ? 'text-slate-100' : 'text-slate-400'}`}>
+                    {c.coverage !== null ? `${c.coverage.toFixed(1)}%` : '—'}
+                  </span>
+                  <span className="w-12 text-right text-[9px] tabular-nums text-slate-500">
+                    {delta !== null ? `${delta >= 0 ? '+' : ''}${delta.toFixed(1)}pp` : ''}
+                  </span>
+                </button>
+              )
+            })}
+            <p className="mt-1 text-[8.5px] leading-snug text-slate-500">{t('act.marginalNote')}</p>
           </div>
         )}
         {loading && (
