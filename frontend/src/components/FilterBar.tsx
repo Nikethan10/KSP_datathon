@@ -7,15 +7,13 @@ interface Props {
   onCrimeType: (t: string | null) => void
   scope: HotspotScope
   onScope: (s: HotspotScope) => void
-  emerging: boolean
-  onEmerging: (v: boolean) => void
   demographics: boolean
   onDemographics: (v: boolean) => void
 }
 
 export default function FilterBar({
   crimeTypes, crimeType, onCrimeType,
-  scope, onScope, emerging, onEmerging,
+  scope, onScope,
   demographics, onDemographics,
 }: Props) {
   const { t, tc } = useI18n()
@@ -24,7 +22,6 @@ export default function FilterBar({
       <select
         value={crimeType ?? ''}
         onChange={(e) => onCrimeType(e.target.value || null)}
-        disabled={emerging}
         className="glass rounded-md px-3 py-1.5 text-xs text-slate-200 outline-none cursor-pointer max-w-56 disabled:opacity-40"
       >
         <option value="">{t('sense.allCrimes')}</option>
@@ -40,8 +37,7 @@ export default function FilterBar({
           <button
             key={s}
             onClick={() => onScope(s)}
-            disabled={emerging}
-            className={`px-3 py-1.5 text-xs font-medium transition-colors disabled:opacity-40 ${
+            className={`px-3 py-1.5 text-xs font-medium transition-colors ${
               scope === s
                 ? 'bg-sky-500/25 text-sky-300'
                 : 'text-slate-400 hover:text-slate-200'
@@ -51,19 +47,6 @@ export default function FilterBar({
           </button>
         ))}
       </div>
-      <button
-        onClick={() => onEmerging(!emerging)}
-        className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors border flex items-center gap-1.5 ${
-          emerging
-            ? 'bg-fuchsia-500/20 border-fuchsia-400/50 text-fuchsia-300'
-            : 'bg-transparent border-slate-600/50 text-slate-400 hover:border-fuchsia-400/40 hover:text-fuchsia-300'
-        }`}
-      >
-        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" aria-hidden>
-          <path d="M3 12 H8 L10 6 L14 18 L16 12 H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-        {t('sense.emerging')}
-      </button>
       <button
         onClick={() => onDemographics(!demographics)}
         className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors border flex items-center gap-1.5 ${

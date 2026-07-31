@@ -88,7 +88,12 @@ const translations: Record<string, Record<Lang, string>> = {
   'workspace.heinous': { en: '{n}% of linked FIRs are classified heinous.', kn: '' },
 
   // ── FORECAST lenses ────────────────────────────────────────────────
-  'forecast.lensPatterns': { en: 'Patterns', kn: 'ಮಾದರಿಗಳು' },
+  'forecast.emergingHint': { en: 'Cells whose recent activity departs from their own 24-month history', kn: 'ತಮ್ಮ 24-ತಿಂಗಳ ಇತಿಹಾಸದಿಂದ ಇತ್ತೀಚಿನ ಚಟುವಟಿಕೆ ಭಿನ್ನವಾಗಿರುವ ಕೋಶಗಳು' },
+  'trust.showEvidence': { en: 'How this was tested — show the technical evidence', kn: 'ಇದನ್ನು ಹೇಗೆ ಪರೀಕ್ಷಿಸಲಾಯಿತು — ತಾಂತ್ರಿಕ ಪುರಾವೆ ತೋರಿಸಿ' },
+  'trust.hideEvidence': { en: 'Hide the technical evidence', kn: 'ತಾಂತ್ರಿಕ ಪುರಾವೆ ಮರೆಮಾಡಿ' },
+  'trust.evidenceHint': { en: 'Calibration curve · accuracy by area · SHAP attribution · fairness audit · worked examples', kn: 'ಕ್ಯಾಲಿಬ್ರೇಶನ್ ವಕ್ರರೇಖೆ · ಪ್ರದೇಶವಾರು ನಿಖರತೆ · SHAP ಕೊಡುಗೆ · ನ್ಯಾಯೋಚಿತ ಲೆಕ್ಕಪರಿಶೋಧನೆ · ಉದಾಹರಣೆಗಳು' },
+  'forecast.lensHappening': { en: 'Happening now', kn: 'ಈಗ ನಡೆಯುತ್ತಿರುವುದು' },
+  'forecast.lensEmerging': { en: 'Emerging', kn: 'ಉದಯೋನ್ಮುಖ' },
   'forecast.lensRisk': { en: 'Week-ahead risk', kn: 'ಮುಂದಿನ ವಾರದ ಅಪಾಯ' },
 
   // ── REPLAY ─────────────────────────────────────────────────────────

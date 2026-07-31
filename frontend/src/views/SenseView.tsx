@@ -27,7 +27,7 @@ import type {
   OffenderDossier as Dossier, OffenderIndex,
 } from '../lib/data'
 
-export default function SenseView() {
+export default function SenseView({ emergingLens = false }: { emergingLens?: boolean }) {
   const [hotspots, setHotspots] = useState<HotspotPoint[]>([])
   // cells the Gi* test covered — larger than hotspots.length, which now
   // holds only the significant ones actually drawn
@@ -45,7 +45,6 @@ export default function SenseView() {
 
   const [crimeType, setCrimeType] = useState<string | null>(null)
   const [scope, setScope] = useState<HotspotScope>('state')
-  const [showEmerging, setShowEmerging] = useState(false)
   const [showDemographics, setShowDemographics] = useState(false)
   const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null)
   const [flyTarget, setFlyTarget] = useState<{ lat: number; lon: number; zoom?: number; pitch?: number } | null>(null)
@@ -53,6 +52,14 @@ export default function SenseView() {
   const { focus } = useFocus()
   const { t, tc, td } = useI18n()
   const { navigateTo, pending, consumePending } = useNav()
+
+  /* Emerging is a lens of FORECAST now, not a toggle buried in the filter
+     bar. Derived, so a lens switch can never leave stale layer state. */
+  const showEmerging = emergingLens && !!emergingData
+
+  useEffect(() => {
+    if (emergingLens) setShowDemographics(false)
+  }, [emergingLens])
 
   // header search -> fly the map + highlight the district
   useEffect(() => {
@@ -240,19 +247,23 @@ export default function SenseView() {
         onDistrictClick={handleBoundaryClick}
       />
 
-      {/* top-left: filters */}
+      {/* top-left: filters (the emerging lens has none — its layer is fixed) */}
       <div className="absolute top-3 left-3 z-10 flex items-center gap-2">
-        <FilterBar
-          crimeTypes={crimeTypes}
-          crimeType={crimeType}
-          onCrimeType={setCrimeType}
-          scope={scope}
-          onScope={setScope}
-          emerging={showEmerging && !!emergingData}
-          onEmerging={(v) => { if (emergingData) { setShowEmerging(v); if (v) setShowDemographics(false) } }}
-          demographics={showDemographics}
-          onDemographics={(v) => { setShowDemographics(v); if (v) setShowEmerging(false) }}
-        />
+        {emergingLens ? (
+          <span className="glass rounded-md px-3 py-1.5 text-[11px] text-slate-300">
+            {t('forecast.emergingHint')}
+          </span>
+        ) : (
+          <FilterBar
+            crimeTypes={crimeTypes}
+            crimeType={crimeType}
+            onCrimeType={setCrimeType}
+            scope={scope}
+            onScope={setScope}
+            demographics={showDemographics}
+            onDemographics={setShowDemographics}
+          />
+        )}
         {loading && (
           <span className="glass rounded-md px-3 py-1.5 text-xs text-sky-300 animate-pulse">
             loading layer…

@@ -3,22 +3,21 @@ import SenseView from './SenseView'
 import PredictView from './PredictView'
 import { useI18n } from '../lib/i18n'
 
-/* FORECAST answers "what is happening, and what is coming".
+/* FORECAST, as the three questions an officer actually asks, in order:
+   what is happening (Gi* hotspots and trends), what is changing (cells
+   departing from their own history), and what is likely next (the week-ahead
+   risk surface). Emerging used to hide behind a toggle inside the first
+   lens; promoting it makes the analytical stages the visible structure. */
 
-   That is two existing surfaces: the Gi* hotspot and trend map (SenseView)
-   and the week-ahead risk surface (PredictView in risk mode). They were
-   separate top-level tabs, which meant an officer asking one question had to
-   know which analytical layer produced the answer. Here they are two lenses
-   on the same question instead. */
-
-type Lens = 'patterns' | 'risk'
+type Lens = 'happening' | 'emerging' | 'risk'
 
 export default function ForecastView() {
-  const [lens, setLens] = useState<Lens>('patterns')
+  const [lens, setLens] = useState<Lens>('happening')
   const { t } = useI18n()
 
   const LENSES: { id: Lens; key: string }[] = [
-    { id: 'patterns', key: 'forecast.lensPatterns' },
+    { id: 'happening', key: 'forecast.lensHappening' },
+    { id: 'emerging', key: 'forecast.lensEmerging' },
     { id: 'risk', key: 'forecast.lensRisk' },
   ]
 
@@ -49,7 +48,11 @@ export default function ForecastView() {
           caches parsed payloads, so a lens switch re-renders without
           re-downloading or re-parsing anything. */}
       <div className="absolute inset-0 flex flex-col">
-        {lens === 'patterns' ? <SenseView /> : <PredictView initialMode="risk" lockMode />}
+        {lens === 'risk' ? (
+          <PredictView initialMode="risk" lockMode />
+        ) : (
+          <SenseView emergingLens={lens === 'emerging'} />
+        )}
       </div>
     </div>
   )
