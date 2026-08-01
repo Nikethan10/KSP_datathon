@@ -74,6 +74,10 @@ export default function TrustView() {
   const [benchmark, setBenchmark] = useState<BenchmarkReport | null>(null)
   const [calib, setCalib] = useState<CalibrationData | null>(null)
   const [showSamples, setShowSamples] = useState(false)
+  /* Layer 1 answers "can I trust this?" in four figures and the hard limits.
+     Layer 2 is the full technical evidence, folded until asked for — the
+     same charts and tables, nothing removed. */
+  const [showEvidence, setShowEvidence] = useState(false)
   const { t } = useI18n()
 
   useEffect(() => {
@@ -169,6 +173,34 @@ export default function TrustView() {
           </div>
         </div>
 
+        {/* ── 4. known limitations (honest) — two columns to stay compact ── */}
+        <div className="glass rounded-xl p-3.5 border border-red-400/15">
+          <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-2">{t('trust.limitsTitle')}</div>
+          <ul className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+            {[t('trust.limitCorpus'), t('trust.limitGeo'), t('trust.limitIdentity'), t('trust.limitState'), t('trust.limitOutcome')].map((txt, i) => (
+              <li key={i} className="flex gap-1.5 text-[10px] text-slate-400 leading-snug">
+                <span className="text-red-400/70 shrink-0">•</span>
+                <span>{txt}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* ── layer 2: the full technical evidence, folded ───────── */}
+        <button
+          onClick={() => setShowEvidence((v) => !v)}
+          className="glass rounded-xl px-4 py-3 flex items-center justify-between text-left transition-colors"
+        >
+          <span>
+            <span className="block text-[11px] font-semibold uppercase tracking-widest text-slate-200">
+              {showEvidence ? t('trust.hideEvidence') : t('trust.showEvidence')}
+            </span>
+            <span className="block text-[10px] text-slate-500 mt-0.5">{t('trust.evidenceHint')}</span>
+          </span>
+          <span className="text-slate-400 text-sm shrink-0 ml-4">{showEvidence ? '−' : '+'}</span>
+        </button>
+
+        {showEvidence && (<>
         {/* ── 2. calibration + accuracy ─────────────────────────────── */}
         <div className="grid grid-cols-2 gap-4">
           {calib && (
@@ -264,7 +296,7 @@ export default function TrustView() {
                   </div>
                   <div className="flex-1 h-2 rounded bg-slate-700/50 overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-sky-500 to-sky-300"
+                      className="h-full bg-sky-400"
                       style={{ width: `${(f.mean_abs_shap / shapMax) * 100}%` }}
                     />
                   </div>
@@ -301,19 +333,6 @@ export default function TrustView() {
           </div>
         </div>
 
-        {/* ── 4. known limitations (honest) — two columns to stay compact ── */}
-        <div className="glass rounded-xl p-3.5 border border-red-400/15">
-          <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-2">{t('trust.limitsTitle')}</div>
-          <ul className="grid grid-cols-2 gap-x-4 gap-y-1.5">
-            {[t('trust.limitCorpus'), t('trust.limitGeo'), t('trust.limitIdentity'), t('trust.limitState'), t('trust.limitOutcome')].map((txt, i) => (
-              <li key={i} className="flex gap-1.5 text-[10px] text-slate-400 leading-snug">
-                <span className="text-red-400/70 shrink-0">•</span>
-                <span>{txt}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
         {/* ── 5. worked examples — collapsed by default ─────────────── */}
         <div className="glass rounded-xl p-3.5">
           <button
@@ -346,6 +365,7 @@ export default function TrustView() {
             </div>
           )}
         </div>
+        </>)}
 
       </div>
     </div>
