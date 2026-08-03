@@ -187,12 +187,12 @@ export default function PredictView({ initialMode = 'risk', lockMode = false }: 
           >
             {rankedGangs.map((g) => (
               <option key={g.gang_rank} value={g.gang_rank}>
-                {t('predict.gangs').replace(/s$/, '')} #{g.gang_rank} \u00b7 {t(`threat.${g.threat_tier}`)} \u00b7 {g.gang_size.toLocaleString()} {t('board.members')}
+                {t('predict.gangs').replace(/s$/, '')} #{g.gang_rank} · {t(`threat.${g.threat_tier}`)} · {g.gang_size.toLocaleString()} {t('board.members')}
               </option>
             ))}
           </select>
           <div className="mt-2 text-[10px] leading-snug text-slate-400">
-            {activeGang.total_cases.toLocaleString()} {t('war.cases')} \u00b7 {activeGang.n_districts} {t('war.districts')} \u00b7 {t('board.core')}
+            {activeGang.total_cases.toLocaleString()} {t('war.cases')} · {activeGang.n_districts} {t('war.districts')} · {t('board.core')}
           </div>
         </section>
       )}

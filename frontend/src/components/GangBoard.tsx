@@ -19,8 +19,8 @@ interface PNode {
   size: number
   deg: number
   role: Role
-  x: number // % of board width
-  y: number // % of board height
+  x: number // virtual-board pixels (centre of the card)
+  y: number // virtual-board pixels (centre of the card)
   rot: number // deterministic tilt for the "pinned photo" look
 }
 interface PEdge { a: string; b: string; weight: number }
@@ -34,8 +34,9 @@ function tilt(id: string): number {
 }
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v))
 const STRING = '#e0483d' // evidence-board red string
-const dimsFor = (role: Role) => (role === 'boss' ? 112 : role === 'lieutenant' ? 94 : 78)
-const MIN_SCALE = 0.55
+const dimsFor = (role: Role) => (role === 'boss' ? 120 : role === 'lieutenant' ? 102 : 88)
+const CARD_RATIO = 1.3
+const MIN_SCALE = 0.4
 const MAX_SCALE = 3.5
 
 export default function GangBoard({ rank, tier, network, onSelectNode }: Props) {
@@ -44,11 +45,12 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
   const [view, setView] = useState<View>({ scale: 1, tx: 0, ty: 0 })
   const [panning, setPanning] = useState(false)
   const vpRef = useRef<HTMLDivElement>(null)
+  const [box, setBox] = useState({ w: 1000, h: 620 })
   const drag = useRef<{ x: number; y: number; tx: number; ty: number; moved: boolean } | null>(null)
 
-  const { nodes, edges, adj } = useMemo(() => {
+  const { nodes, edges, adj, extent } = useMemo(() => {
     if (!network || rank == null) {
-      return { nodes: [] as PNode[], edges: [] as PEdge[], adj: new Map<string, Set<string>>() }
+      return { nodes: [] as PNode[], edges: [] as PEdge[], adj: new Map<string, Set<string>>(), extent: { x: 0, y: 0, w: 1, h: 1 } }
     }
     const members = rosterFor(network, rank)
     const ids = new Set(members.map((m) => m.id))
@@ -61,30 +63,61 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
       id: m.id, name: m.name, size: m.size, deg: m.deg, role: m.role, x: 0, y: 0, rot: tilt(m.id),
     }))
 
-    // ---- hierarchy layout (boss top-centre, lieutenants row, soldiers rows) ----
     const boss = nd[0]
-    if (boss) { boss.x = 50; boss.y = 15 }
-    const lts = nd.filter((n) => n.role === 'lieutenant')
-    lts.forEach((n, i) => {
-      const span = 64
-      n.x = lts.length === 1 ? 50 : 50 - span / 2 + (span * i) / (lts.length - 1)
-      n.y = 40
-    })
-    const sol = nd.filter((n) => n.role === 'soldier')
-    const perRow = Math.min(8, Math.max(4, Math.ceil(sol.length / 2)))
-    const rows = Math.max(1, Math.ceil(sol.length / perRow))
-    /* Rows used to step 22% each from 68%, so a third row sat at 112% - off
-       the board entirely, with no way to reach it. Distribute them across a
-       fixed band instead, so the layout stays inside the frame at any size. */
-    const TOP = 62, BOTTOM = 90
-    sol.forEach((n, i) => {
-      const row = Math.floor(i / perRow)
-      const inRow = i % perRow
-      const count = Math.min(perRow, sol.length - row * perRow)
-      const span = 84
-      n.x = count === 1 ? 50 : 50 - span / 2 + (span * inRow) / (count - 1)
-      n.y = rows === 1 ? 72 : TOP + ((BOTTOM - TOP) * row) / (rows - 1)
-    })
+    const lts = nd.filter((n) => n !== boss && n.role === 'lieutenant')
+    const sol = nd.filter((n) => n !== boss && n.role !== 'lieutenant')
+
+    /* Hierarchy layout in virtual pixels.
+
+       Cards are a fixed pixel size but used to be positioned as a percentage
+       of the board, so the gap between rows shrank with the viewport while the
+       cards did not - on a short console the rows simply sat on top of each
+       other. Laying out in a virtual space with real card dimensions makes the
+       spacing a property of the layout instead of the window, and fitView
+       scales the whole board to fit whatever room it actually has. */
+    const GAP_X = 30
+    const GAP_Y = 52
+
+    /* How many per row is not a fixed number: a wide, short console wants long
+       rows, a narrow one wants more of them. Try each shape and keep whichever
+       lets the cards render largest, so the board fills the room it has instead
+       of being scaled down to fit a guess. */
+    const solW = dimsFor('soldier'), solH = solW * CARD_RATIO
+    const ltW = dimsFor('lieutenant'), ltH = ltW * CARD_RATIO
+    const bossH = dimsFor('boss') * CARD_RATIO
+    let perRow = Math.max(1, sol.length)
+    if (sol.length > 1) {
+      let best = -Infinity
+      for (let cand = 3; cand <= Math.min(12, sol.length); cand++) {
+        const r = Math.ceil(sol.length / cand)
+        const w = Math.max(
+          cand * solW + (cand - 1) * GAP_X,
+          lts.length * ltW + Math.max(0, lts.length - 1) * GAP_X,
+        )
+        const h = (boss ? bossH + GAP_Y : 0) + (lts.length ? ltH + GAP_Y : 0)
+          + r * solH + (r - 1) * GAP_Y
+        const fit = Math.min(box.w / (w + 80), box.h / (h + 80))
+        if (fit > best) { best = fit; perRow = cand }
+      }
+    }
+
+    const rows: PNode[][] = []
+    if (boss) rows.push([boss])
+    if (lts.length) rows.push(lts)
+    for (let i = 0; i < sol.length; i += perRow) rows.push(sol.slice(i, i + perRow))
+
+    let cursorY = 0
+    for (const row of rows) {
+      const cw = dimsFor(row[0].role)
+      const ch = cw * CARD_RATIO
+      const rowW = row.length * cw + (row.length - 1) * GAP_X
+      const startX = -rowW / 2 + cw / 2
+      row.forEach((n, i) => {
+        n.x = startX + i * (cw + GAP_X)
+        n.y = cursorY + ch / 2
+      })
+      cursorY += ch + GAP_Y
+    }
 
     const a = new Map<string, Set<string>>()
     for (const e of es) {
@@ -93,8 +126,21 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
       a.get(e.a)!.add(e.b)
       a.get(e.b)!.add(e.a)
     }
-    return { nodes: nd, edges: es, adj: a }
-  }, [network, rank])
+    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity
+    for (const n of nd) {
+      const cw = dimsFor(n.role), ch = cw * CARD_RATIO
+      minX = Math.min(minX, n.x - cw / 2); maxX = Math.max(maxX, n.x + cw / 2)
+      minY = Math.min(minY, n.y - ch / 2); maxY = Math.max(maxY, n.y + ch / 2)
+    }
+    const PAD = 40
+    const extent = nd.length
+      ? { x: minX - PAD, y: minY - PAD, w: maxX - minX + PAD * 2, h: maxY - minY + PAD * 2 }
+      : { x: 0, y: 0, w: 1, h: 1 }
+    // shift so the content starts at the origin of the virtual board
+    for (const n of nd) { n.x -= extent.x; n.y -= extent.y }
+
+    return { nodes: nd, edges: es, adj: a, extent }
+  }, [network, rank, box.w, box.h])
 
   /* Frame the whole network whenever the gang changes. Opening at scale 1
      assumed the layout fits the viewport; on a short console it did not, and
@@ -104,25 +150,28 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
     if (!el || nodes.length === 0) return { scale: 1, tx: 0, ty: 0 }
     const w = el.clientWidth, h = el.clientHeight
     if (!w || !h) return { scale: 1, tx: 0, ty: 0 }
-    const PAD = 26
-    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity
-    for (const n of nodes) {
-      const cw = dimsFor(n.role), ch = cw * 1.3
-      const cx = (n.x / 100) * w, cy = (n.y / 100) * h
-      minX = Math.min(minX, cx - cw / 2); maxX = Math.max(maxX, cx + cw / 2)
-      minY = Math.min(minY, cy - ch / 2); maxY = Math.max(maxY, cy + ch / 2)
-    }
-    const bw = maxX - minX, bh = maxY - minY
-    if (bw <= 0 || bh <= 0) return { scale: 1, tx: 0, ty: 0 }
-    const scale = clamp(Math.min((w - PAD * 2) / bw, (h - PAD * 2) / bh, 1), MIN_SCALE, MAX_SCALE)
-    return {
-      scale,
-      tx: (w - bw * scale) / 2 - minX * scale,
-      ty: (h - bh * scale) / 2 - minY * scale,
-    }
-  }, [nodes])
+    const scale = clamp(Math.min(w / extent.w, h / extent.h), MIN_SCALE, MAX_SCALE)
+    return { scale, tx: (w - extent.w * scale) / 2, ty: (h - extent.h * scale) / 2 }
+  }, [nodes, extent])
 
   useEffect(() => { setView(fitView()); setHover(null) }, [rank, fitView])
+
+  // the sidebar and window change the room available; re-shape and re-frame
+  useEffect(() => {
+    const el = vpRef.current
+    if (!el) return
+    const measure = () => {
+      const w = el.clientWidth, h = el.clientHeight
+      if (w > 0 && h > 0) setBox((b) => (b.w === w && b.h === h ? b : { w, h }))
+    }
+    measure()
+    if (typeof ResizeObserver === 'undefined') return
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
+  useEffect(() => { setView(fitView()) }, [box.w, box.h, fitView])
 
   // wheel-to-zoom toward the cursor (native listener so we can preventDefault)
   useEffect(() => {
@@ -217,10 +266,15 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
         }}
       />
 
-      {/* pan + zoom camera */}
+      {/* pan + zoom camera over a stage sized to the layout itself */}
       <div
-        className="absolute inset-0"
-        style={{ transform: `translate(${view.tx}px, ${view.ty}px) scale(${view.scale})`, transformOrigin: '0 0' }}
+        className="absolute top-0 left-0"
+        style={{
+          width: extent.w,
+          height: extent.h,
+          transform: `translate(${view.tx}px, ${view.ty}px) scale(${view.scale})`,
+          transformOrigin: '0 0',
+        }}
       >
         {/* perspective + tilted board plane for real depth */}
         <div className="absolute inset-0" style={{ perspective: '1500px' }}>
@@ -231,15 +285,14 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
             {/* red-string connection layer */}
             <svg
               className="absolute inset-0 w-full h-full"
-              viewBox="0 0 1000 640"
-              preserveAspectRatio="none"
+              viewBox={`0 0 ${extent.w} ${extent.h}`}
               style={{ transform: 'translateZ(2px)' }}
             >
               {edges.map((e, i) => {
                 const a = posById.get(e.a); const b = posById.get(e.b)
                 if (!a || !b) return null
-                const x1 = (a.x / 100) * 1000, y1 = (a.y / 100) * 640
-                const x2 = (b.x / 100) * 1000, y2 = (b.y / 100) * 640
+                const x1 = a.x, y1 = a.y
+                const x2 = b.x, y2 = b.y
                 const mx = (x1 + x2) / 2, my = (y1 + y2) / 2 + 22
                 const lit = edgeLit(e)
                 return (
@@ -259,7 +312,7 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
             {nodes.map((n) => {
               const lit = isLit(n.id)
               const w = dimsFor(n.role)
-              const h = w * 1.3
+              const h = w * CARD_RATIO
               const initials = n.name.split(' ').map((s) => s[0]).slice(0, 2).join('').toUpperCase()
               const hovered = hover === n.id
               const isBoss = n.role === 'boss'
@@ -272,8 +325,8 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
                   onClick={() => { if (!drag.current?.moved) onSelectNode(n.id) }}
                   className="absolute focus:outline-none"
                   style={{
-                    left: `${n.x}%`,
-                    top: `${n.y}%`,
+                    left: n.x,
+                    top: n.y,
                     width: w,
                     transformStyle: 'preserve-3d',
                     transform: `translate(-50%,-50%) rotate(${n.rot}deg) translateZ(${hovered ? 78 : baseZ}px) scale(${hovered ? 1.08 : 1})`,
@@ -331,8 +384,8 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
                     </div>
                     {/* name plate */}
                     <div className="px-1 pt-[4px] pb-[5px] text-center">
-                      <div className="text-[10px] font-semibold leading-[1.3] text-[#2a2620] truncate">{n.name}</div>
-                      <div className="mt-[2px] text-[9px] leading-[1.3] text-[#5c564a] truncate">{n.deg} links · {n.size} cases</div>
+                      <div className="text-[11.5px] font-semibold leading-[1.3] text-[#2a2620] truncate">{n.name}</div>
+                      <div className="mt-[2px] text-[10px] leading-[1.3] text-[#5c564a] truncate">{n.deg} links · {n.size} cases</div>
                     </div>
                   </div>
                 </button>
