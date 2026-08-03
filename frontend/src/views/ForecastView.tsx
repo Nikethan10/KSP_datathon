@@ -22,18 +22,20 @@ export default function ForecastView() {
   ]
 
   return (
-    <div className="relative h-full">
-      {/* Lens switch sits above the map, clear of the view's own controls. */}
-      <div className="absolute top-3 left-1/2 -translate-x-1/2 z-20 flex rounded-md border border-slate-700/70 bg-[#15181c] overflow-hidden">
+    <div className="h-full flex flex-col">
+      {/* The three questions get their own band. Floating this centred over the
+          map put it on top of the filter bar the lens below anchors top-left;
+          any absolute position collides at some width, a real row cannot. */}
+      <div className="shrink-0 flex items-center gap-0.5 px-3 h-9 border-b border-slate-800/70 bg-[#15181c]">
         {LENSES.map((l) => (
           <button
             key={l.id}
             onClick={() => setLens(l.id)}
             aria-pressed={lens === l.id}
-            className={`px-3.5 h-7 text-[10.5px] font-semibold uppercase tracking-[0.14em] transition-colors ${
+            className={`relative px-3.5 h-full text-[10.5px] font-semibold uppercase tracking-[0.14em] transition-colors ${
               lens === l.id
-                ? 'bg-slate-700/60 text-slate-50'
-                : 'text-slate-500 hover:text-slate-300'
+                ? 'text-slate-50 after:absolute after:inset-x-2 after:bottom-0 after:h-[2px] after:bg-sky-300'
+                : 'text-slate-400 hover:text-slate-100'
             }`}
           >
             {t(l.key)}
@@ -47,7 +49,7 @@ export default function ForecastView() {
           a map partway through a demo. Remounting is cheap now that data.ts
           caches parsed payloads, so a lens switch re-renders without
           re-downloading or re-parsing anything. */}
-      <div className="absolute inset-0 flex flex-col">
+      <div className="flex-1 min-h-0 flex flex-col">
         {lens === 'risk' ? (
           <PredictView initialMode="risk" lockMode />
         ) : (

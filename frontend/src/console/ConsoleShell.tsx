@@ -112,7 +112,7 @@ export default function ConsoleShell() {
 
   return (
     <div className="h-full flex flex-col">
-      <header className="shrink-0 z-20 flex items-center gap-5 px-4 h-14 border-b border-slate-800/70 bg-[#15181c]">
+      <header className="shrink-0 z-20 flex items-center gap-6 px-4 h-14 border-b border-slate-800/70 bg-[#15181c]">
         <a
           href="#/"
           title={t('site.backHome')}
@@ -123,7 +123,7 @@ export default function ConsoleShell() {
             <span className="text-[17px] font-bold tracking-[0.14em] text-slate-100 group-hover:text-white transition-colors">
               PRAHARI <span className="brand-accent font-semibold">ಪ್ರಹರಿ</span>
             </span>
-            <span className="hidden lg:inline mt-1 text-[9px] font-mono-data uppercase tracking-[0.18em] text-slate-500">
+            <span className="hidden 2xl:block mt-1 text-[9px] font-mono-data uppercase tracking-[0.14em] whitespace-nowrap text-slate-500">
               {t('product.tagline')}
             </span>
           </div>
