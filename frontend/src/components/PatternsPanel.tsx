@@ -23,7 +23,7 @@ export default function PatternsPanel({
           </div>
           <div className="flex gap-1.5 mb-2">
             <div className="flex-1 rounded-lg bg-slate-800/50 border border-slate-700/40 px-2 py-1.5 text-center">
-              <div className="text-sm font-bold text-fuchsia-300 tabular-nums">
+              <div className="text-sm font-bold text-sky-300 tabular-nums">
                 {cs.multi_district_offenders.toLocaleString()}
               </div>
               <div className="text-[9px] uppercase tracking-wider text-slate-400 mt-0.5">
@@ -49,7 +49,7 @@ export default function PatternsPanel({
                 <span className="truncate">
                   {td(c.from_district)} ↔ {td(c.to_district)}
                 </span>
-                <span className="shrink-0 text-fuchsia-300 tabular-nums font-semibold">
+                <span className="shrink-0 text-sky-300 tabular-nums font-semibold">
                   {c.n_offenders} {t('patterns.offenders')}
                 </span>
               </div>

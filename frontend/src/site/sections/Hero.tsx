@@ -60,7 +60,7 @@ export default function Hero() {
       <div className="site-wrap relative pt-20 pb-24 md:pt-28 md:pb-32">
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full border border-slate-700/70 bg-[#1d2126]/60">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(92,138,110,0.9)]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
             <span className="text-[10px] font-mono-data uppercase tracking-[0.22em] text-slate-400">
               {t('site.hero.badge')}
             </span>

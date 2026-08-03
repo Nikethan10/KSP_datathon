@@ -104,7 +104,7 @@ export default function RiskStats({ summary }: { summary: RiskSummary }) {
               </div>
               <div className="flex-1 h-1.5 rounded bg-slate-700/50 overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-sky-500 to-sky-300"
+                  className="h-full bg-sky-400"
                   style={{ width: `${(f.importance / maxImp) * 100}%` }}
                 />
               </div>

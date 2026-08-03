@@ -136,7 +136,7 @@ export default function OffenderDossier({ dossier: d, onBack, onSelectAssociate,
         <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-1.5">{t('war.career')}</div>
         <div className="flex items-center gap-2 text-[10.5px]">
           <span className="text-slate-300 font-mono-data">{fmtDate(d.first_incident)}</span>
-          <div className="flex-1 h-[3px] rounded bg-gradient-to-r from-sky-500/60 to-red-500/60" />
+          <div className="flex-1 h-[3px] rounded bg-slate-600" />
           <span className="text-slate-300 font-mono-data">{fmtDate(d.last_incident)}</span>
         </div>
         {d.last_arrest && (

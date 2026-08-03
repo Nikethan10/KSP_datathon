@@ -568,7 +568,7 @@ export interface EmergingData {
 }
 
 export const EMERGING_COLORS: Record<EmergingCategory, [number, number, number, number]> = {
-  new: [232, 121, 249, 235],          // fuchsia — brand new activity
+  new: [242, 235, 216, 235],          // warm white — brand new activity (fuchsia read as decoration, not signal)
   intensifying: [239, 68, 68, 225],   // red — trending up
   persistent: [249, 115, 22, 190],    // orange — stable hot
   cooling: [91, 122, 140, 170],       // muted slate-blue — trending down
