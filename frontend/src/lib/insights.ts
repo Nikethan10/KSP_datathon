@@ -39,15 +39,6 @@ export interface FeedItem {
   district: string
 }
 
-const HOURS = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11',
-  '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']
-
-function fakeTimestamp(idx: number): string {
-  const h = HOURS[(23 - (idx * 3 + idx * 7) % 24)]
-  const m = String((idx * 17 + 5) % 60).padStart(2, '0')
-  return `${h}:${m}`
-}
-
 export function generateFeedItems(
   anomalies: Anomaly[],
   districts: DistrictSummary[],
@@ -59,7 +50,7 @@ export function generateFeedItems(
     const pctChange = Math.abs(((a.observed - a.expected) / Math.max(a.expected, 1)) * 100).toFixed(0)
     items.push({
       id: `anomaly-${i}`,
-      timestamp: fakeTimestamp(i),
+      timestamp: String(a.date).slice(0, 10),
       severity: a.severity === 'critical' ? 'critical' : a.zscore > 3 ? 'high' : 'medium',
       icon: 'alert',
       title: `${a.crime_type} ${dir} detected in ${a.district}`,
@@ -74,7 +65,7 @@ export function generateFeedItems(
     .forEach((d, i) => {
       items.push({
         id: `trend-${i}`,
-        timestamp: fakeTimestamp(items.length + i),
+        timestamp: `${d.latest_year} YTD`,
         severity: d.yoy_change_pct > 15 ? 'high' : 'medium',
         icon: 'trend',
         title: `${d.district} crime trending +${d.yoy_change_pct.toFixed(1)}% YoY`,
