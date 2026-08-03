@@ -222,12 +222,12 @@ export default function MostWantedBoard({ offenders, onSelect }: Props) {
                         <path d="M3.5 22c0-4.4 3.8-7 8.5-7s8.5 2.6 8.5 7" fill="currentColor" />
                       </svg>
                       <div className="absolute inset-0" style={{ backgroundImage: 'repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0 1px, transparent 1px 3px)' }} />
-                      <span className="absolute top-0 left-0 text-[7px] font-bold px-1 py-[1px]" style={{ background: color, color: '#15181c' }}>#{n.rank}</span>
-                      <span className="absolute top-0 right-0 text-[7px] font-bold px-1 py-[1px] text-slate-200" style={{ background: 'rgba(0,0,0,0.55)' }}>{initials}</span>
+                      <span className="absolute top-0 left-0 text-[9px] font-bold px-1 py-[1px]" style={{ background: color, color: '#15181c' }}>#{n.rank}</span>
+                      <span className="absolute top-0 right-0 text-[9px] font-bold px-1 py-[1px] text-slate-200" style={{ background: 'rgba(0,0,0,0.55)' }}>{initials}</span>
                     </div>
                     <div className="px-1 py-[3px] text-center">
-                      <div className="text-[8px] font-semibold leading-tight text-[#2a2620] truncate">{n.name}</div>
-                      <div className="text-[6.5px] leading-tight" style={{ color }}>{n.score.toFixed(0)} {t('war.cases')}</div>
+                      <div className="text-[9px] font-semibold leading-tight text-[#2a2620] truncate">{n.name}</div>
+                      <div className="text-[9px] leading-tight" style={{ color }}>{n.score.toFixed(0)} {t('war.cases')}</div>
                     </div>
                   </div>
                 </button>

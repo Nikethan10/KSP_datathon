@@ -26,7 +26,7 @@ function NetStat({ value, label }: { value: string; label: string }) {
   return (
     <div className="text-center px-2">
       <div className="text-sm font-bold text-sky-300 tabular-nums leading-tight">{value}</div>
-      <div className="text-[8.5px] uppercase tracking-wider text-slate-400">{label}</div>
+      <div className="mt-0.5 text-[9.5px] uppercase tracking-wider text-slate-400">{label}</div>
     </div>
   )
 }
@@ -294,7 +294,7 @@ export default function PredictView({ initialMode = 'risk', lockMode = false }: 
               </svg>
               <span className="text-[10px] uppercase tracking-widest text-slate-300 font-semibold">Week-ahead Risk</span>
             </div>
-            <span className="text-[8px] uppercase tracking-wider text-slate-500">LightGBM · held-out test</span>
+            <span className="text-[9px] uppercase tracking-wider text-slate-500">LightGBM · held-out test</span>
           </div>
           {riskSummary && <RiskStats summary={riskSummary} />}
           {predictionNarrative && (

@@ -134,8 +134,8 @@ export default function ConsoleShell() {
           onClick={() => goTab('COMMAND')}
           className="hidden md:flex flex-col items-start ml-4 px-3 py-1 rounded-md border border-slate-700/70 hover:border-slate-500 transition-colors text-left"
         >
-          <span className="text-[8px] uppercase tracking-[0.16em] text-slate-500">{t('shell.situation')}</span>
-          <span className="text-[10px] font-semibold text-slate-200 tabular-nums leading-tight">
+          <span className="text-[9px] uppercase tracking-[0.16em] text-slate-500">{t('shell.situation')}</span>
+          <span className="mt-0.5 text-[10px] font-semibold text-slate-200 tabular-nums leading-tight">
             {districtSummaries.length === 0
               ? '—'
               : anomalies.length === 0 && districtsRising === 0
@@ -159,7 +159,7 @@ export default function ConsoleShell() {
                   active ? 'text-slate-50' : 'text-slate-500 hover:text-slate-300'
                 }`}
               >
-                <span className="text-[8px] tabular-nums text-slate-600 mr-1.5">{TAB_NO[tb]}</span>
+                <span className="text-[9px] tabular-nums text-slate-400 mr-1.5">{TAB_NO[tb]}</span>
                 {t(TAB_KEYS[tb])}
                 {tb === 'COMMAND' && anomalies.length > 0 && (
                   <span className="ml-1.5 min-w-[15px] h-[15px] rounded-[3px] bg-red-500/90 text-[9px] text-white font-bold flex items-center justify-center px-1 tabular-nums">

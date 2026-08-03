@@ -52,7 +52,7 @@ function Metric({ value, label }: { value: string; label: string }) {
       <div className="text-[17px] font-semibold tabular-nums text-slate-50 leading-none">
         {value}
       </div>
-      <div className="mt-1.5 text-[8.5px] font-mono-data uppercase tracking-[0.16em] text-slate-500">
+      <div className="mt-1.5 text-[9.5px] font-mono-data uppercase tracking-[0.16em] text-slate-500">
         {label}
       </div>
     </div>
@@ -210,7 +210,7 @@ export default function CommandView() {
                 <div className="text-[15px] font-semibold tabular-nums text-slate-50 leading-none">
                   {districtCard.d.latest_year_cases.toLocaleString('en-IN')}
                 </div>
-                <div className="mt-1 text-[8px] font-mono-data uppercase tracking-[0.14em] text-slate-500">
+                <div className="mt-1 text-[9px] font-mono-data uppercase tracking-[0.14em] text-slate-500">
                   {t('command.cardFirs')}
                 </div>
               </div>
@@ -222,7 +222,7 @@ export default function CommandView() {
                   {districtCard.d.yoy_change_pct > 0 ? '+' : ''}
                   {districtCard.d.yoy_change_pct.toFixed(1)}%
                 </div>
-                <div className="mt-1 text-[8px] font-mono-data uppercase tracking-[0.14em] text-slate-500">
+                <div className="mt-1 text-[9px] font-mono-data uppercase tracking-[0.14em] text-slate-500">
                   {t('command.cardYoY')}
                 </div>
               </div>
@@ -240,7 +240,7 @@ export default function CommandView() {
               )}
               {districtCard.topStations.length > 0 && (
                 <div className="col-span-2">
-                  <div className="text-[8px] font-mono-data uppercase tracking-[0.14em] text-slate-500 mb-1">
+                  <div className="text-[9px] font-mono-data uppercase tracking-[0.14em] text-slate-500 mb-1">
                     {t('command.cardStations')}
                   </div>
                   <ul className="space-y-0.5">
@@ -338,8 +338,8 @@ export default function CommandView() {
                     style={{ background: SEVERITY_COLOR[a.severity] ?? '#5b7a8c' }}
                   />
                   <div className="min-w-0">
-                    <div className="text-[11px] text-slate-200 truncate">{tc(a.crime_type)}</div>
-                    <div className="text-[9.5px] text-slate-500 tabular-nums">
+                    <div className="text-[11px] leading-snug text-slate-200 truncate">{tc(a.crime_type)}</div>
+                    <div className="mt-0.5 text-[9.5px] leading-snug text-slate-500 tabular-nums">
                       {td(a.district)} · {a.observed} vs {a.expected.toFixed(1)} · z {a.zscore.toFixed(1)}
                     </div>
                   </div>
@@ -369,7 +369,7 @@ export default function CommandView() {
             <ul className="px-3 pb-3 space-y-1">
               {topDistricts.map((d, i) => (
                 <li key={d.district} className="flex items-baseline gap-2 text-[10.5px]">
-                  <span className="w-3 tabular-nums text-slate-600">{i + 1}</span>
+                  <span className="w-3 tabular-nums text-slate-400">{i + 1}</span>
                   <span className="flex-1 truncate text-slate-300">{td(d.district)}</span>
                   <span className="tabular-nums text-slate-500">
                     {d.total_cases.toLocaleString('en-IN')}

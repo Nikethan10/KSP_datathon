@@ -154,7 +154,7 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
     )
   }
 
-  const dims = { boss: 104, lieutenant: 86, soldier: 68 }
+  const dims = { boss: 112, lieutenant: 94, soldier: 78 }
   const roleLabel: Record<Role, string> = {
     boss: t('board.boss'), lieutenant: t('board.lieutenant'), soldier: t('board.soldier'),
   }
@@ -226,7 +226,7 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
             {nodes.map((n) => {
               const lit = isLit(n.id)
               const w = dims[n.role]
-              const h = w * 1.28
+              const h = w * 1.3
               const initials = n.name.split(' ').map((s) => s[0]).slice(0, 2).join('').toUpperCase()
               const hovered = hover === n.id
               const isBoss = n.role === 'boss'
@@ -279,27 +279,27 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
                     {/* grayscale mugshot */}
                     <div
                       className="relative overflow-hidden"
-                      style={{ height: h * 0.72, background: 'linear-gradient(160deg,#4a4f57,#23262c 70%,#15171b)' }}
+                      style={{ height: h * 0.64, background: 'linear-gradient(160deg,#4a4f57,#23262c 70%,#15171b)' }}
                     >
                       <svg viewBox="0 0 24 24" className="absolute left-1/2 -translate-x-1/2 bottom-0" width={w * 0.72} height={w * 0.72} style={{ color: '#8b93a1' }} aria-hidden>
                         <circle cx="12" cy="8.5" r="4.2" fill="currentColor" />
                         <path d="M3.5 22c0-4.4 3.8-7 8.5-7s8.5 2.6 8.5 7" fill="currentColor" />
                       </svg>
                       <div className="absolute inset-0" style={{ backgroundImage: 'repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0 1px, transparent 1px 3px)' }} />
-                      <span className="absolute top-0 right-0 text-[7px] font-bold px-1 py-[1px]" style={{ background: color, color: '#15181c' }}>
+                      <span className="absolute top-0 right-0 text-[9px] font-bold px-1 py-[1px]" style={{ background: color, color: '#15181c' }}>
                         {initials}
                       </span>
                       {n.role !== 'soldier' && (
-                        <span className="absolute bottom-0 left-0 text-[6.5px] font-bold tracking-wider px-1 py-[1px]"
+                        <span className="absolute bottom-0 left-0 text-[9px] font-bold tracking-wide px-1 py-[1px] max-w-full truncate"
                           style={{ background: 'rgba(0,0,0,0.6)', color }}>
                           {roleLabel[n.role]}
                         </span>
                       )}
                     </div>
                     {/* name plate */}
-                    <div className="px-1 py-[3px] text-center">
-                      <div className="text-[8.5px] font-semibold leading-tight text-[#2a2620] truncate">{n.name}</div>
-                      <div className="text-[6.5px] text-[#6b6455] leading-tight">{n.deg} links · {n.size} cases</div>
+                    <div className="px-1 pt-[4px] pb-[5px] text-center">
+                      <div className="text-[10px] font-semibold leading-[1.3] text-[#2a2620] truncate">{n.name}</div>
+                      <div className="mt-[2px] text-[9px] leading-[1.3] text-[#5c564a] truncate">{n.deg} links · {n.size} cases</div>
                     </div>
                   </div>
                 </button>

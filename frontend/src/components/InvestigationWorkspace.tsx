@@ -22,7 +22,7 @@ function Fact({ value, label }: { value: string; label: string }) {
       <div className="text-[18px] font-semibold tabular-nums text-slate-50 leading-none">
         {value}
       </div>
-      <div className="mt-1.5 text-[8.5px] font-mono-data uppercase tracking-[0.16em] text-slate-500">
+      <div className="mt-1.5 text-[9.5px] font-mono-data uppercase tracking-[0.16em] text-slate-500">
         {label}
       </div>
     </div>
@@ -36,7 +36,7 @@ function Block({ title, note, children }: { title: string; note?: string; childr
         <h3 className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-slate-300">
           {title}
         </h3>
-        {note && <span className="text-[9px] text-slate-600">{note}</span>}
+        {note && <span className="text-[9px] text-slate-400">{note}</span>}
       </div>
       {children}
     </section>
@@ -186,7 +186,7 @@ export default function InvestigationWorkspace({
                 >
                   <span className="flex-1 truncate text-slate-200">{a.name}</span>
                   {linked && (
-                    <span className="tabular-nums text-slate-600 shrink-0">
+                    <span className="tabular-nums text-slate-400 shrink-0">
                       {t('workspace.aTotalCases').replace('{n}', String(linked.total_cases))}
                     </span>
                   )}

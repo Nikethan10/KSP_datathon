@@ -68,7 +68,7 @@ export default function ForecastWidget({ items }: Props) {
         })}
       </div>
 
-      <div className="mt-1 text-[8.5px] text-slate-500 leading-snug">
+      <div className="mt-1 text-[9.5px] text-slate-500 leading-snug">
         {t('forecast.note')}
       </div>
     </div>

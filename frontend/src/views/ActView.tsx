@@ -223,7 +223,7 @@ export default function ActView() {
                 </button>
               )
             })}
-            <p className="mt-1 text-[8.5px] leading-snug text-slate-500">{t('act.marginalNote')}</p>
+            <p className="mt-1 text-[9.5px] leading-snug text-slate-500">{t('act.marginalNote')}</p>
           </div>
         )}
         {loading && (
@@ -242,7 +242,7 @@ export default function ActView() {
             </svg>
             <span className="text-[10px] uppercase tracking-widest text-slate-300 font-semibold">Deployment Center</span>
           </div>
-          <span className="text-[8px] uppercase tracking-wider text-slate-500">Patrol Optimizer</span>
+          <span className="text-[9px] uppercase tracking-wider text-slate-500">Patrol Optimizer</span>
         </div>
         <BriefingPanel
           summary={summary}

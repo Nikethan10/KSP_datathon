@@ -39,7 +39,7 @@ function StatCell({ value, label, accent }: { value: string; label: string; acce
   return (
     <div className="flex-1 rounded-lg bg-slate-800/50 border border-slate-700/40 px-2 py-1.5 text-center">
       <div className="text-base font-bold tabular-nums leading-tight" style={{ color: accent ?? '#c9a35c' }}>{value}</div>
-      <div className="text-[8.5px] uppercase tracking-wider text-slate-400 mt-0.5">{label}</div>
+      <div className="text-[9.5px] uppercase tracking-wider text-slate-400 mt-0.5">{label}</div>
     </div>
   )
 }
@@ -77,7 +77,7 @@ export default function OffenderDossier({ dossier: d, onBack, onSelectAssociate,
             <span className="text-base font-bold text-slate-100 leading-tight">{d.name}</span>
             {tier && (
               <span
-                className="text-[8.5px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
+                className="text-[9.5px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
                 style={{ background: `${color}22`, color }}
               >
                 {t(`threat.${tier}`)}
@@ -157,7 +157,7 @@ export default function OffenderDossier({ dossier: d, onBack, onSelectAssociate,
                 {tier && <span className="ml-1.5 text-[10px]" style={{ color }}>· {t(`threat.${tier}`)}</span>}
               </span>
               {d.is_articulation && (
-                <span className="text-[8.5px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300">
+                <span className="text-[9.5px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300">
                   ◆ {t('war.keyPlayer')}
                 </span>
               )}

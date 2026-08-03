@@ -42,7 +42,7 @@ export default function MostWanted({ offenders, onSelect }: Props) {
                   <circle cx="12" cy="8" r="4" fill="currentColor" />
                   <path d="M4 20c0-4 3.6-6.5 8-6.5S20 16 20 20" fill="currentColor" />
                 </svg>
-                <span className="absolute bottom-0 right-0.5 text-[7px] font-bold" style={{ color }}>{initials}</span>
+                <span className="absolute bottom-0 right-0.5 text-[9px] font-bold" style={{ color }}>{initials}</span>
               </span>
               <span className="min-w-0 flex-1">
                 <span className="flex items-center gap-1.5">
@@ -55,7 +55,7 @@ export default function MostWanted({ offenders, onSelect }: Props) {
               </span>
               <span className="shrink-0 text-right">
                 <span className="block text-[11px] font-bold tabular-nums text-slate-300">{d.n_districts}</span>
-                <span className="block text-[8px] uppercase tracking-wider text-slate-500">{t('war.districts')}</span>
+                <span className="block text-[9px] uppercase tracking-wider text-slate-500">{t('war.districts')}</span>
               </span>
             </button>
           )

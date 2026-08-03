@@ -16,8 +16,8 @@
   --color-slate-100: #e8ebee;
   --color-slate-200: #d5dae0;
   --color-slate-300: #b6bec7;
-  --color-slate-400: #8a939e;
-  --color-slate-500: #6b7480;
+  --color-slate-400: #a2abb6;   /* secondary label - 6.1:1 on nested, 7.7:1 on base */
+  --color-slate-500: #8e97a2;   /* tertiary label - 4.8:1 on nested, clears AA on every surface */
   --color-slate-600: #4a515a;
   --color-slate-700: #353b43;
   --color-slate-800: #272c33;   /* nested cards */

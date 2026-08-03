@@ -224,7 +224,7 @@ export default function TrustView() {
                 <div className="flex-1 rounded-lg bg-slate-800/50 border border-slate-700/40 px-2 py-1.5 text-center">
                   <div className="text-[11px] font-bold tabular-nums text-slate-300">
                     <span className="text-slate-500">{(calib.ece_raw * 100).toFixed(2)}%</span>
-                    <span className="mx-1 text-slate-600">→</span>
+                    <span className="mx-1 text-slate-400">→</span>
                     <span className="text-emerald-300">{(calib.ece_calibrated * 100).toFixed(2)}%</span>
                   </div>
                   <div className="text-[9px] uppercase tracking-wider text-slate-400 mt-0.5">{t('trust.ece')}</div>
@@ -232,7 +232,7 @@ export default function TrustView() {
                 <div className="flex-1 rounded-lg bg-slate-800/50 border border-slate-700/40 px-2 py-1.5 text-center">
                   <div className="text-[11px] font-bold tabular-nums text-slate-300">
                     <span className="text-slate-500">{calib.brier_raw.toFixed(3)}</span>
-                    <span className="mx-1 text-slate-600">→</span>
+                    <span className="mx-1 text-slate-400">→</span>
                     <span className="text-emerald-300">{calib.brier_calibrated.toFixed(3)}</span>
                   </div>
                   <div className="text-[9px] uppercase tracking-wider text-slate-400 mt-0.5">{t('trust.brier')}</div>

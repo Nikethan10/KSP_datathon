@@ -47,7 +47,7 @@ export default function EmergingPanel({ cells, onSelect }: Props) {
                   </span>
                 </span>
                 <span
-                  className="shrink-0 text-[8.5px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded"
+                  className="shrink-0 text-[9.5px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded"
                   style={{ background: `${color.replace('1)', '0.16)')}`, color }}
                 >
                   {t(`emerging.${c.category}`)}

@@ -72,7 +72,7 @@ export default function GangPanel({ gangs, summary, selected, onSelect, hideStat
                     </span>
                   </span>
                   <span
-                    className="shrink-0 text-[8.5px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
+                    className="shrink-0 text-[9.5px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
                     style={{ background: `${color}22`, color }}
                   >
                     {t(`threat.${g.threat_tier}`)}

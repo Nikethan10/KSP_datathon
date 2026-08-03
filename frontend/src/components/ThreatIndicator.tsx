@@ -30,7 +30,7 @@ export default function ThreatIndicator({ level, compact }: Props) {
         />
       </div>
       <div className="flex flex-col leading-none">
-        <span className="text-[8px] uppercase tracking-widest text-slate-500">Threat Level</span>
+        <span className="text-[9px] uppercase tracking-widest text-slate-500">Threat Level</span>
         <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color }}>
           {level}
         </span>

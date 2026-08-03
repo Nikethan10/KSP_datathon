@@ -38,7 +38,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
               <span className="text-[16px] font-bold tracking-[0.16em] text-slate-100">
                 PRAHARI <span className="brand-accent">ಪ್ರಹರಿ</span>
               </span>
-              <span className="mt-1 stamp !text-[8px] !tracking-[0.3em] text-slate-500">
+              <span className="mt-1 stamp !text-[9px] !tracking-[0.26em] text-slate-500">
                 KSP · Karnataka
               </span>
             </span>

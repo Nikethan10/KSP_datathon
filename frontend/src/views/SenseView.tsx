@@ -298,7 +298,7 @@ export default function SenseView({ emergingLens = false }: { emergingLens?: boo
             </svg>
             <span className="text-[10px] uppercase tracking-widest text-slate-300 font-semibold">Situation Room</span>
           </div>
-          <span className="text-[8px] uppercase tracking-wider text-slate-500">Karnataka State Police</span>
+          <span className="text-[9px] uppercase tracking-wider text-slate-500">Karnataka State Police</span>
         </div>
 
         {/* quick stats bar */}
@@ -337,20 +337,20 @@ export default function SenseView({ emergingLens = false }: { emergingLens?: boo
                 <div className="text-[10px] font-bold tabular-nums" style={{ color: districtBrief.trend === 'increasing' ? '#ef4444' : districtBrief.trend === 'decreasing' ? '#22c55e' : '#f59e0b' }}>
                   {districtBrief.trend === 'increasing' ? '↑' : districtBrief.trend === 'decreasing' ? '↓' : '→'} {Math.abs(districtBrief.trendPct).toFixed(1)}%
                 </div>
-                <div className="text-[7.5px] uppercase tracking-wider text-slate-500">Trend</div>
+                <div className="text-[9px] uppercase tracking-wider text-slate-500">Trend</div>
               </div>
               <div className="flex-1 rounded bg-slate-800/60 px-1.5 py-1 text-center">
                 <div className="text-[10px] font-bold text-sky-300 tabular-nums">{districtBrief.heinousPct.toFixed(1)}%</div>
-                <div className="text-[7.5px] uppercase tracking-wider text-slate-500">Heinous</div>
+                <div className="text-[9px] uppercase tracking-wider text-slate-500">Heinous</div>
               </div>
               <div className="flex-1 rounded bg-slate-800/60 px-1.5 py-1 text-center">
                 <div className="text-[10px] font-bold text-slate-300 tabular-nums">{districtBrief.clearancePct.toFixed(1)}%</div>
-                <div className="text-[7.5px] uppercase tracking-wider text-slate-500">Clearance</div>
+                <div className="text-[9px] uppercase tracking-wider text-slate-500">Clearance</div>
               </div>
               {districtBrief.anomalyCount > 0 && (
                 <div className="flex-1 rounded bg-red-500/10 border border-red-400/20 px-1.5 py-1 text-center">
                   <div className="text-[10px] font-bold text-red-400 tabular-nums">{districtBrief.anomalyCount}</div>
-                  <div className="text-[7.5px] uppercase tracking-wider text-slate-500">Alerts</div>
+                  <div className="text-[9px] uppercase tracking-wider text-slate-500">Alerts</div>
                 </div>
               )}
             </div>
@@ -418,7 +418,7 @@ export default function SenseView({ emergingLens = false }: { emergingLens?: boo
                           style={{ background: '#8aa0b8' }} />
                         <span className="text-[10px] text-slate-300 truncate">{o.name}</span>
                         {o.heinous_pct >= 50 && (
-                          <span className="text-[8px] text-red-400/90 shrink-0">{o.heinous_pct.toFixed(0)}%H</span>
+                          <span className="text-[9px] text-red-400/90 shrink-0">{o.heinous_pct.toFixed(0)}%H</span>
                         )}
                       </span>
                       <span className="tabular-nums text-slate-400 text-[9.5px] shrink-0">
@@ -496,7 +496,7 @@ function QuickStat({ label, value, accent }: { label: string; value: number; acc
       <div className={`text-sm font-bold tabular-nums leading-tight ${accent ? 'text-red-400' : 'text-sky-300'}`}>
         {counted >= 1000 ? `${(counted / 1000).toFixed(1)}k` : counted}
       </div>
-      <div className="text-[7.5px] uppercase tracking-wider text-slate-500">{label}</div>
+      <div className="mt-0.5 text-[9px] uppercase tracking-wider text-slate-500">{label}</div>
     </div>
   )
 }

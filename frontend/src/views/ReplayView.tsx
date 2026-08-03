@@ -67,7 +67,7 @@ function Stat({ value, label, accent }: { value: string; label: string; accent?:
       >
         {value}
       </div>
-      <div className="mt-1.5 text-[8.5px] font-mono-data uppercase tracking-[0.16em] text-slate-500">
+      <div className="mt-1.5 text-[9.5px] font-mono-data uppercase tracking-[0.16em] text-slate-500">
         {label}
       </div>
     </div>
@@ -284,7 +284,7 @@ export default function ReplayView() {
                 className="w-4 h-4 rounded-full text-[9px] font-bold flex items-center justify-center shrink-0"
                 style={{
                   background: stage === st.n ? '#c9a35c' : '#3f4753',
-                  color: stage === st.n ? '#15181c' : '#9aa3ad',
+                  color: stage === st.n ? '#15181c' : '#ccd3da',
                 }}
               >
                 {st.n}
@@ -380,8 +380,8 @@ export default function ReplayView() {
                   }}
                 />
                 <span
-                  className={`mt-1 text-[8px] tabular-nums text-center ${
-                    active ? 'text-slate-200' : 'text-slate-600'
+                  className={`mt-1 text-[9px] tabular-nums text-center ${
+                    active ? 'text-slate-200' : 'text-slate-400'
                   }`}
                 >
                   {w.week.slice(-3)}
@@ -395,7 +395,7 @@ export default function ReplayView() {
           {loadingWeek ? t('common.loading') : t('replay.method')}
         </p>
         {!loadingWeek && index.mean_cell_hit_rate !== null && (
-          <p className="mt-1 text-[9.5px] leading-snug text-slate-600 max-w-5xl">
+          <p className="mt-1 text-[9.5px] leading-snug text-slate-400 max-w-5xl">
             {t('replay.denominators')
               .replace('{all}', String(index.mean_hit_rate ?? '—'))
               .replace('{grid}', String(index.mean_cell_hit_rate))}

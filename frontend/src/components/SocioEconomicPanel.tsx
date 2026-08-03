@@ -144,7 +144,7 @@ export default function SocioEconomicPanel() {
       <SectionTitle>{t('socio.genderSplit')}</SectionTitle>
       <div className="flex gap-3">
         <div className="flex-1">
-          <div className="text-[8.5px] text-slate-500 mb-1">{t('socio.accused')}</div>
+          <div className="text-[9.5px] text-slate-500 mb-1">{t('socio.accused')}</div>
           {data.by_gender.accused.map(g => (
             <div key={g.gender} className="flex items-center gap-1.5 mb-0.5">
               <span className="w-2 h-2 rounded-full shrink-0" style={{ background: GENDER_COLORS[g.gender] || '#8aa0b8' }} />
@@ -154,7 +154,7 @@ export default function SocioEconomicPanel() {
           ))}
         </div>
         <div className="flex-1">
-          <div className="text-[8.5px] text-slate-500 mb-1">{t('socio.victims')}</div>
+          <div className="text-[9.5px] text-slate-500 mb-1">{t('socio.victims')}</div>
           {data.by_gender.victim.map(g => (
             <div key={g.gender} className="flex items-center gap-1.5 mb-0.5">
               <span className="w-2 h-2 rounded-full shrink-0" style={{ background: GENDER_COLORS[g.gender] || '#8aa0b8' }} />

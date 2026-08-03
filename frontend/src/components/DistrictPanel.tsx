@@ -19,7 +19,7 @@ export default function DistrictPanel({ districts, selected, onSelect }: Props) 
         <div className="text-[10px] uppercase tracking-widest text-slate-400">
           {t('sense.districts')}
         </div>
-        <div className="text-[9.5px] text-slate-500">{t('sense.rankedByFirs')}</div>
+        <div className="mt-0.5 text-[9.5px] text-slate-500">{t('sense.rankedByFirs')}</div>
       </div>
       <div className="overflow-y-auto min-h-0 flex flex-col gap-0.5 pr-1">
         {sorted.map((d, i) => {

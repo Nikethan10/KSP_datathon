@@ -62,7 +62,7 @@ export default function InvestigateView() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder={t('investigate.searchPlaceholder')}
-            className="w-full h-8 px-2.5 rounded-md border border-slate-700/70 bg-slate-900/40 text-[12px] text-slate-200 placeholder:text-slate-600 focus:border-slate-500 focus:outline-none transition-colors"
+            className="w-full h-8 px-2.5 rounded-md border border-slate-700/70 bg-slate-900/40 text-[12px] text-slate-200 placeholder:text-slate-500 focus:border-slate-500 focus:outline-none transition-colors"
           />
           <p className="mt-1.5 text-[9.5px] leading-snug text-slate-500">
             {t('investigate.searchHint')}

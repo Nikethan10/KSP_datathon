@@ -48,13 +48,13 @@ export default function GangRoster({ rank, tier, network, onSelect }: Props) {
                 className="relative w-7 h-7 shrink-0 rounded grid place-items-center overflow-hidden"
                 style={{ background: `linear-gradient(160deg, ${color}22, rgba(9,13,20,0.5))`, border: `1px solid ${color}55` }}
               >
-                <span className="text-[8px] font-bold" style={{ color }}>{initials}</span>
+                <span className="text-[9px] font-bold" style={{ color }}>{initials}</span>
               </span>
               <span className="min-w-0 flex-1">
                 <span className="flex items-center gap-1.5">
                   <span className="text-xs font-semibold text-slate-200 truncate">{m.name}</span>
                   {m.role !== 'soldier' && (
-                    <span className="text-[8px] font-bold uppercase tracking-wider px-1 py-[1px] rounded shrink-0"
+                    <span className="text-[9px] font-bold uppercase tracking-wider px-1 py-[1px] rounded shrink-0"
                       style={{ background: isBoss ? color : `${color}22`, color: isBoss ? '#15181c' : color }}>
                       {roleLabel[m.role]}
                     </span>
