@@ -109,6 +109,7 @@ const translations: Record<string, Record<Lang, string>> = {
   'shell.situationQuiet': { en: 'No active anomalies', kn: 'ಸಕ್ರಿಯ ಅಸಹಜತೆಗಳಿಲ್ಲ' },
   'sense.firsLatest': { en: 'FIRs · 2024 YTD', kn: 'FIRಗಳು · 2024 YTD' },
   'predict.persons': { en: 'persons on record', kn: 'ದಾಖಲಿತ ವ್ಯಕ್ತಿಗಳು' },
+  'predict.boardHint': { en: 'Scroll to zoom · drag to pan · click a card for the dossier', kn: 'ಝೂಮ್ ಮಾಡಲು ಸ್ಕ್ರೇಲ್ · ಸರಿಸಲು ಎಳೆಯಿರಿ · ವರದಿಗಾಗಿ ಕಾರ್ಡ್ ಕ್ಲಿಕ್ ಮಾಡಿ' },
   'predict.netScope': { en: 'Persons appearing as accused across {firs} FIRs · a link = co-accused in the same FIR. Detected groups are not confirmed criminal organisations.', kn: '{firs} FIRಗಳಲ್ಲಿ ಆರೋಪಿಗಳಾಗಿ ಕಾಣಿಸಿಕೊಂಡ ವ್ಯಕ್ತಿಗಳು · ಸಂಪರ್ಕ = ಒಂದೇ FIRನಲ್ಲಿ ಸಹ-ಆರೋಪಿ. ಪತ್ತೆಯಾದ ಗುಂಪುಗಳು ದೃಢೀಕೃತ ಅಪರಾಧ ಸಂಘಟನೆಗಳಲ್ಲ.' },
   'common.close': { en: 'Close', kn: 'ಮುಚ್ಚಿ' },
   'command.cardKicker': { en: 'District situation', kn: 'ಜಿಲ್ಲಾ ಪರಿಸ್ಥಿತಿ' },

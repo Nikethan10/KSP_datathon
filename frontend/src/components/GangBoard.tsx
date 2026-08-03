@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { GangNetwork, ThreatTier } from '../lib/data'
 import { THREAT_COLORS } from '../lib/data'
 import { rosterFor } from '../lib/gang'
@@ -34,6 +34,7 @@ function tilt(id: string): number {
 }
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v))
 const STRING = '#e0483d' // evidence-board red string
+const dimsFor = (role: Role) => (role === 'boss' ? 112 : role === 'lieutenant' ? 94 : 78)
 const MIN_SCALE = 0.55
 const MAX_SCALE = 3.5
 
@@ -71,13 +72,18 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
     })
     const sol = nd.filter((n) => n.role === 'soldier')
     const perRow = Math.min(8, Math.max(4, Math.ceil(sol.length / 2)))
+    const rows = Math.max(1, Math.ceil(sol.length / perRow))
+    /* Rows used to step 22% each from 68%, so a third row sat at 112% - off
+       the board entirely, with no way to reach it. Distribute them across a
+       fixed band instead, so the layout stays inside the frame at any size. */
+    const TOP = 62, BOTTOM = 90
     sol.forEach((n, i) => {
       const row = Math.floor(i / perRow)
       const inRow = i % perRow
       const count = Math.min(perRow, sol.length - row * perRow)
       const span = 84
       n.x = count === 1 ? 50 : 50 - span / 2 + (span * inRow) / (count - 1)
-      n.y = 68 + row * 22
+      n.y = rows === 1 ? 72 : TOP + ((BOTTOM - TOP) * row) / (rows - 1)
     })
 
     const a = new Map<string, Set<string>>()
@@ -90,8 +96,33 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
     return { nodes: nd, edges: es, adj: a }
   }, [network, rank])
 
-  // reset the camera whenever the gang changes
-  useEffect(() => { setView({ scale: 1, tx: 0, ty: 0 }); setHover(null) }, [rank])
+  /* Frame the whole network whenever the gang changes. Opening at scale 1
+     assumed the layout fits the viewport; on a short console it did not, and
+     the lower rows were simply unreachable. */
+  const fitView = useCallback(() => {
+    const el = vpRef.current
+    if (!el || nodes.length === 0) return { scale: 1, tx: 0, ty: 0 }
+    const w = el.clientWidth, h = el.clientHeight
+    if (!w || !h) return { scale: 1, tx: 0, ty: 0 }
+    const PAD = 26
+    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity
+    for (const n of nodes) {
+      const cw = dimsFor(n.role), ch = cw * 1.3
+      const cx = (n.x / 100) * w, cy = (n.y / 100) * h
+      minX = Math.min(minX, cx - cw / 2); maxX = Math.max(maxX, cx + cw / 2)
+      minY = Math.min(minY, cy - ch / 2); maxY = Math.max(maxY, cy + ch / 2)
+    }
+    const bw = maxX - minX, bh = maxY - minY
+    if (bw <= 0 || bh <= 0) return { scale: 1, tx: 0, ty: 0 }
+    const scale = clamp(Math.min((w - PAD * 2) / bw, (h - PAD * 2) / bh, 1), MIN_SCALE, MAX_SCALE)
+    return {
+      scale,
+      tx: (w - bw * scale) / 2 - minX * scale,
+      ty: (h - bh * scale) / 2 - minY * scale,
+    }
+  }, [nodes])
+
+  useEffect(() => { setView(fitView()); setHover(null) }, [rank, fitView])
 
   // wheel-to-zoom toward the cursor (native listener so we can preventDefault)
   useEffect(() => {
@@ -111,7 +142,10 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
     }
     el.addEventListener('wheel', onWheel, { passive: false })
     return () => el.removeEventListener('wheel', onWheel)
-  }, [])
+    /* Depends on the node count because the board early-returns a placeholder
+       while the network loads: on first mount vpRef is null, so an effect keyed
+       on [] attached nothing and scroll-to-zoom was dead for the whole session. */
+  }, [nodes.length])
 
   const zoomBy = (factor: number) => {
     const el = vpRef.current
@@ -123,7 +157,7 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
       return { scale: s, tx: w / 2 - (w / 2 - v.tx) * k, ty: h / 2 - (h / 2 - v.ty) * k }
     })
   }
-  const resetView = () => setView({ scale: 1, tx: 0, ty: 0 })
+  const resetView = () => setView(fitView())
 
   // drag-to-pan (ignores drags that start on a card)
   const onDown = (e: React.MouseEvent) => {
@@ -154,7 +188,6 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
     )
   }
 
-  const dims = { boss: 112, lieutenant: 94, soldier: 78 }
   const roleLabel: Record<Role, string> = {
     boss: t('board.boss'), lieutenant: t('board.lieutenant'), soldier: t('board.soldier'),
   }
@@ -225,7 +258,7 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
             {/* mugshot cards */}
             {nodes.map((n) => {
               const lit = isLit(n.id)
-              const w = dims[n.role]
+              const w = dimsFor(n.role)
               const h = w * 1.3
               const initials = n.name.split(' ').map((s) => s[0]).slice(0, 2).join('').toUpperCase()
               const hovered = hover === n.id

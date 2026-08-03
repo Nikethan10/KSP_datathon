@@ -149,69 +149,146 @@ export default function PredictView({ initialMode = 'risk', lockMode = false }: 
   }
   const hasOffenders = offenderIndex.length > 0
 
-  return (
-    <div className="relative flex-1 min-h-0">
-      {mode === 'risk' ? (
-        <RiskMap cells={cells} showPriority={showPriority} flyTarget={flyTarget} />
-      ) : (
-        <>
-          {netSub === 'gangs' ? (
-            <GangBoard
-              rank={activeGang?.gang_rank ?? null}
-              tier={activeGang?.threat_tier ?? null}
-              network={gangNetwork}
-              onSelectNode={openOffenderById}
-            />
-          ) : (
-            <MostWantedBoard offenders={board40} onSelect={openOffenderById} />
-          )}
-
-          {/* gangs sub-mode: interactive gang picker + stats (top-left, below the controls row) */}
-          {netSub === 'gangs' && activeGang && (
-            <div className="absolute top-14 left-3 z-20 glass rounded-lg px-3 py-1.5 text-left max-w-[340px]">
-              <select
-                value={activeGang.gang_rank}
-                onChange={(e) => {
-                  const r = Number(e.target.value)
-                  setSelectedGang(gangs.find((g) => g.gang_rank === r) ?? null)
-                }}
-                className="bg-transparent text-sm font-bold text-slate-100 outline-none cursor-pointer"
-              >
-                {rankedGangs.map((g) => (
-                  <option key={g.gang_rank} value={g.gang_rank}>
-                    {t('predict.gangs').replace(/s$/, '')} #{g.gang_rank} · {t(`threat.${g.threat_tier}`)} · {g.gang_size.toLocaleString()} {t('board.members')}
-                  </option>
-                ))}
-              </select>
-              <div className="text-[10px] text-slate-400">
-                {activeGang.total_cases.toLocaleString()} {t('war.cases')} · {activeGang.n_districts} {t('war.districts')} · {t('board.core')}
-              </div>
-            </div>
-          )}
-
-          {/* compact stats chip (not a side panel), with the reconciliation a
-              judge will ask for: how 3.4L persons relate to 16.7L FIRs, and
-              what a "network" actually is in this data. */}
-          {netSummary && (
-            <div className="absolute top-3 right-3 z-10 flex flex-col items-end gap-1.5 max-w-[340px]">
-              <div className="glass rounded-lg px-2 py-1.5 flex items-center divide-x divide-slate-700/50">
-                <NetStat value={(netSummary.graph_nodes / 1000).toFixed(0) + 'k'} label={t('predict.persons')} />
-                <NetStat value={netSummary.n_communities.toLocaleString()} label={t('predict.gangs')} />
-                <NetStat value={(netSummary.graph_edges / 1e6).toFixed(1) + 'M'} label={t('predict.connections')} />
-              </div>
-              <p className="glass rounded-md px-2.5 py-1.5 text-[9.5px] leading-snug text-slate-400 text-right">
-                {t('predict.netScope').replace('{firs}', stat(stats.firs))}
-              </p>
-            </div>
-          )}
-
-          {selectedOffender && (
-            <DossierOverlay dossier={selectedOffender} onClose={closeDossier} onSelectAssociate={openOffenderById} />
-          )}
-        </>
+  /* CONNECT used to be one full-bleed board with four glass panels floating on
+     top of it - two of them stacked against the same left edge. The controls
+     covered the very graph they described, and nothing had room to breathe.
+     Network mode now docks: a toolbar for what you switch, a sidebar for what
+     you read, and the board keeps the rest to itself. Risk mode is unchanged. */
+  const networkAside = (
+    <aside className="shrink-0 w-[272px] border-l border-slate-800/70 flex flex-col min-h-0 overflow-y-auto">
+      {netSummary && (
+        <section className="shrink-0 px-3 py-3 border-b border-slate-800/70">
+          <h3 className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-slate-300 mb-2.5">
+            {t('predict.crimeNetwork')}
+          </h3>
+          <div className="grid grid-cols-3 gap-2">
+            <NetStat value={(netSummary.graph_nodes / 1000).toFixed(0) + 'k'} label={t('predict.persons')} />
+            <NetStat value={netSummary.n_communities.toLocaleString()} label={t('predict.gangs')} />
+            <NetStat value={(netSummary.graph_edges / 1e6).toFixed(1) + 'M'} label={t('predict.connections')} />
+          </div>
+          <p className="mt-2.5 text-[9.5px] leading-snug text-slate-400">
+            {t('predict.netScope').replace('{firs}', stat(stats.firs))}
+          </p>
+        </section>
       )}
 
-      {/* top-left: mode switch + sub-tabs + controls */}
+      {netSub === 'gangs' && activeGang && (
+        <section className="shrink-0 px-3 py-3 border-b border-slate-800/70">
+          <h3 className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-slate-300 mb-2">
+            {t('predict.gangs')}
+          </h3>
+          <select
+            value={activeGang.gang_rank}
+            onChange={(e) => {
+              const r = Number(e.target.value)
+              setSelectedGang(gangs.find((g) => g.gang_rank === r) ?? null)
+            }}
+            className="w-full h-8 px-2 rounded-md border border-slate-700/70 bg-slate-900/40 text-[11.5px] text-slate-100 outline-none cursor-pointer focus:border-slate-500 transition-colors"
+          >
+            {rankedGangs.map((g) => (
+              <option key={g.gang_rank} value={g.gang_rank}>
+                {t('predict.gangs').replace(/s$/, '')} #{g.gang_rank} \u00b7 {t(`threat.${g.threat_tier}`)} \u00b7 {g.gang_size.toLocaleString()} {t('board.members')}
+              </option>
+            ))}
+          </select>
+          <div className="mt-2 text-[10px] leading-snug text-slate-400">
+            {activeGang.total_cases.toLocaleString()} {t('war.cases')} \u00b7 {activeGang.n_districts} {t('war.districts')} \u00b7 {t('board.core')}
+          </div>
+        </section>
+      )}
+
+      {netSub === 'gangs' && (
+        <section className="shrink-0 px-3 py-3">
+          <h3 className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-slate-300 mb-2">
+            {t('threat.title')}
+          </h3>
+          <div className="flex flex-col gap-1.5">
+            {THREAT_ORDER.map((tier) => (
+              <div key={tier} className="flex items-center gap-2 text-[10.5px] text-slate-300">
+                <span className="inline-block w-2.5 h-2.5 rounded-full shrink-0" style={{ background: THREAT_COLORS[tier] }} />
+                {t(`threat.${tier}`)}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+    </aside>
+  )
+
+  if (mode === 'network') {
+    return (
+      <div className="flex-1 min-h-0 flex flex-col">
+        {/* what you switch */}
+        <div className="shrink-0 flex items-center gap-2 px-3 h-11 border-b border-slate-800/70 bg-[#15181c]">
+          {!lockMode && (
+            <div className="rounded-md border border-slate-700/70 flex overflow-hidden">
+              {modes.map((m) => (
+                <button
+                  key={m}
+                  onClick={() => setMode(m)}
+                  className={`px-3 h-7 text-[11px] font-semibold tracking-wider transition-colors ${
+                    mode === m ? 'bg-slate-700/60 text-slate-50' : 'text-slate-400 hover:text-slate-100'
+                  }`}
+                >
+                  {MODE_LABELS[m]}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div className="rounded-md border border-slate-700/70 flex overflow-hidden">
+            {(['gangs', 'wanted'] as NetSub[]).map((sub) => (
+              <button
+                key={sub}
+                onClick={() => setNetSub(sub)}
+                aria-pressed={netSub === sub}
+                className={`px-3 h-7 text-[11px] font-semibold tracking-wider transition-colors ${
+                  netSub === sub ? 'bg-slate-700/60 text-slate-50' : 'text-slate-400 hover:text-slate-100'
+                }`}
+              >
+                {sub === 'gangs' ? t('war.gangConnections') : t('war.highProfile')}
+              </button>
+            ))}
+          </div>
+
+          {hasOffenders && <OffenderSearch offenders={offenderIndex} onSelect={openOffender} />}
+
+          {loading && <span className="text-[10.5px] text-slate-400">{t('common.loading')}</span>}
+
+          <span className="ml-auto hidden lg:block text-[9.5px] text-slate-400">
+            {t('predict.boardHint')}
+          </span>
+        </div>
+
+        {/* what you look at, and what you read beside it */}
+        <div className="flex-1 min-h-0 flex">
+          <div className="relative flex-1 min-w-0">
+            {netSub === 'gangs' ? (
+              <GangBoard
+                rank={activeGang?.gang_rank ?? null}
+                tier={activeGang?.threat_tier ?? null}
+                network={gangNetwork}
+                onSelectNode={openOffenderById}
+              />
+            ) : (
+              <MostWantedBoard offenders={board40} onSelect={openOffenderById} />
+            )}
+          </div>
+          {networkAside}
+        </div>
+
+        {selectedOffender && (
+          <DossierOverlay dossier={selectedOffender} onClose={closeDossier} onSelectAssociate={openOffenderById} />
+        )}
+      </div>
+    )
+  }
+
+  return (
+    <div className="relative flex-1 min-h-0">
+      <RiskMap cells={cells} showPriority={showPriority} flyTarget={flyTarget} />
+
+      {/* top-left: mode switch + controls */}
       <div className="absolute top-3 left-3 z-30 flex items-center gap-2">
         {!lockMode && (
           <div className="glass rounded-md flex overflow-hidden">
@@ -229,60 +306,22 @@ export default function PredictView({ initialMode = 'risk', lockMode = false }: 
           </div>
         )}
 
-        {mode === 'network' && (
-          <div className="glass rounded-md flex overflow-hidden">
-            {(['gangs', 'wanted'] as NetSub[]).map((s) => (
-              <button
-                key={s}
-                onClick={() => setNetSub(s)}
-                className={`px-3 py-1.5 text-[11px] font-semibold tracking-wider transition-colors ${
-                  netSub === s ? 'bg-amber-500/25 text-amber-200' : 'text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                {s === 'gangs' ? t('war.gangConnections') : t('war.highProfile')}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {mode === 'risk' && (
-          <button
-            onClick={() => setShowPriority(!showPriority)}
-            className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors border ${
-              showPriority
-                ? 'bg-sky-500/20 border-sky-400/40 text-sky-300'
-                : 'bg-transparent border-slate-600/50 text-slate-400 hover:border-slate-500'
-            }`}
-          >
-            {t('predict.priorityCells')}
-          </button>
-        )}
-        {mode === 'network' && hasOffenders && (
-          <OffenderSearch offenders={offenderIndex} onSelect={openOffender} />
-        )}
+        <button
+          onClick={() => setShowPriority(!showPriority)}
+          className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors border ${
+            showPriority
+              ? 'bg-sky-500/20 border-sky-400/40 text-sky-300'
+              : 'bg-transparent border-slate-600/50 text-slate-400 hover:border-slate-500'
+          }`}
+        >
+          {t('predict.priorityCells')}
+        </button>
         {loading && (
           <span className="glass rounded-md px-3 py-1.5 text-xs text-sky-300 animate-pulse">
-            loading analytics…
+            {t('common.loading')}
           </span>
         )}
       </div>
-
-      {/* bottom-left: threat legend (network mode) */}
-      {mode === 'network' && (
-        <div className="absolute bottom-8 left-3 z-10 glass rounded-lg px-3 py-2.5">
-          <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-1.5">
-            {t('threat.title')}
-          </div>
-          <div className="flex flex-col gap-1">
-            {THREAT_ORDER.map((tier) => (
-              <div key={tier} className="flex items-center gap-2 text-[11px] text-slate-300">
-                <span className="inline-block w-3 h-3 rounded-full" style={{ background: THREAT_COLORS[tier] }} />
-                {t(`threat.${tier}`)}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* right panel — risk mode only */}
       {mode === 'risk' && (
