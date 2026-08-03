@@ -212,8 +212,12 @@ h1[class*="uppercase"], h2[class*="uppercase"] { letter-spacing: 0.02em; }
 #root[data-mode="console"] .overflow-y-auto {
   padding-bottom: 14px;
   scrollbar-gutter: stable;
-  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 22px), transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 calc(100% - 22px), transparent 100%);
+  /* The fade cannot know whether the pane is scrolled to the end, so it must
+     never reach full transparency: at the bottom of a list the final row was
+     dimmed to nothing and read as cut off. Fading to a partial alpha keeps
+     that row legible while still hinting there is more above the edge. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 16px), rgba(0, 0, 0, 0.55) 100%);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 16px), rgba(0, 0, 0, 0.55) 100%);
 }
 
 /* The print sheet and modal bodies must not fade — they are documents. */

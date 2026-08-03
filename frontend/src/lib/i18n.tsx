@@ -37,6 +37,9 @@ const translations: Record<string, Record<Lang, string>> = {
   'command.mDistricts': { en: 'Police districts', kn: 'ಪೊಲೀಸ್ ಜಿಲ್ಲೆಗಳು' },
   'command.mHotCells': { en: 'Hot cells', kn: 'ಹಾಟ್ ಸೆಲ್‌ಗಳು' },
   'command.mNetworks': { en: 'Co-offending groups', kn: 'ಸಹ-ಅಪರಾಧ ಗುಂಪುಗಳು' },
+  'command.hAboveBaseline': { en: 'Above baseline', kn: 'ಮೂಲಭೂತ ಮಟ್ಟಕ್ಕಿಂತ ಮೇಲೆ' },
+  'command.hInterval': { en: '80% interval', kn: '80% ಮಧ್ಯಂತರ' },
+  'command.hDistricts': { en: 'Districts affected', kn: 'ಪರಿಣಾಮ ಜಿಲ್ಲೆಗಳು' },
   'command.topDistricts': { en: 'By volume', kn: 'ಪ್ರಮಾಣದ ಪ್ರಕಾರ' },
 
   // ── INVESTIGATE ────────────────────────────────────────────────────

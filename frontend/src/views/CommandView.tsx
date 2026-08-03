@@ -141,7 +141,7 @@ export default function CommandView() {
   }, [forecast, anomalies, tc, td])
 
   const topDistricts = useMemo(
-    () => [...districts].sort((a, b) => b.total_cases - a.total_cases).slice(0, 5),
+    () => [...districts].sort((a, b) => b.total_cases - a.total_cases).slice(0, 12),
     [districts],
   )
 
@@ -173,7 +173,7 @@ export default function CommandView() {
   }
 
   return (
-    <div className="h-full grid grid-rows-[minmax(0,1.55fr)_minmax(0,1fr)]">
+    <div className="h-full grid grid-rows-[minmax(0,1.4fr)_minmax(0,1fr)]">
       {/* ── 1. The map, given the most room ─────────────────────────── */}
       <div className="relative min-h-0 border-b border-slate-800/70">
         <MapView
@@ -297,11 +297,11 @@ export default function CommandView() {
       </div>
 
       {/* ── 2. Intelligence, then 3. metrics ────────────────────────── */}
-      <div className="min-h-0 grid grid-cols-1 lg:grid-cols-[1.2fr_1fr_0.9fr] divide-x divide-slate-800/70">
+      <div className="min-h-0 overflow-hidden grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-[minmax(0,1fr)] divide-x divide-slate-800/70">
         <Panel title={t('command.intelligence')}>
           {headline ? (
-            <div className="space-y-3">
-              <p className="text-[12px] leading-relaxed text-slate-300">
+            <div className="flex flex-col gap-3.5 max-w-[46rem]">
+              <p className="text-[12.5px] leading-relaxed text-slate-200">
                 {t('command.headline')
                   .replace('{crime}', headline.crime)
                   .replace('{district}', headline.district)
@@ -310,9 +310,39 @@ export default function CommandView() {
                   .replace('{hi}', String(headline.hi))
                   .replace('{n}', String(headline.districts))}
               </p>
+
+              {/* the figures the sentence rests on, so the claim is checkable
+                  at a glance rather than only readable as prose */}
+              <dl className="grid grid-cols-3 gap-3 border-t border-slate-800/70 pt-3">
+                <div>
+                  <dd className="text-[15px] font-semibold tabular-nums text-slate-50 leading-none">
+                    +{headline.excess}
+                  </dd>
+                  <dt className="mt-1.5 text-[9px] font-mono-data uppercase tracking-[0.16em] text-slate-500">
+                    {t('command.hAboveBaseline')}
+                  </dt>
+                </div>
+                <div>
+                  <dd className="text-[15px] font-semibold tabular-nums text-slate-50 leading-none">
+                    {headline.lo}&ndash;{headline.hi}
+                  </dd>
+                  <dt className="mt-1.5 text-[9px] font-mono-data uppercase tracking-[0.16em] text-slate-500">
+                    {t('command.hInterval')}
+                  </dt>
+                </div>
+                <div>
+                  <dd className="text-[15px] font-semibold tabular-nums text-slate-50 leading-none">
+                    {headline.districts}
+                  </dd>
+                  <dt className="mt-1.5 text-[9px] font-mono-data uppercase tracking-[0.16em] text-slate-500">
+                    {t('command.hDistricts')}
+                  </dt>
+                </div>
+              </dl>
+
               <button
                 onClick={() => navigateTo({ tab: 'FORECAST' })}
-                className="text-[10.5px] font-semibold uppercase tracking-[0.14em] text-slate-400 hover:text-slate-100 transition-colors"
+                className="self-start h-7 px-3 rounded-md border border-slate-700/70 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-slate-300 hover:text-slate-50 hover:border-slate-500 transition-colors"
               >
                 {t('command.openForecast')}
               </button>
@@ -349,8 +379,8 @@ export default function CommandView() {
           )}
         </Panel>
 
-        <div className="flex flex-col divide-y divide-slate-800/70">
-          <div className="grid grid-cols-2">
+        <div className="flex flex-col min-h-0 divide-y divide-slate-800/70">
+          <div className="shrink-0 grid grid-cols-2">
             <Metric value={stat(stats.firs)} label={t('command.mFirs')} />
             <Metric value={stat(stats.districts)} label={t('command.mDistricts')} />
             <Metric
