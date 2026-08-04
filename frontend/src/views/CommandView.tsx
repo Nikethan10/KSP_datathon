@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import MapView from '../components/MapView'
 import { useI18n } from '../lib/i18n'
 import { useNav } from '../lib/nav'
+import { useFocus } from '../lib/focus'
 import { useStats, stat } from '../lib/useStats'
 import {
   fetchJson,
@@ -76,6 +77,16 @@ export default function CommandView() {
   const [network, setNetwork] = useState<NetworkSummary | null>(null)
   const [boundaries, setBoundaries] = useState<GeoJSON.FeatureCollection | null>(null)
   const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null)
+  const [flyTarget, setFlyTarget] = useState<{ lat: number; lon: number; zoom?: number } | null>(null)
+
+  /* The masthead search offers COMMAND a district; the state map is what
+     answers, so fly to it and select it rather than leaving the box inert. */
+  const { focus } = useFocus()
+  useEffect(() => {
+    if (!focus) return
+    setFlyTarget({ lat: focus.lat, lon: focus.lon, zoom: focus.zoom ?? 9.5 })
+    if (focus.district) setSelectedDistrict(focus.district)
+  }, [focus])
   const [stations, setStations] = useState<StationSummaryFile | null>(null)
   const [loading, setLoading] = useState(true)
   const [failed, setFailed] = useState(false)
@@ -182,7 +193,7 @@ export default function CommandView() {
           view3D={false}
           sigOnly
           emerging={null}
-          flyTarget={null}
+          flyTarget={flyTarget}
           onDistrictClick={handleDistrictClick}
         />
 

@@ -58,6 +58,10 @@ function SectionSkeleton() {
   )
 }
 
+/* Tabs whose view listens for a district focus and moves a map in response:
+   FORECAST (hotspot + risk lenses), ACT (patrol map), COMMAND (state map). */
+const DISTRICT_SEARCH_TABS = new Set<Tab>(['COMMAND', 'FORECAST', 'ACT'])
+
 export default function ConsoleShell() {
   const { activeTab: tab, setActiveTab: setTab } = useNav()
   const { tab: routeTab, navigate } = useRoute()
@@ -116,7 +120,7 @@ export default function ConsoleShell() {
         <a
           href="#/"
           title={t('site.backHome')}
-          className="flex items-center gap-3 group"
+          className="flex items-center gap-3 shrink-0 group"
         >
           <SentinelMark />
           <div className="flex flex-col leading-none">
@@ -132,10 +136,10 @@ export default function ConsoleShell() {
         {/* What "critical" never said: the actual counts, and a way in. */}
         <button
           onClick={() => goTab('COMMAND')}
-          className="hidden md:flex flex-col items-start ml-4 px-3 py-1 rounded-md border border-slate-700/70 hover:border-slate-500 transition-colors text-left"
+          className="hidden xl:flex flex-col items-start shrink-0 px-3 py-1 rounded-md border border-slate-700/70 hover:border-slate-500 transition-colors text-left"
         >
-          <span className="text-[9px] uppercase tracking-[0.16em] text-slate-500">{t('shell.situation')}</span>
-          <span className="mt-0.5 text-[10px] font-semibold text-slate-200 tabular-nums leading-tight">
+          <span className="text-[9px] uppercase tracking-[0.16em] whitespace-nowrap text-slate-400">{t('shell.situation')}</span>
+          <span className="mt-0.5 text-[10px] font-semibold text-slate-100 tabular-nums leading-tight whitespace-nowrap">
             {districtSummaries.length === 0
               ? '—'
               : anomalies.length === 0 && districtsRising === 0
@@ -146,7 +150,9 @@ export default function ConsoleShell() {
           </span>
         </button>
 
-        <SearchBar className="hidden sm:block ml-5" />
+        {/* Only the tabs with a map to fly. Elsewhere the box would accept a
+            district and have nothing to do with it. */}
+        {DISTRICT_SEARCH_TABS.has(tab) && <SearchBar className="hidden sm:block ml-5" />}
 
         <nav className="flex items-stretch gap-0.5 ml-auto h-full">
           {TABS.map((tb) => {

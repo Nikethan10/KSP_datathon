@@ -32,15 +32,15 @@ export default function IntelFeed({ items, onDistrictClick }: Props) {
   }
 
   return (
-    <div className="shrink-0 flex flex-col" style={{ maxHeight: 220 }}>
-      <div className="flex items-center justify-between mb-1.5">
+    <div className="shrink-0 flex flex-col overflow-hidden" style={{ maxHeight: 172 }}>
+      <div className="shrink-0 flex items-center justify-between mb-1.5">
         <div className="text-[9.5px] uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-glow" />
           Intelligence Feed
         </div>
         <span className="text-[9px] text-slate-500 tabular-nums">{items.length} alerts</span>
       </div>
-      <div className="overflow-y-auto min-h-0 flex flex-col gap-0.5 pr-0.5">
+      <div className="flex-1 min-h-0 overflow-y-auto flex flex-col gap-0.5 pr-0.5">
         {items.map((item) => {
           const color = SEVERITY_COLORS[item.severity] ?? SEVERITY_COLORS.info
           const isExpanded = expanded === item.id
@@ -52,7 +52,7 @@ export default function IntelFeed({ items, onDistrictClick }: Props) {
               style={{ borderLeftColor: color, background: isExpanded ? 'rgba(39,44,51,0.7)' : 'transparent' }}
             >
               <div className="flex items-start gap-1.5">
-                <span className="text-[9px] tabular-nums text-slate-500 shrink-0 mt-px w-8">
+                <span className="text-[9px] tabular-nums text-slate-500 shrink-0 mt-px w-14 whitespace-nowrap">
                   {item.timestamp}
                 </span>
                 <svg viewBox="0 0 24 24" width="11" height="11" fill="none" className="shrink-0 mt-0.5" aria-hidden>

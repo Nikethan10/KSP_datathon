@@ -24,11 +24,11 @@ export default function EmergingPanel({ cells, onSelect }: Props) {
     .slice(0, 12)
 
   return (
-    <div className="flex flex-col min-h-0">
+    <div className="flex-1 min-h-0 flex flex-col">
       <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-1.5">
         {t('emerging.topAreas')} ({ranked.length})
       </div>
-      <div className="overflow-y-auto min-h-0 flex flex-col gap-1 pr-1">
+      <div className="flex-1 min-h-0 overflow-y-auto flex flex-col gap-1 pr-1">
         {ranked.map((c) => {
           const color = rgba(EMERGING_COLORS[c.category])
           return (
