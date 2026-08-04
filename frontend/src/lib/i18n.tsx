@@ -291,6 +291,7 @@ const translations: Record<string, Record<Lang, string>> = {
   'war.heinousShare': { en: 'heinous', kn: 'ಗಂಭೀರ' },
   'war.wantedNote': { en: 'ordered by FIRs on record, then districts appeared in', kn: 'ದಾಖಲಾದ ಎಫ್‌ಐಆರ್, ನಂತರ ಜಿಲ್ಲೆಗಳ ಪ್ರಕಾರ' },
   'board.pick': { en: 'Select a gang to view its connections', kn: 'ಸಂಪರ್ಕಗಳನ್ನು ನೋಡಲು ಒಂದು ಗ್ಯಾಂಗ್ ಆಯ್ಕೆಮಾಡಿ' },
+  'board.links': { en: '{n} links', kn: '{n} ಸಂಪರ್ಕಗಳು' },
   'board.members': { en: 'members', kn: 'ಸದಸ್ಯರು' },
   'board.hint': { en: 'click a member to open their dossier · hover to trace links', kn: 'ಕಡತ ತೆರೆಯಲು ಸದಸ್ಯರನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ · ಸಂಪರ್ಕ ಪತ್ತೆಗೆ ಹೋವರ್' },
   'board.core': { en: 'showing the most-connected core · click a member for their dossier', kn: 'ಹೆಚ್ಚು ಸಂಪರ್ಕಿತ ತಿರುಳು ತೋರಿಸಲಾಗಿದೆ · ಕಡತಕ್ಕಾಗಿ ಸದಸ್ಯರನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ' },

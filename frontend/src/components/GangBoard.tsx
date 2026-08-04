@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { GangNetwork, ThreatTier } from '../lib/data'
 import { THREAT_COLORS } from '../lib/data'
 import { rosterFor } from '../lib/gang'
@@ -34,8 +34,8 @@ function tilt(id: string): number {
 }
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v))
 const STRING = '#e0483d' // evidence-board red string
-const dimsFor = (role: Role) => (role === 'boss' ? 120 : role === 'lieutenant' ? 102 : 88)
-const CARD_RATIO = 1.3
+const dimsFor = (role: Role) => (role === 'boss' ? 110 : role === 'lieutenant' ? 96 : 84)
+const CARD_RATIO = 1.32
 const MIN_SCALE = 0.4
 const MAX_SCALE = 3.5
 
@@ -45,6 +45,7 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
   const [view, setView] = useState<View>({ scale: 1, tx: 0, ty: 0 })
   const [panning, setPanning] = useState(false)
   const vpRef = useRef<HTMLDivElement>(null)
+  const stageRef = useRef<HTMLDivElement>(null)
   const [box, setBox] = useState({ w: 1000, h: 620 })
   const drag = useRef<{ x: number; y: number; tx: number; ty: number; moved: boolean } | null>(null)
 
@@ -82,6 +83,7 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
        rows, a narrow one wants more of them. Try each shape and keep whichever
        lets the cards render largest, so the board fills the room it has instead
        of being scaled down to fit a guess. */
+    const head = [...(boss ? [boss] : []), ...lts]
     const solW = dimsFor('soldier'), solH = solW * CARD_RATIO
     const ltW = dimsFor('lieutenant'), ltH = ltW * CARD_RATIO
     const bossH = dimsFor('boss') * CARD_RATIO
@@ -90,33 +92,39 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
       let best = -Infinity
       for (let cand = 3; cand <= Math.min(12, sol.length); cand++) {
         const r = Math.ceil(sol.length / cand)
-        const w = Math.max(
-          cand * solW + (cand - 1) * GAP_X,
-          lts.length * ltW + Math.max(0, lts.length - 1) * GAP_X,
-        )
-        const h = (boss ? bossH + GAP_Y : 0) + (lts.length ? ltH + GAP_Y : 0)
-          + r * solH + (r - 1) * GAP_Y
+        const headW = head.length
+          ? (boss ? dimsFor('boss') : 0) + lts.length * ltW + (head.length - 1) * GAP_X
+          : 0
+        const w = Math.max(cand * solW + (cand - 1) * GAP_X, headW)
+        const headH = head.length ? Math.max(boss ? bossH : 0, lts.length ? ltH : 0) + GAP_Y : 0
+        const h = headH + r * solH + (r - 1) * GAP_Y
         const fit = Math.min(box.w / (w + 80), box.h / (h + 80))
         if (fit > best) { best = fit; perRow = cand }
       }
     }
 
     const rows: PNode[][] = []
-    if (boss) rows.push([boss])
-    if (lts.length) rows.push(lts)
+    if (head.length) {
+      // most-connected in the middle, lieutenants fanned either side
+      const ordered: PNode[] = []
+      lts.forEach((n, i) => (i % 2 === 0 ? ordered.push(n) : ordered.unshift(n)))
+      if (boss) ordered.splice(Math.floor(ordered.length / 2), 0, boss)
+      rows.push(ordered)
+    }
     for (let i = 0; i < sol.length; i += perRow) rows.push(sol.slice(i, i + perRow))
 
     let cursorY = 0
     for (const row of rows) {
-      const cw = dimsFor(row[0].role)
-      const ch = cw * CARD_RATIO
-      const rowW = row.length * cw + (row.length - 1) * GAP_X
-      const startX = -rowW / 2 + cw / 2
+      const widths = row.map((n) => dimsFor(n.role))
+      const rowH = Math.max(...widths) * CARD_RATIO
+      const rowW = widths.reduce((a, b) => a + b, 0) + (row.length - 1) * GAP_X
+      let x = -rowW / 2
       row.forEach((n, i) => {
-        n.x = startX + i * (cw + GAP_X)
-        n.y = cursorY + ch / 2
+        n.x = x + widths[i] / 2
+        n.y = cursorY + rowH / 2
+        x += widths[i] + GAP_X
       })
-      cursorY += ch + GAP_Y
+      cursorY += rowH + GAP_Y
     }
 
     const a = new Map<string, Set<string>>()
@@ -150,11 +158,14 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
     if (!el || nodes.length === 0) return { scale: 1, tx: 0, ty: 0 }
     const w = el.clientWidth, h = el.clientHeight
     if (!w || !h) return { scale: 1, tx: 0, ty: 0 }
-    const scale = clamp(Math.min(w / extent.w, h / extent.h), MIN_SCALE, MAX_SCALE)
-    return { scale, tx: (w - extent.w * scale) / 2, ty: (h - extent.h * scale) / 2 }
+    // the stage as laid out, not as remembered
+    const sw = stageRef.current?.offsetWidth || extent.w
+    const sh = stageRef.current?.offsetHeight || extent.h
+    const scale = clamp(Math.min(w / sw, h / sh), MIN_SCALE, MAX_SCALE)
+    return { scale, tx: (w - sw * scale) / 2, ty: (h - sh * scale) / 2 }
   }, [nodes, extent])
 
-  useEffect(() => { setView(fitView()); setHover(null) }, [rank, fitView])
+  useLayoutEffect(() => { setView(fitView()); setHover(null) }, [rank, fitView])
 
   // the sidebar and window change the room available; re-shape and re-frame
   useEffect(() => {
@@ -168,10 +179,21 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
     if (typeof ResizeObserver === 'undefined') return
     const ro = new ResizeObserver(measure)
     ro.observe(el)
-    return () => ro.disconnect()
-  }, [])
+    /* A window resize is listened for as well as observed. The observer covers
+       the panel changing shape around a still window (the sidebar, a lens
+       switch); the event covers the window itself, which does not always reach
+       the observer. Either way measure() is idempotent, so both firing is
+       harmless and only one needs to arrive. */
+    window.addEventListener('resize', measure)
+    return () => { ro.disconnect(); window.removeEventListener('resize', measure) }
+    /* Keyed on the node count for the same reason as the wheel listener: the
+       board early-returns a placeholder until the network arrives, so on the
+       first mount vpRef is null and an effect keyed on [] would observe
+       nothing and never re-run - leaving the board frozen at whatever zoom it
+       opened with while the window changed size around it. */
+  }, [nodes.length])
 
-  useEffect(() => { setView(fitView()) }, [box.w, box.h, fitView])
+  useLayoutEffect(() => { setView(fitView()) }, [box.w, box.h, fitView])
 
   // wheel-to-zoom toward the cursor (native listener so we can preventDefault)
   useEffect(() => {
@@ -268,6 +290,7 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
 
       {/* pan + zoom camera over a stage sized to the layout itself */}
       <div
+        ref={stageRef}
         className="absolute top-0 left-0"
         style={{
           width: extent.w,
@@ -365,7 +388,7 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
                     {/* grayscale mugshot */}
                     <div
                       className="relative overflow-hidden"
-                      style={{ height: h * 0.64, background: 'linear-gradient(160deg,#4a4f57,#23262c 70%,#15171b)' }}
+                      style={{ height: h * 0.5, background: 'linear-gradient(160deg,#4a4f57,#23262c 70%,#15171b)' }}
                     >
                       <svg viewBox="0 0 24 24" className="absolute left-1/2 -translate-x-1/2 bottom-0" width={w * 0.72} height={w * 0.72} style={{ color: '#8b93a1' }} aria-hidden>
                         <circle cx="12" cy="8.5" r="4.2" fill="currentColor" />
@@ -385,7 +408,7 @@ export default function GangBoard({ rank, tier, network, onSelectNode }: Props) 
                     {/* name plate */}
                     <div className="px-1 pt-[4px] pb-[5px] text-center">
                       <div className="text-[11.5px] font-semibold leading-[1.3] text-[#2a2620] truncate">{n.name}</div>
-                      <div className="mt-[2px] text-[10px] leading-[1.3] text-[#5c564a] truncate">{n.deg} links · {n.size} cases</div>
+                      <div className="mt-[2px] text-[10px] leading-[1.3] text-[#5c564a] truncate">{t('board.links').replace('{n}', String(n.deg))}</div>
                     </div>
                   </div>
                 </button>
