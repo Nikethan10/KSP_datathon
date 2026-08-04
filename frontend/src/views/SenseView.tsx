@@ -46,6 +46,7 @@ export default function SenseView({ emergingLens = false }: { emergingLens?: boo
   const [crimeType, setCrimeType] = useState<string | null>(null)
   const [scope, setScope] = useState<HotspotScope>('state')
   const [showDemographics, setShowDemographics] = useState(false)
+  const [sidePane, setSidePane] = useState<'feed' | 'districts'>('feed')
   const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null)
   const [flyTarget, setFlyTarget] = useState<{ lat: number; lon: number; zoom?: number; pitch?: number } | null>(null)
   const [loading, setLoading] = useState(true)
@@ -455,20 +456,50 @@ export default function SenseView({ emergingLens = false }: { emergingLens?: boo
         ) : showEmerging && emergingData ? (
           <EmergingPanel cells={emergingData.cells} onSelect={handleEmergingSelect} />
         ) : !(selectedDistrict && districtBrief) ? (
-          <>
-            <IntelFeed
-              items={feedItems}
-              onDistrictClick={(d) => {
-                const ds = districts.find((x) => x.district === d)
-                if (ds) handleDistrictSelect(ds)
-              }}
-            />
-            <DistrictPanel
-              districts={districts}
-              selected={selectedDistrict}
-              onSelect={handleDistrictSelect}
-            />
-          </>
+          /* The feed and the district list used to sit one above the other in
+             a column that had already spent most of its height on the stats
+             and the trend chart. Each was left with a sliver - the district
+             list showed two rows of thirty-seven and read as broken. They
+             share the remaining space now, so whichever is in front gets all
+             of it. */
+          <div className="flex-1 min-h-0 flex flex-col">
+            <div className="shrink-0 flex items-center gap-1 border-b border-slate-800/70 mb-1.5">
+              {([
+                { id: 'feed' as const, label: t('intel.feed'), count: feedItems.length },
+                { id: 'districts' as const, label: t('sense.districts'), count: districts.length },
+              ]).map((pane) => (
+                <button
+                  key={pane.id}
+                  onClick={() => setSidePane(pane.id)}
+                  aria-pressed={sidePane === pane.id}
+                  className={`relative px-2 pb-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] transition-colors ${
+                    sidePane === pane.id
+                      ? 'text-slate-100 after:absolute after:inset-x-1 after:-bottom-px after:h-[2px] after:bg-sky-300'
+                      : 'text-slate-400 hover:text-slate-100'
+                  }`}
+                >
+                  {pane.label}
+                  <span className="ml-1.5 tabular-nums text-slate-500">{pane.count}</span>
+                </button>
+              ))}
+            </div>
+
+            {sidePane === 'feed' ? (
+              <IntelFeed
+                items={feedItems}
+                onDistrictClick={(d) => {
+                  const ds = districts.find((x) => x.district === d)
+                  if (ds) handleDistrictSelect(ds)
+                }}
+              />
+            ) : (
+              <DistrictPanel
+                districts={districts}
+                selected={selectedDistrict}
+                onSelect={handleDistrictSelect}
+              />
+            )}
+          </div>
         ) : null}
       </div>
 
