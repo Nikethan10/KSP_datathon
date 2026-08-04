@@ -80,13 +80,21 @@ export default function BriefingPanel({ summary, briefings, selected, onSelect }
     const topCrime = [...allCrimes.entries()].sort(([, a], [, b]) => b - a)[0]
     const heinousTotal = briefings.reduce((s, b) => s + (b.gravity_breakdown['Heinous'] ?? 0), 0)
 
-    let rec = `Deploy ${summary.n_patrols} patrol units for ${summary.greedy_coverage_pct.toFixed(1)}% risk coverage.`
-    if (topCrime) rec += ` Primary focus: ${topCrime[0].replace('Crimes Against ', '')} (${topCrime[1]} incidents).`
-    if (heinousTotal > 0) rec += ` ${heinousTotal} heinous cases require priority response.`
-    if (districtAnomalies.length > 0) rec += ` ${districtAnomalies.length} active anomaly alert${districtAnomalies.length > 1 ? 's' : ''} in this district.`
+    let rec = t('narr.deployBase')
+      .replace('{n}', String(summary.n_patrols))
+      .replace('{pct}', summary.greedy_coverage_pct.toFixed(1))
+    if (topCrime) {
+      rec += t('narr.deployFocus')
+        .replace('{crime}', tc(topCrime[0]))
+        .replace('{n}', String(topCrime[1]))
+    }
+    if (heinousTotal > 0) rec += t('narr.deployHeinous').replace('{n}', String(heinousTotal))
+    if (districtAnomalies.length > 0) {
+      rec += t('narr.deployAnoms').replace('{n}', String(districtAnomalies.length))
+    }
 
     return { text: rec, totalIncidents, topCrime: topCrime?.[0] ?? '', heinousTotal }
-  }, [summary, briefings, anomalies])
+  }, [summary, briefings, anomalies, t, tc])
 
   const uplift = summary
     ? `${(summary.greedy_uplift_vs_statusquo_x ?? summary.greedy_uplift_x)}x`
@@ -102,7 +110,7 @@ export default function BriefingPanel({ summary, briefings, selected, onSelect }
               <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8Z" stroke="currentColor" strokeWidth="1.5" />
               <circle cx="12" cy="10" r="3" stroke="currentColor" strokeWidth="1.5" />
             </svg>
-            Recommended Deployment
+            {t('act.recommendedDeployment')}
           </div>
           <div className="text-[10px] text-slate-300 leading-snug">{deploymentRec.text}</div>
         </div>

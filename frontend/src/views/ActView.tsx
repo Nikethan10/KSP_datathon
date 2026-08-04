@@ -240,9 +240,9 @@ export default function ActView() {
               <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8Z" stroke="currentColor" strokeWidth="1.5" />
               <circle cx="12" cy="10" r="3" stroke="currentColor" strokeWidth="1.5" />
             </svg>
-            <span className="text-[10px] uppercase tracking-widest text-slate-300 font-semibold">Deployment Center</span>
+            <span className="text-[10px] uppercase tracking-widest text-slate-300 font-semibold">{t('act.deploymentCenter')}</span>
           </div>
-          <span className="text-[9px] uppercase tracking-wider text-slate-500">Patrol Optimizer</span>
+          <span className="text-[9px] uppercase tracking-wider text-slate-500">{t('act.patrolOptimizer')}</span>
         </div>
         <BriefingPanel
           summary={summary}

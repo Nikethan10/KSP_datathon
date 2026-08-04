@@ -42,6 +42,9 @@ export interface FeedItem {
 export function generateFeedItems(
   anomalies: Anomaly[],
   districts: DistrictSummary[],
+  t: Translate,
+  tc: Translate,
+  td: Translate,
 ): FeedItem[] {
   const items: FeedItem[] = []
 
@@ -53,8 +56,15 @@ export function generateFeedItems(
       timestamp: String(a.date).slice(0, 10),
       severity: a.severity === 'critical' ? 'critical' : a.zscore > 3 ? 'high' : 'medium',
       icon: 'alert',
-      title: `${a.crime_type} ${dir} detected in ${a.district}`,
-      detail: `${a.observed} observed vs ${a.expected.toFixed(0)} expected (${dir === 'spike' ? '+' : '-'}${pctChange}%). Z-score: ${a.zscore.toFixed(1)}`,
+      title: t(dir === 'spike' ? 'narr.feedSpike' : 'narr.feedDrop')
+        .replace('{crime}', tc(a.crime_type))
+        .replace('{district}', td(a.district)),
+      detail: t('narr.feedDetail')
+        .replace('{observed}', String(a.observed))
+        .replace('{expected}', a.expected.toFixed(0))
+        .replace('{sign}', dir === 'spike' ? '+' : '-')
+        .replace('{pct}', pctChange)
+        .replace('{z}', a.zscore.toFixed(1)),
       district: a.district,
     })
   })
@@ -68,8 +78,14 @@ export function generateFeedItems(
         timestamp: `${d.latest_year} YTD`,
         severity: d.yoy_change_pct > 15 ? 'high' : 'medium',
         icon: 'trend',
-        title: `${d.district} crime trending +${d.yoy_change_pct.toFixed(1)}% YoY`,
-        detail: `${d.latest_year_cases.toLocaleString()} cases in ${d.latest_year}, led by ${d.top_crime_type}. Heinous: ${d.heinous_pct.toFixed(1)}%`,
+        title: t('narr.feedTrend')
+          .replace('{district}', td(d.district))
+          .replace('{pct}', d.yoy_change_pct.toFixed(1)),
+        detail: t('narr.feedTrendDetail')
+          .replace('{cases}', d.latest_year_cases.toLocaleString())
+          .replace('{year}', String(d.latest_year))
+          .replace('{crime}', tc(d.top_crime_type))
+          .replace('{heinous}', d.heinous_pct.toFixed(1)),
         district: d.district,
       })
     })
@@ -79,6 +95,9 @@ export function generateFeedItems(
     return sev[a.severity] - sev[b.severity]
   })
 }
+
+/** The view passes its own t(); these builders stay pure. */
+export type Translate = (key: string) => string
 
 export interface DistrictBrief {
   threatLevel: ThreatLevel
@@ -96,6 +115,9 @@ export function generateDistrictBrief(
   district: string,
   summary: DistrictSummary | undefined,
   anomalies: Anomaly[],
+  t: Translate,
+  tc: Translate,
+  td: Translate,
 ): DistrictBrief | null {
   if (!summary) return null
 
@@ -104,22 +126,27 @@ export function generateDistrictBrief(
   const yoy = summary.yoy_change_pct
   const trend = yoy > 2 ? 'increasing' : yoy < -2 ? 'decreasing' : 'stable'
 
-  let narrative = `${district} recorded ${summary.latest_year_cases.toLocaleString()} FIRs in ${summary.latest_year}`
-  if (trend === 'increasing') narrative += `, up ${yoy.toFixed(1)}% year-over-year`
-  else if (trend === 'decreasing') narrative += `, down ${Math.abs(yoy).toFixed(1)}% year-over-year`
-  narrative += `. Top offence: ${summary.top_crime_type} (${summary.top_crime_count.toLocaleString()} cases).`
-  if (summary.heinous_pct > 10) narrative += ` ${summary.heinous_pct.toFixed(1)}% of cases are heinous offences.`
-  if (distAnomalies.length > 0) narrative += ` ${distAnomalies.length} active anomaly alert${distAnomalies.length > 1 ? 's' : ''}.`
+  let narrative = t('narr.briefBase')
+    .replace('{district}', td(district))
+    .replace('{cases}', summary.latest_year_cases.toLocaleString())
+    .replace('{year}', String(summary.latest_year))
+  if (trend === 'increasing') narrative += t('narr.briefUp').replace('{pct}', yoy.toFixed(1))
+  else if (trend === 'decreasing') narrative += t('narr.briefDown').replace('{pct}', Math.abs(yoy).toFixed(1))
+  narrative += t('narr.briefTop')
+    .replace('{crime}', tc(summary.top_crime_type))
+    .replace('{cases}', summary.top_crime_count.toLocaleString())
+  if (summary.heinous_pct > 10) narrative += t('narr.briefHeinous').replace('{pct}', summary.heinous_pct.toFixed(1))
+  if (distAnomalies.length > 0) narrative += t('narr.briefAnoms').replace('{n}', String(distAnomalies.length))
 
   let recommendation = ''
   if (threatLevel === 'CRITICAL' || threatLevel === 'HIGH') {
     const topAnomaly = distAnomalies[0]
-    recommendation = `Increase patrol presence. Focus on ${summary.top_crime_type.replace('Crimes Against ', '')} prevention.`
+    recommendation = t('narr.recIncrease').replace('{crime}', tc(summary.top_crime_type))
     if (topAnomaly) recommendation += ` Priority: ${topAnomaly.crime_type} spike (z=${topAnomaly.zscore.toFixed(1)}).`
   } else if (trend === 'increasing') {
-    recommendation = `Monitor ${summary.top_crime_type.replace('Crimes Against ', '')} trend. Consider preventive deployment.`
+    recommendation = t('narr.recMonitor').replace('{crime}', tc(summary.top_crime_type))
   } else {
-    recommendation = `Maintain current deployment. Clearance rate: ${summary.clearance_pct.toFixed(1)}%.`
+    recommendation = t('narr.recMaintain').replace('{pct}', summary.clearance_pct.toFixed(1))
   }
 
   return {
@@ -262,9 +289,11 @@ export function generateForecast(
 
 /* Deterministic template, not a language model. It was called
    generateAISummary, which implied an LLM had written it. */
-export function composeModelSummary(riskSummary: Pick<RiskSummary, 'pai'>): string {
+export function composeModelSummary(riskSummary: Pick<RiskSummary, 'pai'>, t: Translate): string {
   const hitRate = riskSummary.pai?.hit_rate_5pct ?? 0
   const pai = riskSummary.pai?.pai_5pct ?? 0
 
-  return `On a held-out temporal split, patrolling the 5% of Karnataka that PRAHARI flags captures ${hitRate.toFixed(1)}% of the crime that follows — ${pai.toFixed(1)}× what the same area picked at random would return. Every prediction is explainable: SHAP values show which factors drove each risk score, and isotonic calibration ensures scores read as true probabilities.`
+  return t('narr.modelSummary')
+    .replace('{hit}', hitRate.toFixed(1))
+    .replace('{pai}', pai.toFixed(1))
 }

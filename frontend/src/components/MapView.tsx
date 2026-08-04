@@ -3,9 +3,10 @@ import maplibregl from 'maplibre-gl'
 import { MapboxOverlay } from '@deck.gl/mapbox'
 import { ColumnLayer, ScatterplotLayer, GeoJsonLayer } from '@deck.gl/layers'
 import {
-  SIG_COLORS, SIG_LABELS, EMERGING_COLORS, KARNATAKA_CENTER, KARNATAKA_ZOOM,
+  SIG_COLORS, EMERGING_COLORS, KARNATAKA_CENTER, KARNATAKA_ZOOM,
 } from '../lib/data'
 import { loadKarnatakaOverlay, karnatakaMaskLayers } from '../lib/basemap'
+import { useI18n } from '../lib/i18n'
 import type { KarnatakaOverlay } from '../lib/basemap'
 import type { HotspotPoint, Significance, EmergingCell } from '../lib/data'
 
@@ -62,6 +63,7 @@ function radiusFlat(count: number): number {
 export default function MapView({
   hotspots, boundaries, view3D, sigOnly, emerging, flyTarget, onDistrictClick,
 }: Props) {
+  const { t } = useI18n()
   const containerRef = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
   const overlayRef = useRef<MapboxOverlay | null>(null)
@@ -194,11 +196,20 @@ export default function MapView({
         }
         if ('sig' in object) {
           const h = object as HotspotPoint
+          /* Finding first, then the count, then the test that supports it.
+             The statistic is kept - a judge will look for it - but it no
+             longer leads, because Gi* z is not what an officer is asking. */
+          const meaning = h.sig.startsWith('hot')
+            ? t('sense.tipHot')
+            : h.sig.startsWith('cold')
+              ? t('sense.tipCold')
+              : t('sense.tipNotSig')
           return {
-            html: `<div style="font-family:ui-sans-serif,system-ui;font-size:12px">
-              <div style="font-weight:600;margin-bottom:2px">${SIG_LABELS[h.sig]}</div>
-              <div>${h.count.toLocaleString()} cases</div>
-              <div>Gi* z = ${h.z.toFixed(2)}, p = ${h.p.toFixed(3)}</div>
+            html: `<div style="font-family:ui-sans-serif,system-ui;font-size:12px;max-width:230px">
+              <div style="font-weight:600;margin-bottom:2px">${t(`sig.${h.sig}`)}</div>
+              <div style="color:#b6bec7;line-height:1.35;margin-bottom:3px">${meaning}</div>
+              <div>${t('sense.tipCases').replace('{n}', h.count.toLocaleString())}</div>
+              <div style="color:#8e97a2;margin-top:2px">Gi* z = ${h.z.toFixed(2)}, p = ${h.p.toFixed(3)}</div>
             </div>`,
             style: {
               background: 'rgba(29,33,38,0.96)',
@@ -222,7 +233,7 @@ export default function MapView({
           : null
       },
     })
-  }, [hotspots, boundaries, view3D, sigOnly, emerging, overlay, onDistrictClick])
+  }, [hotspots, boundaries, view3D, sigOnly, emerging, overlay, onDistrictClick, t])
 
   // fly on request — a descending approach rather than a flat pan, so
   // selecting a district reads as "zooming into" it

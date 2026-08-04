@@ -170,15 +170,15 @@ export default function SenseView({ emergingLens = false }: { emergingLens?: boo
   }, [selectedDistrict, offenders])
 
   const feedItems = useMemo(
-    () => generateFeedItems(anomalies, districts),
-    [anomalies, districts],
+    () => generateFeedItems(anomalies, districts, t, tc, td),
+    [anomalies, districts, t, tc, td],
   )
 
   const districtBrief = useMemo(() => {
     if (!selectedDistrict) return null
     const summary = districts.find((d) => d.district === selectedDistrict)
-    return generateDistrictBrief(selectedDistrict, summary, anomalies)
-  }, [selectedDistrict, districts, anomalies])
+    return generateDistrictBrief(selectedDistrict, summary, anomalies, t, tc, td)
+  }, [selectedDistrict, districts, anomalies, t, tc, td])
 
   const offenderById = useMemo(() => {
     const m = new Map<string, Dossier>()
@@ -283,7 +283,11 @@ export default function SenseView({ emergingLens = false }: { emergingLens?: boo
               {(emergingData.summary.counts.cooling ?? 0).toLocaleString()} cooling
             </>
           ) : (
-            <>{activeHotspots.toLocaleString()} hot cells / {analysedCells.toLocaleString()} analysed</>
+            <>
+              {t('sense.cellsReadout')
+                .replace('{hot}', activeHotspots.toLocaleString())
+                .replace('{all}', analysedCells.toLocaleString())}
+            </>
           )}
         </div>
       </div>
@@ -297,17 +301,17 @@ export default function SenseView({ emergingLens = false }: { emergingLens?: boo
               <path d="M2 12C2 6.5 6.5 2 12 2a10 10 0 0 1 10 10c0 5.5-4.5 10-10 10a10 10 0 0 1-10-10Z" stroke="currentColor" strokeWidth="1.5" />
               <path d="M12 6v6l4 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
-            <span className="text-[10px] uppercase tracking-widest text-slate-300 font-semibold">Situation Room</span>
+            <span className="text-[10px] uppercase tracking-widest text-slate-300 font-semibold">{t('sense.situationRoom')}</span>
           </div>
-          <span className="text-[9px] uppercase tracking-wider text-slate-500">Karnataka State Police</span>
+          <span className="text-[9px] uppercase tracking-wider text-slate-500">{t('sense.kspLabel')}</span>
         </div>
 
         {/* quick stats bar */}
         <div className="flex gap-1.5 shrink-0">
           <QuickStat label={t('sense.firsLatest')} value={totalFIRs} />
-          <QuickStat label="Hotspots" value={activeHotspots} />
-          <QuickStat label="Anomalies" value={anomalies.length} accent={anomalies.length > 0} />
-          <QuickStat label="At Risk" value={districtsAtRisk} accent={districtsAtRisk > 3} />
+          <QuickStat label={t('sense.qsHotspots')} value={activeHotspots} />
+          <QuickStat label={t('sense.qsAnomalies')} value={anomalies.length} accent={anomalies.length > 0} />
+          <QuickStat label={t('sense.qsAtRisk')} value={districtsAtRisk} accent={districtsAtRisk > 3} />
         </div>
 
         {trends && <TrendChart data={trendData} label={trendLabel} />}

@@ -102,8 +102,8 @@ export default function TrustView() {
 
   const aiSummary = useMemo(() => {
     if (!rm) return null
-    return composeModelSummary(rm)
-  }, [rm])
+    return composeModelSummary(rm, t)
+  }, [rm, t])
 
   if (!benchmark && !shap && !fairness) {
     return (

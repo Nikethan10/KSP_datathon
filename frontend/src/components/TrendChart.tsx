@@ -2,6 +2,7 @@ import {
   ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid,
 } from 'recharts'
 import type { TrendPoint } from '../lib/data'
+import { useI18n } from '../lib/i18n'
 
 interface Props {
   data: TrendPoint[]
@@ -29,12 +30,13 @@ function trimPartialTail(data: TrendPoint[]): TrendPoint[] {
 }
 
 export default function TrendChart({ data, label }: Props) {
+  const { t } = useI18n()
   const series = trimPartialTail(data)
 
   return (
     <div>
       <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-1">
-        Monthly trend — {label}
+        {t('sense.monthlyTrend')} — {label}
       </div>
       <div className="h-36">
         <ResponsiveContainer width="100%" height="100%">

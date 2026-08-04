@@ -1,4 +1,4 @@
-import { SIG_COLORS, SIG_LABELS, EMERGING_COLORS } from '../lib/data'
+import { SIG_COLORS, EMERGING_COLORS } from '../lib/data'
 import type { Significance, EmergingCategory } from '../lib/data'
 import { useI18n } from '../lib/i18n'
 
@@ -35,7 +35,7 @@ export default function Legend({ emerging = false }: { emerging?: boolean }) {
   return (
     <div className="glass rounded-lg px-3 py-2.5">
       <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-1.5">
-        Getis-Ord Gi* significance
+        {t('sense.sigTitle')}
       </div>
       <div className="flex flex-col gap-1">
         {ORDER.map((s) => {
@@ -46,7 +46,7 @@ export default function Legend({ emerging = false }: { emerging?: boolean }) {
                 className="inline-block w-3 h-3 rounded-sm"
                 style={{ background: `rgb(${r},${g},${b})` }}
               />
-              {SIG_LABELS[s]}
+              {t(`sig.${s}`)}
             </div>
           )
         })}
