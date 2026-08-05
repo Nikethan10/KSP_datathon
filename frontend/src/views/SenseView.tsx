@@ -278,9 +278,10 @@ export default function SenseView({ emergingLens = false }: { emergingLens?: boo
         <div className="glass rounded-lg px-3 py-2 text-[11px] text-slate-300">
           {showEmerging && emergingData ? (
             <>
-              {(emergingData.summary.counts.new ?? 0).toLocaleString()} new ·{' '}
-              {(emergingData.summary.counts.intensifying ?? 0).toLocaleString()} intensifying ·{' '}
-              {(emergingData.summary.counts.cooling ?? 0).toLocaleString()} cooling
+              {t('sense.emergingCounts')
+                .replace('{new}', (emergingData.summary.counts.new ?? 0).toLocaleString())
+                .replace('{int}', (emergingData.summary.counts.intensifying ?? 0).toLocaleString())
+                .replace('{cool}', (emergingData.summary.counts.cooling ?? 0).toLocaleString())}
             </>
           ) : (
             <>

@@ -1,3 +1,4 @@
+import { featureName } from './data'
 import type { Anomaly, DistrictSummary, ShapFeature, RiskSummary, PatrolBriefing } from './data'
 
 export type ThreatLevel = 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW'
@@ -165,13 +166,19 @@ export function generateDistrictBrief(
 export function generatePredictionNarrative(
   shapFeatures: ShapFeature[],
   riskSummary: RiskSummary,
+  t: Translate,
 ): string {
   const top3 = shapFeatures.slice(0, 3)
-  const drivers = top3.map((f) => f.description || f.feature).join(', ')
+  // featureName over description: the description ships from the pipeline in
+  // English, the feature key resolves through i18n
+  const drivers = top3.map((f) => featureName(f.feature, t)).join(', ')
   const hitRate = riskSummary.pai?.hit_rate_5pct ?? 0
   const pai = riskSummary.pai?.pai_5pct ?? 0
 
-  return `PRAHARI identifies ${hitRate.toFixed(1)}% of future crime in just 5% of the area — ${pai.toFixed(1)}× what picking that area at random would return. Top prediction drivers: ${drivers}. The model has learned spatio-temporal crime clustering patterns — areas with recent nearby incidents face significantly elevated risk.`
+  return t('narr.predictInsight')
+    .replace('{hit}', hitRate.toFixed(1))
+    .replace('{pai}', pai.toFixed(1))
+    .replace('{drivers}', drivers)
 }
 
 export function generatePatrolRecommendation(

@@ -127,8 +127,8 @@ export default function PredictView({ initialMode = 'risk', lockMode = false }: 
 
   const predictionNarrative = useMemo(() => {
     if (!shapData || !riskSummary) return null
-    return generatePredictionNarrative(shapData.global_feature_importance, riskSummary)
-  }, [shapData, riskSummary])
+    return generatePredictionNarrative(shapData.global_feature_importance, riskSummary, t)
+  }, [shapData, riskSummary, t])
 
   const handleAnomalySelect = (a: Anomaly) => {
     const c = centroids.find((x) => x.district === a.district)
@@ -325,15 +325,15 @@ export default function PredictView({ initialMode = 'risk', lockMode = false }: 
 
       {/* right panel — risk mode only */}
       {mode === 'risk' && (
-        <div className="absolute top-3 right-3 bottom-8 z-10 w-[360px] max-w-[calc(100vw-340px)] glass rounded-xl p-3.5 flex flex-col gap-3 min-h-0 overflow-hidden">
+        <div className="absolute top-3 right-3 bottom-8 z-10 w-[360px] max-w-[calc(100vw-340px)] glass rounded-xl p-3.5 flex flex-col gap-3 min-h-0 overflow-y-auto">
           <div className="flex items-center justify-between shrink-0 pb-1 border-b border-slate-700/30">
             <div className="flex items-center gap-1.5">
               <svg viewBox="0 0 24 24" width="12" height="12" fill="none" className="text-sky-300" aria-hidden>
                 <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              <span className="text-[10px] uppercase tracking-widest text-slate-300 font-semibold">Week-ahead Risk</span>
+              <span className="text-[10px] uppercase tracking-widest text-slate-300 font-semibold">{t('predict.riskPanelTitle')}</span>
             </div>
-            <span className="text-[9px] uppercase tracking-wider text-slate-500">LightGBM · held-out test</span>
+            <span className="text-[9px] uppercase tracking-wider text-slate-500">{t('predict.riskPanelSub')}</span>
           </div>
           {riskSummary && <RiskStats summary={riskSummary} />}
           {predictionNarrative && (
