@@ -402,10 +402,16 @@ export const FEATURE_NAMES: Record<string, string> = {
   n_officers: 'Officer deployment level',
 }
 
-export function featureName(f: string): string {
-  if (FEATURE_NAMES[f]) return FEATURE_NAMES[f]
+/** Model feature -> label. Pass the view's t() so the label follows the UI
+ *  language; without one it falls back to the English table. */
+export function featureName(f: string, t?: (k: string) => string): string {
   const nr = f.match(/^nr_([\d.]+)km_(\d+)d$/)
-  if (nr) return `Crimes within ${nr[1]} km, last ${nr[2]} days`
+  if (nr) {
+    return t
+      ? t('feat.nearRepeat').replace('{km}', nr[1]).replace('{days}', nr[2])
+      : `Crimes within ${nr[1]} km, last ${nr[2]} days`
+  }
+  if (FEATURE_NAMES[f]) return t ? t(`feat.${f}`) : FEATURE_NAMES[f]
   return f
 }
 

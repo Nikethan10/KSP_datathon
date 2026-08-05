@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { fetchJson, featureName } from '../lib/data'
 import { composeModelSummary } from '../lib/insights'
 import { useI18n } from '../lib/i18n'
 import type {
-  ShapData, FairnessReport, BenchmarkReport, CalibrationData, ReliabilityPoint,
+  ShapData, ShapExplanation, FairnessReport, BenchmarkReport, CalibrationData, ReliabilityPoint,
 } from '../lib/data'
 
 const PCTS = [1, 2, 5, 10, 20]
@@ -99,6 +99,20 @@ export default function TrustView() {
   const shapTop = shap?.global_feature_importance.slice(0, 6) ?? []
   const shapMax = shapTop[0]?.mean_abs_shap ?? 1
   const samples = shap?.sample_explanations.slice(0, 4) ?? []
+
+  /* shap_explanations.json ships a pre-built English sentence. The same
+     record also carries top_features, so the sentence is rebuilt here from
+     translated feature names rather than shown in whatever language the
+     pipeline happened to write. */
+  const explain = useCallback((sx: ShapExplanation) => {
+    const entries = Object.entries(sx.top_features ?? {})
+    const up = entries.filter(([, v]) => v > 0).map(([k]) => featureName(k, t))
+    const down = entries.filter(([, v]) => v < 0).map(([k]) => featureName(k, t))
+    let out = ''
+    if (up.length) out += t('shap.elevated').replace('{factors}', up.join(', '))
+    if (down.length) out += t('shap.mitigating').replace('{factors}', down.join(', '))
+    return out || sx.explanation
+  }, [t])
 
   const aiSummary = useMemo(() => {
     if (!rm) return null
@@ -291,8 +305,8 @@ export default function TrustView() {
             <div className="flex flex-col gap-1.5">
               {shapTop.map((f) => (
                 <div key={f.feature} className="flex items-center gap-2">
-                  <div className="w-48 shrink-0 text-[10.5px] text-slate-300 truncate" title={featureName(f.feature)}>
-                    {featureName(f.feature)}
+                  <div className="w-48 shrink-0 text-[10.5px] text-slate-300 truncate" title={featureName(f.feature, t)}>
+                    {featureName(f.feature, t)}
                   </div>
                   <div className="flex-1 h-2 rounded bg-slate-700/50 overflow-hidden">
                     <div
@@ -327,7 +341,7 @@ export default function TrustView() {
                     <div className="text-[9px] uppercase tracking-wider text-slate-400 mt-0.5">{t('trust.lowClearance')}</div>
                   </div>
                 </div>
-                <div className="text-[10.5px] text-slate-400 leading-relaxed">{fairness!.fairness_statement}</div>
+                <div className="text-[10.5px] text-slate-400 leading-relaxed">{t('trust.fairnessStatement')}</div>
               </>
             )}
           </div>
@@ -358,7 +372,7 @@ export default function TrustView() {
                     </span>
                   </div>
                   <div className="mt-1 text-[10.5px] text-slate-300 leading-snug">
-                    {s.explanation.replace(/^Risk score: [\d.]+\. /, '')}
+                    {explain(s)}
                   </div>
                 </div>
               ))}

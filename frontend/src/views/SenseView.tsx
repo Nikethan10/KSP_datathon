@@ -437,7 +437,7 @@ export default function SenseView({ emergingLens = false }: { emergingLens?: boo
 
             {/* recommended action */}
             <div className="rounded-md border border-sky-400/25 bg-sky-500/8 px-2.5 py-2 mb-2">
-              <div className="text-[9px] uppercase tracking-wider text-sky-400/80 mb-1 font-semibold">Recommended Action</div>
+              <div className="text-[9px] uppercase tracking-wider text-sky-400/80 mb-1 font-semibold">{t('intel.recommendation')}</div>
               <div className="text-[10px] text-slate-300 leading-snug">{districtBrief.recommendation}</div>
             </div>
 

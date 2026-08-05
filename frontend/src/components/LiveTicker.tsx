@@ -13,13 +13,26 @@ function nowTimestamp(): string {
   return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`
 }
 
-function generateAlerts(anomalies: Anomaly[], districts: DistrictSummary[]): Alert[] {
+type Tr = (k: string) => string
+
+function generateAlerts(
+  anomalies: Anomaly[],
+  districts: DistrictSummary[],
+  t: Tr,
+  tc: Tr,
+  td: Tr,
+): Alert[] {
   const alerts: Alert[] = []
 
   anomalies.forEach((a, i) => {
     alerts.push({
       id: i,
-      text: `ANOMALY: ${a.crime_type} — ${a.observed} cases in ${a.district} (expected ${a.expected.toFixed(0)}, z=${a.zscore.toFixed(1)})`,
+      text: t('ticker.anomaly')
+        .replace('{crime}', tc(a.crime_type))
+        .replace('{observed}', String(a.observed))
+        .replace('{district}', td(a.district))
+        .replace('{expected}', a.expected.toFixed(0))
+        .replace('{z}', a.zscore.toFixed(1)),
       severity: a.severity === 'critical' ? 'critical' : a.zscore > 3 ? 'high' : 'medium',
     })
   })
@@ -29,7 +42,11 @@ function generateAlerts(anomalies: Anomaly[], districts: DistrictSummary[]): Ale
     .forEach((d, i) => {
       alerts.push({
         id: 1000 + i,
-        text: `TREND: ${d.district} crime up ${d.yoy_change_pct.toFixed(1)}% YoY — ${d.latest_year_cases.toLocaleString()} FIRs, led by ${d.top_crime_type}`,
+        text: t('ticker.trend')
+          .replace('{district}', td(d.district))
+          .replace('{pct}', d.yoy_change_pct.toFixed(1))
+          .replace('{cases}', d.latest_year_cases.toLocaleString())
+          .replace('{crime}', tc(d.top_crime_type)),
         severity: d.yoy_change_pct > 15 ? 'high' : 'medium',
       })
     })
@@ -50,8 +67,11 @@ interface Props {
 }
 
 export default function LiveTicker({ anomalies, districts }: Props) {
-  const { t } = useI18n()
-  const alerts = useMemo(() => generateAlerts(anomalies, districts), [anomalies, districts])
+  const { t, tc, td } = useI18n()
+  const alerts = useMemo(
+    () => generateAlerts(anomalies, districts, t, tc, td),
+    [anomalies, districts, t, tc, td],
+  )
   const [currentIdx, setCurrentIdx] = useState(0)
   const [clock, setClock] = useState(nowTimestamp)
   const [sliding, setSliding] = useState(false)

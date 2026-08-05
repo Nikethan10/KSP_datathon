@@ -99,8 +99,8 @@ export default function RiskStats({ summary }: { summary: RiskSummary }) {
         <div className="flex flex-col gap-1">
           {top.map((f) => (
             <div key={f.feature} className="flex items-center gap-2">
-              <div className="w-44 shrink-0 text-[10.5px] text-slate-300 truncate" title={featureName(f.feature)}>
-                {featureName(f.feature)}
+              <div className="w-44 shrink-0 text-[10.5px] text-slate-300 truncate" title={featureName(f.feature, t)}>
+                {featureName(f.feature, t)}
               </div>
               <div className="flex-1 h-1.5 rounded bg-slate-700/50 overflow-hidden">
                 <div

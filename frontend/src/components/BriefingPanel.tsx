@@ -57,7 +57,7 @@ function Stat({ value, label, accent, animate }: { value: string; label: string;
 export default function BriefingPanel({ summary, briefings, selected, onSelect }: Props) {
   const [feedback, recordFeedback] = useFeedback()
   const [anomalies, setAnomalies] = useState<Anomaly[]>([])
-  const { t, tc } = useI18n()
+  const { t, tc, td } = useI18n()
 
   useEffect(() => {
     fetchJson<Anomaly[]>('anomaly_feed.json')
@@ -125,7 +125,7 @@ export default function BriefingPanel({ summary, briefings, selected, onSelect }
               <div className="text-xs text-gray-600 mt-0.5">Crime Intelligence · Karnataka State Police</div>
             </div>
             <div className="text-right">
-              <div className="text-sm font-semibold">{summary.scope_district}</div>
+              <div className="text-sm font-semibold">{td(summary.scope_district)}</div>
               <div className="text-xs text-gray-500">
                 {new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
               </div>
@@ -145,7 +145,7 @@ export default function BriefingPanel({ summary, briefings, selected, onSelect }
         <div>
           <div className="flex items-center justify-between mb-1.5">
             <div className="text-[10px] uppercase tracking-widest text-slate-400">
-              {t('act.briefing')} — {summary.scope_district}
+              {t('act.briefing')} — {td(summary.scope_district)}
             </div>
             <button
               onClick={() => window.print()}

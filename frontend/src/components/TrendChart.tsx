@@ -12,10 +12,12 @@ interface Props {
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 // "2024-03" -> "Mar '24" so the axis reads naturally
-function fmtPeriod(p: string): string {
+/** Axis ticks follow the UI language; the month list comes from i18n so the
+ *  chart does not stay English while everything around it changes. */
+function fmtPeriod(p: string, months: string[] = MONTHS): string {
   const [y, m] = String(p).split('-')
   const mi = Number(m) - 1
-  return mi >= 0 && mi < 12 ? `${MONTHS[mi]} '${y.slice(2)}` : String(p)
+  return mi >= 0 && mi < 12 ? `${months[mi]} '${y.slice(2)}` : String(p)
 }
 
 // The dataset ends mid-month, so the final month is only partially reported and
@@ -31,6 +33,7 @@ function trimPartialTail(data: TrendPoint[]): TrendPoint[] {
 
 export default function TrendChart({ data, label }: Props) {
   const { t } = useI18n()
+  const months = t('month.abbr').split(',')
   const series = trimPartialTail(data)
 
   return (
@@ -56,7 +59,7 @@ export default function TrendChart({ data, label }: Props) {
               axisLine={{ stroke: '#353b43' }}
               interval="preserveStartEnd"
               minTickGap={44}
-              tickFormatter={fmtPeriod}
+              tickFormatter={(p: string) => fmtPeriod(p, months)}
             />
             <YAxis
               tick={{ fill: '#6b7480', fontSize: 9 }}
@@ -81,7 +84,7 @@ export default function TrendChart({ data, label }: Props) {
               }}
               labelStyle={{ color: '#8a939e' }}
               itemStyle={{ color: '#c9a35c' }}
-              labelFormatter={(p) => fmtPeriod(String(p))}
+              labelFormatter={(p) => fmtPeriod(String(p), months)}
               formatter={(v) => [Number(v).toLocaleString(), 'FIRs']}
             />
             <Area

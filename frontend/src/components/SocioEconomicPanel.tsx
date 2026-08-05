@@ -80,7 +80,7 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 
 export default function SocioEconomicPanel() {
   const [data, setData] = useState<SocioData | null>(null)
-  const { t } = useI18n()
+  const { t, tc, td } = useI18n()
 
   useEffect(() => {
     fetchJson<SocioData>('socioeconomic.json').then(setData).catch(() => {})
@@ -148,7 +148,7 @@ export default function SocioEconomicPanel() {
           {data.by_gender.accused.map(g => (
             <div key={g.gender} className="flex items-center gap-1.5 mb-0.5">
               <span className="w-2 h-2 rounded-full shrink-0" style={{ background: GENDER_COLORS[g.gender] || '#8aa0b8' }} />
-              <span className="text-[10px] text-slate-300">{g.gender}</span>
+              <span className="text-[10px] text-slate-300">{t(`gender.${g.gender}`)}</span>
               <span className="ml-auto text-[10px] tabular-nums text-slate-400">{g.pct}%</span>
             </div>
           ))}
@@ -158,7 +158,7 @@ export default function SocioEconomicPanel() {
           {data.by_gender.victim.map(g => (
             <div key={g.gender} className="flex items-center gap-1.5 mb-0.5">
               <span className="w-2 h-2 rounded-full shrink-0" style={{ background: GENDER_COLORS[g.gender] || '#8aa0b8' }} />
-              <span className="text-[10px] text-slate-300">{g.gender}</span>
+              <span className="text-[10px] text-slate-300">{t(`gender.${g.gender}`)}</span>
               <span className="ml-auto text-[10px] tabular-nums text-slate-400">{g.pct}%</span>
             </div>
           ))}
@@ -204,7 +204,7 @@ export default function SocioEconomicPanel() {
               <th className="text-left font-medium py-0.5 pr-1">{t('socio.crimeType')}</th>
               {data.by_occupation.map(o => (
                 <th key={o.occupation} className="text-right font-medium py-0.5 px-1 whitespace-nowrap">
-                  {o.occupation.replace('Government Employee', 'Govt').replace('Private Sector', 'Private')}
+                  {t(`occ.${o.occupation}`)}
                 </th>
               ))}
             </tr>
@@ -216,7 +216,7 @@ export default function SocioEconomicPanel() {
               return (
                 <tr key={row.crime_type} className="border-t border-slate-700/30">
                   <td className="text-slate-300 py-0.5 pr-1 truncate max-w-[100px]">
-                    {String(row.crime_type).replace('Crimes Against ', '').replace('Offences', 'Off.')}
+                    {tc(String(row.crime_type))}
                   </td>
                   {data.by_occupation.map((o) => {
                     const v = (row[o.occupation] as number) || 0
@@ -268,9 +268,9 @@ export default function SocioEconomicPanel() {
       <div className="flex flex-col gap-0.5 mb-2">
         {topDistricts.map(d => (
           <div key={d.district} className="flex items-center gap-1.5 text-[9.5px]">
-            <span className="text-slate-300 truncate flex-1 min-w-0">{d.district}</span>
-            <span className="text-slate-400 tabular-nums shrink-0">{d.dominant_occupation.replace('Government Employee', 'Govt').replace('Private Sector', 'Pvt')}</span>
-            <span className="text-slate-500 tabular-nums shrink-0">age {d.median_accused_age}</span>
+            <span className="text-slate-300 truncate flex-1 min-w-0">{td(d.district)}</span>
+            <span className="text-slate-400 tabular-nums shrink-0">{t(`occ.${d.dominant_occupation}`)}</span>
+            <span className="text-slate-500 tabular-nums shrink-0">{t('socio.ageShort').replace('{n}', String(d.median_accused_age))}</span>
           </div>
         ))}
       </div>
