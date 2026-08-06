@@ -26,6 +26,9 @@ const translations: Record<string, Record<Lang, string>> = {
     kn: '{crime} {n} ಜಿಲ್ಲೆಗಳಲ್ಲಿ ತನ್ನ STL ಮೂಲಮಟ್ಟಕ್ಕಿಂತ {excess} ಪ್ರಕರಣಗಳಷ್ಟು ಹೆಚ್ಚಾಗಿ ನಡೆಯುತ್ತಿದೆ, {district}ದಲ್ಲಿ ಅತಿ ತೀವ್ರವಾಗಿದೆ. ಈ ವ್ಯತ್ಯಾಸದ 80% ಮಧ್ಯಂತರ {lo} ರಿಂದ {hi}.',
   },
   'command.openForecast': { en: 'Open in forecast', kn: 'ಮುನ್ಸೂಚನೆಯಲ್ಲಿ ತೆರೆಯಿರಿ' },
+  'anom.above': { en: '{n}× above the {district} baseline for {crime}', kn: '{crime}ಗಾಗಿ {district} ಮೂಲಮಟ್ಟಕ್ಕಿಂತ {n}× ಹೆಚ್ಚು' },
+  'anom.below': { en: '{n}× below expected in {district}', kn: '{district}ದಲ್ಲಿ ನಿರೀಕ್ಷಿತಕ್ಕಿಂತ {n}× ಕಡಿಮೆ' },
+  'command.alertOpen': { en: 'Open {district}', kn: '{district} ತೆರೆಯಿರಿ' },
   'command.noSignal': { en: 'No departures from baseline in the current window.', kn: 'ಪ್ರಸ್ತುತ ಅವಧಿಯಲ್ಲಿ ಮೂಲಮಟ್ಟದಿಂದ ಯಾವುದೇ ವ್ಯತ್ಯಾಸ ಕಂಡುಬಂದಿಲ್ಲ.' },
   'command.noAlerts': { en: 'No active alerts.', kn: 'ಸಕ್ರಿಯ ಎಚ್ಚರಿಕೆಗಳಿಲ್ಲ.' },
   'command.loadFailed': { en: 'Operational picture unavailable', kn: 'ಕಾರ್ಯಾಚರಣೆ ಚಿತ್ರಣ ಲಭ್ಯವಿಲ್ಲ' },
@@ -116,7 +119,7 @@ const translations: Record<string, Record<Lang, string>> = {
   'predict.netScope': { en: 'Persons appearing as accused across {firs} FIRs · a link = co-accused in the same FIR. Detected groups are not confirmed criminal organisations.', kn: '{firs} FIRಗಳಲ್ಲಿ ಆರೋಪಿಗಳಾಗಿ ಕಾಣಿಸಿಕೊಂಡ ವ್ಯಕ್ತಿಗಳು · ಸಂಪರ್ಕ = ಒಂದೇ FIRನಲ್ಲಿ ಸಹ-ಆರೋಪಿ. ಪತ್ತೆಯಾದ ಗುಂಪುಗಳು ದೃಢೀಕೃತ ಅಪರಾಧ ಸಂಘಟನೆಗಳಲ್ಲ.' },
   'common.close': { en: 'Close', kn: 'ಮುಚ್ಚಿ' },
   'command.cardKicker': { en: 'District situation', kn: 'ಜಿಲ್ಲಾ ಪರಿಸ್ಥಿತಿ' },
-  'command.cardFirs': { en: 'FIRs · 2024 YTD', kn: 'FIRಗಳು · 2024 YTD' },
+  'command.cardFirs': { en: 'FIRs · 2024 YTD', kn: 'ಎಫ್‌ಐಆರ್ · 2024 YTD' },
   'command.cardYoY': { en: 'vs same period 2023', kn: '2023ರ ಅದೇ ಅವಧಿಗೆ ಹೋಲಿಸಿ' },
   'command.cardTopCrime': { en: 'Top crime', kn: 'ಪ್ರಮುಖ ಅಪರಾಧ' },
   'command.cardAnoms': { en: 'Active anomalies', kn: 'ಸಕ್ರಿಯ ಅಸಹಜತೆಗಳು' },
@@ -126,7 +129,7 @@ const translations: Record<string, Record<Lang, string>> = {
   'act.marginalTitle': { en: 'Coverage by unit count', kn: 'ಘಟಕ ಸಂಖ್ಯೆಯ ಪ್ರಕಾರ ವ್ಯಾಪ್ತಿ' },
   'act.marginalNote': { en: 'Predicted-crime coverage from the optimizer at each unit count; +pp is what the two added units buy.', kn: 'ಪ್ರತಿ ಘಟಕ ಸಂಖ್ಯೆಯಲ್ಲಿ ಆಪ್ಟಿಮೈಸರ್‌ನ ಮುನ್ಸೂಚಿತ-ಅಪರಾಧ ವ್ಯಾಪ್ತಿ; +pp ಎಂದರೆ ಸೇರಿಸಿದ ಎರಡು ಘಟಕಗಳ ಲಾಭ.' },
   'replay.step1': { en: 'Forecast drawn', kn: 'ಮುನ್ಸೂಚನೆ ರಚನೆ' },
-  'replay.step2': { en: 'Real FIRs drop in', kn: 'ನೈಜ FIRಗಳು ಬೀಳುತ್ತವೆ' },
+  'replay.step2': { en: 'Real FIRs drop in', kn: 'ನೈಜ ಎಫ್‌ಐಆರ್ ಬೀಳುತ್ತವೆ' },
   'replay.step3': { en: 'Week scored', kn: 'ವಾರದ ಅಂಕ' },
   'replay.vsTrust': { en: 'TRUST reports {n}% captured over the whole held-out test period; each replay week scores only that week.', kn: 'TRUST ಇಡೀ ಪರೀಕ್ಷಾ ಅವಧಿಯ ಮೇಲೆ {n}% ಸೆರೆಹಿಡಿತ ವರದಿ ಮಾಡುತ್ತದೆ; ಪ್ರತಿ ರೀಪ್ಲೇ ವಾರ ಆ ವಾರವನ್ನಷ್ಟೇ ಅಳೆಯುತ್ತದೆ.' },
   'replay.sHitRate': { en: 'Hit rate · this week', kn: 'ಹಿಟ್ ದರ · ಈ ವಾರ' },
@@ -510,7 +513,7 @@ const translations: Record<string, Record<Lang, string>> = {
   'intel.recommendation': { en: 'Recommended Action', kn: 'ಶಿಫಾರಸು ಕ್ರಮ' },
   'intel.deployment': { en: 'Recommended Deployment', kn: 'ಶಿಫಾರಸು ನಿಯೋಜನೆ' },
   'intel.forecast': { en: '7-Day Crime Forecast', kn: '7-ದಿನ ಅಪರಾಧ ಮುನ್ಸೂಚನೆ' },
-  'intel.aiInsight': { en: 'Model insight', kn: 'ಮಾದರಿ ಒಳನೋಡ' },
+  'intel.aiInsight': { en: 'Model insight', kn: 'ಮಾದರಿ ಒಳನೋಟ' },
   'intel.aiSummary': { en: 'Model summary', kn: 'ಮಾದರಿ ಸಾರಾಶ' },
   'intel.trend': { en: 'Trend', kn: 'ಪ್ರವೃತ್ತಿ' },
   'intel.heinous': { en: 'Heinous', kn: 'ಗಂಭೀರ' },
@@ -905,6 +908,54 @@ const crimeTypes: Record<string, string> = {
   'Sexual Offences': 'ಲೈಂಗಿಕ ಅಪರಾಧಗಳು',
 }
 
+/* Plain-language gloss per category. The dataset's own name is kept; this is
+   only what the category covers, shown on hover. */
+const crimeGlossEn: Record<string, string> = {
+  'Arms Act Violations': 'Illegal possession, carrying or sale of weapons',
+  'Cheating & Fraud': 'Deception for money or property, including forgery of intent',
+  'Crimes Against Body': 'Physical harm to a person — assault, hurt, culpable homicide and murder',
+  'Crimes Against Children': 'Offences where the victim is a minor',
+  'Crimes Against Property': 'Theft, burglary, house-breaking and criminal trespass',
+  'Crimes Against Public Tranquility': 'Rioting, unlawful assembly and affray',
+  'Crimes Against Women': 'Offences where the victim is a woman, including cruelty and harassment',
+  'Cyber Crimes': 'Offences committed through computers, phones or the internet',
+  'Domestic Violence': 'Violence or cruelty by a family member or partner',
+  'Economic Offences': 'Financial crime — criminal breach of trust, misappropriation',
+  'Environmental Offences': 'Damage to forest, wildlife, water or air under environmental law',
+  'Forgery & Counterfeiting': 'Fake documents, seals, signatures or currency',
+  'Gambling & Betting': 'Running or taking part in unlawful gaming and wagering',
+  'Kidnapping & Abduction': 'Taking or carrying away a person against their will',
+  'Motor Vehicle Offences': 'Road and traffic offences, including rash and negligent driving',
+  'Narcotics & Drugs': 'Possession, sale or trafficking of controlled substances',
+  'Other IPC Offences': 'IPC offences not falling under the other categories',
+  'Public Order Violations': 'Obstruction, public nuisance and disobedience of lawful orders',
+  'Robbery & Dacoity': 'Theft with force or the threat of force; dacoity is five or more offenders',
+  'Sexual Offences': 'Rape, sexual assault and related offences',
+}
+
+const crimeGlossKn: Record<string, string> = {
+  'Arms Act Violations': 'ಶಸ್ತ್ರಾಸ್ತ್ರಗಳ ಅಕ್ರಮ ಸ್ವಾಧೀನ, ಸಾಗಣೆ ಅಥವಾ ಮಾರಾಟ',
+  'Cheating & Fraud': 'ಹಣ ಅಥವಾ ಆಸ್ತಿಗಾಗಿ ಮೋಸ, ಉದ್ದೇಶಪೂರ್ವಕ ವಂಚನೆ ಸೇರಿದಂತೆ',
+  'Crimes Against Body': 'ವ್ಯಕ್ತಿಗೆ ದೈಹಿಕ ಹಾನಿ — ಹಲ್ಲೆ, ಗಾಯ, ಸಾವಿಗೆ ಕಾರಣವಾಗುವ ಕೃತ್ಯ ಮತ್ತು ಕೊಲೆ',
+  'Crimes Against Children': 'ಸಂತ್ರಸ್ತರು ಅಪ್ರಾಪ್ತ ವಯಸ್ಕರಾಗಿರುವ ಅಪರಾಧಗಳು',
+  'Crimes Against Property': 'ಕಳ್ಳತನ, ಮನೆ ಒಡೆದು ಕಳ್ಳತನ ಮತ್ತು ಅಕ್ರಮ ಪ್ರವೇಶ',
+  'Crimes Against Public Tranquility': 'ಗಲಭೆ, ಕಾನೂನುಬಾಹಿರ ಸಭೆ ಮತ್ತು ಜಗಳ',
+  'Crimes Against Women': 'ಸಂತ್ರಸ್ತರು ಮಹಿಳೆಯಾಗಿರುವ ಅಪರಾಧಗಳು, ಕ್ರೌರ್ಯ ಮತ್ತು ಕಿರುಕುಳ ಸೇರಿದಂತೆ',
+  'Cyber Crimes': 'ಗಣಕಯಂತ್ರ, ದೂರವಾಣಿ ಅಥವಾ ಅಂತರ್ಜಾಲದ ಮೂಲಕ ನಡೆಸಿದ ಅಪರಾಧಗಳು',
+  'Domestic Violence': 'ಕುಟುಂಬದ ಸದಸ್ಯ ಅಥವಾ ಸಂಗಾತಿಯಿಂದ ಹಿಂಸೆ ಅಥವಾ ಕ್ರೌರ್ಯ',
+  'Economic Offences': 'ಆರ್ಥಿಕ ಅಪರಾಧ — ನಂಬಿಕೆ ದ್ರೋಹ, ದುರುಪಯೋಗ',
+  'Environmental Offences': 'ಪರಿಸರ ಕಾನೂನಿನಡಿ ಅರಣ್ಯ, ವನ್ಯಜೀವಿ, ನೀರು ಅಥವಾ ಗಾಳಿಗೆ ಹಾನಿ',
+  'Forgery & Counterfeiting': 'ನಕಲಿ ದಾಖಲೆ, ಮುದ್ರೆ, ಸಹಿ ಅಥವಾ ನೋಟು',
+  'Gambling & Betting': 'ಕಾನೂನುಬಾಹಿರ ಜೂಜು ಮತ್ತು ಬೆಟ್ಟಿಂಗ್ ನಡೆಸುವುದು ಅಥವಾ ಭಾಗವಹಿಸುವುದು',
+  'Kidnapping & Abduction': 'ವ್ಯಕ್ತಿಯ ಇಚ್ಛೆಗೆ ವಿರುದ್ಧವಾಗಿ ಕರೆದೊಯ್ಯುವುದು',
+  'Motor Vehicle Offences': 'ರಸ್ತೆ ಮತ್ತು ಸಂಚಾರ ಅಪರಾಧಗಳು, ಅಜಾಗರೂಕ ಚಾಲನೆ ಸೇರಿದಂತೆ',
+  'Narcotics & Drugs': 'ನಿಷೇಧಿತ ಮಾದಕ ವಸ್ತುಗಳ ಸ್ವಾಧೀನ, ಮಾರಾಟ ಅಥವಾ ಸಾಗಣೆ',
+  'Other IPC Offences': 'ಇತರ ವರ್ಗಗಳಿಗೆ ಸೇರದ IPC ಅಪರಾಧಗಳು',
+  'Public Order Violations': 'ಅಡಚಣೆ, ಸಾರ್ವಜನಿಕ ಉಪದ್ರವ ಮತ್ತು ಕಾನೂನುಬದ್ಧ ಆದೇಶ ಉಲ್ಲಂಘನೆ',
+  'Robbery & Dacoity': 'ಬಲ ಅಥವಾ ಬೆದರಿಕೆಯೊಂದಿಗೆ ಕಳ್ಳತನ; ಐದು ಅಥವಾ ಹೆಚ್ಚು ಆರೋಪಿಗಳಿದ್ದರೆ ಡಕಾಯಿತಿ',
+  'Sexual Offences': 'ಅತ್ಯಾಚಾರ, ಲೈಂಗಿಕ ದೌರ್ಜನ್ಯ ಮತ್ತು ಸಂಬಂಧಿತ ಅಪರಾಧಗಳು',
+}
+
 // ── Context & hooks ──────────────────────────────────────────────────
 
 interface I18nCtx {
@@ -913,6 +964,8 @@ interface I18nCtx {
   t: (key: string) => string
   td: (district: string) => string
   tc: (crimeType: string) => string
+  /** Plain-language gloss for a crime category, for a title tooltip. */
+  tcg: (crimeType: string) => string
 }
 
 const I18nContext = createContext<I18nCtx>({
@@ -921,6 +974,7 @@ const I18nContext = createContext<I18nCtx>({
   t: (k) => k,
   td: (d) => d,
   tc: (c) => c,
+  tcg: () => '',
 })
 
 export function I18nProvider({ children }: { children: ReactNode }) {
@@ -954,8 +1008,14 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     [lang],
   )
 
+  const tcg = useCallback(
+    (crimeType: string): string =>
+      (lang === 'kn' ? crimeGlossKn[crimeType] : crimeGlossEn[crimeType]) ?? '',
+    [lang],
+  )
+
   return (
-    <I18nContext.Provider value={{ lang, setLang: changeLang, t, td, tc }}>
+    <I18nContext.Provider value={{ lang, setLang: changeLang, t, td, tc, tcg }}>
       {children}
     </I18nContext.Provider>
   )

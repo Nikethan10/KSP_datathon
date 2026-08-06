@@ -10,6 +10,7 @@ import {
   loadHotspots,
   matchBoundaryToDataset,
   type Anomaly,
+  type DistrictCentroid,
   type DistrictSummary,
   type HotspotPoint,
   type NetworkSummary,
@@ -67,7 +68,7 @@ const SEVERITY_COLOR: Record<string, string> = {
 }
 
 export default function CommandView() {
-  const { t, tc, td } = useI18n()
+  const { t, tc, td, tcg } = useI18n()
   const { navigateTo } = useNav()
   const stats = useStats()
 
@@ -76,6 +77,7 @@ export default function CommandView() {
   const [districts, setDistricts] = useState<DistrictSummary[]>([])
   const [network, setNetwork] = useState<NetworkSummary | null>(null)
   const [boundaries, setBoundaries] = useState<GeoJSON.FeatureCollection | null>(null)
+  const [centroids, setCentroids] = useState<DistrictCentroid[]>([])
   const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null)
   const [flyTarget, setFlyTarget] = useState<{ lat: number; lon: number; zoom?: number } | null>(null)
 
@@ -117,6 +119,9 @@ export default function CommandView() {
       .catch(() => {})
     fetchJson<GeoJSON.FeatureCollection>('karnataka_districts.json')
       .then((b) => alive && setBoundaries(b))
+      .catch(() => {})
+    fetchJson<DistrictCentroid[]>('district_centroids.json')
+      .then((c) => alive && setCentroids(c))
       .catch(() => {})
     fetchJson<StationSummaryFile>('station_summary.json')
       .then((st) => alive && setStations(st))
@@ -166,6 +171,14 @@ export default function CommandView() {
     const topStations = stations?.districts[selectedDistrict]?.slice(0, 3) ?? []
     return { d, anoms, topStations }
   }, [selectedDistrict, districts, anomalies, stations])
+
+  /* An alert names a district; selecting it is what an officer would do next.
+     Same destination as clicking the district on the map. */
+  const openAlertDistrict = (district: string) => {
+    setSelectedDistrict(district)
+    const c = centroids.find((x) => x.district === district)
+    if (c) setFlyTarget({ lat: c.lat, lon: c.lon, zoom: 9.2 })
+  }
 
   const handleDistrictClick = (boundaryName: string) => {
     const match = matchBoundaryToDataset(boundaryName, districts.map((x) => x.district))
@@ -239,7 +252,7 @@ export default function CommandView() {
               </div>
               <div className="col-span-2 text-[10.5px] text-slate-300">
                 <span className="text-slate-500">{t('command.cardTopCrime')}: </span>
-                {tc(districtCard.d.top_crime_type)}
+                <span title={tcg(districtCard.d.top_crime_type)}>{tc(districtCard.d.top_crime_type)}</span>
               </div>
               {districtCard.anoms.length > 0 && (
                 <div className="col-span-2 text-[10.5px] text-slate-300">
@@ -373,17 +386,23 @@ export default function CommandView() {
           ) : (
             <ul className="space-y-1.5">
               {anomalies.slice(0, 6).map((a, i) => (
-                <li key={`${a.district}-${a.crime_type}-${a.date}-${i}`} className="flex gap-2">
-                  <span
-                    className="mt-[5px] w-1.5 h-1.5 rounded-full shrink-0"
-                    style={{ background: SEVERITY_COLOR[a.severity] ?? '#5b7a8c' }}
-                  />
-                  <div className="min-w-0">
-                    <div className="text-[11px] leading-snug text-slate-200 truncate">{tc(a.crime_type)}</div>
-                    <div className="mt-0.5 text-[9.5px] leading-snug text-slate-500 tabular-nums">
-                      {td(a.district)} · {a.observed} vs {a.expected.toFixed(1)} · z {a.zscore.toFixed(1)}
+                <li key={`${a.district}-${a.crime_type}-${a.date}-${i}`}>
+                  <button
+                    onClick={() => openAlertDistrict(a.district)}
+                    title={t('command.alertOpen').replace('{district}', td(a.district))}
+                    className="w-full flex gap-2 text-left rounded px-1 -mx-1 py-0.5 hover:bg-slate-800/50 transition-colors"
+                  >
+                    <span
+                      className="mt-[5px] w-1.5 h-1.5 rounded-full shrink-0"
+                      style={{ background: SEVERITY_COLOR[a.severity] ?? '#5b7a8c' }}
+                    />
+                    <div className="min-w-0">
+                      <div className="text-[11px] leading-snug text-slate-200 truncate" title={tcg(a.crime_type)}>{tc(a.crime_type)}</div>
+                      <div className="mt-0.5 text-[9.5px] leading-snug text-slate-500 tabular-nums">
+                        {td(a.district)} · {a.observed} vs {a.expected.toFixed(1)} · z {a.zscore.toFixed(1)}
+                      </div>
                     </div>
-                  </div>
+                  </button>
                 </li>
               ))}
             </ul>

@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function AnomalyFeed({ anomalies, onSelect }: Props) {
-  const { t, td, tc } = useI18n()
+  const { t, td, tc, tcg } = useI18n()
 
   const sorted = [...anomalies].sort((a, b) => {
     const spikeA = a.observed > a.expected ? 1 : 0
@@ -44,7 +44,7 @@ export default function AnomalyFeed({ anomalies, onSelect }: Props) {
                   {isSpike ? t('predict.spike') : t('predict.drop')}
                 </span>
                 <span className="text-xs font-semibold text-slate-200 truncate">
-                  {tc(a.crime_type)}
+                  <span title={tcg(a.crime_type)}>{tc(a.crime_type)}</span>
                 </span>
                 <span className="ml-auto shrink-0 text-[10px] text-slate-500 tabular-nums">
                   {date}
@@ -59,8 +59,13 @@ export default function AnomalyFeed({ anomalies, onSelect }: Props) {
               {a.observed > 0 && a.expected > 0 && (
                 <div className="mt-1 text-[9.5px] text-slate-500 leading-snug">
                   {isSpike
-                    ? `${(a.observed / a.expected).toFixed(1)}× above the ${td(a.district)} baseline for ${tc(a.crime_type)}`
-                    : `${(a.expected / Math.max(a.observed, 0.1)).toFixed(1)}× below expected in ${td(a.district)}`}
+                    ? t('anom.above')
+                        .replace('{n}', (a.observed / a.expected).toFixed(1))
+                        .replace('{district}', td(a.district))
+                        .replace('{crime}', tc(a.crime_type))
+                    : t('anom.below')
+                        .replace('{n}', (a.expected / Math.max(a.observed, 0.1)).toFixed(1))
+                        .replace('{district}', td(a.district))}
                 </div>
               )}
             </button>

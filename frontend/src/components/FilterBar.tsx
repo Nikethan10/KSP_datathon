@@ -16,7 +16,7 @@ export default function FilterBar({
   scope, onScope,
   demographics, onDemographics,
 }: Props) {
-  const { t, tc } = useI18n()
+  const { t, tc, tcg } = useI18n()
   return (
     <div className="flex items-center gap-2 flex-wrap">
       <select
@@ -26,7 +26,7 @@ export default function FilterBar({
       >
         <option value="">{t('sense.allCrimes')}</option>
         {crimeTypes.map((ct) => (
-          <option key={ct} value={ct}>{tc(ct)}</option>
+          <option key={ct} value={ct} title={tcg(ct)}>{tc(ct)}</option>
         ))}
       </select>
       <div

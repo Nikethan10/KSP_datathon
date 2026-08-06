@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function DistrictPanel({ districts, selected, onSelect }: Props) {
-  const { t, td, tc } = useI18n()
+  const { t, td, tc, tcg } = useI18n()
   const total = districts.reduce((s, d) => s + d.total_cases, 0)
   const sorted = [...districts].sort((a, b) => b.total_cases - a.total_cases)
   const max = sorted[0]?.total_cases ?? 1
@@ -60,7 +60,7 @@ export default function DistrictPanel({ districts, selected, onSelect }: Props) 
                 <div className="mt-1.5 ml-6 flex items-center gap-3 text-[10px] text-slate-400">
                   <span className="truncate">
                     <span className="text-slate-500">{t('sense.topCrime')}: </span>
-                    {tc(d.top_crime_type)}
+                    <span title={tcg(d.top_crime_type)}>{tc(d.top_crime_type)}</span>
                   </span>
                   <span className="shrink-0 text-red-400/90">
                     {d.heinous_pct.toFixed(0)}% {t('sense.heinous')}
