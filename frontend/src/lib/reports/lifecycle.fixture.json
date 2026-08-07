@@ -1,0 +1,36 @@
+{
+  "_comment": "Shared adjacency table for the report lifecycle. The TypeScript map in lifecycle.ts and the Catalyst function's validator must both equal this. __tests__/lifecycle.test.ts enforces the TS side. When the function is built in Phase 2, move this to a location both can import and keep the test pointing at it.",
+  "transitions": {
+    "SUBMITTED": [
+      { "to": "TRIAGE", "roles": ["officer", "supervisor"] },
+      { "to": "DUPLICATE", "roles": ["officer", "supervisor"], "reasonRequired": true, "dupRequired": true },
+      { "to": "REJECTED", "roles": ["officer", "supervisor"], "reasonRequired": true },
+      { "to": "WITHDRAWN", "roles": ["citizen"], "guard": "within24h" }
+    ],
+    "TRIAGE": [
+      { "to": "NEEDS_INFO", "roles": ["officer", "supervisor"], "reasonRequired": true },
+      { "to": "DUPLICATE", "roles": ["officer", "supervisor"], "reasonRequired": true, "dupRequired": true },
+      { "to": "REJECTED", "roles": ["officer", "supervisor"], "reasonRequired": true },
+      { "to": "VERIFIED_FIR", "roles": ["officer", "supervisor"], "reasonRequired": true, "firRequired": true },
+      { "to": "CLOSED_NO_ACTION", "roles": ["officer", "supervisor"], "reasonRequired": true },
+      { "to": "WITHDRAWN", "roles": ["citizen"], "guard": "within24h" }
+    ],
+    "NEEDS_INFO": [
+      { "to": "TRIAGE", "roles": ["citizen", "officer", "supervisor"] },
+      { "to": "REJECTED", "roles": ["system"], "guard": "after7d", "reasonRequired": true }
+    ],
+    "DUPLICATE": [
+      { "to": "TRIAGE", "roles": ["supervisor"], "reasonRequired": true }
+    ],
+    "REJECTED": [
+      { "to": "TRIAGE", "roles": ["supervisor"], "reasonRequired": true }
+    ],
+    "CLOSED_NO_ACTION": [
+      { "to": "TRIAGE", "roles": ["supervisor"], "reasonRequired": true }
+    ],
+    "VERIFIED_FIR": [
+      { "to": "TRIAGE", "roles": ["supervisor"], "guard": "notSealed", "reasonRequired": true }
+    ],
+    "WITHDRAWN": []
+  }
+}

@@ -1,0 +1,553 @@
+{
+  "_comment": "Demo fixture for the citizen report queue. NOT a pipeline artefact, NOT on copy_data.py's COPY allowlist. Regenerate with gen_demo_reports.py.",
+  "generated_at": "2026-08-29T18:00:00.000Z",
+  "reports": [
+    {
+      "publicRef": "PR-DEMO01",
+      "reporterRef": "seed",
+      "status": "SUBMITTED",
+      "category": "Motor Vehicle Offences",
+      "description": "Two-wheelers riding on the footpath outside the market gate every evening around 7pm. An elderly man was clipped yesterday.",
+      "incidentAt": "2026-08-29T13:00:00.000Z",
+      "lat": 12.95639,
+      "lon": 77.58782,
+      "locationPrecision": "map_pin",
+      "severitySelf": "routine",
+      "lang": "en",
+      "district": "BENGALURU CITY",
+      "dupOf": null,
+      "firNumber": null,
+      "exportedAt": null,
+      "submittedAt": "2026-08-29T15:00:00.000Z",
+      "updatedAt": "2026-08-29T15:00:00.000Z",
+      "attachments": [],
+      "timeline": [
+        {
+          "at": "2026-08-29T15:00:00.000Z",
+          "fromStatus": null,
+          "toStatus": "SUBMITTED",
+          "reasonCode": null,
+          "actorType": "citizen"
+        }
+      ]
+    },
+    {
+      "publicRef": "PR-DEMO02",
+      "reporterRef": "seed",
+      "status": "SUBMITTED",
+      "category": "Cheating & Fraud",
+      "description": "Received a call claiming to be from the electricity board asking for a payment link to avoid disconnection. They knew my consumer number.",
+      "incidentAt": "2026-08-29T11:00:00.000Z",
+      "lat": 12.93393,
+      "lon": 77.57644,
+      "locationPrecision": "map_pin",
+      "severitySelf": "urgent",
+      "lang": "en",
+      "district": "BENGALURU CITY",
+      "dupOf": null,
+      "firNumber": null,
+      "exportedAt": null,
+      "submittedAt": "2026-08-29T12:00:00.000Z",
+      "updatedAt": "2026-08-29T12:00:00.000Z",
+      "attachments": [],
+      "timeline": [
+        {
+          "at": "2026-08-29T12:00:00.000Z",
+          "fromStatus": null,
+          "toStatus": "SUBMITTED",
+          "reasonCode": null,
+          "actorType": "citizen"
+        }
+      ]
+    },
+    {
+      "publicRef": "PR-DEMO03",
+      "reporterRef": "seed",
+      "status": "SUBMITTED",
+      "category": "Crimes Against Property",
+      "description": "Chain snatching near the temple street bus stop this morning. Two men on a black bike, no number plate visible.",
+      "incidentAt": "2026-08-29T05:00:00.000Z",
+      "lat": 12.19231,
+      "lon": 76.45888,
+      "locationPrecision": "map_pin",
+      "severitySelf": "urgent",
+      "lang": "en",
+      "district": "MYSURU CITY",
+      "dupOf": null,
+      "firNumber": null,
+      "exportedAt": null,
+      "submittedAt": "2026-08-29T08:00:00.000Z",
+      "updatedAt": "2026-08-29T08:00:00.000Z",
+      "attachments": [],
+      "timeline": [
+        {
+          "at": "2026-08-29T08:00:00.000Z",
+          "fromStatus": null,
+          "toStatus": "SUBMITTED",
+          "reasonCode": null,
+          "actorType": "citizen"
+        }
+      ]
+    },
+    {
+      "publicRef": "PR-DEMO04",
+      "reporterRef": "seed",
+      "status": "SUBMITTED",
+      "category": "Crimes Against Property",
+      "description": "Chain snatching reported near temple street bus stop this morning. Two men on a black motorcycle with no visible number plate.",
+      "incidentAt": "2026-08-28T23:00:00.000Z",
+      "lat": 12.21908,
+      "lon": 76.42582,
+      "locationPrecision": "map_pin",
+      "severitySelf": "urgent",
+      "lang": "en",
+      "district": "MYSURU CITY",
+      "dupOf": null,
+      "firNumber": null,
+      "exportedAt": null,
+      "submittedAt": "2026-08-29T04:00:00.000Z",
+      "updatedAt": "2026-08-29T04:00:00.000Z",
+      "attachments": [],
+      "timeline": [
+        {
+          "at": "2026-08-29T04:00:00.000Z",
+          "fromStatus": null,
+          "toStatus": "SUBMITTED",
+          "reasonCode": null,
+          "actorType": "citizen"
+        }
+      ]
+    },
+    {
+      "publicRef": "PR-DEMO05",
+      "reporterRef": "seed",
+      "status": "TRIAGE",
+      "category": "Narcotics & Drugs",
+      "description": "Group gathering behind the old warehouse after midnight. Strong smell and foil packets left behind. Happens most nights.",
+      "incidentAt": "2026-08-28T11:00:00.000Z",
+      "lat": 12.87188,
+      "lon": 75.23709,
+      "locationPrecision": "map_pin",
+      "severitySelf": "urgent",
+      "lang": "en",
+      "district": "MANGALURU CITY",
+      "dupOf": null,
+      "firNumber": null,
+      "exportedAt": null,
+      "submittedAt": "2026-08-28T12:00:00.000Z",
+      "updatedAt": "2026-08-28T14:00:00.000Z",
+      "attachments": [],
+      "timeline": [
+        {
+          "at": "2026-08-28T12:00:00.000Z",
+          "fromStatus": null,
+          "toStatus": "SUBMITTED",
+          "reasonCode": null,
+          "actorType": "citizen"
+        },
+        {
+          "at": "2026-08-28T14:00:00.000Z",
+          "fromStatus": "SUBMITTED",
+          "toStatus": "TRIAGE",
+          "reasonCode": null,
+          "actorType": "officer",
+          "actorLabel": "officer"
+        }
+      ]
+    },
+    {
+      "publicRef": "PR-DEMO06",
+      "reporterRef": "seed",
+      "status": "TRIAGE",
+      "category": "Public Order Violations",
+      "description": "Loud unauthorised gathering blocking the main road on weekends, vehicles cannot pass and there is no permission board displayed.",
+      "incidentAt": "2026-08-28T00:00:00.000Z",
+      "lat": 14.05852,
+      "lon": 75.237,
+      "locationPrecision": "map_pin",
+      "severitySelf": "routine",
+      "lang": "en",
+      "district": "SHIVAMOGGA",
+      "dupOf": null,
+      "firNumber": null,
+      "exportedAt": null,
+      "submittedAt": "2026-08-28T02:00:00.000Z",
+      "updatedAt": "2026-08-28T04:00:00.000Z",
+      "attachments": [],
+      "timeline": [
+        {
+          "at": "2026-08-28T02:00:00.000Z",
+          "fromStatus": null,
+          "toStatus": "SUBMITTED",
+          "reasonCode": null,
+          "actorType": "citizen"
+        },
+        {
+          "at": "2026-08-28T04:00:00.000Z",
+          "fromStatus": "SUBMITTED",
+          "toStatus": "TRIAGE",
+          "reasonCode": null,
+          "actorType": "officer",
+          "actorLabel": "officer"
+        }
+      ]
+    },
+    {
+      "publicRef": "PR-DEMO07",
+      "reporterRef": "seed",
+      "status": "NEEDS_INFO",
+      "category": "Crimes Against Body",
+      "description": "Fight broke out near the bus stand, one person was injured and taken away by friends. I did not see who started it.",
+      "incidentAt": "2026-08-27T00:00:00.000Z",
+      "lat": 15.39999,
+      "lon": 75.13301,
+      "locationPrecision": "map_pin",
+      "severitySelf": "urgent",
+      "lang": "en",
+      "district": "HUBBALLI DHARWAD CITY",
+      "dupOf": null,
+      "firNumber": null,
+      "exportedAt": null,
+      "submittedAt": "2026-08-27T06:00:00.000Z",
+      "updatedAt": "2026-08-27T14:00:00.000Z",
+      "attachments": [],
+      "timeline": [
+        {
+          "at": "2026-08-27T06:00:00.000Z",
+          "fromStatus": null,
+          "toStatus": "SUBMITTED",
+          "reasonCode": null,
+          "actorType": "citizen"
+        },
+        {
+          "at": "2026-08-27T08:00:00.000Z",
+          "fromStatus": "SUBMITTED",
+          "toStatus": "TRIAGE",
+          "reasonCode": null,
+          "actorType": "officer",
+          "actorLabel": "officer"
+        },
+        {
+          "at": "2026-08-27T14:00:00.000Z",
+          "fromStatus": "TRIAGE",
+          "toStatus": "NEEDS_INFO",
+          "reasonCode": "insufficient_detail",
+          "actorType": "officer",
+          "actorLabel": "officer"
+        }
+      ]
+    },
+    {
+      "publicRef": "PR-DEMO08",
+      "reporterRef": "seed",
+      "status": "SUBMITTED",
+      "category": "Gambling & Betting",
+      "description": "Card gambling running out of a shed near the canal every night, large amounts of cash changing hands.",
+      "incidentAt": "2026-08-28T15:00:00.000Z",
+      "lat": 16.11178,
+      "lon": 74.8165,
+      "locationPrecision": "map_pin",
+      "severitySelf": "routine",
+      "lang": "en",
+      "district": "BELAGAVI CITY",
+      "dupOf": null,
+      "firNumber": null,
+      "exportedAt": null,
+      "submittedAt": "2026-08-28T22:00:00.000Z",
+      "updatedAt": "2026-08-28T22:00:00.000Z",
+      "attachments": [],
+      "timeline": [
+        {
+          "at": "2026-08-28T22:00:00.000Z",
+          "fromStatus": null,
+          "toStatus": "SUBMITTED",
+          "reasonCode": null,
+          "actorType": "citizen"
+        }
+      ]
+    },
+    {
+      "publicRef": "PR-DEMO09",
+      "reporterRef": "seed",
+      "status": "SUBMITTED",
+      "category": "Environmental Offences",
+      "description": "Industrial effluent being released into the stream behind the layout after dark. Water has turned dark and smells strongly.",
+      "incidentAt": "2026-08-28T10:00:00.000Z",
+      "lat": 13.50653,
+      "lon": 76.9554,
+      "locationPrecision": "map_pin",
+      "severitySelf": "routine",
+      "lang": "en",
+      "district": "TUMAKURU",
+      "dupOf": null,
+      "firNumber": null,
+      "exportedAt": null,
+      "submittedAt": "2026-08-28T16:00:00.000Z",
+      "updatedAt": "2026-08-28T16:00:00.000Z",
+      "attachments": [],
+      "timeline": [
+        {
+          "at": "2026-08-28T16:00:00.000Z",
+          "fromStatus": null,
+          "toStatus": "SUBMITTED",
+          "reasonCode": null,
+          "actorType": "citizen"
+        }
+      ]
+    },
+    {
+      "publicRef": "PR-DEMO10",
+      "reporterRef": "seed",
+      "status": "VERIFIED_FIR",
+      "category": "Cyber Crimes",
+      "description": "My account was accessed and money transferred after I clicked a link sent by someone posing as bank support.",
+      "incidentAt": "2026-08-25T18:00:00.000Z",
+      "lat": 17.2747,
+      "lon": 76.86284,
+      "locationPrecision": "map_pin",
+      "severitySelf": "urgent",
+      "lang": "en",
+      "district": "KALABURAGI",
+      "dupOf": null,
+      "firNumber": "FIR/2026/00409",
+      "exportedAt": null,
+      "submittedAt": "2026-08-26T00:00:00.000Z",
+      "updatedAt": "2026-08-26T08:00:00.000Z",
+      "attachments": [],
+      "timeline": [
+        {
+          "at": "2026-08-26T00:00:00.000Z",
+          "fromStatus": null,
+          "toStatus": "SUBMITTED",
+          "reasonCode": null,
+          "actorType": "citizen"
+        },
+        {
+          "at": "2026-08-26T02:00:00.000Z",
+          "fromStatus": "SUBMITTED",
+          "toStatus": "TRIAGE",
+          "reasonCode": null,
+          "actorType": "officer",
+          "actorLabel": "officer"
+        },
+        {
+          "at": "2026-08-26T08:00:00.000Z",
+          "fromStatus": "TRIAGE",
+          "toStatus": "VERIFIED_FIR",
+          "reasonCode": "verified_on_site",
+          "actorType": "officer",
+          "actorLabel": "officer"
+        }
+      ]
+    },
+    {
+      "publicRef": "PR-DEMO11",
+      "reporterRef": "seed",
+      "status": "VERIFIED_FIR",
+      "category": "Crimes Against Property",
+      "description": "House break-in while the family was away for the weekend. Lock was cut, jewellery and cash missing.",
+      "incidentAt": "2026-08-24T14:00:00.000Z",
+      "lat": 13.23728,
+      "lon": 77.57027,
+      "locationPrecision": "map_pin",
+      "severitySelf": "routine",
+      "lang": "en",
+      "district": "BENGALURU DIST",
+      "dupOf": null,
+      "firNumber": "FIR/2026/00410",
+      "exportedAt": null,
+      "submittedAt": "2026-08-24T18:00:00.000Z",
+      "updatedAt": "2026-08-25T02:00:00.000Z",
+      "attachments": [],
+      "timeline": [
+        {
+          "at": "2026-08-24T18:00:00.000Z",
+          "fromStatus": null,
+          "toStatus": "SUBMITTED",
+          "reasonCode": null,
+          "actorType": "citizen"
+        },
+        {
+          "at": "2026-08-24T20:00:00.000Z",
+          "fromStatus": "SUBMITTED",
+          "toStatus": "TRIAGE",
+          "reasonCode": null,
+          "actorType": "officer",
+          "actorLabel": "officer"
+        },
+        {
+          "at": "2026-08-25T02:00:00.000Z",
+          "fromStatus": "TRIAGE",
+          "toStatus": "VERIFIED_FIR",
+          "reasonCode": "verified_on_site",
+          "actorType": "officer",
+          "actorLabel": "officer"
+        }
+      ]
+    },
+    {
+      "publicRef": "PR-DEMO12",
+      "reporterRef": "seed",
+      "status": "REJECTED",
+      "category": "Arms Act Violations",
+      "description": "Saw someone showing what looked like a country weapon near the field. Could not see clearly, it was getting dark.",
+      "incidentAt": "2026-08-23T10:00:00.000Z",
+      "lat": 12.86807,
+      "lon": 75.23096,
+      "locationPrecision": "map_pin",
+      "severitySelf": "urgent",
+      "lang": "en",
+      "district": "DAKSHINA KANNADA",
+      "dupOf": null,
+      "firNumber": null,
+      "exportedAt": null,
+      "submittedAt": "2026-08-23T12:00:00.000Z",
+      "updatedAt": "2026-08-23T20:00:00.000Z",
+      "attachments": [],
+      "timeline": [
+        {
+          "at": "2026-08-23T12:00:00.000Z",
+          "fromStatus": null,
+          "toStatus": "SUBMITTED",
+          "reasonCode": null,
+          "actorType": "citizen"
+        },
+        {
+          "at": "2026-08-23T14:00:00.000Z",
+          "fromStatus": "SUBMITTED",
+          "toStatus": "TRIAGE",
+          "reasonCode": null,
+          "actorType": "officer",
+          "actorLabel": "officer"
+        },
+        {
+          "at": "2026-08-23T20:00:00.000Z",
+          "fromStatus": "TRIAGE",
+          "toStatus": "REJECTED",
+          "reasonCode": "unverifiable",
+          "actorType": "officer",
+          "actorLabel": "officer"
+        }
+      ]
+    },
+    {
+      "publicRef": "PR-DEMO13",
+      "reporterRef": "seed",
+      "status": "DUPLICATE",
+      "category": "Motor Vehicle Offences",
+      "description": "Rash driving by a tempo on the highway service road, nearly hit a cyclist near the junction.",
+      "incidentAt": "2026-08-27T04:00:00.000Z",
+      "lat": 15.10749,
+      "lon": 76.52267,
+      "locationPrecision": "map_pin",
+      "severitySelf": "routine",
+      "lang": "en",
+      "district": "BALLARI",
+      "dupOf": "PR-DEMO03",
+      "firNumber": null,
+      "exportedAt": null,
+      "submittedAt": "2026-08-27T11:00:00.000Z",
+      "updatedAt": "2026-08-27T19:00:00.000Z",
+      "attachments": [],
+      "timeline": [
+        {
+          "at": "2026-08-27T11:00:00.000Z",
+          "fromStatus": null,
+          "toStatus": "SUBMITTED",
+          "reasonCode": null,
+          "actorType": "citizen"
+        },
+        {
+          "at": "2026-08-27T13:00:00.000Z",
+          "fromStatus": "SUBMITTED",
+          "toStatus": "TRIAGE",
+          "reasonCode": null,
+          "actorType": "officer",
+          "actorLabel": "officer"
+        },
+        {
+          "at": "2026-08-27T19:00:00.000Z",
+          "fromStatus": "TRIAGE",
+          "toStatus": "DUPLICATE",
+          "reasonCode": "duplicate_of",
+          "actorType": "officer",
+          "actorLabel": "officer"
+        }
+      ]
+    },
+    {
+      "publicRef": "PR-DEMO14",
+      "reporterRef": "seed",
+      "status": "CLOSED_NO_ACTION",
+      "category": "Forgery & Counterfeiting",
+      "description": "Suspected fake stamp paper being sold near the registration office.",
+      "incidentAt": "2026-08-21T08:00:00.000Z",
+      "lat": 13.51554,
+      "lon": 74.85253,
+      "locationPrecision": "map_pin",
+      "severitySelf": "routine",
+      "lang": "en",
+      "district": "UDUPI",
+      "dupOf": null,
+      "firNumber": null,
+      "exportedAt": null,
+      "submittedAt": "2026-08-21T10:00:00.000Z",
+      "updatedAt": "2026-08-21T18:00:00.000Z",
+      "attachments": [],
+      "timeline": [
+        {
+          "at": "2026-08-21T10:00:00.000Z",
+          "fromStatus": null,
+          "toStatus": "SUBMITTED",
+          "reasonCode": null,
+          "actorType": "citizen"
+        },
+        {
+          "at": "2026-08-21T12:00:00.000Z",
+          "fromStatus": "SUBMITTED",
+          "toStatus": "TRIAGE",
+          "reasonCode": null,
+          "actorType": "officer",
+          "actorLabel": "officer"
+        },
+        {
+          "at": "2026-08-21T18:00:00.000Z",
+          "fromStatus": "TRIAGE",
+          "toStatus": "CLOSED_NO_ACTION",
+          "reasonCode": "not_a_crime",
+          "actorType": "officer",
+          "actorLabel": "officer"
+        }
+      ]
+    },
+    {
+      "publicRef": "PR-DEMO15",
+      "reporterRef": "seed",
+      "status": "SUBMITTED",
+      "category": "Cheating & Fraud",
+      "description": "aaaaaaaaaaaaaaaaaaaaaaaaaaaa visit www.example-scam-site.com now 9876543210 9876543211",
+      "incidentAt": "2026-08-29T09:00:00.000Z",
+      "lat": 12.93443,
+      "lon": 77.59631,
+      "locationPrecision": "map_pin",
+      "severitySelf": "emergency",
+      "lang": "en",
+      "district": "BENGALURU CITY",
+      "dupOf": null,
+      "firNumber": null,
+      "exportedAt": null,
+      "submittedAt": "2026-08-29T17:00:00.000Z",
+      "updatedAt": "2026-08-29T17:00:00.000Z",
+      "attachments": [],
+      "timeline": [
+        {
+          "at": "2026-08-29T17:00:00.000Z",
+          "fromStatus": null,
+          "toStatus": "SUBMITTED",
+          "reasonCode": null,
+          "actorType": "citizen"
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import MapView from '../components/MapView'
+import { CitizenReportLegend } from '../components/Legend'
+import { reports } from '../lib/reports'
+import type { CitizenReportCell } from '../lib/reports/types'
 import { useI18n } from '../lib/i18n'
 import { useNav } from '../lib/nav'
 import { useFocus } from '../lib/focus'
@@ -28,14 +31,18 @@ import { generateForecast, type ForecastItem } from '../lib/insights'
 function Panel({
   title,
   meta,
+  className = '',
   children,
 }: {
   title: string
   meta?: string
+  className?: string
   children: React.ReactNode
 }) {
   return (
-    <section className="flex flex-col min-h-0 border-t border-slate-800/70 first:border-t-0">
+    <section
+      className={`flex flex-col min-h-0 border-t border-slate-800/70 first:border-t-0 ${className}`}
+    >
       <header className="shrink-0 flex items-baseline justify-between px-3 pt-2.5 pb-1.5">
         <h2 className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-slate-300">
           {title}
@@ -90,6 +97,23 @@ export default function CommandView() {
     if (focus.district) setSelectedDistrict(focus.district)
   }, [focus])
   const [stations, setStations] = useState<StationSummaryFile | null>(null)
+  /* Off by default. The officer opts in, and opting in changes nothing but
+     what is drawn — every count on this screen is computed from FIR
+     artefacts and is untouched by this toggle. */
+  const [showReports, setShowReports] = useState(false)
+  const [reportCells, setReportCells] = useState<CitizenReportCell[] | null>(null)
+
+  /* Fetched only when asked for, and kept in its own state. It never joins the
+     hotspot, anomaly or district arrays — the separation is in the data flow,
+     not just in the styling. */
+  useEffect(() => {
+    if (!showReports || reportCells) return
+    let cancelled = false
+    reports.reportLayer()
+      .then((c) => { if (!cancelled) setReportCells(c) })
+      .catch(() => { if (!cancelled) setReportCells([]) })
+    return () => { cancelled = true }
+  }, [showReports, reportCells])
   const [loading, setLoading] = useState(true)
   const [failed, setFailed] = useState(false)
 
@@ -133,8 +157,8 @@ export default function CommandView() {
   }, [])
 
   const forecast: ForecastItem[] = useMemo(
-    () => generateForecast(anomalies, districts),
-    [anomalies, districts],
+    () => generateForecast(anomalies, districts, t),
+    [anomalies, districts, t],
   )
 
   /* The single most useful sentence on the screen, composed from the largest
@@ -197,9 +221,12 @@ export default function CommandView() {
   }
 
   return (
-    <div className="h-full grid grid-rows-[minmax(0,1.4fr)_minmax(0,1fr)]">
-      {/* ── 1. The map, given the most room ─────────────────────────── */}
-      <div className="relative min-h-0 border-b border-slate-800/70">
+    <div className="h-full flex flex-col lg:flex-row min-h-0">
+      {/* ── 1. The map, given the whole left column ──────────────────
+         A short full-width band wasted the horizontal room and cropped a
+         state that is taller than it is wide. A full-height column suits
+         Karnataka's shape, and nothing below crowds it. */}
+      <div className="relative min-h-0 flex-1 h-1/2 lg:h-auto border-b lg:border-b-0 lg:border-r border-slate-800/70">
         <MapView
           hotspots={hotspots}
           boundaries={boundaries}
@@ -208,7 +235,23 @@ export default function CommandView() {
           emerging={null}
           flyTarget={flyTarget}
           onDistrictClick={handleDistrictClick}
+          autoFit
+          citizenReports={showReports ? reportCells : null}
         />
+
+        <div className="absolute bottom-3 left-3 z-20 flex flex-col gap-2 items-start">
+          {showReports && <CitizenReportLegend />}
+          <button
+            onClick={() => setShowReports((v) => !v)}
+            className={`rounded-md border px-2.5 py-1 text-[10px] transition-colors ${
+              showReports
+                ? 'border-slate-400 bg-slate-800/80 text-slate-100'
+                : 'border-slate-700/70 bg-[#15181c]/85 text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            {t('reports.legendItem')}
+          </button>
+        </div>
 
         {districtCard && (
           <div className="absolute top-3 right-3 z-20 w-[290px] rounded-md border border-slate-700/70 bg-[#15181c]/95 overflow-hidden">
@@ -320,11 +363,14 @@ export default function CommandView() {
         )}
       </div>
 
-      {/* ── 2. Intelligence, then 3. metrics ────────────────────────── */}
-      <div className="min-h-0 overflow-hidden grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-[minmax(0,1fr)] divide-x divide-slate-800/70">
-        <Panel title={t('command.intelligence')}>
+      {/* ── 2. Intelligence, then 3. metrics — a rail beside the map ── */}
+      {/* Beside the map there is a fixed height to divide up; stacked under it
+          there is not, so the rail scrolls as one column instead of squeezing
+          four sections into half a fold. */}
+      <aside className="shrink-0 min-h-0 h-1/2 lg:h-auto w-full lg:w-[340px] xl:w-[384px] 2xl:w-[440px] flex flex-col overflow-y-auto lg:overflow-hidden">
+        <Panel title={t('command.intelligence')} className="shrink-0 lg:max-h-[42%]">
           {headline ? (
-            <div className="flex flex-col gap-3.5 max-w-[46rem]">
+            <div className="flex flex-col gap-3.5">
               <p className="text-[12.5px] leading-relaxed text-slate-200">
                 {t('command.headline')
                   .replace('{crime}', headline.crime)
@@ -378,7 +424,11 @@ export default function CommandView() {
           )}
         </Panel>
 
-        <Panel title={t('command.alerts')} meta={anomalies.length ? String(anomalies.length) : undefined}>
+        <Panel
+          title={t('command.alerts')}
+          meta={anomalies.length ? String(anomalies.length) : undefined}
+          className="shrink-0 lg:shrink lg:grow-[3] lg:basis-0"
+        >
           {anomalies.length === 0 ? (
             <div className="text-[11px] text-slate-500">
               {loading ? t('common.loading') : t('command.noAlerts')}
@@ -409,37 +459,36 @@ export default function CommandView() {
           )}
         </Panel>
 
-        <div className="flex flex-col min-h-0 divide-y divide-slate-800/70">
-          <div className="shrink-0 grid grid-cols-2">
-            <Metric value={stat(stats.firs)} label={t('command.mFirs')} />
-            <Metric value={stat(stats.districts)} label={t('command.mDistricts')} />
-            <Metric
-              value={loading ? '—' : hotspots.length.toLocaleString('en-IN')}
-              label={t('command.mHotCells')}
-            />
-            <Metric
-              value={network ? network.n_communities.toLocaleString('en-IN') : '—'}
-              label={t('command.mNetworks')}
-            />
-          </div>
-          <div className="flex-1 min-h-0 overflow-y-auto">
-            <div className="px-3 pt-2.5 pb-1.5 text-[9.5px] font-semibold uppercase tracking-[0.18em] text-slate-300">
-              {t('command.topDistricts')}
-            </div>
-            <ul className="px-3 pb-3 space-y-1">
-              {topDistricts.map((d, i) => (
-                <li key={d.district} className="flex items-baseline gap-2 text-[10.5px]">
-                  <span className="w-3 tabular-nums text-slate-400">{i + 1}</span>
-                  <span className="flex-1 truncate text-slate-300">{td(d.district)}</span>
-                  <span className="tabular-nums text-slate-500">
-                    {d.total_cases.toLocaleString('en-IN')}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="shrink-0 grid grid-cols-2 border-t border-slate-800/70">
+          <Metric value={stat(stats.firs)} label={t('command.mFirs')} />
+          <Metric value={stat(stats.districts)} label={t('command.mDistricts')} />
+          <Metric
+            value={loading ? '—' : hotspots.length.toLocaleString('en-IN')}
+            label={t('command.mHotCells')}
+          />
+          <Metric
+            value={network ? network.n_communities.toLocaleString('en-IN') : '—'}
+            label={t('command.mNetworks')}
+          />
         </div>
-      </div>
+
+        <Panel
+          title={t('command.topDistricts')}
+          className="shrink-0 lg:shrink lg:grow-[2] lg:basis-0"
+        >
+          <ul className="space-y-1">
+            {topDistricts.map((d, i) => (
+              <li key={d.district} className="flex items-baseline gap-2 text-[10.5px]">
+                <span className="w-3 tabular-nums text-slate-400">{i + 1}</span>
+                <span className="flex-1 truncate text-slate-300">{td(d.district)}</span>
+                <span className="tabular-nums text-slate-500">
+                  {d.total_cases.toLocaleString('en-IN')}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </Panel>
+      </aside>
     </div>
   )
 }

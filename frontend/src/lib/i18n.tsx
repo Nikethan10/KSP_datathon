@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useCallback, type ReactNode } from 'react'
+import { crimeTypes, crimeGlossEn, crimeGlossKn } from './crimeTypes'
 
 export type Lang = 'en' | 'kn'
 
@@ -21,9 +22,13 @@ const translations: Record<string, Record<Lang, string>> = {
   // ── COMMAND ────────────────────────────────────────────────────────
   'command.intelligence': { en: 'Intelligence', kn: 'ಗುಪ್ತಚರ' },
   'command.alerts': { en: 'Active alerts', kn: 'ಸಕ್ರಿಯ ಎಚ್ಚರಿಕೆಗಳು' },
+  /* States the finding and where it is worst. The excess, the interval and the
+     district count are NOT repeated here — the stat row directly beneath carries
+     all three, which is what makes the claim checkable. Saying them twice was
+     what made this panel read as padded. */
   'command.headline': {
-    en: '{crime} is running {excess} cases above its STL baseline across {n} district(s), most sharply in {district}. The 80% interval on that departure is {lo} to {hi}.',
-    kn: '{crime} {n} ಜಿಲ್ಲೆಗಳಲ್ಲಿ ತನ್ನ STL ಮೂಲಮಟ್ಟಕ್ಕಿಂತ {excess} ಪ್ರಕರಣಗಳಷ್ಟು ಹೆಚ್ಚಾಗಿ ನಡೆಯುತ್ತಿದೆ, {district}ದಲ್ಲಿ ಅತಿ ತೀವ್ರವಾಗಿದೆ. ಈ ವ್ಯತ್ಯಾಸದ 80% ಮಧ್ಯಂತರ {lo} ರಿಂದ {hi}.',
+    en: '{crime} is running above its STL baseline, most sharply in {district}.',
+    kn: '{crime} ತನ್ನ STL ಮೂಲಮಟ್ಟಕ್ಕಿಂತ ಹೆಚ್ಚಾಗಿ ನಡೆಯುತ್ತಿದೆ, {district}ದಲ್ಲಿ ಅತಿ ತೀವ್ರವಾಗಿದೆ.',
   },
   'command.openForecast': { en: 'Open in forecast', kn: 'ಮುನ್ಸೂಚನೆಯಲ್ಲಿ ತೆರೆಯಿರಿ' },
   'anom.above': { en: '{n}× above the {district} baseline for {crime}', kn: '{crime}ಗಾಗಿ {district} ಮೂಲಮಟ್ಟಕ್ಕಿಂತ {n}× ಹೆಚ್ಚು' },
@@ -421,6 +426,7 @@ const translations: Record<string, Record<Lang, string>> = {
   'act.district': { en: 'District', kn: 'ಜಿಲ್ಲೆ' },
   'act.perPatrol': { en: 'coverage / unit', kn: 'ಪ್ರತಿ ಘಟಕಕ್ಕೆ ವ್ಯಾಪ್ತಿ' },
   'act.beatRadius': { en: 'beat radius per unit', kn: 'ಪ್ರತಿ ಘಟಕಕ್ಕೆ ಬೀಟ್ ತ್ರಿಜ್ಯ' },
+  'act.howCalculated': { en: 'How this is calculated', kn: 'ಇದನ್ನು ಹೇಗೆ ಲೆಕ್ಕಹಾಕಲಾಗಿದೆ' },
   'act.efficiencyNote': {
     en: 'Each unit runs a 2 km beat placed on the highest-risk cluster in this district. Coverage per unit falls as you add units (diminishing returns) — the efficient number is where it plateaus.',
     kn: 'ಪ್ರತಿ ಘಟಕವು ಈ ಜಿಲ್ಲೆಯ ಅತಿ ಹೆಚ್ಚು ಅಪಾಯದ ಸಮೂಹದಲ್ಲಿ 2 ಕಿಮೀ ಬೀಟ್ ನಡೆಸುತ್ತದೆ. ಘಟಕಗಳನ್ನು ಸೇರಿಸಿದಂತೆ ಪ್ರತಿ ಘಟಕದ ವ್ಯಾಪ್ತಿ ಕಡಿಮೆಯಾಗುತ್ತದೆ — ಅದು ಸ್ಥಿರವಾಗುವ ಸಂಖ್ಯೆಯೇ ದಕ್ಷ ಸಂಖ್ಯೆ.',
@@ -458,6 +464,16 @@ const translations: Record<string, Record<Lang, string>> = {
   'trust.reliabilityTitle': { en: 'How reliable is PRAHARI?', kn: 'ಪ್ರಹರಿ ಎಷ್ಟು ವಿಶ್ವಾಸಾರ್ಹ?' },
   'trust.showExamples': { en: 'Show worked examples', kn: 'ಉದಾಹರಣೆಗಳನ್ನು ತೋರಿಸಿ' },
   'trust.hideExamples': { en: 'Hide examples', kn: 'ಉದಾಹರಣೆಗಳನ್ನು ಮರೆಮಾಡಿ' },
+  'trust.baseRate': { en: 'base rate', kn: 'ಮೂಲ ದರ' },
+  'trust.cellShift': { en: 'cell {cell} · {date} · shift {shift}', kn: 'ಕೋಶ {cell} · {date} · ಪಾಳಿ {shift}' },
+  'console.helpTooltip': { en: 'What am I looking at?', kn: 'ನಾನು ಏನನ್ನು ನೋಡುತ್ತಿದ್ದೇನೆ?' },
+  'act.printSubtitle': { en: 'Crime Intelligence · Karnataka State Police', kn: 'ಅಪರಾಧ ಗುಪ್ತಚರ · ಕರ್ನಾಟಕ ರಾಜ್ಯ ಪೊಲೀಸ್' },
+  'act.printPatrols': { en: '{n} patrols', kn: '{n} ಗಸ್ತುಗಳು' },
+  'act.printRiskCov': { en: '{pct}% risk coverage', kn: '{pct}% ಅಪಾಯ ವ್ಯಾಪ್ತಿ' },
+  'act.printUplift': { en: '{x} coverage uplift vs status quo', kn: '{x} ವ್ಯಾಪ್ತಿ ಉನ್ನತಿ ಪ್ರಸ್ತುತ ಸ್ಥಿತಿಗಿಂತ' },
+  'act.per30d': { en: '/ 30d', kn: '/ 30ದಿ' },
+  'act.cellsCovered': { en: '{n} cells', kn: '{n} ಕೋಶಗಳು' },
+  'forecast.stlDetail': { en: '{spikes} spike(s), {drops} drop(s) across {districts} district(s). Net {sign}{excess} vs STL baseline (80% interval {lo} to {hi}).', kn: '{districts} ಜಿಲ್ಲೆಗಳಲ್ಲಿ {spikes} ಏರಿಕೆ, {drops} ಇಳಿಕೆ. STL ಮೂಲಮಟ್ಟದಿಂದ ನಿವ್ವಳ {sign}{excess} (80% ಅಂತರ {lo} ರಿಂದ {hi}).' },
   'trust.limitCorpus': { en: 'Scores are benchmarked on a synthetic FIR corpus with planted patterns (a ground-truth test that the pipeline recovers known structure). The same harness runs unchanged on live CCTNS data — real-world scores will differ.', kn: 'ಅಂಕಗಳನ್ನು ಕೃತಕ FIR ದತ್ತಸಂಚಯದ ಮೇಲೆ ಮಾನದಂಡ ಮಾಡಲಾಗಿದೆ; ನೈಜ ದತ್ತಾಂಶದಲ್ಲಿ ಅಂಕಗಳು ಭಿನ್ನವಾಗಿರುತ್ತವೆ.' },
   'trust.reliabilitySub': { en: 'every number below is measured on held-out data the model never saw — nothing is estimated', kn: 'ಕೆಳಗಿನ ಪ್ರತಿ ಸಂಖ್ಯೆಯೂ ಮಾದರಿ ನೋಡದ ದತ್ತಾಂಶದ ಮೇಲೆ ಅಳೆಯಲಾಗಿದೆ — ಯಾವುದೂ ಅಂದಾಜಲ್ಲ' },
   'forecast.title': { en: 'Departure from baseline', kn: 'ಬೇಸ್‌ಲೈನ್‌ನಿಂದ ವಿಚಲನ' },
@@ -830,6 +846,206 @@ const translations: Record<string, Record<Lang, string>> = {
     en: 'Every step writes JSON or GeoJSON artefacts that the console loads directly. Because nothing is computed in the browser, the console stays responsive on modest hardware and the same artefacts can be served from a scheduled nightly job.',
     kn: 'ಪ್ರತಿ ಹಂತವೂ ಕನ್ಸೋಲ್ ನೇರವಾಗಿ ಲೋಡ್ ಮಾಡುವ JSON ಅಥವಾ GeoJSON ಕಡತಗಳನ್ನು ಬರೆಯುತ್ತದೆ. ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಏನನ್ನೂ ಲೆಕ್ಕಹಾಕದ ಕಾರಣ ಸಾಧಾರಣ ಯಂತ್ರಾಂಶದಲ್ಲೂ ಕನ್ಸೋಲ್ ಚುರುಕಾಗಿರುತ್ತದೆ, ಮತ್ತು ಅದೇ ಕಡತಗಳನ್ನು ನಿಗದಿತ ರಾತ್ರಿ ಕೆಲಸದಿಂದ ಒದಗಿಸಬಹುದು.',
   },
+
+  // ── Citizen report portal ──────────────────────────────────────────
+  /* NOTE: the consent and emergency strings below carry legal weight. They read
+     correctly, but a native Kannada speaker should review them before this is
+     shown to the public. */
+  'report.nav': { en: 'Report an issue', kn: 'ದೂರು ಸಲ್ಲಿಸಿ' },
+  'report.stamp': { en: 'FILE A REPORT', kn: 'ದೂರು ದಾಖಲಿಸಿ' },
+  'report.title': { en: 'Report an issue', kn: 'ದೂರು ಸಲ್ಲಿಸಿ' },
+  'report.lede': {
+    en: 'For incidents that have already happened and are not an emergency. A station officer reviews every report.',
+    kn: 'ಈಗಾಗಲೇ ನಡೆದಿರುವ ಮತ್ತು ತುರ್ತು ಅಲ್ಲದ ಘಟನೆಗಳಿಗಾಗಿ. ಪ್ರತಿ ದೂರನ್ನೂ ಠಾಣಾ ಅಧಿಕಾರಿ ಪರಿಶೀಲಿಸುತ್ತಾರೆ.',
+  },
+  'report.demoBanner': {
+    en: 'Demonstration only. Nothing you enter is sent to the police, and the verification code is fixed.',
+    kn: 'ಪ್ರದರ್ಶನಕ್ಕಾಗಿ ಮಾತ್ರ. ನೀವು ನಮೂದಿಸಿದ್ದು ಪೊಲೀಸರಿಗೆ ಹೋಗುವುದಿಲ್ಲ, ಪರಿಶೀಲನಾ ಸಂಕೇತ ನಿಗದಿತವಾಗಿದೆ.',
+  },
+
+  'report.emergency.title': { en: 'Call 112 now', kn: 'ಈಗಲೇ 112 ಕರೆ ಮಾಡಿ' },
+  'report.emergency.body': {
+    en: 'This form is not monitored around the clock. If someone is in danger, or a crime is happening right now, call 112 or go to the nearest police station. Do not wait for a reply here.',
+    kn: 'ಈ ಅರ್ಜಿಯನ್ನು ದಿನವಿಡೀ ಗಮನಿಸಲಾಗುವುದಿಲ್ಲ. ಯಾರಿಗಾದರೂ ಅಪಾಯವಿದ್ದರೆ ಅಥವಾ ಈಗಲೇ ಅಪರಾಧ ನಡೆಯುತ್ತಿದ್ದರೆ 112 ಕರೆ ಮಾಡಿ ಅಥವಾ ಹತ್ತಿರದ ಠಾಣೆಗೆ ಹೋಗಿ. ಇಲ್ಲಿ ಉತ್ತರಕ್ಕಾಗಿ ಕಾಯಬೇಡಿ.',
+  },
+  'report.emergency.back': { en: 'Go back', kn: 'ಹಿಂದೆ ಹೋಗಿ' },
+
+  'report.blocked.title': { en: 'Please report this in person', kn: 'ದಯವಿಟ್ಟು ಖುದ್ದಾಗಿ ದೂರು ನೀಡಿ' },
+  'report.blocked.body': {
+    en: 'Offences of this kind carry legal protections for the identity of those involved, and cannot be handled through a public web form. Call 112 or go to the nearest police station, where a case can be registered properly and confidentially.',
+    kn: 'ಈ ಬಗೆಯ ಅಪರಾಧಗಳಲ್ಲಿ ಸಂಬಂಧಪಟ್ಟವರ ಗುರುತಿಗೆ ಕಾನೂನಿನ ರಕ್ಷಣೆ ಇರುತ್ತದೆ, ಆದ್ದರಿಂದ ಸಾರ್ವಜನಿಕ ಅರ್ಜಿಯ ಮೂಲಕ ಇವನ್ನು ನಿರ್ವಹಿಸಲಾಗದು. 112 ಕರೆ ಮಾಡಿ ಅಥವಾ ಹತ್ತಿರದ ಠಾಣೆಗೆ ಹೋಗಿ, ಅಲ್ಲಿ ಪ್ರಕರಣವನ್ನು ಸರಿಯಾಗಿ ಮತ್ತು ಗೌಪ್ಯವಾಗಿ ದಾಖಲಿಸಬಹುದು.',
+  },
+
+  'report.step.what': { en: 'What happened', kn: 'ಏನಾಯಿತು' },
+  'report.step.where': { en: 'Where and when', kn: 'ಎಲ್ಲಿ ಮತ್ತು ಯಾವಾಗ' },
+  'report.step.verify': { en: 'Verify and send', kn: 'ಪರಿಶೀಲಿಸಿ ಕಳುಹಿಸಿ' },
+
+  'report.category.label': { en: 'Type of incident', kn: 'ಘಟನೆಯ ಪ್ರಕಾರ' },
+  'report.category.placeholder': { en: 'Select a category', kn: 'ವರ್ಗವನ್ನು ಆರಿಸಿ' },
+  'report.severity.label': { en: 'Is this still happening?', kn: 'ಇದು ಈಗಲೂ ನಡೆಯುತ್ತಿದೆಯೇ?' },
+  'report.severity.emergency': { en: 'Happening right now', kn: 'ಈಗಲೇ ನಡೆಯುತ್ತಿದೆ' },
+  'report.severity.urgent': { en: 'Recent, needs attention', kn: 'ಇತ್ತೀಚಿನದು, ಗಮನ ಬೇಕು' },
+  'report.severity.routine': { en: 'Already over', kn: 'ಈಗಾಗಲೇ ಮುಗಿದಿದೆ' },
+
+  'report.description.label': { en: 'What happened', kn: 'ಏನಾಯಿತು' },
+  'report.description.hint': {
+    en: 'What you saw, when, and anything that would help an officer find the place. Do not include your own contact details here.',
+    kn: 'ನೀವು ಕಂಡದ್ದು, ಯಾವಾಗ, ಮತ್ತು ಸ್ಥಳ ಹುಡುಕಲು ಸಹಾಯವಾಗುವ ವಿವರ. ನಿಮ್ಮ ಸಂಪರ್ಕ ವಿವರವನ್ನು ಇಲ್ಲಿ ಬರೆಯಬೇಡಿ.',
+  },
+  'report.description.placeholder': {
+    en: 'Describe what happened',
+    kn: 'ಏನಾಯಿತು ಎಂದು ವಿವರಿಸಿ',
+  },
+  'report.when.label': { en: 'When did it happen', kn: 'ಯಾವಾಗ ನಡೆಯಿತು' },
+  'report.district.label': { en: 'District', kn: 'ಜಿಲ್ಲೆ' },
+  'report.location.label': { en: 'Location', kn: 'ಸ್ಥಳ' },
+  'report.location.hint': {
+    en: 'Reported at police-station level. An exact pin is never published.',
+    kn: 'ಠಾಣಾ ಮಟ್ಟದಲ್ಲಿ ದಾಖಲಿಸಲಾಗುತ್ತದೆ. ನಿಖರ ಸ್ಥಳವನ್ನು ಎಂದಿಗೂ ಪ್ರಕಟಿಸುವುದಿಲ್ಲ.',
+  },
+  'report.location.useGps': { en: 'Use my location', kn: 'ನನ್ನ ಸ್ಥಳ ಬಳಸಿ' },
+  'report.location.gpsFailed': { en: 'Could not get your location', kn: 'ನಿಮ್ಮ ಸ್ಥಳ ಪಡೆಯಲಾಗಲಿಲ್ಲ' },
+
+  'report.email.label': { en: 'Email address', kn: 'ಇಮೇಲ್ ವಿಳಾಸ' },
+  'report.email.hint': {
+    en: 'Used once to send a code, and to let you check the status later.',
+    kn: 'ಸಂಕೇತ ಕಳುಹಿಸಲು ಮತ್ತು ನಂತರ ಸ್ಥಿತಿ ನೋಡಲು ಮಾತ್ರ ಬಳಸಲಾಗುತ್ತದೆ.',
+  },
+  'report.otp.send': { en: 'Send code', kn: 'ಸಂಕೇತ ಕಳುಹಿಸಿ' },
+  'report.otp.label': { en: 'Verification code', kn: 'ಪರಿಶೀಲನಾ ಸಂಕೇತ' },
+  'report.otp.demoHint': {
+    en: 'Demonstration: enter 000000.',
+    kn: 'ಪ್ರದರ್ಶನ: 000000 ನಮೂದಿಸಿ.',
+  },
+  'report.otp.verify': { en: 'Verify', kn: 'ಪರಿಶೀಲಿಸಿ' },
+  'report.otp.verified': { en: 'Verified', kn: 'ಪರಿಶೀಲಿಸಲಾಗಿದೆ' },
+
+  'report.consent': {
+    en: 'I understand this is not an emergency channel, that what I write will be read by police staff, and that knowingly filing a false report is an offence.',
+    kn: 'ಇದು ತುರ್ತು ಮಾರ್ಗವಲ್ಲ, ನಾನು ಬರೆದದ್ದನ್ನು ಪೊಲೀಸ್ ಸಿಬ್ಬಂದಿ ಓದುತ್ತಾರೆ, ಮತ್ತು ತಿಳಿದೂ ಸುಳ್ಳು ದೂರು ನೀಡುವುದು ಅಪರಾಧ ಎಂದು ನಾನು ಅರ್ಥಮಾಡಿಕೊಂಡಿದ್ದೇನೆ.',
+  },
+  'report.submit': { en: 'Send report', kn: 'ದೂರು ಕಳುಹಿಸಿ' },
+  'report.submitting': { en: 'Sending', kn: 'ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ' },
+
+  'report.done.title': { en: 'Report received', kn: 'ದೂರು ಸ್ವೀಕರಿಸಲಾಗಿದೆ' },
+  'report.done.refLabel': { en: 'Your reference number', kn: 'ನಿಮ್ಮ ಉಲ್ಲೇಖ ಸಂಖ್ಯೆ' },
+  'report.done.body': {
+    en: 'Keep this number. You can use it to check the status of your report at any time.',
+    kn: 'ಈ ಸಂಖ್ಯೆಯನ್ನು ಇಟ್ಟುಕೊಳ್ಳಿ. ಯಾವಾಗ ಬೇಕಾದರೂ ನಿಮ್ಮ ದೂರಿನ ಸ್ಥಿತಿ ನೋಡಲು ಇದನ್ನು ಬಳಸಬಹುದು.',
+  },
+  'report.done.dup': {
+    en: 'This looks similar to a report already on file. An officer will check whether they are the same incident.',
+    kn: 'ಇದು ಈಗಾಗಲೇ ದಾಖಲಾದ ದೂರಿನಂತೆ ಕಾಣುತ್ತದೆ. ಇವು ಒಂದೇ ಘಟನೆಯೇ ಎಂದು ಅಧಿಕಾರಿ ಪರಿಶೀಲಿಸುತ್ತಾರೆ.',
+  },
+  'report.done.track': { en: 'Check status', kn: 'ಸ್ಥಿತಿ ನೋಡಿ' },
+  'report.done.another': { en: 'File another report', kn: 'ಇನ್ನೊಂದು ದೂರು ಸಲ್ಲಿಸಿ' },
+
+  'report.err.RATE_LIMITED': { en: 'Too many attempts. Try again shortly.', kn: 'ಹಲವು ಪ್ರಯತ್ನಗಳು. ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ.' },
+  'report.err.OTP_INVALID': { en: 'That code is not right.', kn: 'ಆ ಸಂಕೇತ ಸರಿಯಿಲ್ಲ.' },
+  'report.err.OTP_EXPIRED': { en: 'That code has expired. Request a new one.', kn: 'ಸಂಕೇತದ ಅವಧಿ ಮುಗಿದಿದೆ. ಹೊಸದನ್ನು ಕೇಳಿ.' },
+  'report.err.OTP_ATTEMPTS': { en: 'Too many wrong codes. Request a new one.', kn: 'ಹಲವು ತಪ್ಪು ಸಂಕೇತಗಳು. ಹೊಸದನ್ನು ಕೇಳಿ.' },
+  'report.err.UNAUTHENTICATED': { en: 'Verify your email address first.', kn: 'ಮೊದಲು ನಿಮ್ಮ ಇಮೇಲ್ ಪರಿಶೀಲಿಸಿ.' },
+  'report.err.FORBIDDEN': { en: 'You cannot do that.', kn: 'ನೀವು ಅದನ್ನು ಮಾಡಲಾಗದು.' },
+  'report.err.NOT_FOUND': { en: 'No report with that reference number.', kn: 'ಆ ಉಲ್ಲೇಖ ಸಂಖ್ಯೆಯ ದೂರು ಸಿಗಲಿಲ್ಲ.' },
+  'report.err.VALIDATION': { en: 'Please check the highlighted fields.', kn: 'ಗುರುತಿಸಿದ ಜಾಗಗಳನ್ನು ಪರಿಶೀಲಿಸಿ.' },
+  'report.err.BLOCKED': { en: 'This cannot be reported here.', kn: 'ಇದನ್ನು ಇಲ್ಲಿ ದಾಖಲಿಸಲಾಗದು.' },
+  'report.err.SEALED': { en: 'This report is closed to further changes.', kn: 'ಈ ದೂರಿನಲ್ಲಿ ಇನ್ನು ಬದಲಾವಣೆ ಸಾಧ್ಯವಿಲ್ಲ.' },
+  'report.err.ILLEGAL_TRANSITION': { en: 'That change is not allowed.', kn: 'ಆ ಬದಲಾವಣೆಗೆ ಅವಕಾಶವಿಲ್ಲ.' },
+  'report.err.ATTACHMENT_TOO_LARGE': { en: 'That file is too large.', kn: 'ಆ ಕಡತ ತುಂಬಾ ದೊಡ್ಡದು.' },
+  'report.err.ATTACHMENT_TYPE': { en: 'Images only.', kn: 'ಚಿತ್ರಗಳು ಮಾತ್ರ.' },
+  'report.err.OFFLINE': { en: 'You appear to be offline.', kn: 'ನೀವು ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿರುವಂತಿದೆ.' },
+  'report.err.SERVER': { en: 'Something went wrong. Try again.', kn: 'ಏನೋ ತಪ್ಪಾಗಿದೆ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.' },
+
+  // ── Report status lookup ───────────────────────────────────────────
+  'reportStatus.stamp': { en: 'REPORT STATUS', kn: 'ದೂರಿನ ಸ್ಥಿತಿ' },
+  'reportStatus.title': { en: 'Check a report', kn: 'ದೂರಿನ ಸ್ಥಿತಿ' },
+  'reportStatus.lede': {
+    en: 'Enter the reference number you were given when you filed.',
+    kn: 'ದೂರು ಸಲ್ಲಿಸಿದಾಗ ನಿಮಗೆ ಸಿಕ್ಕ ಉಲ್ಲೇಖ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ.',
+  },
+  'reportStatus.refLabel': { en: 'Reference number', kn: 'ಉಲ್ಲೇಖ ಸಂಖ್ಯೆ' },
+  'reportStatus.lookup': { en: 'Look up', kn: 'ಹುಡುಕಿ' },
+  'reportStatus.signInFirst': {
+    en: 'Verify the email address you used when filing, so we can show only your own reports.',
+    kn: 'ದೂರು ಸಲ್ಲಿಸುವಾಗ ಬಳಸಿದ ಇಮೇಲ್ ಪರಿಶೀಲಿಸಿ, ಆಗ ನಿಮ್ಮ ದೂರುಗಳನ್ನು ಮಾತ್ರ ತೋರಿಸಬಹುದು.',
+  },
+  'reportStatus.mine': { en: 'Your reports', kn: 'ನಿಮ್ಮ ದೂರುಗಳು' },
+  'reportStatus.none': { en: 'No reports yet.', kn: 'ಇನ್ನೂ ದೂರುಗಳಿಲ್ಲ.' },
+  'reportStatus.filed': { en: 'Filed', kn: 'ಸಲ್ಲಿಸಿದ್ದು' },
+  'reportStatus.updated': { en: 'Last update', kn: 'ಕೊನೆಯ ಬದಲಾವಣೆ' },
+  'reportStatus.timeline': { en: 'History', kn: 'ಇತಿಹಾಸ' },
+  'reportStatus.withdraw': { en: 'Withdraw this report', kn: 'ಈ ದೂರನ್ನು ಹಿಂಪಡೆಯಿರಿ' },
+  'reportStatus.reply': { en: 'Add the information requested', kn: 'ಕೇಳಿದ ಮಾಹಿತಿ ಸೇರಿಸಿ' },
+  'reportStatus.send': { en: 'Send', kn: 'ಕಳುಹಿಸಿ' },
+
+  'rstatus.SUBMITTED': { en: 'Received', kn: 'ಸ್ವೀಕರಿಸಲಾಗಿದೆ' },
+  'rstatus.TRIAGE': { en: 'Under review', kn: 'ಪರಿಶೀಲನೆಯಲ್ಲಿದೆ' },
+  'rstatus.NEEDS_INFO': { en: 'More information needed', kn: 'ಹೆಚ್ಚಿನ ಮಾಹಿತಿ ಬೇಕು' },
+  'rstatus.DUPLICATE': { en: 'Already reported', kn: 'ಈಗಾಗಲೇ ದಾಖಲಾಗಿದೆ' },
+  'rstatus.REJECTED': { en: 'Not taken forward', kn: 'ಮುಂದುವರಿಸಲಾಗಿಲ್ಲ' },
+  'rstatus.VERIFIED_FIR': { en: 'Verified, FIR registered', kn: 'ಪರಿಶೀಲಿಸಲಾಗಿದೆ, ಎಫ್‌ಐಆರ್ ದಾಖಲು' },
+  'rstatus.CLOSED_NO_ACTION': { en: 'Closed, no action', kn: 'ಮುಚ್ಚಲಾಗಿದೆ, ಕ್ರಮವಿಲ್ಲ' },
+  'rstatus.WITHDRAWN': { en: 'Withdrawn', kn: 'ಹಿಂಪಡೆಯಲಾಗಿದೆ' },
+
+  'reason.insufficient_detail': { en: 'Not enough detail', kn: 'ಸಾಕಷ್ಟು ವಿವರವಿಲ್ಲ' },
+  'reason.outside_jurisdiction': { en: 'Outside jurisdiction', kn: 'ವ್ಯಾಪ್ತಿಯ ಹೊರಗೆ' },
+  'reason.duplicate_of': { en: 'Duplicate', kn: 'ಪುನರಾವರ್ತನೆ' },
+  'reason.not_a_crime': { en: 'Not a police matter', kn: 'ಪೊಲೀಸ್ ವಿಷಯವಲ್ಲ' },
+  'reason.unverifiable': { en: 'Could not be verified', kn: 'ಪರಿಶೀಲಿಸಲಾಗಲಿಲ್ಲ' },
+  'reason.no_response': { en: 'No reply received', kn: 'ಉತ್ತರ ಬರಲಿಲ್ಲ' },
+  'reason.verified_on_site': { en: 'Verified', kn: 'ಪರಿಶೀಲಿಸಲಾಗಿದೆ' },
+  'reason.referred_elsewhere': { en: 'Referred elsewhere', kn: 'ಬೇರೆಡೆಗೆ ವರ್ಗಾಯಿಸಲಾಗಿದೆ' },
+  'reason.supervisor_reopen': { en: 'Reopened by supervisor', kn: 'ಮೇಲಧಿಕಾರಿಯಿಂದ ಮರುತೆರೆಯಲಾಗಿದೆ' },
+
+  // ── Officer triage ─────────────────────────────────────────────────
+  'tab.reports': { en: 'REPORTS', kn: 'ದೂರುಗಳು' },
+  'reports.tipUnverified': { en: 'Unverified citizen report', kn: 'ಪರಿಶೀಲಿಸದ ನಾಗರಿಕ ದೂರು' },
+  'reports.tipCount': {
+    en: '{n} report(s) in this cell, {r} in the last 7 days',
+    kn: 'ಈ ಕೋಶದಲ್ಲಿ {n} ದೂರು(ಗಳು), ಕಳೆದ 7 ದಿನಗಳಲ್ಲಿ {r}',
+  },
+  'reports.legendTitle': { en: 'Not part of the analysis', kn: 'ವಿಶ್ಲೇಷಣೆಯ ಭಾಗವಲ್ಲ' },
+  'reports.legendItem': { en: 'Citizen report, unverified', kn: 'ನಾಗರಿಕ ದೂರು, ಪರಿಶೀಲಿಸದ್ದು' },
+  'reports.legendNote': {
+    en: 'Shown for context only. Never used in the hotspot or risk models.',
+    kn: 'ಸಂದರ್ಭಕ್ಕಾಗಿ ಮಾತ್ರ. ಹಾಟ್‌ಸ್ಪಾಟ್ ಅಥವಾ ಅಪಾಯ ಮಾದರಿಗಳಲ್ಲಿ ಎಂದಿಗೂ ಬಳಸಲಾಗಿಲ್ಲ.',
+  },
+  'triage.title': { en: 'Citizen reports', kn: 'ನಾಗರಿಕ ದೂರುಗಳು' },
+  'triage.notAnalysis': {
+    en: 'Public submissions, not analysis. These are unverified and are never used in the hotspot or risk models.',
+    kn: 'ಸಾರ್ವಜನಿಕ ಸಲ್ಲಿಕೆಗಳು, ವಿಶ್ಲೇಷಣೆ ಅಲ್ಲ. ಇವು ಪರಿಶೀಲಿಸದವು ಮತ್ತು ಹಾಟ್‌ಸ್ಪಾಟ್ ಅಥವಾ ಅಪಾಯ ಮಾದರಿಗಳಲ್ಲಿ ಎಂದಿಗೂ ಬಳಸಲಾಗುವುದಿಲ್ಲ.',
+  },
+  'triage.queue': { en: 'Queue', kn: 'ಸರತಿ' },
+  'triage.empty': { en: 'Nothing in the queue.', kn: 'ಸರತಿಯಲ್ಲಿ ಏನೂ ಇಲ್ಲ.' },
+  'triage.selectHint': { en: 'Select a report to review it.', kn: 'ಪರಿಶೀಲಿಸಲು ದೂರನ್ನು ಆರಿಸಿ.' },
+  'triage.filterAll': { en: 'All', kn: 'ಎಲ್ಲ' },
+  'triage.filterOpen': { en: 'Open', kn: 'ತೆರೆದಿರುವ' },
+  'triage.dupOf': { en: 'Possible duplicate of {ref}', kn: '{ref} ನ ಸಂಭಾವ್ಯ ಪುನರಾವರ್ತನೆ' },
+  'triage.spamFlag': { en: 'Low quality', kn: 'ಕಳಪೆ ಗುಣಮಟ್ಟ' },
+  'triage.reported': { en: 'Reported', kn: 'ದಾಖಲಿಸಿದ್ದು' },
+  'triage.incident': { en: 'Incident', kn: 'ಘಟನೆ' },
+  'triage.description': { en: 'What the reporter wrote', kn: 'ದೂರುದಾರರು ಬರೆದದ್ದು' },
+  'triage.history': { en: 'History', kn: 'ಇತಿಹಾಸ' },
+  'triage.action': { en: 'Decision', kn: 'ನಿರ್ಧಾರ' },
+  'triage.reason': { en: 'Reason', kn: 'ಕಾರಣ' },
+  'triage.note': { en: 'Internal note', kn: 'ಆಂತರಿಕ ಟಿಪ್ಪಣಿ' },
+  'triage.noteHint': { en: 'Not shown to the reporter.', kn: 'ದೂರುದಾರರಿಗೆ ತೋರಿಸುವುದಿಲ್ಲ.' },
+  'triage.firNumber': { en: 'FIR number', kn: 'ಎಫ್‌ಐಆರ್ ಸಂಖ್ಯೆ' },
+  'triage.dupRef': { en: 'Duplicate of', kn: 'ಇದರ ಪುನರಾವರ್ತನೆ' },
+  'triage.apply': { en: 'Apply', kn: 'ಅನ್ವಯಿಸಿ' },
+  'triage.sealed': {
+    en: 'Sealed into an export batch. It cannot be changed.',
+    kn: 'ರಫ್ತು ಗುಂಪಿನಲ್ಲಿ ಮುಚ್ಚಲಾಗಿದೆ. ಬದಲಾಯಿಸಲಾಗದು.',
+  },
+  'triage.noActions': { en: 'No decisions available from this state.', kn: 'ಈ ಸ್ಥಿತಿಯಿಂದ ಯಾವ ನಿರ್ಧಾರವೂ ಸಾಧ್ಯವಿಲ್ಲ.' },
+  'triage.export': { en: 'Export verified', kn: 'ಪರಿಶೀಲಿತವನ್ನು ರಫ್ತು ಮಾಡಿ' },
+  'triage.exportNone': { en: 'Nothing verified and waiting.', kn: 'ಪರಿಶೀಲಿತವಾದದ್ದು ಏನೂ ಬಾಕಿ ಇಲ್ಲ.' },
+  'triage.exportBody': {
+    en: 'These verified reports are ready to hand to the analytics pipeline. Sealing freezes them; a person then carries the file across. Nothing is transferred automatically.',
+    kn: 'ಈ ಪರಿಶೀಲಿತ ದೂರುಗಳು ವಿಶ್ಲೇಷಣಾ ಪೈಪ್‌ಲೈನ್‌ಗೆ ಸಿದ್ಧವಾಗಿವೆ. ಮುಚ್ಚುವುದರಿಂದ ಅವು ಸ್ಥಗಿತಗೊಳ್ಳುತ್ತವೆ; ನಂತರ ವ್ಯಕ್ತಿಯೊಬ್ಬರು ಕಡತವನ್ನು ಒಯ್ಯುತ್ತಾರೆ. ಯಾವುದೂ ತಾನಾಗಿ ವರ್ಗಾವಣೆಯಾಗುವುದಿಲ್ಲ.',
+  },
+  'triage.seal': { en: 'Seal batch', kn: 'ಗುಂಪನ್ನು ಮುಚ್ಚಿ' },
+  'triage.sealedOk': { en: 'Sealed {n} report(s). Batch {batch}.', kn: '{n} ದೂರುಗಳನ್ನು ಮುಚ್ಚಲಾಗಿದೆ. ಗುಂಪು {batch}.' },
 }
 
 // ── District name translations ───────────────────────────────────────
@@ -885,76 +1101,6 @@ export function districtNameKn(district: string): string | undefined {
 }
 
 // ── Crime type translations ──────────────────────────────────────────
-const crimeTypes: Record<string, string> = {
-  'Arms Act Violations': 'ಶಸ್ತ್ರಾಸ್ತ್ರ ಕಾಯ್ದೆ ಉಲ್ಲಂಘನೆ',
-  'Cheating & Fraud': 'ವಂಚನೆ ಮತ್ತು ಮೋಸ',
-  'Crimes Against Body': 'ದೇಹದ ವಿರುದ್ಧ ಅಪರಾಧಗಳು',
-  'Crimes Against Children': 'ಮಕ್ಕಳ ವಿರುದ್ಧ ಅಪರಾಧಗಳು',
-  'Crimes Against Property': 'ಆಸ್ತಿ ವಿರುದ್ಧ ಅಪರಾಧಗಳು',
-  'Crimes Against Public Tranquility': 'ಸಾರ್ವಜನಿಕ ಶಾಂತಿ ವಿರುದ್ಧ ಅಪರಾಧಗಳು',
-  'Crimes Against Women': 'ಮಹಿಳೆಯರ ವಿರುದ್ಧ ಅಪರಾಧಗಳು',
-  'Cyber Crimes': 'ಸೈಬರ್ ಅಪರಾಧಗಳು',
-  'Domestic Violence': 'ಕೌಟುಂಬಿಕ ಹಿಂಸೆ',
-  'Economic Offences': 'ಆರ್ಥಿಕ ಅಪರಾಧಗಳು',
-  'Environmental Offences': 'ಪರಿಸರ ಅಪರಾಧಗಳು',
-  'Forgery & Counterfeiting': 'ನಕಲಿ ಮತ್ತು ಖೋಟಾ',
-  'Gambling & Betting': 'ಜೂಜು ಮತ್ತು ಬೆಟ್ಟಿಂಗ್',
-  'Kidnapping & Abduction': 'ಅಪಹರಣ',
-  'Motor Vehicle Offences': 'ಮೋಟಾರು ವಾಹನ ಅಪರಾಧಗಳು',
-  'Narcotics & Drugs': 'ಮಾದಕ ದ್ರವ್ಯಗಳು',
-  'Other IPC Offences': 'ಇತರ IPC ಅಪರಾಧಗಳು',
-  'Public Order Violations': 'ಸಾರ್ವಜನಿಕ ಸುವ್ಯವಸ್ಥೆ ಉಲ್ಲಂಘನೆ',
-  'Robbery & Dacoity': 'ದರೋಡೆ ಮತ್ತು ಡಕಾಯಿತಿ',
-  'Sexual Offences': 'ಲೈಂಗಿಕ ಅಪರಾಧಗಳು',
-}
-
-/* Plain-language gloss per category. The dataset's own name is kept; this is
-   only what the category covers, shown on hover. */
-const crimeGlossEn: Record<string, string> = {
-  'Arms Act Violations': 'Illegal possession, carrying or sale of weapons',
-  'Cheating & Fraud': 'Deception for money or property, including forgery of intent',
-  'Crimes Against Body': 'Physical harm to a person — assault, hurt, culpable homicide and murder',
-  'Crimes Against Children': 'Offences where the victim is a minor',
-  'Crimes Against Property': 'Theft, burglary, house-breaking and criminal trespass',
-  'Crimes Against Public Tranquility': 'Rioting, unlawful assembly and affray',
-  'Crimes Against Women': 'Offences where the victim is a woman, including cruelty and harassment',
-  'Cyber Crimes': 'Offences committed through computers, phones or the internet',
-  'Domestic Violence': 'Violence or cruelty by a family member or partner',
-  'Economic Offences': 'Financial crime — criminal breach of trust, misappropriation',
-  'Environmental Offences': 'Damage to forest, wildlife, water or air under environmental law',
-  'Forgery & Counterfeiting': 'Fake documents, seals, signatures or currency',
-  'Gambling & Betting': 'Running or taking part in unlawful gaming and wagering',
-  'Kidnapping & Abduction': 'Taking or carrying away a person against their will',
-  'Motor Vehicle Offences': 'Road and traffic offences, including rash and negligent driving',
-  'Narcotics & Drugs': 'Possession, sale or trafficking of controlled substances',
-  'Other IPC Offences': 'IPC offences not falling under the other categories',
-  'Public Order Violations': 'Obstruction, public nuisance and disobedience of lawful orders',
-  'Robbery & Dacoity': 'Theft with force or the threat of force; dacoity is five or more offenders',
-  'Sexual Offences': 'Rape, sexual assault and related offences',
-}
-
-const crimeGlossKn: Record<string, string> = {
-  'Arms Act Violations': 'ಶಸ್ತ್ರಾಸ್ತ್ರಗಳ ಅಕ್ರಮ ಸ್ವಾಧೀನ, ಸಾಗಣೆ ಅಥವಾ ಮಾರಾಟ',
-  'Cheating & Fraud': 'ಹಣ ಅಥವಾ ಆಸ್ತಿಗಾಗಿ ಮೋಸ, ಉದ್ದೇಶಪೂರ್ವಕ ವಂಚನೆ ಸೇರಿದಂತೆ',
-  'Crimes Against Body': 'ವ್ಯಕ್ತಿಗೆ ದೈಹಿಕ ಹಾನಿ — ಹಲ್ಲೆ, ಗಾಯ, ಸಾವಿಗೆ ಕಾರಣವಾಗುವ ಕೃತ್ಯ ಮತ್ತು ಕೊಲೆ',
-  'Crimes Against Children': 'ಸಂತ್ರಸ್ತರು ಅಪ್ರಾಪ್ತ ವಯಸ್ಕರಾಗಿರುವ ಅಪರಾಧಗಳು',
-  'Crimes Against Property': 'ಕಳ್ಳತನ, ಮನೆ ಒಡೆದು ಕಳ್ಳತನ ಮತ್ತು ಅಕ್ರಮ ಪ್ರವೇಶ',
-  'Crimes Against Public Tranquility': 'ಗಲಭೆ, ಕಾನೂನುಬಾಹಿರ ಸಭೆ ಮತ್ತು ಜಗಳ',
-  'Crimes Against Women': 'ಸಂತ್ರಸ್ತರು ಮಹಿಳೆಯಾಗಿರುವ ಅಪರಾಧಗಳು, ಕ್ರೌರ್ಯ ಮತ್ತು ಕಿರುಕುಳ ಸೇರಿದಂತೆ',
-  'Cyber Crimes': 'ಗಣಕಯಂತ್ರ, ದೂರವಾಣಿ ಅಥವಾ ಅಂತರ್ಜಾಲದ ಮೂಲಕ ನಡೆಸಿದ ಅಪರಾಧಗಳು',
-  'Domestic Violence': 'ಕುಟುಂಬದ ಸದಸ್ಯ ಅಥವಾ ಸಂಗಾತಿಯಿಂದ ಹಿಂಸೆ ಅಥವಾ ಕ್ರೌರ್ಯ',
-  'Economic Offences': 'ಆರ್ಥಿಕ ಅಪರಾಧ — ನಂಬಿಕೆ ದ್ರೋಹ, ದುರುಪಯೋಗ',
-  'Environmental Offences': 'ಪರಿಸರ ಕಾನೂನಿನಡಿ ಅರಣ್ಯ, ವನ್ಯಜೀವಿ, ನೀರು ಅಥವಾ ಗಾಳಿಗೆ ಹಾನಿ',
-  'Forgery & Counterfeiting': 'ನಕಲಿ ದಾಖಲೆ, ಮುದ್ರೆ, ಸಹಿ ಅಥವಾ ನೋಟು',
-  'Gambling & Betting': 'ಕಾನೂನುಬಾಹಿರ ಜೂಜು ಮತ್ತು ಬೆಟ್ಟಿಂಗ್ ನಡೆಸುವುದು ಅಥವಾ ಭಾಗವಹಿಸುವುದು',
-  'Kidnapping & Abduction': 'ವ್ಯಕ್ತಿಯ ಇಚ್ಛೆಗೆ ವಿರುದ್ಧವಾಗಿ ಕರೆದೊಯ್ಯುವುದು',
-  'Motor Vehicle Offences': 'ರಸ್ತೆ ಮತ್ತು ಸಂಚಾರ ಅಪರಾಧಗಳು, ಅಜಾಗರೂಕ ಚಾಲನೆ ಸೇರಿದಂತೆ',
-  'Narcotics & Drugs': 'ನಿಷೇಧಿತ ಮಾದಕ ವಸ್ತುಗಳ ಸ್ವಾಧೀನ, ಮಾರಾಟ ಅಥವಾ ಸಾಗಣೆ',
-  'Other IPC Offences': 'ಇತರ ವರ್ಗಗಳಿಗೆ ಸೇರದ IPC ಅಪರಾಧಗಳು',
-  'Public Order Violations': 'ಅಡಚಣೆ, ಸಾರ್ವಜನಿಕ ಉಪದ್ರವ ಮತ್ತು ಕಾನೂನುಬದ್ಧ ಆದೇಶ ಉಲ್ಲಂಘನೆ',
-  'Robbery & Dacoity': 'ಬಲ ಅಥವಾ ಬೆದರಿಕೆಯೊಂದಿಗೆ ಕಳ್ಳತನ; ಐದು ಅಥವಾ ಹೆಚ್ಚು ಆರೋಪಿಗಳಿದ್ದರೆ ಡಕಾಯಿತಿ',
-  'Sexual Offences': 'ಅತ್ಯಾಚಾರ, ಲೈಂಗಿಕ ದೌರ್ಜನ್ಯ ಮತ್ತು ಸಂಬಂಧಿತ ಅಪರಾಧಗಳು',
-}
 
 // ── Context & hooks ──────────────────────────────────────────────────
 

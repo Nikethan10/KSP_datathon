@@ -1,0 +1,17 @@
+{
+  "bbox": {
+    "lat_min": 11.5,
+    "lat_max": 18.5,
+    "lon_min": 74.0,
+    "lon_max": 78.6
+  },
+  "resolution_km": 1.0,
+  "deg_per_km_lat": 0.009009009009009009,
+  "deg_per_km_lon": 0.009345794392523364,
+  "dlat": 0.009009009009009009,
+  "dlon": 0.009345794392523364,
+  "n_lat": 777,
+  "n_lon": 493,
+  "n_cells": 383061,
+  "_note": "cell_id = lat_index * n_lon + lon_index, matching np.meshgrid(indexing='ij') in data/grid.py"
+}

@@ -14,9 +14,18 @@ import type { Tab } from './nav'
    vite is pinned to base '/app/'. Hash routes work under both with zero
    server config, which a history router would not. */
 
-export type Screen = 'landing' | 'how-it-works' | 'impact' | 'stack' | 'console'
+export type Screen =
+  | 'landing'
+  | 'how-it-works'
+  | 'impact'
+  | 'stack'
+  | 'report'
+  | 'report-status'
+  | 'console'
 
-const SITE_SCREENS: Screen[] = ['landing', 'how-it-works', 'impact', 'stack']
+const SITE_SCREENS: Screen[] = [
+  'landing', 'how-it-works', 'impact', 'stack', 'report', 'report-status',
+]
 
 const TAB_BY_SLUG: Record<string, Tab> = {
   command: 'COMMAND',
@@ -26,6 +35,7 @@ const TAB_BY_SLUG: Record<string, Tab> = {
   act: 'ACT',
   replay: 'REPLAY',
   trust: 'TRUST',
+  reports: 'REPORTS',
   // Pre-rename slugs, kept so existing links and the deck's QR codes resolve.
   sense: 'FORECAST',
   predict: 'CONNECT',
@@ -39,6 +49,7 @@ export const SLUG_BY_TAB: Record<Tab, string> = {
   ACT: 'act',
   REPLAY: 'replay',
   TRUST: 'trust',
+  REPORTS: 'reports',
 }
 
 export interface Route {

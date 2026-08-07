@@ -1,9 +1,35 @@
 import { SIG_COLORS, EMERGING_COLORS } from '../lib/data'
 import type { Significance, EmergingCategory } from '../lib/data'
+import { CITIZEN_REPORT_COLOR } from '../lib/reports/types'
 import { useI18n } from '../lib/i18n'
 
 const ORDER: Significance[] = ['hot_99', 'hot_95', 'hot_90', 'not_sig', 'cold_90', 'cold_95', 'cold_99']
 const EMERGING_ORDER: EmergingCategory[] = ['new', 'intensifying', 'persistent', 'cooling']
+
+/* Deliberately its own block, headed "Not part of the analysis" and separated
+   from the significance scale. A reader glancing at the map should not have to
+   work out which markers are measurements and which are allegations. */
+export function CitizenReportLegend() {
+  const { t } = useI18n()
+  const [r, g, b] = CITIZEN_REPORT_COLOR
+  return (
+    <div className="glass rounded-lg px-3 py-2.5 border border-slate-600/40">
+      <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-1.5">
+        {t('reports.legendTitle')}
+      </div>
+      <div className="flex items-center gap-2 text-[11px] text-slate-300">
+        <span
+          className="inline-block w-3 h-3 rounded-full border border-slate-200/70"
+          style={{ background: `rgb(${r},${g},${b})` }}
+        />
+        {t('reports.legendItem')}
+      </div>
+      <p className="mt-1.5 max-w-[190px] text-[10px] leading-snug text-slate-500">
+        {t('reports.legendNote')}
+      </p>
+    </div>
+  )
+}
 
 export default function Legend({ emerging = false }: { emerging?: boolean }) {
   const { t } = useI18n()

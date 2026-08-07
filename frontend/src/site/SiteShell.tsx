@@ -7,6 +7,7 @@ const NAV: { screen: Screen; key: string; href: string }[] = [
   { screen: 'how-it-works', key: 'site.nav.how', href: '#/how-it-works' },
   { screen: 'impact', key: 'site.nav.impact', href: '#/impact' },
   { screen: 'stack', key: 'site.nav.stack', href: '#/stack' },
+  { screen: 'report', key: 'report.nav', href: '#/report' },
 ]
 
 export default function SiteShell({ children }: { children: ReactNode }) {

@@ -6,10 +6,16 @@ import HowItWorksPage from './site/HowItWorksPage'
 import ImpactPage from './site/ImpactPage'
 import StackPage from './site/StackPage'
 
-/* The console pulls in deck.gl, maplibre and three — roughly 2 MB that a
-   visitor landing on the marketing page has no use for. Splitting it here
-   lets the landing paint immediately and loads the console on demand. */
+/* The console pulls in deck.gl and maplibre — roughly 1.7 MB that a visitor
+   landing on the marketing page has no use for. Splitting it here lets the
+   landing paint immediately and loads the console on demand. */
 const ConsoleShell = lazy(() => import('./console/ConsoleShell'))
+
+/* The report portal carries its own form state and the reports data layer, none
+   of which a visitor reading the landing page needs. Split for the same reason
+   the console is. */
+const ReportPage = lazy(() => import('./site/ReportPage'))
+const ReportStatusPage = lazy(() => import('./site/ReportStatusPage'))
 
 /* How long the splash stays up at minimum. The chunk resolves in ~100 ms
    from a warm cache, and a splash that appears and vanishes that fast reads
@@ -55,5 +61,19 @@ export default function App() {
   if (screen === 'how-it-works') return <HowItWorksPage />
   if (screen === 'impact') return <ImpactPage />
   if (screen === 'stack') return <StackPage />
+  if (screen === 'report') {
+    return (
+      <Suspense fallback={null}>
+        <ReportPage />
+      </Suspense>
+    )
+  }
+  if (screen === 'report-status') {
+    return (
+      <Suspense fallback={null}>
+        <ReportStatusPage />
+      </Suspense>
+    )
+  }
   return <LandingPage />
 }

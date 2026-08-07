@@ -121,8 +121,8 @@ export default function PredictView({ initialMode = 'risk', lockMode = false }: 
   const activeGang = selectedGang ?? rankedGangs[0] ?? null
 
   const forecastItems = useMemo(
-    () => generateForecast(anomalies, []),
-    [anomalies],
+    () => generateForecast(anomalies, [], t),
+    [anomalies, t],
   )
 
   const predictionNarrative = useMemo(() => {

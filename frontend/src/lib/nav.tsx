@@ -11,7 +11,12 @@ import { createContext, useContext, useCallback, useState, type ReactNode } from
      FORECAST     hotspots, trends, anomalies, week-ahead risk
      ACT          where to put the units, and what the next one buys
      REPLAY       what we predicted, against what actually happened
-     TRUST        how well it works, where it fails, what it must not do */
+     TRUST        how well it works, where it fails, what it must not do
+     REPORTS      what the public has sent in, awaiting a human decision
+
+   REPORTS sits apart from the others: everything else on this list is derived
+   from verified FIR data, and that one is not. It is here because triage is
+   officer work, not because citizen reports are an analytical input. */
 export type Tab =
   | 'COMMAND'
   | 'INVESTIGATE'
@@ -20,6 +25,7 @@ export type Tab =
   | 'ACT'
   | 'REPLAY'
   | 'TRUST'
+  | 'REPORTS'
 
 interface NavPayload {
   tab: Tab

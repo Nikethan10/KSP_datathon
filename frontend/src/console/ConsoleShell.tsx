@@ -1,8 +1,7 @@
 import { useEffect, useState, lazy, Suspense } from 'react'
 
-/* Each section is split out. Loading COMMAND used to pull in 3d-force-graph
-   and three (~700 KB) because every view was imported eagerly, for a graph
-   most sessions never open. */
+/* Each section is split out, so opening COMMAND does not download the map
+   and chart code that only FORECAST, ACT or REPLAY need. */
 const CommandView = lazy(() => import('../views/CommandView'))
 const InvestigateView = lazy(() => import('../views/InvestigateView'))
 const ConnectView = lazy(() => import('../views/PredictView'))
@@ -10,6 +9,7 @@ const ForecastView = lazy(() => import('../views/ForecastView'))
 const ActView = lazy(() => import('../views/ActView'))
 const ReplayView = lazy(() => import('../views/ReplayView'))
 const TrustView = lazy(() => import('../views/TrustView'))
+const ReportsView = lazy(() => import('../views/ReportsView'))
 import IntroOverlay from '../components/IntroOverlay'
 import ErrorBoundary from '../components/ErrorBoundary'
 import SentinelMark from '../components/SentinelMark'
@@ -25,7 +25,7 @@ import type { Tab } from '../lib/nav'
 import type { Anomaly, DistrictSummary } from '../lib/data'
 
 const TABS: Tab[] = [
-  'COMMAND', 'INVESTIGATE', 'CONNECT', 'FORECAST', 'ACT', 'REPLAY', 'TRUST',
+  'COMMAND', 'INVESTIGATE', 'CONNECT', 'FORECAST', 'ACT', 'REPLAY', 'TRUST', 'REPORTS',
 ]
 const TAB_KEYS: Record<Tab, string> = {
   COMMAND: 'tab.command',
@@ -35,12 +35,14 @@ const TAB_KEYS: Record<Tab, string> = {
   ACT: 'tab.act',
   REPLAY: 'tab.replay',
   TRUST: 'tab.trust',
+  REPORTS: 'tab.reports',
 }
 /* Numbered so the navigation reads as a workflow rather than a set of
    interchangeable dashboards. */
 const TAB_NO: Record<Tab, string> = {
   COMMAND: '01', INVESTIGATE: '02', CONNECT: '03',
   FORECAST: '04', ACT: '05', REPLAY: '06', TRUST: '07',
+  REPORTS: '08',
 }
 
 /* Matches the console's shape so a section switch does not collapse the
@@ -191,7 +193,7 @@ export default function ConsoleShell() {
             </button>
             <button
               onClick={() => setShowHelp(true)}
-              title="What am I looking at?"
+              title={t('console.helpTooltip')}
               className="w-7 h-7 rounded-md border border-slate-700/70 text-slate-400 text-xs font-mono-data hover:text-slate-50 hover:border-slate-500 transition-colors"
             >
               ?
@@ -213,6 +215,7 @@ export default function ConsoleShell() {
               : tab === 'FORECAST' ? <ForecastView />
               : tab === 'ACT' ? <ActView />
               : tab === 'REPLAY' ? <ReplayView />
+              : tab === 'REPORTS' ? <ReportsView />
               : <TrustView />}
           </Suspense>
         </ErrorBoundary>

@@ -231,6 +231,7 @@ const Z80 = 1.2816 // two-sided 80% normal quantile
 export function generateForecast(
   anomalies: Anomaly[],
   _districts: DistrictSummary[],
+  t?: Translate,
 ): ForecastItem[] {
   interface Acc {
     spikes: number
@@ -281,12 +282,20 @@ export function generateForecast(
       nSpikes: acc.spikes,
       nDrops: acc.drops,
       nDistricts,
-      detail:
-        `${acc.spikes} spike${acc.spikes !== 1 ? 's' : ''}, ` +
-        `${acc.drops} drop${acc.drops !== 1 ? 's' : ''} across ` +
-        `${nDistricts} district${nDistricts !== 1 ? 's' : ''}. ` +
-        `Net ${acc.excess >= 0 ? '+' : ''}${Math.round(acc.excess)} vs STL baseline ` +
-        `(80% interval ${Math.round(lo)} to ${Math.round(hi)}).`,
+      detail: t
+        ? t('forecast.stlDetail')
+            .replace('{spikes}', String(acc.spikes))
+            .replace('{drops}', String(acc.drops))
+            .replace('{districts}', String(nDistricts))
+            .replace('{sign}', acc.excess >= 0 ? '+' : '')
+            .replace('{excess}', String(Math.round(acc.excess)))
+            .replace('{lo}', String(Math.round(lo)))
+            .replace('{hi}', String(Math.round(hi)))
+        : `${acc.spikes} spike${acc.spikes !== 1 ? 's' : ''}, ` +
+          `${acc.drops} drop${acc.drops !== 1 ? 's' : ''} across ` +
+          `${nDistricts} district${nDistricts !== 1 ? 's' : ''}. ` +
+          `Net ${acc.excess >= 0 ? '+' : ''}${Math.round(acc.excess)} vs STL baseline ` +
+          `(80% interval ${Math.round(lo)} to ${Math.round(hi)}).`,
     })
   }
 
