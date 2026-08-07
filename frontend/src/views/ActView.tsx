@@ -42,6 +42,8 @@ export default function ActView() {
   const [bundle, setBundle] = useState<PatrolBundle | null>(null)
   const [districts, setDistricts] = useState<PatrolDistrict[]>([])
   const [districtSafe, setDistrictSafe] = useState<string | null>(null)
+  /* "Why six units?" is a question an officer asks once, not every shift. */
+  const [showCurve, setShowCurve] = useState(false)
   const prevDistrictRef = useRef<string | null>(null)
   const { t, td } = useI18n()
   const { focus } = useFocus()
@@ -147,53 +149,70 @@ export default function ActView() {
         flyTarget={flyTarget}
       />
 
-      <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
-        <div className="glass rounded-md px-3 py-1.5 text-[11px] text-slate-300">
-          <span className="font-semibold text-sky-300">{t('act.patrolDeployment')}</span>
+      {/* One panel, not four stacked over the map. The controls an officer
+          actually touches stay visible; the coverage curve is a "why six?"
+          question, so it waits until asked. */}
+      <div className="absolute top-3 left-3 z-10 flex flex-col gap-2 w-[248px]">
+        <div className="glass rounded-md px-3 py-2.5 flex flex-col gap-2.5">
+          <span className="text-[11px] font-semibold text-sky-300">
+            {t('act.patrolDeployment')}
+          </span>
+
+          {districts.length > 1 && (
+            <label className="flex items-center gap-2">
+              <span className="text-[9px] uppercase tracking-wider text-slate-400 shrink-0">
+                {t('act.district')}
+              </span>
+              <select
+                value={districtSafe ?? ''}
+                onChange={(e) => setDistrictSafe(e.target.value)}
+                className="flex-1 min-w-0 bg-transparent text-xs text-slate-200 outline-none cursor-pointer"
+              >
+                {districts.map((d) => (
+                  <option key={d.safe} value={d.safe} className="bg-slate-900">
+                    {td(d.district)}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
+
+          {(hasScenarios || districts.length > 0) && (
+            <div className="flex flex-col gap-1.5">
+              <span className="text-[9px] uppercase tracking-wider text-slate-400">
+                {t('act.numPatrols')}
+              </span>
+              <div className="flex items-center gap-1.5">
+                {PATROL_OPTIONS.map((n) => (
+                  <button
+                    key={n}
+                    onClick={() => setNumPatrols(n)}
+                    className={`w-8 h-7 rounded text-xs font-bold transition-colors ${
+                      numPatrols === n
+                        ? 'bg-sky-500/25 text-sky-300 border border-sky-400/40'
+                        : 'text-slate-400 hover:text-slate-200 border border-slate-600/50'
+                    }`}
+                  >
+                    {n}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {coverageCurve.some((c) => c.coverage !== null) && (
+            <button
+              onClick={() => setShowCurve((v) => !v)}
+              className="flex items-center justify-between gap-2 pt-0.5 text-[9px] uppercase tracking-wider text-slate-400 hover:text-slate-200 transition-colors"
+            >
+              {t('act.marginalTitle')}
+              <span className="text-[11px] leading-none">{showCurve ? '−' : '+'}</span>
+            </button>
+          )}
         </div>
 
-        {districts.length > 1 && (
-          <div className="glass rounded-md px-3 py-2 flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-wider text-slate-400">{t('act.district')}</span>
-            <select
-              value={districtSafe ?? ''}
-              onChange={(e) => setDistrictSafe(e.target.value)}
-              className="bg-transparent text-xs text-slate-200 outline-none cursor-pointer max-w-[190px]"
-            >
-              {districts.map((d) => (
-                <option key={d.safe} value={d.safe} className="bg-slate-900">
-                  {td(d.district)}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-
-        {(hasScenarios || districts.length > 0) && (
-          <div className="glass rounded-md px-3 py-2 flex items-center gap-3">
-            <span className="text-[10px] uppercase tracking-wider text-slate-400">{t('act.numPatrols')}</span>
-            <div className="flex items-center gap-1.5">
-              {PATROL_OPTIONS.map((n) => (
-                <button
-                  key={n}
-                  onClick={() => setNumPatrols(n)}
-                  className={`w-8 h-7 rounded text-xs font-bold transition-colors ${
-                    numPatrols === n
-                      ? 'bg-sky-500/25 text-sky-300 border border-sky-400/40'
-                      : 'text-slate-400 hover:text-slate-200 border border-slate-600/50'
-                  }`}
-                >
-                  {n}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-        {coverageCurve.some((c) => c.coverage !== null) && (
-          <div className="glass rounded-md px-3 py-2 w-[248px]">
-            <div className="text-[9px] uppercase tracking-wider text-slate-400 mb-1.5">
-              {t('act.marginalTitle')}
-            </div>
+        {showCurve && coverageCurve.some((c) => c.coverage !== null) && (
+          <div className="glass rounded-md px-3 py-2">
             {coverageCurve.map((c, i) => {
               const prev = i > 0 ? coverageCurve[i - 1].coverage : null
               const delta = c.coverage !== null && prev !== null ? c.coverage - prev : null

@@ -29,7 +29,7 @@ export default function Capabilities() {
       title={t('site.caps.title')}
       lede={t('site.caps.lede')}
     >
-      <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {CAPS.map((c, i) => (
           <DossierCard
             key={c.fr}
@@ -37,7 +37,8 @@ export default function Capabilities() {
             meta={c.shipped ? t('site.caps.live') : t('site.caps.roadmap')}
             title={t(`site.caps.${c.key}.title`)}
             body={fillStats(t(`site.caps.${c.key}.body`), stats)}
-            delay={(i % 3) * 70}
+            delay={(i % 4) * 60}
+            compact
             muted={!c.shipped}
           />
         ))}

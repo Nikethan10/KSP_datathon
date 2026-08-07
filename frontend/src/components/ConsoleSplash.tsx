@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import SentinelMark from './SentinelMark'
 
-/* Shown while the console chunk (deck.gl + maplibre + three, ~610 KB gzip)
+/* Shown while the console chunk (deck.gl + maplibre, ~480 KB gzip)
    downloads. Never waited on -- it is torn down the moment the console is
    ready, typically after 1-3 s of a 6 s clip.
 

@@ -92,7 +92,13 @@ export function RedactedFigure({
   )
 }
 
-/** Dossier-style card: monospace index, title, body. No icons, no emoji. */
+/** Dossier-style card: monospace index, title, body. No icons, no emoji.
+
+    `compact` keeps the index, meta and title but moves the body to a native
+    tooltip. Eleven of these with full bodies made one grid taller than the rest
+    of the page put together; the index and title still carry the claim, and the
+    elaboration is one hover away — the same trade FilterBar already makes with
+    `sense.scopeTooltip`. */
 export function DossierCard({
   index,
   title,
@@ -100,6 +106,7 @@ export function DossierCard({
   meta,
   delay = 0,
   muted = false,
+  compact = false,
 }: {
   index: string
   title: string
@@ -107,10 +114,16 @@ export function DossierCard({
   meta?: string
   delay?: number
   muted?: boolean
+  compact?: boolean
 }) {
   return (
     <Reveal delay={delay} className="h-full">
-      <article className={`site-card h-full p-6 flex flex-col ${muted ? 'opacity-70' : ''}`}>
+      <article
+        title={compact ? body : undefined}
+        className={`site-card h-full flex flex-col ${compact ? 'p-4' : 'p-6'} ${
+          muted ? 'opacity-70' : ''
+        }`}
+      >
         <div className="flex items-baseline justify-between gap-3">
           <span className="stamp">{index}</span>
           {meta && (
@@ -119,8 +132,16 @@ export function DossierCard({
             </span>
           )}
         </div>
-        <h3 className="mt-4 text-[16px] font-semibold text-slate-100 leading-snug">{title}</h3>
-        <p className="mt-3 text-[13.5px] leading-relaxed text-slate-400">{body}</p>
+        <h3
+          className={`font-semibold text-slate-100 leading-snug ${
+            compact ? 'mt-2.5 text-[14px]' : 'mt-4 text-[16px]'
+          }`}
+        >
+          {title}
+        </h3>
+        {!compact && (
+          <p className="mt-3 text-[13.5px] leading-relaxed text-slate-400">{body}</p>
+        )}
       </article>
     </Reveal>
   )

@@ -56,6 +56,7 @@ function Stat({ value, label, accent, animate }: { value: string; label: string;
 
 export default function BriefingPanel({ summary, briefings, selected, onSelect }: Props) {
   const [feedback, recordFeedback] = useFeedback()
+  const [showMethod, setShowMethod] = useState(false)
   const [anomalies, setAnomalies] = useState<Anomaly[]>([])
   const { t, tc, td } = useI18n()
 
@@ -122,7 +123,7 @@ export default function BriefingPanel({ summary, briefings, selected, onSelect }
           <div className="flex items-center justify-between">
             <div>
               <div className="text-xl font-bold tracking-widest">PRAHARI</div>
-              <div className="text-xs text-gray-600 mt-0.5">Crime Intelligence · Karnataka State Police</div>
+              <div className="text-xs text-gray-600 mt-0.5">{t('act.printSubtitle')}</div>
             </div>
             <div className="text-right">
               <div className="text-sm font-semibold">{td(summary.scope_district)}</div>
@@ -132,11 +133,11 @@ export default function BriefingPanel({ summary, briefings, selected, onSelect }
             </div>
           </div>
           <div className="mt-2 text-sm">
-            <span className="font-semibold">{summary.n_patrols} patrols</span>
+            <span className="font-semibold">{t('act.printPatrols').replace('{n}', String(summary.n_patrols))}</span>
             {' · '}
-            <span>{summary.greedy_coverage_pct.toFixed(1)}% risk coverage</span>
+            <span>{t('act.printRiskCov').replace('{pct}', summary.greedy_coverage_pct.toFixed(1))}</span>
             {' · '}
-            <span className="font-bold">{uplift} coverage uplift vs status quo</span>
+            <span className="font-bold">{t('act.printUplift').replace('{x}', uplift)}</span>
           </div>
         </div>
       )}
@@ -176,11 +177,32 @@ export default function BriefingPanel({ summary, briefings, selected, onSelect }
           </div>
           <div className="mt-1.5 text-[10.5px] text-slate-400">
             {summary.patrol_radius_km} km {t('act.beatRadius')}
-            {summary.ilp_coverage_pct ? ` · ${t('act.ilpVerified')} (${summary.ilp_coverage_pct.toFixed(1)}%)` : ''}
           </div>
-          <div className="mt-1 text-[9.5px] text-slate-500 leading-snug">
-            {t('act.efficiencyNote')}
-          </div>
+
+          {/* The ILP figure and the diminishing-returns note are the answer to
+              "why should I trust this number", which is worth having and is not
+              worth occupying the panel every shift. At one decimal the ILP value
+              rounded to the same 11.7% as the greedy one and read as a pointless
+              repeat; shown here at two, the 0.05pt gap is the actual point. */}
+          <button
+            onClick={() => setShowMethod((v) => !v)}
+            className="mt-1.5 flex items-center gap-1.5 text-[9.5px] uppercase tracking-wider text-slate-500 hover:text-slate-300 transition-colors"
+          >
+            {t('act.howCalculated')}
+            <span className="text-[11px] leading-none">{showMethod ? '−' : '+'}</span>
+          </button>
+          {showMethod && (
+            <div className="mt-1.5 flex flex-col gap-1">
+              {summary.ilp_coverage_pct != null && (
+                <div className="text-[10px] tabular-nums text-slate-400">
+                  {t('act.ilpVerified')} · {summary.ilp_coverage_pct.toFixed(2)}%
+                </div>
+              )}
+              <div className="text-[9.5px] text-slate-500 leading-snug">
+                {t('act.efficiencyNote')}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -210,7 +232,7 @@ export default function BriefingPanel({ summary, briefings, selected, onSelect }
                   <span className="text-xs font-bold text-sky-300">{t('act.patrolUnit')} {b.patrol_id}</span>
                   <span className="flex items-center gap-1.5">
                     <span className="text-[10px] text-slate-400 tabular-nums">
-                      {b.recent_incidents_30d} / 30d
+                      {b.recent_incidents_30d} {t('act.per30d')}
                     </span>
                     <button
                       onClick={(e) => { e.stopPropagation(); recordFeedback(b.patrol_id, 'up') }}
@@ -237,7 +259,7 @@ export default function BriefingPanel({ summary, briefings, selected, onSelect }
                   </span>
                 </div>
                 <div className="mt-1 text-[10.5px] text-slate-400">
-                  ({b.center_lat.toFixed(4)}, {b.center_lon.toFixed(4)}) · {b.cells_covered} cells
+                  ({b.center_lat.toFixed(4)}, {b.center_lon.toFixed(4)}) · {t('act.cellsCovered').replace('{n}', String(b.cells_covered))}
                   {heinous > 0 && (
                     <span className="ml-1.5 text-red-400/90">{heinous} {t('act.heinousCases')}</span>
                   )}
