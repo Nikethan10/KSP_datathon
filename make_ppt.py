@@ -470,7 +470,7 @@ def build_slide_04(prs):
         ("FR-1",  "Unified crime data model",              "8 CCTNS tables into one normalised schema"),
         ("FR-2",  "Geospatial drill-down",                 "District → station, click-to-fly, MapLibre GL"),
         ("FR-3",  "Gi*/LISA hotspots, 20 crime types",     "p < 0.05 significance; state + district baselines"),
-        ("FR-4",  "Spatio-temporal risk forecast",          "LightGBM, near-repeat features, AUC 0.847"),
+        ("FR-4",  "Spatio-temporal risk forecast",          "LightGBM, near-repeat features, PAI 10.63 @ 5%"),
         ("FR-5",  "Anomaly & emerging-pattern alerts",      "STL residuals, changepoint detection, spike-first sort"),
         ("FR-6",  "Co-offending network + disruption",      "341,803 nodes · modularity 0.978 · Louvain communities"),
         ("FR-7",  "Socio-economic overlay",                 "District-level contextual factors on map"),
@@ -859,7 +859,7 @@ def build_slide_09(prs):
     add_rect(sl, 0, 0, Inches(0.18), H, fill=GOLD)
     mark_top_right(sl)
 
-    section_stamp(sl, "09  ·  CATALYST SERVICES  ⭐  SCORED SECTION")
+    section_stamp(sl, "09  ·  CATALYST SERVICES  ·  SCORED SECTION")
     add_text(sl, "Zoho Catalyst Integration", Inches(0.8), Inches(0.9),
              Inches(9), Inches(0.65), size=26, bold=True, color=OFF_WHITE)
     add_divider(sl, Inches(1.85))
@@ -905,7 +905,7 @@ def build_slide_09(prs):
 
         # Status badge
         sc = GREEN_OK if is_live else SLATE
-        status_label = "✓ DEPLOYED" if is_live else "ARCHITECTED"
+        status_label = "DEPLOYED" if is_live else "ARCHITECTED"
         sbadge = add_rect(sl, col_x[2], ry + Inches(0.22),
                            Inches(1.5), Inches(0.38),
                            fill=CHARCOAL if not is_live else RGBColor(0x14, 0x38, 0x22),
@@ -1084,7 +1084,7 @@ def build_slide_12(prs):
     add_divider(sl, Inches(1.85))
 
     metrics = [
-        ("Test AUC",          "0.847",    "Held-out temporal split (LightGBM risk model)",                   OFF_WHITE),
+        ("RRI @ 5%",           "1.27",     "vs a 41.94% status-quo baseline on pre-2024 data",               OFF_WHITE),
         ("PAI @ top 5%",      "10.63",    "53.1% of all crime falls inside 5% of the map area",              GREEN_OK),
         ("Patrol coverage",   "11.67%",   "ILP-optimised vs 9.87% volume-driven status quo",                 GREEN_OK),
         ("Coverage uplift",   "+18.2%",   "vs status quo — same unit count, zero extra cost",                GREEN_OK),

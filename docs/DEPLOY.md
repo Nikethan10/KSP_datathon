@@ -48,8 +48,9 @@ the Bash tool with forward-slash paths — it fails with exit 16.
 { "client": { "source": "client" } }
 ```
 
-The plugin rebuilds from `react-app/` (the stale `catalyst init` scaffold) and
-deploys the template app instead of ours.
+The plugin rebuilds from a `react-app/` scaffold and deploys the template app
+instead of ours. That stale scaffold has since been deleted, but keep
+`catalyst.json` a plain client so the plugin is never selected in the first place.
 
 **`client/client-package.json` name must be `react-app`** — it has to match
 what was registered at `catalyst init`. Renaming it breaks the deploy.

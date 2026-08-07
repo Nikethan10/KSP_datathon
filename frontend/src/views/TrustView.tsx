@@ -180,7 +180,7 @@ export default function TrustView() {
               <Tile
                 value={calib.n_test.toLocaleString()}
                 label={t('trust.evidenceTile')}
-                sub={`${(calib.pos_rate * 100).toFixed(1)}% base rate · ${t('trust.evidenceSub')}`}
+                sub={`${(calib.pos_rate * 100).toFixed(1)}% ${t('trust.baseRate')} · ${t('trust.evidenceSub')}`}
                 accent="#b6bec7"
               />
             )}
@@ -367,8 +367,8 @@ export default function TrustView() {
                       {t('trust.risk')} {s.risk_score.toFixed(3)}
                     </span>
                     <span className="text-[9.5px] text-slate-500">
-                      cell {s.cell_id} · {String(s.date).slice(0, 10)} · shift {s.shift}
-                      {s.has_crime === 1 && <span className="ml-1.5 text-emerald-400">✓ {t('trust.crimeOccurred')}</span>}
+                      {t('trust.cellShift').replace('{cell}', String(s.cell_id)).replace('{date}', String(s.date).slice(0, 10)).replace('{shift}', String(s.shift))}
+                      {s.has_crime === 1 && <span className="ml-1.5 text-emerald-400">{t('trust.crimeOccurred')}</span>}
                     </span>
                   </div>
                   <div className="mt-1 text-[10.5px] text-slate-300 leading-snug">

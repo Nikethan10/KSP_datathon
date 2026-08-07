@@ -28,4 +28,4 @@ stats = compute_cell_stats(cases)
 print(f"\nCell stats sample:")
 print(stats.describe().to_string())
 
-print("\n✓ Skeleton verification complete!")
+print("\nSkeleton verification complete.")

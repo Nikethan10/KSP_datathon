@@ -45,7 +45,7 @@ export default function IntroOverlay({ onClose }: Props) {
             className="text-slate-500 hover:text-slate-200 text-sm px-1 leading-none"
             aria-label="Close intro"
           >
-            ✕
+            ×
           </button>
         </div>
 
