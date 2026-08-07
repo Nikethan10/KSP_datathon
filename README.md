@@ -122,6 +122,7 @@ frontend/                                React 19 + TypeScript web application
 - **Data Science & ML Pipeline:** pandas, scikit-learn, LightGBM, libpysal, esda, networkx, statsmodels, SHAP
 - **Optimization:** Google OR-Tools (Integer Linear Programming)
 - **Cloud Infrastructure:** Zoho Catalyst (Hosting & Serverless Distribution)
+  
 
 ---
 
@@ -129,18 +130,16 @@ frontend/                                React 19 + TypeScript web application
 
 | Team Member | GitHub Profile | Core Component Ownership |
 |---|---|---|
-| **Nikethan Tirumala** | [@Nikethan10](https://github.com/Nikethan10) | Frontend Architecture, Web Console, MapLibre GL & deck.gl Integration |
-| **Hari Nair** | [@r-harinarayanan](https://github.com/r-harinarayanan) | Analytics Pipeline, LightGBM Risk Model, STL Anomaly Detection |
-| **Katir Velavan** (team lead) | [@myselfcarewinter-hue](https://github.com/myselfcarewinter-hue) | System Architecture, ACT Patrol Optimizer, TRUST Layer, Catalyst Deployment |
-| **Dhikshitha** | [@DHIKSHITHA0906](https://github.com/DHIKSHITHA0906) | Co-offending Graph Analytics, Louvain Community Detection, Disruption Modeling |
-| **Nihan** | [@nihan-98716](https://github.com/nihan-98716) | Data Engineering, CCTNS Data Normalization, Gi\* Spatial Analysis Pipeline |
+| **Nikethan Tirumala** | [@nikethan_10](https://github.com/Nikethan10) | Frontend Architecture, Web Console, MapLibre GL & deck.gl Integration |
+| **R Hari Narayanan** | [@r-harinarayanan](https://github.com/r-harinarayanan) | Analytics Pipeline, LightGBM Risk Model, STL Anomaly Detection |
+| **Katir** (team lead) | [@myselfcarewinter-hue](https://github.com/myselfcarewinter-hue) | System Architecture, ACT Patrol Optimizer, TRUST Layer, Catalyst Deployment |
+| **Dhikshitha R G** | [@DHIKSHITHA0906](https://github.com/DHIKSHITHA0906) | Co-offending Graph Analytics, Louvain Community Detection, Disruption Modeling |
+| **Nihan Anoop** | [@nihan-98716](https://github.com/nihan-98716) | Data Engineering, CCTNS Data Normalization, Gi\* Spatial Analysis Pipeline |
 
 > *Note: Development was conducted using a shared core development environment. Module ownership is delineated above.*
-
+This repository contains both the analytics pipeline and the interactive visualization console.
 ---
 
 ## License
 
-See [LICENSE](LICENSE).
-
-Submitted to KSP Datathon 2026 under Hack2skill's terms, which require a public repository. Verify the licence choice against those terms before the finale.
+© 2026 Nikethan10,r-harinarayanan,nihan-98716,DHIKSHITHA0906. All rights reserved. Proprietary software — no unauthorized copying, modification, or distribution permitted.
