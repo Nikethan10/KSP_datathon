@@ -848,9 +848,11 @@ const translations: Record<string, Record<Lang, string>> = {
   },
 
   // ── Citizen report portal ──────────────────────────────────────────
-  /* NOTE: the consent and emergency strings below carry legal weight. They read
-     correctly, but a native Kannada speaker should review them before this is
-     shown to the public. */
+  /* The consent, emergency and blocked-category strings below carry legal and
+     safety weight. Grammar has been checked (dative on 112, "service" rather
+     than "application" as the subject, explicit 24-hour phrasing), but this is
+     still not a substitute for sign-off by a native Kannada speaker before the
+     portal faces the public. Treat that as a release blocker, not a nicety. */
   'report.nav': { en: 'Report an issue', kn: 'ದೂರು ಸಲ್ಲಿಸಿ' },
   'report.stamp': { en: 'FILE A REPORT', kn: 'ದೂರು ದಾಖಲಿಸಿ' },
   'report.title': { en: 'Report an issue', kn: 'ದೂರು ಸಲ್ಲಿಸಿ' },
@@ -863,17 +865,17 @@ const translations: Record<string, Record<Lang, string>> = {
     kn: 'ಪ್ರದರ್ಶನಕ್ಕಾಗಿ ಮಾತ್ರ. ನೀವು ನಮೂದಿಸಿದ್ದು ಪೊಲೀಸರಿಗೆ ಹೋಗುವುದಿಲ್ಲ, ಪರಿಶೀಲನಾ ಸಂಕೇತ ನಿಗದಿತವಾಗಿದೆ.',
   },
 
-  'report.emergency.title': { en: 'Call 112 now', kn: 'ಈಗಲೇ 112 ಕರೆ ಮಾಡಿ' },
+  'report.emergency.title': { en: 'Call 112 now', kn: 'ಈಗಲೇ 112 ಗೆ ಕರೆ ಮಾಡಿ' },
   'report.emergency.body': {
     en: 'This form is not monitored around the clock. If someone is in danger, or a crime is happening right now, call 112 or go to the nearest police station. Do not wait for a reply here.',
-    kn: 'ಈ ಅರ್ಜಿಯನ್ನು ದಿನವಿಡೀ ಗಮನಿಸಲಾಗುವುದಿಲ್ಲ. ಯಾರಿಗಾದರೂ ಅಪಾಯವಿದ್ದರೆ ಅಥವಾ ಈಗಲೇ ಅಪರಾಧ ನಡೆಯುತ್ತಿದ್ದರೆ 112 ಕರೆ ಮಾಡಿ ಅಥವಾ ಹತ್ತಿರದ ಠಾಣೆಗೆ ಹೋಗಿ. ಇಲ್ಲಿ ಉತ್ತರಕ್ಕಾಗಿ ಕಾಯಬೇಡಿ.',
+    kn: 'ಈ ಸೇವೆಯನ್ನು ದಿನದ ಇಪ್ಪತ್ನಾಲ್ಕು ಗಂಟೆಯೂ ಗಮನಿಸಲಾಗುವುದಿಲ್ಲ. ಯಾರಿಗಾದರೂ ಅಪಾಯವಿದ್ದರೆ ಅಥವಾ ಈಗಲೇ ಅಪರಾಧ ನಡೆಯುತ್ತಿದ್ದರೆ, 112 ಗೆ ಕರೆ ಮಾಡಿ ಅಥವಾ ಹತ್ತಿರದ ಪೊಲೀಸ್ ಠಾಣೆಗೆ ಹೋಗಿ. ಇಲ್ಲಿ ಉತ್ತರಕ್ಕಾಗಿ ಕಾಯಬೇಡಿ.',
   },
   'report.emergency.back': { en: 'Go back', kn: 'ಹಿಂದೆ ಹೋಗಿ' },
 
   'report.blocked.title': { en: 'Please report this in person', kn: 'ದಯವಿಟ್ಟು ಖುದ್ದಾಗಿ ದೂರು ನೀಡಿ' },
   'report.blocked.body': {
     en: 'Offences of this kind carry legal protections for the identity of those involved, and cannot be handled through a public web form. Call 112 or go to the nearest police station, where a case can be registered properly and confidentially.',
-    kn: 'ಈ ಬಗೆಯ ಅಪರಾಧಗಳಲ್ಲಿ ಸಂಬಂಧಪಟ್ಟವರ ಗುರುತಿಗೆ ಕಾನೂನಿನ ರಕ್ಷಣೆ ಇರುತ್ತದೆ, ಆದ್ದರಿಂದ ಸಾರ್ವಜನಿಕ ಅರ್ಜಿಯ ಮೂಲಕ ಇವನ್ನು ನಿರ್ವಹಿಸಲಾಗದು. 112 ಕರೆ ಮಾಡಿ ಅಥವಾ ಹತ್ತಿರದ ಠಾಣೆಗೆ ಹೋಗಿ, ಅಲ್ಲಿ ಪ್ರಕರಣವನ್ನು ಸರಿಯಾಗಿ ಮತ್ತು ಗೌಪ್ಯವಾಗಿ ದಾಖಲಿಸಬಹುದು.',
+    kn: 'ಈ ಬಗೆಯ ಅಪರಾಧಗಳಲ್ಲಿ ಸಂಬಂಧಪಟ್ಟವರ ಗುರುತಿಗೆ ಕಾನೂನಿನ ರಕ್ಷಣೆ ಇರುತ್ತದೆ, ಆದ್ದರಿಂದ ಸಾರ್ವಜನಿಕ ಆನ್‌ಲೈನ್ ನಮೂನೆಯ ಮೂಲಕ ಇವನ್ನು ನಿರ್ವಹಿಸಲಾಗದು. 112 ಗೆ ಕರೆ ಮಾಡಿ ಅಥವಾ ಹತ್ತಿರದ ಪೊಲೀಸ್ ಠಾಣೆಗೆ ಹೋಗಿ, ಅಲ್ಲಿ ಪ್ರಕರಣವನ್ನು ಸರಿಯಾಗಿ ಮತ್ತು ಗೌಪ್ಯವಾಗಿ ದಾಖಲಿಸಬಹುದು.',
   },
 
   'report.step.what': { en: 'What happened', kn: 'ಏನಾಯಿತು' },
