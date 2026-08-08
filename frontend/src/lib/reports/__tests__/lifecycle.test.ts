@@ -8,6 +8,7 @@ import {
 } from '../lifecycle'
 import type { ReportStatus } from '../types'
 import fixture from '../lifecycle.fixture.json'
+import serverFixture from '../../../../../functions/prahari_api/lifecycle.fixture.json'
 
 /* The Catalyst function will validate transitions against lifecycle.fixture.json.
    The console draws its buttons from TRANSITIONS. If those two ever disagree, an
@@ -46,6 +47,13 @@ function normalise(t: {
 describe('lifecycle / fixture parity', () => {
   it('covers exactly the same statuses', () => {
     expect(Object.keys(TRANSITIONS).sort()).toEqual(Object.keys(fixtureMap).sort())
+  })
+
+  /* The Catalyst function keeps its own copy, because a deployed function bundles
+     only its own directory. This is what stops the two drifting: change one and
+     this fails until both match. */
+  it('matches the copy the Catalyst function deploys with', () => {
+    expect(serverFixture).toEqual(fixture)
   })
 
   it('has identical transitions for every status', () => {

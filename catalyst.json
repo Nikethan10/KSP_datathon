@@ -1,5 +1,8 @@
 {
   "client": {
     "source": "client"
+  },
+  "functions": {
+    "source": "functions"
   }
 }

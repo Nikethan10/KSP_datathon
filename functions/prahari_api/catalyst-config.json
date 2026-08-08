@@ -1,0 +1,18 @@
+{
+  "deployment": {
+    "name": "prahari_api",
+    "stack": "node18",
+    "type": "advancedio",
+    "env_variables": {
+      "OTP_PEPPER": "",
+      "TOKEN_SECRET": "",
+      "BREVO_API_KEY": "",
+      "BREVO_SENDER_EMAIL": "",
+      "BREVO_SENDER_NAME": "PRAHARI",
+      "OTP_DEMO_MODE": "true"
+    }
+  },
+  "execution": {
+    "main": "index.js"
+  }
+}

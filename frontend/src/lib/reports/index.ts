@@ -1,10 +1,12 @@
 import { LocalReportRepository } from './local'
+import { CatalystReportRepository } from './catalyst'
 import type { ReportRepository } from './repository'
 
 export * from './types'
 export * from './lifecycle'
 export type { ReportRepository } from './repository'
 export { LocalReportRepository } from './local'
+export { CatalystReportRepository } from './catalyst'
 
 /* Which backend the console talks to.
 
@@ -20,13 +22,7 @@ const MODE = import.meta.env.VITE_REPORTS_MODE ?? 'local'
 export const API_BASE = `${location.origin}/server/prahari_api/v1`
 
 function build(): ReportRepository {
-  if (MODE === 'catalyst') {
-    /* Phase 2. Deliberately not stubbed out with a fake that resolves — a silent
-       no-op backend is worse than a loud missing one. */
-    throw new Error(
-      'VITE_REPORTS_MODE=catalyst is set, but the Catalyst adapter is not built yet.',
-    )
-  }
+  if (MODE === 'catalyst') return new CatalystReportRepository(API_BASE)
   return new LocalReportRepository()
 }
 
