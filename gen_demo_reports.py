@@ -48,8 +48,10 @@ ROWS = [
      "House break-in while the family was away for the weekend. Lock was cut, jewellery and cash missing."),
     ("DAKSHINA KANNADA", "Arms Act Violations", "urgent", "REJECTED", 150,
      "Saw someone showing what looked like a country weapon near the field. Could not see clearly, it was getting dark."),
-    ("BALLARI", "Motor Vehicle Offences", "routine", "DUPLICATE", 55,
-     "Rash driving by a tempo on the highway service road, nearly hit a cyclist near the junction."),
+    # Third sighting of the same Mysuru chain snatching as PR-DEMO03/04 — the
+    # pair the duplicate detector is meant to catch.
+    ("MYSURU CITY", "Crimes Against Property", "urgent", "DUPLICATE", 12,
+     "Chain snatching close to the bus stop on temple street this morning, two men on a black bike without a number plate."),
     ("UDUPI", "Forgery & Counterfeiting", "routine", "CLOSED_NO_ACTION", 200,
      "Suspected fake stamp paper being sold near the registration office."),
     # Deliberately junk, to show the spam signal and the queue ordering.
@@ -94,7 +96,11 @@ for i, (dist, cat, sev, status, hrs, desc) in enumerate(ROWS):
         "severitySelf": sev,
         "lang": "en",
         "district": dist,
-        "dupOf": "PR-DEMO03" if status == "DUPLICATE" else None,
+        # A duplicate must be the same crime in the same place — findDuplicate
+        # only ever links reports sharing a category, a 48h window and adjacent
+        # cells, so pointing this at an unrelated report contradicted the very
+        # logic the demo is meant to show.
+        "dupOf": "PR-DEMO03" if status == "DUPLICATE" and cat == ROWS[2][1] else None,
         "firNumber": ("FIR/2026/%05d" % (400 + i)) if status == "VERIFIED_FIR" else None,
         "exportedAt": None,
         "submittedAt": iso(submitted),

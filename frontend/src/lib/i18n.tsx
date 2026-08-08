@@ -1016,6 +1016,13 @@ const translations: Record<string, Record<Lang, string>> = {
     kn: 'ಸಾರ್ವಜನಿಕ ಸಲ್ಲಿಕೆಗಳು, ವಿಶ್ಲೇಷಣೆ ಅಲ್ಲ. ಇವು ಪರಿಶೀಲಿಸದವು ಮತ್ತು ಹಾಟ್‌ಸ್ಪಾಟ್ ಅಥವಾ ಅಪಾಯ ಮಾದರಿಗಳಲ್ಲಿ ಎಂದಿಗೂ ಬಳಸಲಾಗುವುದಿಲ್ಲ.',
   },
   'triage.queue': { en: 'Queue', kn: 'ಸರತಿ' },
+  'triage.actingAs': { en: 'Acting as', kn: 'ಪಾತ್ರ' },
+  'triage.role.officer': { en: 'Officer', kn: 'ಅಧಿಕಾರಿ' },
+  'triage.role.supervisor': { en: 'Supervisor', kn: 'ಮೇಲಧಿಕಾರಿ' },
+  'triage.sealNeedsSupervisor': {
+    en: 'Sealing a batch is a supervisor action.',
+    kn: 'ಗುಂಪನ್ನು ಮುಚ್ಚುವುದು ಮೇಲಧಿಕಾರಿಯ ಕ್ರಮ.',
+  },
   'triage.empty': { en: 'Nothing in the queue.', kn: 'ಸರತಿಯಲ್ಲಿ ಏನೂ ಇಲ್ಲ.' },
   'triage.selectHint': { en: 'Select a report to review it.', kn: 'ಪರಿಶೀಲಿಸಲು ದೂರನ್ನು ಆರಿಸಿ.' },
   'triage.filterAll': { en: 'All', kn: 'ಎಲ್ಲ' },

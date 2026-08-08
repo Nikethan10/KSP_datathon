@@ -16,6 +16,7 @@ vi.mock('../../data', () => ({
 }))
 
 import { LocalReportRepository } from '../local'
+import { cellCenter, cellIdFor, type GridParams } from '../grid'
 import { ReportError, type ReportDraft } from '../types'
 
 function memoryStorage(): Storage {
@@ -222,9 +223,18 @@ describe('the full loop, end to end', () => {
     const sealed = await repo.officerGetReport(publicRef)
     expect(sealed.exportedAt).toBeTruthy()
 
-    // Once sealed, it cannot be walked back — the pipeline may already have it.
+    // An officer cannot walk it back at all — that is supervisor territory.
     await expect(
       repo.officerTransition(publicRef, { toStatus: 'TRIAGE', reasonCode: 'supervisor_reopen' }),
+    ).rejects.toMatchObject({ code: 'FORBIDDEN' })
+
+    // And a supervisor cannot either, once sealed — the pipeline may have it.
+    await expect(
+      repo.officerTransition(
+        publicRef,
+        { toStatus: 'TRIAGE', reasonCode: 'supervisor_reopen' },
+        'supervisor',
+      ),
     ).rejects.toMatchObject({ code: 'SEALED' })
 
     // And it does not appear in a second export batch.
@@ -269,6 +279,40 @@ describe('what the citizen is allowed to see', () => {
   })
 })
 
+describe('role separation', () => {
+  it('does not let an officer reopen a rejected report', async () => {
+    const repo = new LocalReportRepository()
+    const page = await repo.officerQueue({ status: ['REJECTED'], limit: 50 })
+    const ref = page.items[0].publicRef
+    await expect(
+      repo.officerTransition(ref, { toStatus: 'TRIAGE', reasonCode: 'supervisor_reopen' }),
+    ).rejects.toMatchObject({ code: 'FORBIDDEN' })
+    const ok = await repo.officerTransition(
+      ref, { toStatus: 'TRIAGE', reasonCode: 'supervisor_reopen' }, 'supervisor',
+    )
+    expect(ok.status).toBe('TRIAGE')
+  })
+})
+
+describe('answering a request for more information', () => {
+  it('records the reply on the timeline without rewriting the description', async () => {
+    const repo = await signedIn()
+    const { publicRef } = await repo.submitReport(draft())
+    const before = (await repo.getMyReport(publicRef)).description
+
+    await repo.officerTransition(publicRef, { toStatus: 'TRIAGE', reasonCode: 'insufficient_detail' })
+    await repo.officerTransition(publicRef, { toStatus: 'NEEDS_INFO', reasonCode: 'insufficient_detail' })
+    await repo.replyToReport(publicRef, 'The shutter was cut, not forced.')
+
+    const after = await repo.getMyReport(publicRef)
+    expect(after.status).toBe('TRIAGE')
+    // The narrative the duplicate detector fingerprints is untouched...
+    expect(after.description).toBe(before)
+    // ...and the reporter can still see what they wrote.
+    expect(after.timeline.some((e) => e.citizenReply?.includes('shutter was cut'))).toBe(true)
+  })
+})
+
 describe('the map layer', () => {
   it('aggregates to cells and carries no free text', async () => {
     const repo = new LocalReportRepository()
@@ -280,6 +324,26 @@ describe('the map layer', () => {
         ['cellId', 'lat', 'lon', 'nLast7d', 'nReports', 'topCategory'].sort(),
       )
     }
+  })
+
+  /* The whole point of aggregating. Publishing the reporter's own coordinates
+     for a single-report cell would expose where they stood, to GPS accuracy. */
+  it('publishes the cell centre, never a reporter position', async () => {
+    const repo = await signedIn()
+    const lat = 12.98765, lon = 77.61234
+    await repo.submitReport(draft({ lat, lon }))
+    const cells = await repo.reportLayer()
+
+    const params = gridParamsFixture as unknown as GridParams
+    const cellId = cellIdFor(lat, lon, params)!
+    const cell = cells.find((c) => c.cellId === cellId)!
+    expect(cell).toBeTruthy()
+
+    const centre = cellCenter(cellId, params)
+    expect(cell.lat).toBeCloseTo(centre.lat, 10)
+    expect(cell.lon).toBeCloseTo(centre.lon, 10)
+    expect(cell.lat).not.toBeCloseTo(lat, 6)
+    expect(cell.lon).not.toBeCloseTo(lon, 6)
   })
 
   it('excludes withdrawn and rejected reports', async () => {

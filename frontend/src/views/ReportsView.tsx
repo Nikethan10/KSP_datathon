@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useI18n } from '../lib/i18n'
 import { reports, REPORTS_DEMO_MODE } from '../lib/reports'
-import { allowedTransitions, OPEN_STATUSES, REASON_CODES } from '../lib/reports/lifecycle'
+import { allowedTransitions, OPEN_STATUSES, REASON_CODES, type Role } from '../lib/reports/lifecycle'
 import { SPAM_FLAG_THRESHOLD } from '../lib/reports/moderation'
 import {
   ReportError,
@@ -34,6 +34,11 @@ export default function ReportsView() {
   const { t, tc, td } = useI18n()
 
   const [filter, setFilter] = useState<'open' | 'all'>('open')
+  /* Stands in for authentication, which does not exist yet. Least privilege by
+     default: reopening a closed report and un-verifying an FIR are
+     supervisor-only in the lifecycle table, and until Catalyst Auth is wired up
+     this switch is what makes that distinction real rather than decorative. */
+  const [role, setRole] = useState<Role>('officer')
   const [items, setItems] = useState<ReportSummary[] | null>(null)
   const [stats, setStats] = useState<Record<ReportStatus, number> | null>(null)
   const [openRef, setOpenRef] = useState<string | null>(null)
@@ -81,18 +86,18 @@ export default function ReportsView() {
     return () => { cancelled = true }
   }, [openRef])
 
-  /* Supervisor is the widest role, so the console offers every legal move and the
-     repository still refuses anything the table forbids. */
+  /* The console offers exactly what this role may do, and the repository checks
+     the same table again — the buttons are a mirror, not the authority. */
   const options = useMemo(
     () =>
       open
-        ? allowedTransitions('' + open.status as ReportStatus, 'supervisor', {
+        ? allowedTransitions(open.status, role, {
             submittedAt: open.submittedAt,
             exportedAt: open.exportedAt,
             lastEventAt: open.updatedAt,
           })
         : [],
-    [open],
+    [open, role],
   )
 
   const chosen = options.find((o) => o.to === toStatus)
@@ -107,7 +112,7 @@ export default function ReportsView() {
         note: note || undefined,
         firNumber: firNumber || undefined,
         dupOf: dupOf || undefined,
-      })
+      }, role)
       setOpen(updated)
       setToStatus(''); setReasonCode(''); setNote('')
       await load()
@@ -161,6 +166,26 @@ export default function ReportsView() {
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* Until Catalyst Auth is wired up this is what the officer/supervisor
+              split rests on. Labelled as a stand-in so nobody mistakes it for
+              access control. */}
+          <div className="mt-2 flex items-center gap-1.5">
+            <span className="text-[9px] uppercase tracking-wider text-slate-500 shrink-0">
+              {t('triage.actingAs')}
+            </span>
+            {(['officer', 'supervisor'] as const).map((r) => (
+              <button
+                key={r}
+                onClick={() => setRole(r)}
+                className={`px-1.5 py-0.5 rounded text-[9.5px] transition-colors ${
+                  role === r ? 'bg-slate-700 text-slate-100' : 'text-slate-500 hover:text-slate-300'
+                }`}
+              >
+                {t(`triage.role.${r}`)}
+              </button>
+            ))}
           </div>
           {stats && (
             <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[9.5px] tabular-nums text-slate-500">
@@ -387,7 +412,9 @@ export default function ReportsView() {
               <p className="text-[11px] leading-relaxed text-slate-400 mb-3">
                 {t('triage.exportBody')}
               </p>
-              {!batch ? (
+              {role !== 'supervisor' ? (
+                <p className="text-[11px] text-amber-300">{t('triage.sealNeedsSupervisor')}</p>
+              ) : !batch ? (
                 <button
                   onClick={loadBatch}
                   disabled={busy}

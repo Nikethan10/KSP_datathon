@@ -1,6 +1,6 @@
 import type { Lang } from '../i18n'
 import { fetchJson } from '../data'
-import { cellIdFor, loadGridParams, withinKarnataka, type GridParams } from './grid'
+import { cellCenter, cellIdFor, loadGridParams, withinKarnataka, type GridParams } from './grid'
 import { checkTransition, type Role } from './lifecycle'
 import { findDuplicate, scoreSpam } from './moderation'
 import type { ReportRepository } from './repository'
@@ -124,12 +124,27 @@ function hashContact(contact: string): string {
 }
 
 const REF_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789' // no I/O/0/1
-function publicRef(): string {
+
+function randomRef(): string {
   let out = ''
   const buf = new Uint32Array(6)
   crypto.getRandomValues(buf)
   for (let i = 0; i < 6; i++) out += REF_ALPHABET[buf[i] % REF_ALPHABET.length]
   return `PR-${out}`
+}
+
+/* Six characters of a 32-symbol alphabet is ~1.07e9 values, which sounds ample
+   until you remember the birthday bound puts a 50% collision around 38k
+   reports. Every read path resolves a reference with .find(), so a collision
+   would hand one citizen another's report. Draw against the store instead of
+   trusting the odds. */
+function publicRef(taken: ReadonlySet<string>): string {
+  for (let i = 0; i < 50; i++) {
+    const ref = randomRef()
+    if (!taken.has(ref)) return ref
+  }
+  // Astronomically unlikely; fall back to something that cannot collide.
+  return `PR-${Date.now().toString(36).toUpperCase()}`
 }
 
 const uid = () => crypto.randomUUID()
@@ -168,6 +183,8 @@ function redactTimeline(t: ReportEvent[]): ReportEvent[] {
     toStatus: e.toStatus,
     reasonCode: e.reasonCode,
     actorType: e.actorType,
+    // Their own words survive redaction; the officer's note does not.
+    citizenReply: e.citizenReply,
   }))
 }
 
@@ -217,17 +234,26 @@ export class LocalReportRepository implements ReportRepository {
     const seedRows = await fetchJson<{ reports: Partial<StoredReport>[] }>(
       'demo_reports.json',
     ).catch(() => null)
-    this.store.seeded = true
-    if (seedRows?.reports?.length) {
-      for (const row of seedRows.reports) {
-        const r = this.materialise(row)
-        if (r) this.store.reports.push(r)
+
+    /* Only record the seed as done once it actually succeeded. Setting the flag
+       unconditionally meant one failed fetch — offline, a slow first paint, a
+       404 mid-deploy — persisted an empty queue to localStorage that no later
+       visit would ever retry. */
+    if (!seedRows?.reports?.length) return
+
+    const taken = new Set(this.store.reports.map((r) => r.publicRef))
+    for (const row of seedRows.reports) {
+      const r = this.materialise(row, taken)
+      if (r) {
+        taken.add(r.publicRef)
+        this.store.reports.push(r)
       }
     }
+    this.store.seeded = true
     writeStore(this.store)
   }
 
-  private materialise(row: Partial<StoredReport>): StoredReport | null {
+  private materialise(row: Partial<StoredReport>, taken: ReadonlySet<string>): StoredReport | null {
     if (!row.description || !row.category || typeof row.lat !== 'number') return null
     const submittedAt = row.submittedAt ?? nowIso()
     const lon = row.lon ?? 0
@@ -249,7 +275,7 @@ export class LocalReportRepository implements ReportRepository {
     }).score
 
     return {
-      publicRef: row.publicRef ?? publicRef(),
+      publicRef: row.publicRef ?? publicRef(taken),
       reporterRef: row.reporterRef ?? 'seed',
       status: row.status ?? 'SUBMITTED',
       category: row.category,
@@ -481,7 +507,7 @@ export class LocalReportRepository implements ReportRepository {
 
     const at = nowIso()
     const report: StoredReport = {
-      publicRef: publicRef(),
+      publicRef: publicRef(new Set(this.store.reports.map((r) => r.publicRef))),
       reporterRef: session.reporterRef,
       status: 'SUBMITTED',
       category: draft.category,
@@ -546,9 +572,19 @@ export class LocalReportRepository implements ReportRepository {
     const bad = checkTransition('NEEDS_INFO', 'TRIAGE', 'citizen', { submittedAt: r.submittedAt })
     if (r.status !== 'NEEDS_INFO' || bad) throw new ReportError('ILLEGAL_TRANSITION')
 
+    /* Kept on the event rather than appended to `description`. Splicing it into
+       the narrative permanently altered the text findDuplicate fingerprints, so
+       answering a question could stop a report matching a genuine duplicate it
+       had matched moments earlier. */
     const at = nowIso()
-    r.description += `\n\n[${at}] ${text.trim()}`
-    r.timeline.push({ at, fromStatus: 'NEEDS_INFO', toStatus: 'TRIAGE', reasonCode: null, actorType: 'citizen' })
+    r.timeline.push({
+      at,
+      fromStatus: 'NEEDS_INFO',
+      toStatus: 'TRIAGE',
+      reasonCode: null,
+      actorType: 'citizen',
+      citizenReply: text.trim(),
+    })
     r.status = 'TRIAGE'
     r.updatedAt = at
     this.persist()
@@ -607,9 +643,10 @@ export class LocalReportRepository implements ReportRepository {
     return detail(r, true)
   }
 
-  async officerTransition(ref: string, t: TransitionRequest, role: Role = 'supervisor'): Promise<ReportDetail> {
-    await this.init()
-    await latency()
+  /* Synchronous core, so a bulk call can apply many without paying the
+     simulated latency once per row. Throws the same ReportError the async
+     wrapper does; the caller persists. */
+  private applyTransition(ref: string, t: TransitionRequest, role: Role): StoredReport {
     const r = this.store.reports.find((x) => x.publicRef === ref)
     if (!r) throw new ReportError('NOT_FOUND')
 
@@ -643,21 +680,37 @@ export class LocalReportRepository implements ReportRepository {
     if (t.firNumber) r.firNumber = t.firNumber
     if (t.dupOf) r.dupOf = t.dupOf
     r.updatedAt = at
+    return r
+  }
+
+  /* Defaults to `officer`, not `supervisor`. The lifecycle table restricts
+     reopening a closed report and un-verifying an FIR to supervisors, and
+     defaulting to the wider role meant that restriction was never once
+     enforced — every caller silently had the run of the table. */
+  async officerTransition(ref: string, t: TransitionRequest, role: Role = 'officer'): Promise<ReportDetail> {
+    await this.init()
+    await latency()
+    const r = this.applyTransition(ref, t, role)
     this.persist()
     return detail(r, true)
   }
 
-  async officerBulkTransition(refs: string[], t: TransitionRequest) {
+  /* A real backend does a bulk transition in one round trip, so the simulated
+     latency is paid once here rather than 25 times inside the loop. */
+  async officerBulkTransition(refs: string[], t: TransitionRequest, role: Role = 'officer') {
+    await this.init()
+    await latency()
     const failed: string[] = []
     let updated = 0
     for (const ref of refs.slice(0, 25)) {
       try {
-        await this.officerTransition(ref, t)
+        this.applyTransition(ref, t, role)
         updated++
       } catch {
         failed.push(ref)
       }
     }
+    this.persist()
     return { updated, failed }
   }
 
@@ -698,17 +751,22 @@ export class LocalReportRepository implements ReportRepository {
     await this.init()
     await latency()
     const at = nowIso()
-    let count = 0
+    const sealed: string[] = []
     for (const ref of refs) {
       const r = this.store.reports.find((x) => x.publicRef === ref)
       if (!r || r.status !== 'VERIFIED_FIR' || r.exportedAt) continue
       r.exportedAt = at
       r.sealedBatchId = batchId
-      count++
+      sealed.push(ref)
     }
     this.persist()
 
-    const payload = refs.slice().sort().join('|')
+    /* Digest what was actually frozen. Hashing the requested list meant the
+       manifest could attest rows that were skipped for being the wrong status
+       or already exported — and this digest is the integrity record for what
+       gets handed to the pipeline. */
+    const count = sealed.length
+    const payload = sealed.slice().sort().join('|')
     const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(payload))
     const sha256 = Array.from(new Uint8Array(digest))
       .map((b) => b.toString(16).padStart(2, '0'))
@@ -726,14 +784,14 @@ export class LocalReportRepository implements ReportRepository {
     const since = opts?.since ? Date.parse(opts.since) : 0
     const weekAgo = Date.now() - 7 * 24 * 3600 * 1000
 
-    const byCell = new Map<number, { n: number; recent: number; cats: Map<string, number>; lat: number; lon: number }>()
+    const byCell = new Map<number, { n: number; recent: number; cats: Map<string, number> }>()
     for (const r of this.store.reports) {
       if (r.cellId == null) continue
       if (r.status === 'WITHDRAWN' || r.status === 'REJECTED') continue
       if (Date.parse(r.submittedAt) < since) continue
       let e = byCell.get(r.cellId)
       if (!e) {
-        e = { n: 0, recent: 0, cats: new Map(), lat: r.lat, lon: r.lon }
+        e = { n: 0, recent: 0, cats: new Map() }
         byCell.set(r.cellId, e)
       }
       e.n++
@@ -741,13 +799,20 @@ export class LocalReportRepository implements ReportRepository {
       e.cats.set(r.category, (e.cats.get(r.category) ?? 0) + 1)
     }
 
-    return Array.from(byCell.entries()).map(([cellId, e]) => ({
-      cellId,
-      lat: e.lat,
-      lon: e.lon,
-      nReports: e.n,
-      nLast7d: e.recent,
-      topCategory: [...e.cats.entries()].sort((a, b) => b[1] - a[1])[0][0],
-    }))
+    /* The cell centre, never the reporter's own coordinates. Seeding this from
+       the first report in the cell published a GPS-accurate position for any
+       cell holding a single report — which is most of them — and quietly undid
+       the aggregation this layer exists to provide. */
+    return Array.from(byCell.entries()).map(([cellId, e]) => {
+      const centre = cellCenter(cellId, this.params!)
+      return {
+        cellId,
+        lat: centre.lat,
+        lon: centre.lon,
+        nReports: e.n,
+        nLast7d: e.recent,
+        topCategory: [...e.cats.entries()].sort((a, b) => b[1] - a[1])[0][0],
+      }
+    })
   }
 }

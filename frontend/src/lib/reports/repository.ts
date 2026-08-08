@@ -1,4 +1,5 @@
 import type { Lang } from '../i18n'
+import type { Role } from './lifecycle'
 import type {
   Attachment,
   CitizenReportCell,
@@ -54,10 +55,14 @@ export interface ReportRepository {
   // ── officer ───────────────────────────────────────────────────────
   officerQueue(filter: QueueFilter): Promise<Page<ReportSummary>>
   officerGetReport(publicRef: string): Promise<ReportDetail>
-  officerTransition(publicRef: string, t: TransitionRequest): Promise<ReportDetail>
+  /* `role` is explicit rather than defaulted at the call site: the lifecycle
+     table restricts several transitions to supervisors, and a caller that
+     forgets to pass one should get the narrower role, not the wider one. */
+  officerTransition(publicRef: string, t: TransitionRequest, role?: Role): Promise<ReportDetail>
   officerBulkTransition(
     refs: string[],
     t: TransitionRequest,
+    role?: Role,
   ): Promise<{ updated: number; failed: string[] }>
   officerStats(): Promise<Record<ReportStatus, number>>
 

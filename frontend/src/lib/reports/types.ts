@@ -85,6 +85,9 @@ export interface ReportEvent {
       made, never which officer made it. */
   actorLabel?: string
   note?: string
+  /** What the reporter wrote when answering a request for more information.
+      Unlike `note` this survives redaction — it is their own text. */
+  citizenReply?: string
 }
 
 export interface Attachment {
