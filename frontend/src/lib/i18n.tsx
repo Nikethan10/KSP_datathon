@@ -611,9 +611,12 @@ const translations: Record<string, Record<Lang, string>> = {
     kn: 'ಅಂಕಿಅಂಶಗಳ ಪ್ರಕಾರ ಮಹತ್ವದ ಹಾಟ್‌ಸ್ಪಾಟ್‌ಗಳು.',
   },
   'site.pipeline.predict.name': { en: 'PREDICT', kn: 'ಮುನ್ಸೂಚನೆ' },
+  /* The co-offending network moved to its own CONNECT tab, so this no longer
+     promises it here — the card opens FORECAST, and it should describe what
+     FORECAST shows. */
   'site.pipeline.predict.body': {
-    en: 'Next-week risk per cell, anomaly alerts on emerging spikes, and the co-offending network behind repeat crime.',
-    kn: 'ಪ್ರತಿ ಕೋಶಕ್ಕೆ ಮುಂದಿನ ವಾರದ ಅಪಾಯ ಮತ್ತು ಎಚ್ಚರಿಕೆಗಳು.',
+    en: 'Next-week risk per cell and anomaly alerts on emerging spikes, scored on a period the model never saw.',
+    kn: 'ಪ್ರತಿ ಕೋಶಕ್ಕೆ ಮುಂದಿನ ವಾರದ ಅಪಾಯ ಮತ್ತು ಹೊಸ ಏರಿಕೆಗಳ ಎಚ್ಚರಿಕೆಗಳು, ಮಾದರಿ ನೋಡದ ಅವಧಿಯ ಮೇಲೆ ಅಳೆಯಲಾಗಿದೆ.',
   },
   'site.pipeline.act.name': { en: 'ACT', kn: 'ಕ್ರಮ' },
   'site.pipeline.act.body': {
