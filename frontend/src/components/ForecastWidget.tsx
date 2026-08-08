@@ -22,7 +22,7 @@ export default function ForecastWidget({ items }: Props) {
   const peak = Math.max(...items.map((i) => Math.abs(i.excess)), 1)
 
   return (
-    <div>
+    <div className="shrink-0">
       <div className="text-[9.5px] uppercase tracking-wider text-slate-400 mb-1.5 flex items-center gap-1.5">
         <svg viewBox="0 0 24 24" width="11" height="11" fill="none" aria-hidden>
           <path

@@ -18,12 +18,16 @@ export default function AnomalyFeed({ anomalies, onSelect }: Props) {
     return Math.abs(b.zscore) - Math.abs(a.zscore)
   })
 
+  /* No scroller of its own. This sits last inside PredictView's risk panel,
+     which already scrolls — a nested scroller there combined with `min-h-0`
+     collapsed this block to a couple of rows and buried twenty alerts in a
+     letterbox. The parent owns the scrolling; this just grows. */
   return (
-    <div className="flex flex-col min-h-0">
+    <div className="shrink-0 flex flex-col">
       <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-1.5">
         {t('predict.anomalies')}
       </div>
-      <div className="overflow-y-auto min-h-0 flex flex-col gap-1 pr-1">
+      <div className="flex flex-col gap-1 pr-1">
         {sorted.map((a, i) => {
           const isSpike = a.observed > a.expected
           const date = a.date.slice(0, 10)

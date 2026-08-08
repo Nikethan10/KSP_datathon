@@ -42,7 +42,7 @@ export default function RiskStats({ summary }: { summary: RiskSummary }) {
   ]
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="shrink-0 flex flex-col gap-3">
       <div>
         <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-1.5">
           {t('predict.modelStats')}
