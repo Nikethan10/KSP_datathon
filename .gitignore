@@ -80,6 +80,11 @@ screenshots/
 # One-off submission tooling, same category as fix_commits.py above.
 build_ppt.js
 capture_screenshots.js
+# Superseded by build_ppt.js — generated the pre-template deck, which is itself
+# ignored above. Kept locally, out of the repo.
+make_ppt.py
+# Scratch import check from early pipeline work: no assertions, no runner.
+test_skeleton.py
 
 # Root-level Node deps exist only for the deck/screenshot tooling.
 # The application's own manifest is frontend/package.json.
