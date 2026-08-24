@@ -41,6 +41,7 @@ frontend/.claude/
 # ── Git history tooling (one-off, not part of the project) ───────────
 fix_commits.py
 _msg_filter.py
+_coauthor_map.py
 
 # NOTE: the precompute_*.py / rerun_*.py scripts are NOT ignored. They
 # produce most of frontend/public/data — offender dossiers, the novelty
