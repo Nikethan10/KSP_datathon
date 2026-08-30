@@ -3,6 +3,9 @@
     "source": "client"
   },
   "functions": {
-    "source": "functions"
+    "source": "functions",
+    "targets": [
+      "prahari_api"
+    ]
   }
 }
