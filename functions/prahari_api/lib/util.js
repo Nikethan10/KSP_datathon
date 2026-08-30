@@ -76,8 +76,21 @@ function publicRef() {
 const nowIso = () => new Date().toISOString()
 
 /* ZCQL takes single-quoted string literals and has no parameter binding, so every
-   value that reaches a query goes through here. Values that are not plain
-   scalars are rejected outright rather than escaped. */
+   value that reaches a query goes through here.
+
+   This used to escape quotes with a backslash. That was unsound: Zoho documents
+   that values go in single quotes and documents no escape sequence at all, so
+   whether `\'` escapes anything is a guess. If ZCQL follows standard SQL the
+   backslash is literal, the string terminates early, and whatever follows is
+   executed — an injection reachable from the `category` field of a submitted
+   report.
+
+   Since the escaping semantics are undefined, nothing that would need escaping
+   is allowed through. Quotes, backslashes and control characters are rejected
+   rather than encoded. Free text never comes through here: descriptions and
+   notes are written with the SDK's insertRow/updateRow, which bind properly. */
+const UNSAFE_IN_LITERAL = /['"\\\x00-\x1f]/
+
 function q(value) {
   if (value === null || value === undefined) return 'NULL'
   if (typeof value === 'number') {
@@ -86,10 +99,19 @@ function q(value) {
   }
   if (typeof value === 'boolean') return value ? 'true' : 'false'
   if (typeof value !== 'string') throw new Error('unsupported value type in query')
-  return "'" + value.replace(/\\/g, '\\\\').replace(/'/g, "\\'") + "'"
+  if (UNSAFE_IN_LITERAL.test(value)) {
+    throw new Error('unsafe character in query literal')
+  }
+  return "'" + value + "'"
+}
+
+/** Reject anything that is not a well-formed public reference before it is used
+    in a query or a lookup. */
+function isPublicRef(v) {
+  return typeof v === 'string' && /^PR-[A-Z2-9]{6}$/.test(v)
 }
 
 module.exports = {
   ok, fail, env, hashContact, hashCode, signToken, verifyToken,
-  publicRef, nowIso, q,
+  publicRef, nowIso, q, isPublicRef,
 }

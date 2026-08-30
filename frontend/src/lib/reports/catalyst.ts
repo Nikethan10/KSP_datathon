@@ -55,7 +55,10 @@ export class CatalystReportRepository implements ReportRepository {
     if (init.auth) {
       const t = this.token()
       if (!t) throw new ReportError('UNAUTHENTICATED')
-      headers.authorization = `Bearer ${t}`
+      /* Deliberately not `Authorization`. Catalyst's gateway claims that header
+         for its own OAuth and rejects anything else with INVALID_TOKEN before the
+         function is reached. */
+      headers['x-prahari-token'] = t
     }
     /* Only honoured when the deployment sets ALLOW_UNAUTH_OFFICER, which is off
        by default. Real officer identity comes from Catalyst Authentication. */

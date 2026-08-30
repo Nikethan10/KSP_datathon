@@ -3,7 +3,7 @@
 const express = require('express')
 const {
   ok, fail, env, hashContact, hashCode, signToken, verifyToken,
-  publicRef, nowIso, q,
+  publicRef, nowIso, q, isPublicRef,
 } = require('./lib/util')
 const S = require('./lib/store')
 const { T } = S
@@ -31,10 +31,27 @@ const REPORT_COLS = [
   'ROWID', 'public_ref', 'reporter_id', 'status', 'category', 'description',
   'incident_at', 'lat', 'lon', 'district', 'cell_id', 'severity_self',
 ]
+/* CREATEDTIME and MODIFIEDTIME are in here deliberately: toSummary reads them for
+   submittedAt/updatedAt, and without them both silently fell back to incident_at
+   — so a report filed today about last week's burglary came back dated last week.
+   Selecting them also means the ORDER BY below references a projected column
+   rather than relying on ZCQL tolerating one that is absent. 14 of 20. */
 const REPORT_COLS_META = [
   'ROWID', 'public_ref', 'status', 'category', 'incident_at', 'district',
   'cell_id', 'severity_self', 'dup_group', 'spam_score', 'fir_number', 'exported_at',
+  'CREATEDTIME', 'MODIFIEDTIME',
 ]
+
+/* Enumerated rather than built by concat-and-slice. The slice quietly dropped
+   whichever column fell past ZCQL's 20-column cap, so adding a field would have
+   silently stopped MODIFIEDTIME being read instead of failing. 19 of 20. */
+const REPORT_COLS_DETAIL = REPORT_COLS.concat([
+  'dup_group', 'spam_score', 'fir_number', 'exported_at', 'client_nonce',
+  'CREATEDTIME', 'MODIFIEDTIME',
+])
+if (REPORT_COLS_DETAIL.length > 20) {
+  throw new Error('REPORT_COLS_DETAIL exceeds the ZCQL 20-column cap')
+}
 
 const OTP_TTL_SEC = 600
 const OTP_RESEND_SEC = 60
@@ -42,9 +59,14 @@ const MAX_OTP_ATTEMPTS = 5
 
 // ── helpers ────────────────────────────────────────────────────────
 
+/* NOT the Authorization header. Catalyst's gateway intercepts Authorization and
+   validates it as its own OAuth token — sending a citizen token there gets the
+   request rejected with INVALID_TOKEN before it ever reaches this function
+   (verified against the live deployment). A custom header passes straight
+   through. */
 function bearer(req) {
-  const h = req.headers.authorization || ''
-  return h.startsWith('Bearer ') ? h.slice(7) : null
+  const h = req.headers['x-prahari-token']
+  return typeof h === 'string' && h.length ? h : null
 }
 
 function citizen(req) {
@@ -127,7 +149,11 @@ async function timelineFor(req, reportRowId, forOfficer) {
 }
 
 async function reportByRef(req, ref) {
-  return S.findOne(req, T.reports, REPORT_COLS.concat(['dup_group', 'spam_score', 'fir_number', 'exported_at', 'client_nonce', 'CREATEDTIME', 'MODIFIEDTIME']).slice(0, 20), 'public_ref = ' + q(ref))
+  /* Shape-checked before it reaches a query. q() would reject a quote anyway,
+     but a 404 is the honest answer to a malformed reference and it keeps the
+     rejection out of the error path. */
+  if (!isPublicRef(ref)) return null
+  return S.findOne(req, T.reports, REPORT_COLS_DETAIL, 'public_ref = ' + q(ref))
 }
 
 async function writeEvent(req, reportRowId, from, to, reasonCode, actorType, actorId, note) {
@@ -177,7 +203,7 @@ app.post('/v1/auth/otp/request', async (req, res) => {
       request_ip: clientIp(req).slice(0, 45),
     })
 
-    const sent = await OTP.sendCode(contact, code, lang)
+    const sent = await OTP.sendCode(req, contact, code, lang)
     await S.audit(req, { actorType: 'citizen', action: 'otp.request', entityType: 'otp', entityId: challengeId })
 
     // Never reveals whether the address is already known.
@@ -291,12 +317,23 @@ app.post('/v1/reports', async (req, res) => {
       'ROWID = ' + q(String(me.sub)),
     )
 
+    /* Counted, not assumed. This was hardcoded to 0, which made the
+       new_account_burst signal dead on the server while the local adapter fired
+       it — the demo detected abuse the deployment did not. */
+    const dayStart = new Date(); dayStart.setHours(0, 0, 0, 0)
+    const todayRows = await S.selectFrom(
+      req, T.reports, ['ROWID'],
+      'reporter_id = ' + q(String(me.sub)) + " AND CREATEDTIME >= " + q(dayStart.toISOString()),
+      { limit: 50 },
+    ).catch(() => [])
+    const reportsToday = todayRows.length
+
     const spam = MOD.scoreSpam({
       description, category, severitySelf: severity,
       lat: b.lat, lon: b.lon, inKarnataka: inK,
       reporterAgeHours: reporter && reporter.CREATEDTIME
         ? (Date.now() - Date.parse(reporter.CREATEDTIME)) / 3600000 : 0,
-      reporterReportsToday: 0,
+      reporterReportsToday: reportsToday,
       reporterReports: reporter ? Number(reporter.reports_count || 0) : 0,
       reporterRejected: reporter ? Number(reporter.rejected_count || 0) : 0,
     })
@@ -676,12 +713,26 @@ app.get('/v1/public/reports/layer', async (req, res) => {
     const limited = await S.hitLimit(req, 'layer_ip', clientIp(req), 120, 3600)
     if (limited.limited) return fail(res, 429, 'RATE_LIMITED', limited.retryAfterSec)
 
-    const rows = await S.selectFrom(
-      req, T.reports,
-      ['cell_id', 'lat', 'lon', 'category', 'status', 'CREATEDTIME'],
-      "status != 'WITHDRAWN' AND status != 'REJECTED'",
-      { orderBy: 'CREATEDTIME DESC', limit: 300 },
-    )
+    /* Paged, not capped. A single SELECT tops out at ZCQL's 300 rows and
+       truncates silently, so past 300 reports a cell holding 40 rendered as 2 and
+       nReports stopped meaning what its name says. Bounded at 3000 so one request
+       cannot walk an unbounded table; `truncated` says so rather than quietly
+       under-reporting. */
+    const PAGE = 300
+    const MAX_ROWS = 3000
+    const rows = []
+    let truncated = false
+    for (let offset = 0; offset < MAX_ROWS; offset += PAGE) {
+      const page = await S.selectFrom(
+        req, T.reports,
+        ['cell_id', 'lat', 'lon', 'category', 'status', 'CREATEDTIME'],
+        "status != 'WITHDRAWN' AND status != 'REJECTED'",
+        { orderBy: 'CREATEDTIME DESC', limit: PAGE, offset },
+      )
+      rows.push.apply(rows, page)
+      if (page.length < PAGE) break
+      if (offset + PAGE >= MAX_ROWS) truncated = true
+    }
 
     const weekAgo = Date.now() - 7 * 24 * 3600 * 1000
     const byCell = new Map()
@@ -701,6 +752,10 @@ app.get('/v1/public/reports/layer', async (req, res) => {
       const top = Object.keys(e.cats).sort((a, b) => e.cats[b] - e.cats[a])[0]
       out.push({ cellId, lat: e.lat, lon: e.lon, nReports: e.n, nLast7d: e.recent, topCategory: top })
     })
+    /* The array stays the response shape the client expects; truncation is
+       signalled in a header so an operator can see it without the payload
+       changing under existing consumers. */
+    if (truncated) res.set('X-Prahari-Layer-Truncated', 'true')
     ok(res, out)
   } catch (e) {
     console.error('[public/layer]', e)

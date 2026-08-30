@@ -9,7 +9,8 @@
       "BREVO_API_KEY": "",
       "BREVO_SENDER_EMAIL": "",
       "BREVO_SENDER_NAME": "PRAHARI",
-      "OTP_DEMO_MODE": "true"
+      "OTP_DEMO_MODE": "true",
+      "MAIL_SENDER_EMAIL": ""
     }
   },
   "execution": {

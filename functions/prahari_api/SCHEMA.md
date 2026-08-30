@@ -150,7 +150,8 @@ Set these on the function in the Catalyst console — never in the repo.
 |---|---|
 | `OTP_PEPPER` | HMAC pepper for `contact_hash` and `code_hash`. Long random string. |
 | `TOKEN_SECRET` | HMAC secret for citizen session tokens. Long random string. |
-| `BREVO_API_KEY` | Brevo transactional key. Leave empty to stay in demo mode. |
+| `MAIL_SENDER_EMAIL` | Verified sender for Catalyst's own mail service. Tried first — on-stack, no third-party key. |
+| `BREVO_API_KEY` | Optional override. Only used if the Catalyst send fails or is unconfigured. |
 | `BREVO_SENDER_EMAIL` | **Must be a verified sender in Brevo or nothing delivers.** |
 | `BREVO_SENDER_NAME` | Defaults to `PRAHARI`. |
 | `OTP_DEMO_MODE` | `true` accepts the fixed code `000000` and sends no mail. |
@@ -159,7 +160,11 @@ Set these on the function in the Catalyst console — never in the repo.
 
 ## Verify before trusting any of this
 
-1. **Deploy a hello-world Advanced I/O function and `curl` it.** The docs show
+1. ~~Deploy a hello-world Advanced I/O function and `curl` it.~~ **Done** — the
+   function is live at `/server/prahari_api/`, same origin as the client, so
+   there is no CORS to solve. Original note kept below for the datacenter detail.
+
+   **Deploy a hello-world Advanced I/O function and `curl` it.** The docs show
    `.catalystserverless.com`; this project is on the IN datacenter
    (`.catalystserverless.in`), and `HEAD` returns 400 here — probe with `GET`.
 2. **Confirm the `stack` value.** `catalyst-config.json` says `node18`; the docs
@@ -169,3 +174,9 @@ Set these on the function in the Catalyst console — never in the repo.
    a second custom token system — a materially bigger build. This is the highest-
    value unknown in the whole design.
 4. Check Development-environment quotas: Data Store rows, invocations/day.
+5. **Provision a Cache segment.** Verified against the live deployment: seven
+   consecutive OTP requests for one address all returned `SERVER` rather than
+   `RATE_LIMITED` on the sixth, which means `hitLimit` is failing open. The SDK
+   method names are right (`segment.getValue` / `segment.put` both exist on
+   Segment in v2.5) — the segment itself is not provisioned. Rate limiting is
+   absent until it is, and it fails silently by design so nothing will tell you.
