@@ -42,6 +42,7 @@ frontend/.claude/
 fix_commits.py
 _msg_filter.py
 _coauthor_map.py
+_rewrite_history.py
 
 # NOTE: the precompute_*.py / rerun_*.py scripts are NOT ignored. They
 # produce most of frontend/public/data — offender dossiers, the novelty
