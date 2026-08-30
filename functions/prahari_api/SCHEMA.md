@@ -174,9 +174,11 @@ Set these on the function in the Catalyst console — never in the repo.
    a second custom token system — a materially bigger build. This is the highest-
    value unknown in the whole design.
 4. Check Development-environment quotas: Data Store rows, invocations/day.
-5. **Provision a Cache segment.** Verified against the live deployment: seven
-   consecutive OTP requests for one address all returned `SERVER` rather than
-   `RATE_LIMITED` on the sixth, which means `hitLimit` is failing open. The SDK
-   method names are right (`segment.getValue` / `segment.put` both exist on
-   Segment in v2.5) — the segment itself is not provisioned. Rate limiting is
-   absent until it is, and it fails silently by design so nothing will tell you.
+5. ~~Provision a Cache segment.~~ **Resolved.** The Cache was never the problem:
+   a step-by-step probe (`GET /v1/health/ready`) shows write, read-back, update
+   and read-after-update all succeeding. Rate limiting was failing because
+   `hitLimit` used `put()` for every write, and on Segment `put()` creates while
+   `update()` modifies — so the first request in a window stored 1 and every
+   later one threw, was swallowed by the fail-open guard, and sailed through.
+   Fixed, and verified live: the seventh OTP request for one address now returns
+   429 where all seven previously returned 500.

@@ -175,6 +175,60 @@ app.get('/v1/health', (req, res) => {
   ok(res, { service: 'prahari_api', version: 'v1', otpDemoMode: OTP.isDemo() })
 })
 
+/* Which of the seven tables actually exist, and whether the Cache segment is
+   provisioned. Data Store schema can only be created in the Catalyst console —
+   there is no CLI path for it (ds:import writes records, iac:import only makes a
+   new project) — so a deployment can be perfectly healthy and still have nothing
+   to write to. Without this the operator sees an opaque SERVER from every
+   endpoint and cannot tell a missing table from a bug. */
+app.get('/v1/health/ready', async (req, res) => {
+  const tables = Object.keys(T).map((k) => T[k])
+  const present = []
+  const missing = []
+
+  for (const name of tables) {
+    try {
+      await S.selectFrom(req, name, ['ROWID'], null, { limit: 1 })
+      present.push(name)
+    } catch (e) {
+      missing.push(name)
+    }
+  }
+
+  /* Exercises the cache the way hitLimit does, step by step, and reports each
+     result. Rate limiting is failing to increment in production while the calls
+     themselves report success, and a single ok/unavailable flag was not enough to
+     tell which step is lying. */
+  const cache = { write: null, readBack: null, update: null, readAfterUpdate: null, error: null }
+  try {
+    const seg = S.app(req).cache().segment()
+    const probeKey = 'diag:' + Date.now()
+    await seg.put(probeKey, '1', 1)
+    cache.write = 'ok'
+    cache.readBack = await seg.getValue(probeKey)
+    try {
+      await seg.update(probeKey, '2', 1)
+      cache.update = 'ok'
+    } catch (e) {
+      cache.update = 'failed: ' + e.message
+    }
+    cache.readAfterUpdate = await seg.getValue(probeKey)
+    await seg.delete(probeKey).catch(() => {})
+  } catch (e) {
+    cache.error = e.message
+  }
+
+  ok(res, {
+    ready: missing.length === 0,
+    tables: { present, missing },
+    cache,
+    otpDemoMode: OTP.isDemo(),
+    note: missing.length
+      ? 'Create the missing tables in the Catalyst console; see functions/prahari_api/SCHEMA.md.'
+      : undefined,
+  })
+})
+
 // ── citizen identity ───────────────────────────────────────────────
 
 app.post('/v1/auth/otp/request', async (req, res) => {

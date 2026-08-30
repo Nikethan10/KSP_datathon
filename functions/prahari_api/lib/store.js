@@ -102,7 +102,16 @@ async function hitLimit(req, scope, key, max, windowSec) {
     }
     // expiry is in hours; never below 1
     const hours = Math.max(1, Math.ceil(windowSec / 3600))
-    await segment.put(cacheKey, String(count + 1), hours)
+    /* put() creates and update() modifies — they are separate calls on Segment,
+       and put on a key that already exists rejects. Using put for both meant the
+       first request in a window stored 1 and every subsequent one threw, was
+       caught by the fail-open guard, and sailed past the limit. The counter never
+       advanced beyond 1, so nothing was ever limited. */
+    if (existing === null || existing === undefined) {
+      await segment.put(cacheKey, String(count + 1), hours)
+    } else {
+      await segment.update(cacheKey, String(count + 1), hours)
+    }
     return { limited: false }
   } catch (e) {
     console.error('[ratelimit] cache unavailable, failing open:', e.message)
