@@ -71,6 +71,9 @@ desktop.ini
 # screenshots/; the Word docs are exports. None of them are read by the
 # application, and the .pptx alone is ~9 MB.
 *.pptx
+# ...except the copy the site actually serves. It is a deliverable the public
+# page links to, so it has to ship with the client bundle.
+!frontend/public/docs/*.pptx
 *.docx
 KSP Datathon 2026  Prototype Submission Template.pdf
 

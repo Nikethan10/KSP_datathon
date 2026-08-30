@@ -743,6 +743,7 @@ const translations: Record<string, Record<Lang, string>> = {
     en: 'An AI-driven crime analytics and visualisation platform built for Karnataka State Police on the KSP Datathon 2026 dataset.',
     kn: 'ಕೆಎಸ್‌ಪಿ ಡೇಟಾಥಾನ್ 2026 ದತ್ತಾಂಶದ ಮೇಲೆ ನಿರ್ಮಿಸಲಾದ ಅಪರಾಧ ವಿಶ್ಲೇಷಣಾ ವೇದಿಕೆ.',
   },
+  'site.footer.deck': { en: 'Submission deck (PPTX)', kn: 'ಸಲ್ಲಿಕೆ ಪ್ರಸ್ತುತಿ (PPTX)' },
   'site.footer.explore': { en: 'Explore', kn: 'ಅನ್ವೇಷಿಸಿ' },
   'site.footer.built': { en: 'Built on', kn: 'ನಿರ್ಮಿಸಲಾಗಿದೆ' },
   'site.footer.catalyst': { en: 'Zoho Catalyst', kn: 'ಝೋಹೋ ಕ್ಯಾಟಲಿಸ್ಟ್' },

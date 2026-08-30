@@ -132,6 +132,14 @@ export default function SiteShell({ children }: { children: ReactNode }) {
               <a href="#/console" className="text-[13px] brand-accent hover:text-slate-100 transition-colors w-fit">
                 {t('site.nav.console')}
               </a>
+              {/* Served from the client bundle, so it works on the deployed site
+                  without anything else standing up. */}
+              <a
+                href={`${import.meta.env.BASE_URL}docs/PRAHARI-KSP-Datathon-2026.pptx`}
+                className="text-[13px] text-slate-400 hover:text-slate-100 transition-colors w-fit"
+              >
+                {t('site.footer.deck')}
+              </a>
             </div>
           </div>
 
