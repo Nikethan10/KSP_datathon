@@ -356,7 +356,7 @@ export default function ReportPage() {
                       onChange={(e) => setDistrict(e.target.value)}
                       className={inputCls}
                     >
-                      <option value="">{t('report.category.placeholder')}</option>
+                      <option value="">{t('report.district.placeholder')}</option>
                       {districts.map((d) => (
                         <option key={d.district} value={d.district}>{td(d.district)}</option>
                       ))}

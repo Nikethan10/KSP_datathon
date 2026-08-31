@@ -904,6 +904,7 @@ const translations: Record<string, Record<Lang, string>> = {
   },
   'report.when.label': { en: 'When did it happen', kn: 'ಯಾವಾಗ ನಡೆಯಿತು' },
   'report.district.label': { en: 'District', kn: 'ಜಿಲ್ಲೆ' },
+  'report.district.placeholder': { en: 'Select a district', kn: 'ಜಿಲ್ಲೆಯನ್ನು ಆರಿಸಿ' },
   'report.location.label': { en: 'Location', kn: 'ಸ್ಥಳ' },
   'report.location.hint': {
     en: 'Reported at police-station level. An exact pin is never published.',
