@@ -303,8 +303,8 @@ export function generateForecast(
   return items.sort((a, b) => Math.abs(b.excess) - Math.abs(a.excess)).slice(0, 6)
 }
 
-/* Deterministic template, not a language model. It was called
-   generateAISummary, which implied an LLM had written it. */
+/* Fills a fixed sentence from the model's own metrics. Deterministic — the same
+   inputs always produce the same string. */
 export function composeModelSummary(riskSummary: Pick<RiskSummary, 'pai'>, t: Translate): string {
   const hitRate = riskSummary.pai?.hit_rate_5pct ?? 0
   const pai = riskSummary.pai?.pai_5pct ?? 0

@@ -142,4 +142,4 @@ This repository contains both the analytics pipeline and the interactive visuali
 
 ## License
 
-© 2026 Nikethan10,r-harinarayanan,nihan-98716,DHIKSHITHA0906. All rights reserved. Proprietary software — no unauthorized copying, modification, or distribution permitted.
+© 2026 Nikethan10, r-harinarayanan, myselfcarewinter-hue, DHIKSHITHA0906, nihan-98716. All rights reserved. Proprietary software — no unauthorized copying, modification, or distribution permitted.

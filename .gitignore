@@ -26,16 +26,10 @@ node_modules/
 *.log
 
 # ── IDE / editor config ───────────────────────────────────────────────
-.claude/
-frontend/.claude/
 .vscode/
 .idea/
 
 # ── One-off tooling scripts ──────────────────────────────────────────
-fix_commits.py
-_msg_filter.py
-_coauthor_map.py
-_rewrite_history.py
 build_ppt.js
 capture_screenshots.js
 make_ppt.py
