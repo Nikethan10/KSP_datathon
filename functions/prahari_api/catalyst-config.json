@@ -4,13 +4,8 @@
     "stack": "node18",
     "type": "advancedio",
     "env_variables": {
-      "OTP_PEPPER": "",
-      "TOKEN_SECRET": "",
-      "BREVO_API_KEY": "",
-      "BREVO_SENDER_EMAIL": "",
       "BREVO_SENDER_NAME": "PRAHARI",
-      "OTP_DEMO_MODE": "true",
-      "MAIL_SENDER_EMAIL": ""
+      "OTP_DEMO_MODE": "false"
     }
   },
   "execution": {

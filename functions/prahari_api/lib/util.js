@@ -16,12 +16,40 @@ function fail(res, status, code, retryAfterSec) {
 
 const env = (k, fallback) => (process.env[k] && process.env[k].length ? process.env[k] : fallback)
 
+/* No fallback on purpose. This repository is public, so a default here would be
+   a published signing key: anyone could forge a session token or precompute
+   contact hashes. An absent secret has to stop the request instead. Thrown at
+   point of use, not on require, so /v1/health still answers and can say so. */
+const REQUIRED_SECRETS = ['OTP_PEPPER', 'TOKEN_SECRET']
+
+/* A single space pasted into the console would otherwise satisfy a bare
+   emptiness check and be reported as configured, leaving a one-character HMAC
+   key. Length is measured on the trimmed value; the raw value is what gets
+   used, so an already-working secret is never silently altered. */
+const MIN_SECRET_LEN = 16
+
+const secretIsSet = (name) => {
+  const v = process.env[name]
+  return typeof v === 'string' && v.trim().length >= MIN_SECRET_LEN
+}
+
+function requireSecret(name) {
+  if (!secretIsSet(name)) {
+    throw new Error(name + ' is unset or shorter than ' + MIN_SECRET_LEN + ' characters')
+  }
+  return process.env[name]
+}
+
+function missingSecrets() {
+  return REQUIRED_SECRETS.filter((k) => !secretIsSet(k))
+}
+
 /* The raw address is stored encrypted for confidentiality, but Catalyst's
    Encrypted Text supports only = and != — no LIKE, no ranges, no aggregates. So
    every lookup, dedupe and rate-limit key runs off this peppered hash instead.
    The pepper lives in a function env variable and never in a table. */
 function hashContact(contact) {
-  const pepper = env('OTP_PEPPER', 'dev-only-pepper')
+  const pepper = requireSecret('OTP_PEPPER')
   return crypto
     .createHmac('sha256', pepper)
     .update(String(contact).trim().toLowerCase())
@@ -29,14 +57,14 @@ function hashContact(contact) {
 }
 
 function hashCode(code, salt) {
-  const pepper = env('OTP_PEPPER', 'dev-only-pepper')
+  const pepper = requireSecret('OTP_PEPPER')
   return crypto.createHmac('sha256', pepper + ':' + salt).update(String(code)).digest('hex')
 }
 
 /* Opaque, HMAC-signed, self-contained. Not a JWT — we need exactly three claims
    and no algorithm negotiation, which is one fewer thing to get wrong. */
 function signToken(payload, ttlSec) {
-  const secret = env('TOKEN_SECRET', 'dev-only-secret')
+  const secret = requireSecret('TOKEN_SECRET')
   const body = Object.assign({}, payload, {
     exp: Math.floor(Date.now() / 1000) + (ttlSec || 86400),
   })
@@ -45,9 +73,14 @@ function signToken(payload, ttlSec) {
   return raw + '.' + sig
 }
 
+/* Returns null rather than throwing when the secret is absent: this function's
+   contract is "null means not authenticated", and an unverifiable token is not
+   an authenticated one. Throwing here would turn every 401 into a 500 and tell
+   an attacker the difference. Minting still throws — see signToken. */
 function verifyToken(token) {
   if (!token || typeof token !== 'string' || token.indexOf('.') < 0) return null
-  const secret = env('TOKEN_SECRET', 'dev-only-secret')
+  if (!secretIsSet('TOKEN_SECRET')) return null
+  const secret = process.env.TOKEN_SECRET
   const parts = token.split('.')
   if (parts.length !== 2) return null
   const expected = crypto.createHmac('sha256', secret).update(parts[0]).digest('base64url')
@@ -112,6 +145,6 @@ function isPublicRef(v) {
 }
 
 module.exports = {
-  ok, fail, env, hashContact, hashCode, signToken, verifyToken,
+  ok, fail, env, missingSecrets, hashContact, hashCode, signToken, verifyToken,
   publicRef, nowIso, q, isPublicRef,
 }

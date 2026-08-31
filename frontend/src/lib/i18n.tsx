@@ -960,6 +960,8 @@ const translations: Record<string, Record<Lang, string>> = {
   'report.err.ATTACHMENT_TOO_LARGE': { en: 'That file is too large.', kn: 'ಆ ಕಡತ ತುಂಬಾ ದೊಡ್ಡದು.' },
   'report.err.ATTACHMENT_TYPE': { en: 'Images only.', kn: 'ಚಿತ್ರಗಳು ಮಾತ್ರ.' },
   'report.err.OFFLINE': { en: 'You appear to be offline.', kn: 'ನೀವು ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿರುವಂತಿದೆ.' },
+  'report.err.OTP_UNDELIVERABLE': { en: 'We could not send the code right now. Please try again later.', kn: 'ಈಗ ಸಂಕೇತ ಕಳುಹಿಸಲಾಗಲಿಲ್ಲ. ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ.' },
+  'report.err.NOT_CONFIGURED': { en: 'Reporting is temporarily unavailable.', kn: 'ದೂರು ದಾಖಲಾತಿ ತಾತ್ಕಾಲಿಕವಾಗಿ ಲಭ್ಯವಿಲ್ಲ.' },
   'report.err.SERVER': { en: 'Something went wrong. Try again.', kn: 'ಏನೋ ತಪ್ಪಾಗಿದೆ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.' },
 
   // ── Report status lookup ───────────────────────────────────────────

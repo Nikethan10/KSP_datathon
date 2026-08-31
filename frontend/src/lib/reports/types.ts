@@ -200,6 +200,8 @@ export type ReportErrorCode =
   | 'BLOCKED'
   | 'SEALED'
   | 'OFFLINE'
+  | 'OTP_UNDELIVERABLE'
+  | 'NOT_CONFIGURED'
   | 'SERVER'
 
 /* The server answers with a code, never English prose — the client has to be able

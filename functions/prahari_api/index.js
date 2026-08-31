@@ -2,7 +2,7 @@
 
 const express = require('express')
 const {
-  ok, fail, env, hashContact, hashCode, signToken, verifyToken,
+  ok, fail, env, missingSecrets, hashContact, hashCode, signToken, verifyToken,
   publicRef, nowIso, q, isPublicRef,
 } = require('./lib/util')
 const S = require('./lib/store')
@@ -101,6 +101,19 @@ async function officer(req) {
     return { id: 'unauthenticated', role, scope: '*' }
   }
   return null
+}
+
+/* Checked before the first write, never between two of them. The verify route
+   consumes the challenge before it mints a token and the Data Store has no
+   transactions, so a secret that is missing at step two would burn a code the
+   citizen entered correctly and lock them out of a flow they did nothing wrong
+   in. Refusing up front costs them one retry after the operator fixes config. */
+function configured(res) {
+  const miss = missingSecrets()
+  if (miss.length === 0) return true
+  console.error('[config] refusing request; unset or too short:', miss.join(', '))
+  fail(res, 503, 'NOT_CONFIGURED')
+  return false
 }
 
 const clientIp = (req) => (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown'
@@ -218,20 +231,46 @@ app.get('/v1/health/ready', async (req, res) => {
     cache.error = e.message
   }
 
+  /* A deployment can have every table and still be unsafe to point the public
+     at: without these the signing key is absent, and with demo mode left on the
+     fixed code opens any account. Both are configuration, not code, so the only
+     place an operator can see them is here. */
+  const secrets = missingSecrets()
+  const notes = []
+  if (missing.length) {
+    notes.push('Create the missing tables in the Catalyst console; see functions/prahari_api/CONSOLE_SETUP.md.')
+  }
+  if (secrets.indexOf('OTP_PEPPER') >= 0) {
+    notes.push('OTP_PEPPER is unset or too short. Contact hashing fails, so no OTP can be requested or verified.')
+  }
+  if (secrets.indexOf('TOKEN_SECRET') >= 0) {
+    notes.push('TOKEN_SECRET is unset or too short. No session token can be issued, and any presented token is treated as unauthenticated.')
+  }
+  if (OTP.isDemo()) {
+    notes.push('Demo mode is on: the fixed OTP code is accepted for every address. Set OTP_DEMO_MODE=false before real use.')
+  }
+
+  /* hitLimit fails open when the cache is unavailable, which is the failure
+     this endpoint was added to catch. Reporting ready while every limit is
+     silently disabled would defeat the purpose. */
+  if (cache.error) {
+    notes.push('Cache segment unavailable, so every rate limit is failing open: ' + cache.error)
+  }
+
   ok(res, {
-    ready: missing.length === 0,
+    ready: missing.length === 0 && secrets.length === 0 && !OTP.isDemo() && !cache.error,
     tables: { present, missing },
+    secrets: { missing: secrets },
     cache,
     otpDemoMode: OTP.isDemo(),
-    note: missing.length
-      ? 'Create the missing tables in the Catalyst console; see functions/prahari_api/SCHEMA.md.'
-      : undefined,
+    notes: notes.length ? notes : undefined,
   })
 })
 
 // ── citizen identity ───────────────────────────────────────────────
 
 app.post('/v1/auth/otp/request', async (req, res) => {
+  if (!configured(res)) return
   try {
     const contact = String((req.body && req.body.contact) || '').trim()
     const lang = (req.body && req.body.lang) === 'kn' ? 'kn' : 'en'
@@ -258,6 +297,15 @@ app.post('/v1/auth/otp/request', async (req, res) => {
     })
 
     const sent = await OTP.sendCode(req, contact, code, lang)
+
+    /* A 200 with a challengeId tells the client to render the code box. If no
+       channel is configured the code was generated, hashed, stored and sent
+       nowhere, so that box could never be satisfied. Say so instead. */
+    if (!sent.sent && !sent.demo) {
+      await S.audit(req, { actorType: 'citizen', action: 'otp.request', entityType: 'otp', entityId: challengeId, outcome: 'denied' })
+      return fail(res, 503, 'OTP_UNDELIVERABLE')
+    }
+
     await S.audit(req, { actorType: 'citizen', action: 'otp.request', entityType: 'otp', entityId: challengeId })
 
     // Never reveals whether the address is already known.
@@ -274,6 +322,7 @@ app.post('/v1/auth/otp/request', async (req, res) => {
 })
 
 app.post('/v1/auth/otp/verify', async (req, res) => {
+  if (!configured(res)) return
   try {
     const { challengeId, code } = req.body || {}
     if (!challengeId || !code) return fail(res, 400, 'VALIDATION')

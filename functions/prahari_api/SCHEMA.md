@@ -154,7 +154,7 @@ Set these on the function in the Catalyst console — never in the repo.
 | `BREVO_API_KEY` | Optional override. Only used if the Catalyst send fails or is unconfigured. |
 | `BREVO_SENDER_EMAIL` | **Must be a verified sender in Brevo or nothing delivers.** |
 | `BREVO_SENDER_NAME` | Defaults to `PRAHARI`. |
-| `OTP_DEMO_MODE` | `true` accepts the fixed code `000000` and sends no mail. |
+| `OTP_DEMO_MODE` | `true` accepts the fixed code `000000` and sends no mail. Defaults to `false` — demo mode is opt-in, so an unconfigured deployment does not accept a published code. |
 | `ALLOW_UNAUTH_OFFICER` | `true` lets `X-Prahari-Role` set the officer role. **Prototype only.** Defaults to `false` so an unconfigured deployment is closed. |
 | `PUBLIC_REPORT_LAYER` | `true` exposes the aggregated map layer without auth. Defaults to `false`. |
 

@@ -15,13 +15,18 @@ const { env } = require('./util')
    concluded Catalyst had no email and reached for Brevo; that was wrong — the SDK
    exposes email().sendMail(), which keeps this on-stack, needs no third-party API
    key, and does not consume a separate free-tier quota. Brevo stays as an
-   override for anyone who wants it, and demo mode is the floor. */
+   override for anyone who wants it. There is no floor: with no channel
+   configured and demo mode off, sending fails and the caller must say so. */
 
 const BREVO_URL = 'https://api.brevo.com/v3/smtp/email'
 const DEMO_CODE = '000000'
 
+/* Opt-in, not opt-out. DEMO_CODE is published in this repository, so a
+   deployment that inherits demo mode by omission accepts one known code for
+   every address. Defaulting off means forgetting to configure mail breaks the
+   OTP flow loudly rather than leaving it open. */
 function isDemo() {
-  return env('OTP_DEMO_MODE', 'true') === 'true'
+  return env('OTP_DEMO_MODE', 'false') === 'true'
 }
 
 function generateCode() {

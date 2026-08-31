@@ -17,8 +17,10 @@ list, in the order the console asks for it.
 curl https://prahari-60076064719.development.catalystserverless.in/server/prahari_api/v1/health/ready
 ```
 
-It names every table still missing and flips `ready` to `true` when the last one
-lands. No redeploy needed — the function picks them up immediately.
+It names every table still missing. No redeploy needed — the function picks them
+up immediately. `ready` turns `true` only once the tables exist **and** the two
+secrets below are set **and** demo mode is off, so it answers "is this safe to
+point the public at", not just "do the tables exist".
 
 Catalyst adds `ROWID`, `CREATORID`, `CREATEDTIME` and `MODIFIEDTIME` to every
 table. **Do not add those by hand** — the API reads the built-in ones.
@@ -143,15 +145,17 @@ work — but the API imports the table name, so create it.
 
 ## Then: environment variables
 
-Function → `prahari_api` → Configuration. Two are required before anything real
-happens; the rest have working defaults.
+Function → `prahari_api` → Configuration. The first two are **required** — there
+is no fallback, and any request that hashes a contact or mints a token fails
+without them. That is deliberate: a default would be a signing key published in
+a public repository.
 
 | Name | Set it to |
 |---|---|
 | `OTP_PEPPER` | A long random string. Changing it later invalidates every stored contact hash. |
 | `TOKEN_SECRET` | A long random string. Changing it signs out every citizen session. |
 | `MAIL_SENDER_EMAIL` | A verified sender, to send real codes through Catalyst's own mail service. |
-| `OTP_DEMO_MODE` | `false` once mail works. While `true`, the code is always `000000`. |
+| `OTP_DEMO_MODE` | Leave unset. Only `true` turns on the fixed code `000000` for every address — useful for a demo with no mail configured, unsafe for anything else. |
 
 Leave `ALLOW_UNAUTH_OFFICER` and `PUBLIC_REPORT_LAYER` at `false` — an
 unconfigured deployment should be closed, not open.
